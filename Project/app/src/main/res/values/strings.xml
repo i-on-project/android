@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">IonAndroid</string>
-    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Home</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_schedule">Schedule</string>
 </resources>

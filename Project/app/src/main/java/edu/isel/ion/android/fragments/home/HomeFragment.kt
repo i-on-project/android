@@ -1,4 +1,4 @@
-package edu.isel.ion.android.ui.home
+package edu.isel.ion.android.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,19 +7,20 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="edu.isel.ion.android.ui.home.HomeFragment"
+        android:name="edu.isel.ion.android.fragments.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="edu.isel.ion.android.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_schedule"
+        android:name="edu.isel.ion.android.fragments.schedule.ScheduleFragment"
+        android:label="@string/title_schedule"
+        tools:layout="@layout/fragment_schedule" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="edu.isel.ion.android.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_favorites"
+        android:name="edu.isel.ion.android.fragments.favorites.FavoritesFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_favorites" />
+
 </navigation>

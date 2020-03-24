@@ -32,11 +32,9 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_favorites, R.id.navigation_home, R.id.navigation_schedule
             )
         )
-
-
         /**
          * Ensures the title in the action bar is updated according to the selected item
          * in the bottom navigation bar
