@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
+    android:id="@+id/classes_list_item">
+
+    <!-- Class name -->
+    <TextView
+        android:id="@+id/class_name"
+        android:text="Class name"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/secondaryColor"
+        android:textSize="17sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <!-- Teacher name section -->
+    <TextView
+        android:id="@+id/teacher_name_start"
+        android:text="@string/teacher_name_start"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/secondaryLightColor"
+        app:layout_constraintTop_toBottomOf="@id/class_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/teacher_name"
+        />
+    <TextView
+        android:id="@+id/teacher_name"
+        android:text="Teacher name"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="5dp"
+        android:textColor="@color/secondaryLightColor"
+        app:layout_constraintTop_toBottomOf="@id/class_name"
+        app:layout_constraintLeft_toRightOf="@id/teacher_name_start"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

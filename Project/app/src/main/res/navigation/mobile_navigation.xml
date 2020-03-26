@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="edu.isel.ion.android.fragments.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_curricularTermsFragment"
+            app:destination="@id/curricularTermsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_schedule"
@@ -21,6 +25,47 @@
         android:id="@+id/navigation_favorites"
         android:name="edu.isel.ion.android.fragments.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_classSectionFragment2"
+            app:destination="@id/classSectionFragment"
+            app:popUpTo="@id/classSectionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/classSectionFragment"
+        android:name="edu.isel.ion.android.ClassSectionFragment"
+        android:label="@string/title_class_section"
+        tools:layout="@layout/fragment_class_section" />
+
+    <fragment
+        android:id="@+id/curricularTermsFragment"
+        android:name="edu.isel.ion.android.fragments.curricular_terms.CurricularTermsFragment"
+        android:label="fragment_curricular_terms"
+        tools:layout="@layout/fragment_curricular_terms" >
+        <action
+            android:id="@+id/action_curricularTermsFragment_to_coursesFragment"
+            app:destination="@id/coursesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/coursesFragment"
+        android:name="edu.isel.ion.android.fragments.courses.CoursesFragment"
+        android:label="fragment_courses"
+        tools:layout="@layout/fragment_courses" >
+        <action
+            android:id="@+id/action_coursesFragment_to_courseDetailsFragment"
+            app:destination="@id/courseDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/courseDetailsFragment"
+        android:name="edu.isel.ion.android.fragments.course_details.CourseDetailsFragment"
+        android:label="fragment_course_details"
+        tools:layout="@layout/fragment_course_details" >
+        <action
+            android:id="@+id/action_courseDetailsFragment_to_classSectionFragment"
+            app:destination="@id/classSectionFragment" />
+    </fragment>
 
 </navigation>

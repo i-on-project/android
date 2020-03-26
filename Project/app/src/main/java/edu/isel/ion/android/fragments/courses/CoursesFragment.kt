@@ -1,25 +1,23 @@
-package edu.isel.ion.android.fragments.favorites
+package edu.isel.ion.android.fragments.courses
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import edu.isel.ion.android.R
 
 /**
  * A simple [Fragment] subclass.
  */
-class FavoritesFragment : Fragment() {
+class CoursesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        return inflater.inflate(R.layout.fragment_courses, container, false)
     }
 
 }

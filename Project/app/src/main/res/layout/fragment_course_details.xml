@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.course_details.CourseDetailsFragment">
+
+    <!-- Top Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/course_profile_top_section"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/primaryLightColor"
+        android:padding="20dp"
+        >
+
+        <TextView
+            android:id="@+id/course_full_name"
+
+            android:text="Course Full Name"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="25sp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/course_year"
+
+            android:text="Year"
+            android:textColor="@color/primaryTextColor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/course_full_name"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/course_semester"
+
+            android:text="Semester"
+            android:textColor="@color/primaryTextColor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/course_full_name"
+            app:layout_constraintStart_toEndOf="@id/course_year"
+            android:layout_marginStart="10dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toBottomOf="@id/course_profile_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+        <!-- Term selection Section -->
+        <LinearLayout
+            android:id="@+id/linearLayout_Term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/term_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_term"
+                android:textColor="@color/secondaryColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/term_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/term_label"
+                app:layout_constraintTop_toTopOf="@+id/term_label"
+                tools:listitem="@android:layout/simple_spinner_dropdown_item"
+                />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/classes_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/classes_list_item"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_Term"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
