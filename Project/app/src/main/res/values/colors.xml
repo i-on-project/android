@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#a32516</color>
+    <color name="primaryLightColor">#db573f</color>
+    <color name="primaryDarkColor">#6e0000</color>
+    <color name="secondaryColor">#333333</color>
+    <color name="secondaryLightColor">#5c5c5c</color>
+    <color name="secondaryDarkColor">#0c0c0c</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
+</resources>
+
+<!--
+This colors were generated using the color tool from material.io
+https://material.io/resources/color/#!/?view.left=1&view.right=1&primary.color=a32516&secondary.color=333333.
+The link provides more info about what text color we should use for each defined color.
+The primary color and secondary color came from the ISEL website so that any user of the app can
+identify clearly where it came from.
+-->
