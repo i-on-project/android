@@ -5,13 +5,12 @@
     <string name="title_schedule">Schedule</string>
     <string name="title_courses">Courses</string>
     <string name="title_calendar">Calendar</string>
-
-    <string name="optional_courses">Optional Courses</string>
-    <string name="coordinator">Coordinator</string>
-
     <string name="title_class">Class</string>
     <string name="title_class_section">Class Section</string>
     <string name="title_search">Search</string>
+
+    <string name="optional_courses">Optional Courses</string>
+    <string name="coordinator">Coordinator</string>
 
     <string name="label_term">Curricular term:</string>>
     <string name="label_course">Course:</string>
@@ -28,4 +27,6 @@
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
+    <string name="app_label">i-on</string>
+    <string name="search_hint">Class name</string>
 </resources>
