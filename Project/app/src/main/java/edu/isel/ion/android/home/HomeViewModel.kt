@@ -1,4 +1,4 @@
-package edu.isel.ion.android.fragments.home
+package edu.isel.ion.android.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

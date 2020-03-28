@@ -1,7 +1,6 @@
-package edu.isel.ion.android.fragments.schedule
+package edu.isel.ion.android.favorites
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +10,14 @@ import edu.isel.ion.android.R
 /**
  * A simple [Fragment] subclass.
  */
-class ScheduleFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.println(Log.DEBUG,"Schedule Fragment", "Is creating schedule fragment")
-
-        return inflater.inflate(R.layout.fragment_schedule, container, false)
+        return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 
 }

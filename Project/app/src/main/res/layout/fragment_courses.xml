@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.courses.CoursesFragment"
-    android:padding="20dp"
+    tools:context=".courses.CoursesFragment"
+    android:padding="@dimen/fragment_padding"
     >
 
     <androidx.recyclerview.widget.RecyclerView

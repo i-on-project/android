@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".fragments.favorites.FavoritesFragment">
+    android:padding="@dimen/fragment_padding"
+    tools:context=".favorites.FavoritesFragment">
 
     <!-- Top section -->
     <LinearLayout

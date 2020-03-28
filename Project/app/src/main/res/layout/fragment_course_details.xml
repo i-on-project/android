@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.course_details.CourseDetailsFragment">
+    tools:context=".course_details.CourseDetailsFragment"
+    >
 
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/primaryLightColor"
-        android:padding="20dp"
+        android:padding="@dimen/fragment_padding"
         >
 
         <TextView

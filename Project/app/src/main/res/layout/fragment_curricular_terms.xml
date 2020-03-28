@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.curricular_terms.CurricularTermsFragment"
-    android:padding="20dp"
+    tools:context=".curricular_terms.CurricularTermsFragment"
+    android:padding="@dimen/fragment_padding"
     >
 
     <androidx.recyclerview.widget.RecyclerView

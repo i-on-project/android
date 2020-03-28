@@ -1,4 +1,4 @@
-package edu.isel.ion.android.fragments.curricular_terms
+package edu.isel.ion.android.curricular_terms
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

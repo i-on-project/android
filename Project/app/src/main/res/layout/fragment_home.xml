@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.home.HomeFragment"
-    android:padding="20dp"
+    tools:context=".home.HomeFragment"
+    android:padding="@dimen/fragment_padding"
     >
 
     <Button

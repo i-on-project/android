@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="edu.isel.ion.android.fragments.home.HomeFragment"
+        android:name="edu.isel.ion.android.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,13 +17,13 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="edu.isel.ion.android.fragments.schedule.ScheduleFragment"
+        android:name="edu.isel.ion.android.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="edu.isel.ion.android.fragments.favorites.FavoritesFragment"
+        android:name="edu.isel.ion.android.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/curricularTermsFragment"
-        android:name="edu.isel.ion.android.fragments.curricular_terms.CurricularTermsFragment"
+        android:name="edu.isel.ion.android.curricular_terms.CurricularTermsFragment"
         android:label="fragment_curricular_terms"
         tools:layout="@layout/fragment_curricular_terms" >
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/coursesFragment"
-        android:name="edu.isel.ion.android.fragments.courses.CoursesFragment"
+        android:name="edu.isel.ion.android.courses.CoursesFragment"
         android:label="fragment_courses"
         tools:layout="@layout/fragment_courses" >
         <action
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/courseDetailsFragment"
-        android:name="edu.isel.ion.android.fragments.course_details.CourseDetailsFragment"
+        android:name="edu.isel.ion.android.course_details.CourseDetailsFragment"
         android:label="fragment_course_details"
         tools:layout="@layout/fragment_course_details" >
         <action
