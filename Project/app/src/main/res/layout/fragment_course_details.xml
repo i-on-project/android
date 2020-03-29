@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/course_year"
 
-            android:text="Year"
+            android:text="@string/label_year"
             android:textColor="@color/primaryTextColor"
 
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/course_semester"
 
-            android:text="Semester"
+            android:text="@string/label_semester"
             android:textColor="@color/primaryTextColor"
 
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_term"
                 android:textColor="@color/secondaryColor"
-                android:textSize="18sp"
+                android:textSize="@dimen/genereric_text_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

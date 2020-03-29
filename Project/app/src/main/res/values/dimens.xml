@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fragment_padding">20dp</dimen>
     <dimen name="generic_list_item_padding">20dp</dimen>
+    <dimen name="genereric_text_size">18sp</dimen>
 </resources>

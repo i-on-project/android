@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_term"
-            android:textSize="18sp"
+            android:textSize="@dimen/genereric_text_size"
             android:textStyle="bold" />
 
         <Spinner

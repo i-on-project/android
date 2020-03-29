@@ -7,7 +7,7 @@
     tools:context=".ClassSectionFragment">
 
     <ImageView
-        android:id="@+id/favorite_image"
+        android:id="@+id/image_favorite"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_favorite_border_red_24dp"
@@ -17,6 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <TextView
+        android:id="@+id/title_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="The Class Title"
+        android:textSize="@dimen/genereric_text_size"
+        app:layout_constraintTop_toBottomOf="@id/image_favorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:id="@+id/linearLayout_Labels"
         android:layout_width="wrap_content"
@@ -25,35 +35,42 @@
         android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorite_image">
+        app:layout_constraintTop_toBottomOf="@id/title_class">
 
         <TextView
-            android:id="@+id/course_label"
+            android:id="@+id/label_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_course"
-            android:textSize="18sp" />
+            android:textSize="@dimen/genereric_text_size" />
+
+        <TextView
+            android:id="@+id/label_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_teacher"
+            android:textSize="@dimen/genereric_text_size"/>
 
         <TextView
             android:id="@+id/class_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_class"
-            android:textSize="18sp" />
+            android:textSize="@dimen/genereric_text_size" />
 
         <TextView
             android:id="@+id/id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_id"
-            android:textSize="18sp" />
+            android:textSize="@dimen/genereric_text_size" />
 
         <TextView
             android:id="@+id/events_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_events"
-            android:textSize="18sp" />
+            android:textSize="@dimen/genereric_text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,24 +84,34 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout_Labels">
 
         <TextView
+            android:id="@+id/result_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/genereric_text_size"/>
 
         <TextView
+            android:id="@+id/result_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/genereric_text_size"/>
 
         <TextView
+            android:id="@+id/result_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/genereric_text_size"/>
 
         <TextView
+            android:id="@+id/result_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/genereric_text_size"/>
+
+        <TextView
+            android:id="@+id/result_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/genereric_text_size"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
