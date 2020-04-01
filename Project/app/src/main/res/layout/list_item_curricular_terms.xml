@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/generic_list_item_padding"
+    android:padding="@dimen/all_list_item_padding_20"
     android:id="@+id/curricular_terms_list_item">
 
     <TextView
-        android:id="@+id/semester_name"
+        android:id="@+id/textview_curricular_terms_list_item_semester_name"
         android:text="Semester name"
 
         android:layout_width="wrap_content"
@@ -20,14 +20,14 @@
         />
 
     <TextView
-        android:id="@+id/semester_year"
+        android:id="@+id/textview_curricular_terms_list_item_semester_year"
         android:text="Semester year"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:textColor="@color/secondaryLightColor"
-        app:layout_constraintTop_toBottomOf="@id/semester_name"
+        app:layout_constraintTop_toBottomOf="@id/textview_curricular_terms_list_item_semester_name"
         app:layout_constraintStart_toStartOf="parent"
         />
 

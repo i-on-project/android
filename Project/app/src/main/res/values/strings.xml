@@ -31,4 +31,6 @@
     <string name="app_label">i-on</string>
     <string name="search_hint">Class name</string>
     <string name="label_semester">Semester</string>
+    <string name="title_curricular_terms">Curricular Terms</string>
+    <string name="title_course_details">Course Details</string>
 </resources>

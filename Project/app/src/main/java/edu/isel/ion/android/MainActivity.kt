@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
      */
     fun setupTopBarBehaviour() {
         //Sets up the top action bar as a custom toolbar
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.toolbar_main))
 
         //Add back button support
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity() {
      *  Note : The code inside this method came with the template activity with bottom navigation
      */
     fun setupBottomBarBehaviour() {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = findViewById(R.id.bottomnavview_main)
+        val navController = findNavController(R.id.fragment_main_navhost)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".curricular_terms.CurricularTermsFragment"
-    android:padding="@dimen/fragment_padding"
+    android:padding="@dimen/fragments_padding_20"
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/curricular_terms_recyclerview"
+        android:id="@+id/recyclerview_curricular_terms_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/curricular_terms_list_item"
+        tools:listitem="@layout/list_item_curricular_terms"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
