@@ -1,11 +1,23 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Overall app theme is white, except the action bar which is a brownish red therefore
+    it's text has to be white. To have the action bar text white the theme has to have a DarkActionBar
+    This article talks about the most important details in this theme, in case we need more customization:
+    https://medium.com/over-engineering/setting-up-a-material-components-theme-for-android-fbf7774da739
+    -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
-        <item name="actionBarTabTextStyle">@color/primaryTextColor</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="android:editTextColor">@color/primaryTextColor</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
+
+    <!-- Adds curved corners to small components like buttons -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
 </resources>

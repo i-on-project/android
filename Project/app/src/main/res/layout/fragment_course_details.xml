@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".course_details.CourseDetailsFragment"
+    >
+
+    <!-- Top Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_course_details_top_section"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/primaryLightColor"
+        android:padding="@dimen/fragments_padding_20"
+        >
+
+        <TextView
+            android:id="@+id/textview_course_details_full_name"
+
+            android:text="Course Full Name"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="25sp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/textview_course_details_year"
+
+            android:text="@string/label_year"
+            android:textColor="@color/primaryTextColor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/textview_course_details_semester"
+
+            android:text="@string/label_semester"
+            android:textColor="@color/primaryTextColor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
+            app:layout_constraintStart_toEndOf="@id/textview_course_details_year"
+            android:layout_marginStart="10dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_course_details_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+        <!-- Term selection Section -->
+        <LinearLayout
+            android:id="@+id/linearLayout_course_details_term_selection_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textview_course_details_term_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_term"
+                android:textColor="@color/secondaryColor"
+                android:textSize="@dimen/all_text_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/textview_course_details_term_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/textview_course_details_term_label"
+                app:layout_constraintTop_toTopOf="@+id/textview_course_details_term_label"
+                tools:listitem="@android:layout/simple_spinner_dropdown_item"
+                />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_course_details_classes_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_item_classes"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_course_details_term_selection_section"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

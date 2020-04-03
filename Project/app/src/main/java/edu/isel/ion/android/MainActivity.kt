@@ -1,8 +1,12 @@
 package edu.isel.ion.android
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.view.Menu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,7 +18,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupTopBarBehaviour()
+
         setupBottomBarBehaviour()
+    }
+
+    /**
+     * Instantiates the menu XML file @menu/top_bar_menu.xml into a Menu object.
+     * Configures the search view by enabling assisted search and adding a search
+     * submit button
+     *
+     * This method is called by the framework after OnCreate but before it finishes
+     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_bar_menu, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu?.findItem(R.id.action_search)?.actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = true //Add search submit button
+        }
+        return true
+    }
+
+    /**
+     * Sets the Top bar as a custom toolbar especified in the res/layout/toolbar layout file
+     * Enables the back button on the top bar
+     */
+    fun setupTopBarBehaviour() {
+        //Sets up the top action bar as a custom toolbar
+        setSupportActionBar(findViewById(R.id.toolbar_main))
+
+        //Add back button support
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     /**
@@ -26,8 +64,8 @@ class MainActivity : AppCompatActivity() {
      *  Note : The code inside this method came with the template activity with bottom navigation
      */
     fun setupBottomBarBehaviour() {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = findViewById(R.id.bottomnavview_main)
+        val navController = findNavController(R.id.fragment_main_navhost)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".courses.CoursesFragment"
+    android:padding="@dimen/fragments_padding_20"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_courses_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/list_item_courses"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_courses_optional_courses"
+        />
+
+    <Button
+        android:id="@+id/button_courses_optional_courses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/optional_courses"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_courses_list">
+    </Button>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
