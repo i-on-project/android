@@ -10,9 +10,9 @@ import java.net.URI
     uris.
 
  */
-data class Course (
-    val acronym : String,
-    val name : String,
-    val classesUri : URI, //This is the URI used to navigate to this course classes
-    val eventsUri : URI //This is the URI used to navigate to this course events
+data class Course(
+    val acronym: String,
+    val name: String,
+    val classesUri: URI?, //This is the URI used to navigate to this course classes
+    val eventsUri: URI? //This is the URI used to navigate to this course events
 )
