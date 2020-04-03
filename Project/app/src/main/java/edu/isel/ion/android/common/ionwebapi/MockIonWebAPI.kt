@@ -5,7 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
 
-private const val HOST = "https://www.ionproject.org"
+private const val COURSES_PATH = "/v0/courses"
+private const val CLASSES_PATH = "/classes"
 
 class MockIonWebAPI : IIonWebAPI {
 
@@ -19,14 +20,14 @@ class MockIonWebAPI : IIonWebAPI {
     override suspend fun <T>getFromURI(uri : URI, valueType : Class<T>) : T =
         withContext(Dispatchers.IO) {
             val response = when(uri.path) {
-                "/v0/courses" ->  allCoursesMock
-                "/v0/courses/pg" -> pgMock
-                "/v0/courses/e" -> eMock
-                "/v0/courses/lsd" -> lsdMock
-                "/v0/courses/m1" -> m1Mock
-                "/v0/courses/alga" -> algaMock
-                "/v0/courses/alga/classes" -> algaClassesMock
-                "/v0/courses/alga/classes/LI52D" -> algaClassSectionMock
+                COURSES_PATH ->  allCoursesMock
+                "${COURSES_PATH}/pg" -> pgMock
+                "${COURSES_PATH}/e" -> eMock
+                "${COURSES_PATH}/lsd" -> lsdMock
+                "${COURSES_PATH}/m1" -> m1Mock
+                "${COURSES_PATH}/alga" -> algaMock
+                "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
+                "${COURSES_PATH}/alga${CLASSES_PATH}/LI52D" -> algaClassSectionMock
                 else -> throw Exception("Uri not implemented or invalid")
             }
             objectMapper.readValue(response, valueType)

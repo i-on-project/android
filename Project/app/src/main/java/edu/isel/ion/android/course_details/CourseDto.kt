@@ -2,7 +2,9 @@ package edu.isel.ion.android.course_details
 
 import edu.isel.ion.android.common.EmbeddedEntity
 import edu.isel.ion.android.common.SirenEntity
+import edu.isel.ion.android.common.SubEntity
 import edu.isel.ion.android.common.model.Course
+import edu.isel.ion.android.common.model.CourseSummary
 import java.net.URI
 
 /**
@@ -11,6 +13,12 @@ import java.net.URI
 data class CourseProperties(
     val acronym: String,
     val name: String
+)
+/**
+ *   Represents the properties of the course summary representation in siren
+ */
+data class CourseSummaryProperties(
+    val acronym: String
 )
 
 /**
@@ -27,6 +35,20 @@ fun SirenEntity<CourseProperties>.toCourse(): Course {
         eventsUri = eventsLink
     )
 }
+
+/**
+ *  Converts from a course summary [EmbeddedEntity] to [CourseSummary]
+ */
+fun EmbeddedEntity<CourseSummaryProperties>.toCourseSummary() : CourseSummary {
+    val detailsLink : URI? = links!!.first().href
+
+    return CourseSummary(
+        acronym = properties!!.acronym,
+        detailsUri = detailsLink!!
+    )
+}
+
+
 
 
 
