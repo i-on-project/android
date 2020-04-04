@@ -92,6 +92,9 @@ class MainActivity : AppCompatActivity() {
                     that when the user presses the back button it returns to
                     the destination from which search was called. The query text
                     is passed as a bundle.
+
+                    This approach is probably temporary, we are planning on having a shared viewmodel
+                    between the fragments
                      */
                         navController.navigate(
                             R.id.navigation_search_results,
@@ -100,12 +103,17 @@ class MainActivity : AppCompatActivity() {
                                 .build()
                         )
                     } else {
-                        //TODO set liveData
+                        /*
+                            Once the user is already at the search results, there is no need
+                            to navigate to the same destination, so we are planning on having a
+                            MutableLiveData which is set and the fragment automatically updates
+                            the search results.
+                         */
                     }
                     return true;
                 }
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //TODO While the code is changing
+                    //TODO While the search text is changing
                     return true;
                 }
             })
