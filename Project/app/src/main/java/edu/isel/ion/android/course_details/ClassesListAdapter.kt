@@ -3,8 +3,10 @@ package edu.isel.ion.android.course_details
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
+import org.w3c.dom.Text
 
 class ClassesListAdapter(model : CourseDetailsViewModel) :
     RecyclerView.Adapter<ClassesListAdapter.ClassViewHolder>() {
@@ -16,7 +18,7 @@ class ClassesListAdapter(model : CourseDetailsViewModel) :
     ): ClassViewHolder {
         // create a new view
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.classes_list_item, parent, false)
+            .inflate(R.layout.list_item_classes, parent, false)
         return ClassViewHolder(view)
     }
 
@@ -31,8 +33,11 @@ class ClassesListAdapter(model : CourseDetailsViewModel) :
     // Provides a reference to the views for each data item
     class ClassViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val className = view.findViewById<TextView>(R.id.textview_classes_list_item_name)
+        private val teacherName = view.findViewById<TextView>(R.id.textview_classes_list_item_teacher)
+
         fun bindTo() {
-            TODO()
+            TODO("Binding class summary")
         }
     }
 }
