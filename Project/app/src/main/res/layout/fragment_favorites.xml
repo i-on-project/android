@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_padding"
+    android:padding="@dimen/fragments_padding_20"
     tools:context=".favorites.FavoritesFragment">
 
     <!-- Top section -->
     <LinearLayout
-        android:id="@+id/linearLayout_Term"
+        android:id="@+id/linearLayout_favorites_top_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -18,15 +18,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/term_label"
+            android:id="@+id/textview_favorites_term_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_term"
-            android:textSize="18sp"
+            android:textSize="@dimen/all_text_18"
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/term_spinner"
+            android:id="@+id/textview_favorites_term_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -35,13 +35,13 @@
 
     <!-- Favorite classes list -->
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/classes_list_item"
-
+        tools:listitem="@layout/list_item_classes"
+        android:id="@+id/recyclerview_favorites_classes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_Term"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_favorites_top_section"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

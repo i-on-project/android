@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     which is the default
      */
     private val topBar : Toolbar by lazy(LazyThreadSafetyMode.NONE) {
-        findViewById<Toolbar>(R.id.toolbar)
+        findViewById<Toolbar>(R.id.toolbar_main)
     }
     private val navController : NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.nav_host_fragment)

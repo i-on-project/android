@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/navigation_curricular_terms"
         android:name="edu.isel.ion.android.curricular_terms.CurricularTermsFragment"
-        android:label="fragment_curricular_terms"
+        android:label="@string/title_curricular_terms"
         tools:layout="@layout/fragment_curricular_terms" >
         <action
             android:id="@+id/action_curricular_terms_to_courses"
@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/navigation_courses"
         android:name="edu.isel.ion.android.courses.CoursesFragment"
-        android:label="fragment_courses"
+        android:label="@string/title_courses"
         tools:layout="@layout/fragment_courses" >
         <action
             android:id="@+id/action_courses_to_course_details"
@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/navigation_course_details"
         android:name="edu.isel.ion.android.course_details.CourseDetailsFragment"
-        android:label="fragment_course_details"
+        android:label="@string/title_course_details"
         tools:layout="@layout/fragment_course_details" >
         <action
             android:id="@+id/action_course_details_to_class_section"
