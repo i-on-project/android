@@ -3,6 +3,8 @@ package edu.isel.ion.android.courses
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
 
@@ -16,7 +18,7 @@ class CoursesListAdapter(private val model : CoursesViewModel) :
     ): CourseViewHolder {
         // create a new view
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.courses_list_item, parent, false)
+            .inflate(R.layout.list_item_courses, parent, false)
         return CourseViewHolder(view)
     }
 
@@ -29,10 +31,15 @@ class CoursesListAdapter(private val model : CoursesViewModel) :
     override fun getItemCount() = TODO()
 
     // Provides a reference to the views for each data item
-    class CourseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
+        private val courseName = view.findViewById<TextView>(R.id.textview_courses_list_item_course)
 
         fun bindTo() {
-            TODO()
+            view.setOnClickListener {
+                view.findNavController().navigate(R.id.action_courses_to_course_details)
+            }
+            TODO("Bind to courseSummary")
         }
     }
 }
