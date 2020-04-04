@@ -2,6 +2,7 @@ package edu.isel.ion.android.course_details
 
 import edu.isel.ion.android.common.EmbeddedEntity
 import edu.isel.ion.android.common.SirenEntity
+import com.fasterxml.jackson.annotation.JsonCreator
 import edu.isel.ion.android.common.SubEntity
 import edu.isel.ion.android.common.model.Course
 import edu.isel.ion.android.common.model.CourseSummary
@@ -10,14 +11,14 @@ import java.net.URI
 /**
  *   Represents the properties of the course representation in siren
  */
-data class CourseProperties(
+data class CourseProperties @JsonCreator constructor(
     val acronym: String,
     val name: String
 )
 /**
  *   Represents the properties of the course summary representation in siren
  */
-data class CourseSummaryProperties(
+data class CourseSummaryProperties @JsonCreator constructor(
     val acronym: String
 )
 

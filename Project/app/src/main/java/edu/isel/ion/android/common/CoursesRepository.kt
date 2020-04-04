@@ -29,7 +29,11 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
     suspend fun getAllCourses() : List<CourseSummary> {
         val uri = URI("/v0/courses")
         return ionWebAPI.getFromURI(uri,SirenEntity<Any>()).entities!!.map {
-            (it as EmbeddedEntity<CourseSummaryProperties>).toCourseSummary()
+            val embeddedEntity = (it as EmbeddedEntity<LinkedHashMap<String,String>>)
+            CourseSummary(
+                embeddedEntity.properties!!["acronym"]!!,
+                embeddedEntity.links!!.first().href
+            )
         }
     }
 

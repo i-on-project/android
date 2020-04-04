@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Toolbar>(R.id.toolbar_main)
     }
     private val navController : NavController by lazy(LazyThreadSafetyMode.NONE) {
-        findNavController(R.id.nav_host_fragment)
+        findNavController(R.id.fragment_main_navhost)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity() {
      *  Note : The code inside this method came with the template activity with bottom navigation
      */
     fun setupBottomBarBehaviour() {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = findViewById(R.id.bottomnavview_main)
+        val navController = findNavController(R.id.fragment_main_navhost)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(

@@ -16,7 +16,7 @@ class FavoritesListAdapter(model : FavoritesViewModel) :
     ): FavoriteViewHolder {
         // create a new view
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.classes_list_item, parent, false)
+            .inflate(R.layout.list_item_classes, parent, false)
         return FavoriteViewHolder(view)
     }
 

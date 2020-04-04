@@ -1,8 +1,14 @@
 package edu.isel.ion.android.common
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.*
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.TreeNode
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonDeserializer
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
 import java.net.URI
 
@@ -16,76 +22,99 @@ import java.net.URI
  * For details regarding the Siren media type, see <a href="https://github.com/kevinswiber/siren">Siren</a>
  */
 
-data class SirenEntity<T>(
+data class SirenEntity<T> (
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: T? = null,
-    val entities: List<SubEntity>? = null,
-    val links: List<SirenLink>? = null,
-    val actions: List<SirenAction>? = null,
-    val title: String? = null) : TypeReference<SirenEntity<T>>()
+    @JsonProperty("properties") val properties: T? = null,
+    @JsonProperty("entities") val entities: List<SubEntity>? = null,
+    @JsonProperty("links") val links: List<SirenLink>? = null,
+    @JsonProperty("actions") val actions: List<SirenAction>? = null,
+    @JsonProperty("title") val title: String? = null
+) : TypeReference<SirenEntity<T>>()
+
 
 /**
  * Class whose instances represent links as they are represented in Siren.
  */
-data class SirenLink(
-    val rel: List<String>,
-    val href: URI,
-    val title: String? = null,
-    val type: String? = null)
+data class SirenLink @JsonCreator constructor(
+    @JsonProperty("rel") val rel: List<String>,
+    @JsonProperty("href") val href: URI,
+    @JsonProperty("title") val title: String? = null,
+    @JsonProperty("type") val type: String? = null)
 
 /**
  * Class whose instances represent actions that are included in a siren entity.
  */
-data class SirenAction(
-    val name: String,
-    val href: URI,
-    val title: String? = null,
+data class SirenAction @JsonCreator constructor(
+    @JsonProperty("name") val name: String,
+    @JsonProperty("href")val href: URI,
+    @JsonProperty("title")val title: String? = null,
     @JsonProperty("class") val clazz: List<String>? = null,
-    val method: HttpMethod? = null,
+    @JsonProperty("method")val method: HttpMethod? = null,
+    @JsonProperty("isTemplated")val isTemplated: Boolean? = null,
     @JsonSerialize(using = ToStringSerializer::class)
-    val type: MediaType? = null,
-    val fields: List<Field>? = null
+    @JsonProperty("type")val type: MediaType? = null,
+    @JsonProperty("filed")val fields: List<Field>? = null
 ) {
     /**
      * Represents action's fields
      */
-    data class Field(
-        val name: String,
-        val type: String? = null,
-        val value: String? = null,
-        val title: String? = null
+    data class Field @JsonCreator constructor(
+        @JsonProperty("name") val name: String,
+        @JsonProperty("type") val type: String? = null,
+        @JsonProperty("value") val value: String? = null,
+        @JsonProperty("title") val title: String? = null
     )
 }
 
 /**
  * Base class for admissible sub entities, namely, [EmbeddedLink] and [EmbeddedEntity].
  */
+
+@JsonDeserialize(using= SubEntityDeserializer::class)
 sealed class SubEntity
 
-data class EmbeddedLink(
+@JsonDeserialize(using = JsonDeserializer.None::class)
+data class EmbeddedLink @JsonCreator constructor(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val rel: List<String>,
-    val href: URI,
+    @JsonProperty("rel")val rel: List<String>,
+    @JsonProperty("href")val href: URI,
     @JsonSerialize(using = ToStringSerializer::class)
-    val type: MediaType? = null,
-    val title: String? = null
+    @JsonProperty("type")val type: MediaType? = null,
+    @JsonProperty("title")val title: String? = null
 ) : SubEntity()
 
-data class EmbeddedEntity<T>(
-    val rel: List<String>,
+@JsonDeserialize(using = JsonDeserializer.None::class)
+data class EmbeddedEntity<T> @JsonCreator constructor(
+    @JsonProperty("rel") val rel: List<String>,
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: T? = null,
-    val entities: List<SubEntity>? = null,
-    val links: List<SirenLink>? = null,
-    val actions: SirenAction? = null,
-    val title: String? = null
+    @JsonProperty("properties") val properties: T? = null,
+    @JsonProperty("entities") val entities: List<SubEntity>? = null,
+    @JsonProperty("links") val links: List<SirenLink>? = null,
+    @JsonProperty("actions") val actions: SirenAction? = null,
+    @JsonProperty("title") val title: String? = null
 ) : SubEntity()
+
+
+class SubEntityDeserializer : StdDeserializer<SubEntity>(SubEntity::class.java) {
+
+    override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): SubEntity {
+        val node = p!!.readValueAsTree() as TreeNode
+
+        //If property "properties" exists then it must be an EmbeddedEntity
+        if (node.get("properties") != null) {
+            return p!!.getCodec().treeToValue(node, EmbeddedEntity::class.java)
+        }
+        return p!!.getCodec().treeToValue(node, EmbeddedLink::class.java)
+    }
+
+}
+
 
 
 /*
     Represents an HTTP Method
  */
-enum class HttpMethod {
+enum class HttpMethod  {
     GET,
     POST,
     PUT,
@@ -106,36 +135,14 @@ const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
 
 enum class MediaType {
 
-    JSON {
-        override fun toString(): String {
-            return super.addApplication(JSON_SUBTYPE)
-        }
-    },
+    @JsonProperty("${APPLICATION_TYPE}/${ JSON_SUBTYPE}") JSON ,
 
-    SIREN {
-        override fun toString(): String {
-            return super.addApplication(SIREN_SUBTYPE)
-        }
-    },
+    @JsonProperty("${APPLICATION_TYPE}/${ SIREN_SUBTYPE}") SIREN,
 
-    JSON_HOME {
-        override fun toString(): String {
-            return super.addApplication(JSON_HOME_SUBTYPE)
-        }
-    },
+    @JsonProperty("${APPLICATION_TYPE}/${ JSON_HOME_SUBTYPE}") JSON_HOME,
 
-    URL_ENCODED {
-        override fun toString(): String {
-            return super.addApplication(URL_ENCODED_SUBTYPE)
-        }
-    };
+    @JsonProperty("${APPLICATION_TYPE}/${ URL_ENCODED_SUBTYPE}") URL_ENCODED
 
-    /*
-     Adds the application type to the media type string
-     */
-    private fun addApplication(mediaType : String) : String {
-        return "${APPLICATION_TYPE}/${mediaType}"
-    }
 }
 
 

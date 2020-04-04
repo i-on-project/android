@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 
         //Courses button
         view.findViewById<Button>(R.id.button_home_courses).setOnClickListener {
-            navController.navigate(R.id.action_home_to_curricular_terms)
+            navController.navigate(R.id.navigation_courses)
         }
 
         //Calendar button

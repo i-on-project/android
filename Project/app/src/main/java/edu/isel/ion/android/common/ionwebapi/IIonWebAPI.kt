@@ -11,4 +11,6 @@ interface IIonWebAPI {
      */
     suspend fun <T>getFromURI(uri : URI, sirenEntity : SirenEntity<T>) : SirenEntity<T>
 
+    suspend fun <T>getFromURI(uri : URI,  clazz : Class<T>) : T
+
 }
