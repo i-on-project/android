@@ -13,10 +13,8 @@ import java.net.URI
 typealias SirenCourse = SirenEntity<CourseProperties>
 
 /*
-
     This type represents a course repository, it should request
     from the API, and map the result to the app model.
-
  */
 class CourseRepository(private val ionWebAPI: IIonWebAPI) {
 
@@ -30,7 +28,7 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
      */
     suspend fun getAllCourses() : List<CourseSummary> {
         val uri = URI("/v0/courses")
-        return ionWebAPI.getFromURI(uri,SirenEntity :: class.java).entities!!.map {
+        return ionWebAPI.getFromURI(uri,SirenEntity<Any>()).entities!!.map {
             (it as EmbeddedEntity<CourseSummaryProperties>).toCourseSummary()
         }
     }
@@ -42,8 +40,9 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
      * the details of a course it first has to get its summary
      */
     suspend fun getCourseDetails(courseSummary: CourseSummary) : Course {
-        return ionWebAPI.getFromURI<SirenEntity<CourseProperties>>(courseSummary.detailsUri,
-            TypeReference<SirenEntity<CourseProperties>>()).toCourse()
+        return ionWebAPI.getFromURI(
+            courseSummary.detailsUri,
+            SirenEntity<CourseProperties>()).toCourse()
     }
 
 }

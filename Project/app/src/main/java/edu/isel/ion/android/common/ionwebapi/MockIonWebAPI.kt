@@ -2,6 +2,7 @@ package edu.isel.ion.android.common.ionwebapi
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import edu.isel.ion.android.common.SirenEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
@@ -18,11 +19,9 @@ class MockIonWebAPI : IIonWebAPI {
         outside of the main thread. Examples include using the Room component,
         reading from or writing to files, and running any network operations.
      */
-    override suspend fun <T>getFromURI(uri : URI, clazz : Class<T>) : T =
-        parse(route(uri),clazz)
 
-    override suspend fun <T> getFromURI(uri: URI, typeReference : TypeReference<T>): T =
-        parse(route(uri),typeReference)
+    override suspend fun <T> getFromURI(uri: URI, sirenEntity: SirenEntity<T>): SirenEntity<T> =
+        parse(route(uri),sirenEntity)
 
 
     private suspend fun get(uri : URI) : String =
@@ -30,14 +29,9 @@ class MockIonWebAPI : IIonWebAPI {
             route(uri)
         }
 
-    private suspend fun <T>parse(json : String, clazz: Class<T>) =
+    private suspend fun <T>parse(json : String, sirenEntity: SirenEntity<T>) =
         withContext(Dispatchers.Default) {
-            objectMapper.readValue(json,clazz)
-        }
-
-    private suspend fun <T>parse(json : String, typeReference: TypeReference<T>) =
-        withContext(Dispatchers.Default) {
-            objectMapper.readValue(json,typeReference)
+            objectMapper.readValue(json,sirenEntity)
         }
 
     private fun route(uri : URI) : String = when(uri.path) {
