@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity() {
      *  Note : The code inside this method came with the template activity with bottom navigation
      */
     fun setupBottomBarBehaviour() {
-        val navView: BottomNavigationView = findViewById(R.id.bottomnavview_main)
-        val navController = findNavController(R.id.fragment_main_navhost)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(

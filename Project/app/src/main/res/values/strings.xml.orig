@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">IonAndroid</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_schedule">Schedule</string>
+    <string name="title_courses">Courses</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_class">Class</string>
+    <string name="title_class_section">Class Section</string>
+    <string name="title_search">Search</string>
+
+    <string name="optional_courses">Optional Courses</string>
+    <string name="coordinator">Coordinator</string>
+
+    <string name="label_term">Curricular term:</string>>
+    <string name="label_course">Course:</string>
+    <string name="label_coordinator">Coordinator:</string>
+    <string name="label_mandatory">Mandatory:</string>
+    <string name="label_credits">Credits:</string>
+    <string name="label_year">Year:</string>
+    <string name="label_curricular_term">Curricular Term:</string>
+    <string name="label_classes">Classes:</string>
+    <string name="label_enroll">Enroll:</string>
+    <string name="label_class">Class:</string>
+    <string name="label_id">ID:</string>
+    <string name="label_events">Events:</string>
+    <string name="label_teacher">Teacher:</string>
+
+    <string name="enroll_btn">Enroll</string>
+    <string name="teacher_name_start">Prof.</string>
+    <string name="app_label">i-on</string>
+    <string name="search_hint">Class name</string>
+<<<<<<< HEAD
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+=======
+    <string name="label_semester">Semester</string>
+    <string name="title_curricular_terms">Curricular Terms</string>
+    <string name="title_course_details">Course Details</string>
+>>>>>>> c0b35deb128700655d0aded25b1da791dc115fcf
+</resources>
