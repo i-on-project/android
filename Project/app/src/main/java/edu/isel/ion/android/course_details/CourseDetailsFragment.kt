@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
 
+/**
+ * A simple [Fragment] subclass.
+ */
 class CourseDetailsFragment : Fragment() {
 
     override fun onCreateView(
