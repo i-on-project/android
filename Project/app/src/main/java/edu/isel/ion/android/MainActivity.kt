@@ -4,15 +4,33 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MainActivity : AppCompatActivity() {
+
+    /*
+    lazy initialization with ThreadSafetyMode to NONE because we are sure that
+    they will only be accessed via the UI thread, therefore we don't require a double-checked lock,
+    which is the default
+     */
+    private val topBar : Toolbar by lazy(LazyThreadSafetyMode.NONE) {
+        findViewById<Toolbar>(R.id.toolbar_main)
+    }
+    private val navController : NavController by lazy(LazyThreadSafetyMode.NONE) {
+        findNavController(R.id.nav_host_fragment)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +39,32 @@ class MainActivity : AppCompatActivity() {
         setupTopBarBehaviour()
 
         setupBottomBarBehaviour()
+
+        setupBackButton()
+    }
+
+    /**
+     * Adds a callback to the onBackPressedDispacher which will be called
+     * when the user clicks the back button. This callback guarantees that
+     * when the back button is pressed the navigation controller navigates
+     * to the previous destination.
+     */
+    fun setupBackButton() {
+        onBackPressedDispatcher.addCallback(this) {
+            navController.navigateUp()
+        }
+    }
+
+    /**
+     * This method is called whenever the user chooses to navigate Up within your
+     * application's activity hierarchy from the action bar.
+     * We must override it because we removed the default action bar from the application
+     * and added our own custom toolbar.
+     * The method onBackPressed() calls the callbacks added to the onBackPressedDispacher
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     /**
@@ -35,10 +79,44 @@ class MainActivity : AppCompatActivity() {
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu?.findItem(R.id.action_search)?.actionView as SearchView).apply {
-            // Assumes current activity is the searchable activity
+        val menuSearchItem = menu?.findItem(R.id.action_search)
+        (menuSearchItem!!.actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             isSubmitButtonEnabled = true //Add search submit button
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    //topBar.collapseActionView() //Removing the top search area
+
+                    if(navController.currentDestination!!.id != R.id.navigation_search_results) {
+                        /* Navigating to the SearchResultsFragment and ensuring
+                    that when the user presses the back button it returns to
+                    the destination from which search was called. The query text
+                    is passed as a bundle.
+
+                    This approach is probably temporary, we are planning on having a shared viewmodel
+                    between the fragments
+                     */
+                        navController.navigate(
+                            R.id.navigation_search_results,
+                            bundleOf(SEARCH_KEY to query),
+                            NavOptions.Builder().setPopUpTo(navController.currentDestination!!.id,false)
+                                .build()
+                        )
+                    } else {
+                        /*
+                            Once the user is already at the search results, there is no need
+                            to navigate to the same destination, so we are planning on having a
+                            MutableLiveData which is set and the fragment automatically updates
+                            the search results.
+                         */
+                    }
+                    return true;
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    //TODO While the search text is changing
+                    return true;
+                }
+            })
         }
         return true
     }
@@ -49,7 +127,7 @@ class MainActivity : AppCompatActivity() {
      */
     fun setupTopBarBehaviour() {
         //Sets up the top action bar as a custom toolbar
-        setSupportActionBar(findViewById(R.id.toolbar_main))
+        setSupportActionBar(topBar)
 
         //Add back button support
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

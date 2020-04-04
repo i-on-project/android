@@ -67,5 +67,10 @@
             android:id="@+id/action_course_details_to_class_section"
             app:destination="@id/navigation_class_section" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_search_results"
+        android:name="edu.isel.ion.android.search.SearchResultsFragment"
+        android:label="fragment_search_results"
+        tools:layout="@layout/fragment_search_results" />
 
 </navigation>
