@@ -1,6 +1,7 @@
 package edu.isel.ion.android.common
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
 import java.net.URI
@@ -21,7 +22,7 @@ data class SirenEntity<T>(
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: List<SirenAction>? = null,
-    val title: String? = null)
+    val title: String? = null) : TypeReference<SirenEntity<T>>()
 
 /**
  * Class whose instances represent links as they are represented in Siren.

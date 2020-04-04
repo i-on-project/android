@@ -1,5 +1,6 @@
 package edu.isel.ion.android.common
 
+import com.fasterxml.jackson.core.type.TypeReference
 import edu.isel.ion.android.common.ionwebapi.IIonWebAPI
 import edu.isel.ion.android.common.model.Course
 import edu.isel.ion.android.common.model.CourseSummary
@@ -41,7 +42,8 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
      * the details of a course it first has to get its summary
      */
     suspend fun getCourseDetails(courseSummary: CourseSummary) : Course {
-        return ionWebAPI.getFromURI(courseSummary.detailsUri,SirenEntity :: class.java).toCourse()
+        return ionWebAPI.getFromURI<SirenEntity<CourseProperties>>(courseSummary.detailsUri,
+            TypeReference<SirenEntity<CourseProperties>>()).toCourse()
     }
 
 }

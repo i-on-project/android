@@ -1,5 +1,6 @@
 package edu.isel.ion.android.common.ionwebapi
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,21 +18,40 @@ class MockIonWebAPI : IIonWebAPI {
         outside of the main thread. Examples include using the Room component,
         reading from or writing to files, and running any network operations.
      */
-    override suspend fun <T>getFromURI(uri : URI, valueType : Class<T>) : T =
+    override suspend fun <T>getFromURI(uri : URI, clazz : Class<T>) : T =
+        parse(route(uri),clazz)
+
+    override suspend fun <T> getFromURI(uri: URI, typeReference : TypeReference<T>): T =
+        parse(route(uri),typeReference)
+
+
+    private suspend fun get(uri : URI) : String =
         withContext(Dispatchers.IO) {
-            val response = when(uri.path) {
-                COURSES_PATH ->  allCoursesMock
-                "${COURSES_PATH}/pg" -> pgMock
-                "${COURSES_PATH}/e" -> eMock
-                "${COURSES_PATH}/lsd" -> lsdMock
-                "${COURSES_PATH}/m1" -> m1Mock
-                "${COURSES_PATH}/alga" -> algaMock
-                "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
-                "${COURSES_PATH}/alga${CLASSES_PATH}/LI52D" -> algaClassSectionMock
-                else -> throw Exception("Uri not implemented or invalid")
-            }
-            objectMapper.readValue(response, valueType)
+            route(uri)
         }
+
+    private suspend fun <T>parse(json : String, clazz: Class<T>) =
+        withContext(Dispatchers.Default) {
+            objectMapper.readValue(json,clazz)
+        }
+
+    private suspend fun <T>parse(json : String, typeReference: TypeReference<T>) =
+        withContext(Dispatchers.Default) {
+            objectMapper.readValue(json,typeReference)
+        }
+
+    private fun route(uri : URI) : String = when(uri.path) {
+        COURSES_PATH ->  allCoursesMock
+        "${COURSES_PATH}/pg" -> pgMock
+        "${COURSES_PATH}/e" -> eMock
+        "${COURSES_PATH}/lsd" -> lsdMock
+        "${COURSES_PATH}/m1" -> m1Mock
+        "${COURSES_PATH}/alga" -> algaMock
+        "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
+        "${COURSES_PATH}/alga${CLASSES_PATH}/LI52D" -> algaClassSectionMock
+        else -> throw Exception("Uri not implemented or invalid")
+    }
+
 }
 
 /*
