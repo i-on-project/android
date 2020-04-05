@@ -13,8 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
 
-private const val COURSES_PATH = "/v0/courses"
+private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
+private const val COURSES_PATH = "/courses"
 
 class MockIonWebAPI : IIonWebAPI {
 
@@ -76,7 +77,7 @@ class MockIonWebAPI : IIonWebAPI {
         }
 
     private fun route(uri : URI) : String = when(uri.path) {
-        COURSES_PATH ->  allCoursesMock
+        COURSES_PATH_V0 ->  allCoursesMock
         "${COURSES_PATH}/pg" -> pgMock
         "${COURSES_PATH}/e" -> eMock
         "${COURSES_PATH}/lsd" -> lsdMock

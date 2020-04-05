@@ -2,6 +2,7 @@ package edu.isel.ion.android.common
 
 import android.app.Application
 import androidx.room.Room
+import edu.isel.ion.android.common.db.Database
 import edu.isel.ion.android.common.ionwebapi.MockIonWebAPI
 
 /*

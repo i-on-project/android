@@ -60,9 +60,9 @@ class CourseDetailsFragment : Fragment(), CoroutineScope {
         }
         
         //Course classes list recycler view
-        val classesList = view.findViewById<RecyclerView>(R.id.recyclerview_course_details_classes_list)
-        classesList.layoutManager = LinearLayoutManager(context) //TODO Confirm if this is the right context
-        classesList.adapter = ClassesListAdapter(viewModel)
+        //val classesList = view.findViewById<RecyclerView>(R.id.recyclerview_course_details_classes_list)
+        //classesList.layoutManager = LinearLayoutManager(context) //TODO Confirm if this is the right context
+        //classesList.adapter = ClassesListAdapter(viewModel)
     }
 
 

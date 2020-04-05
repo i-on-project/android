@@ -1,4 +1,4 @@
-package edu.isel.ion.android.common
+package edu.isel.ion.android.common.db
 
 import androidx.room.RoomDatabase
 

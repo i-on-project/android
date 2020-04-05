@@ -40,7 +40,7 @@ class CoursesListAdapter(private val model : CoursesViewModel, private val share
         fun bindTo(courseSummary: CourseSummary) {
             courseName.text = courseSummary.acronym
             view.setOnClickListener {
-                sharedViewModel.courseSummary.postValue(courseSummary)
+                sharedViewModel.courseSummaryLiveData.postValue(courseSummary)
                 view.findNavController().navigate(R.id.action_courses_to_course_details)
             }
         }
