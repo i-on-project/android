@@ -1,16 +1,11 @@
 package edu.isel.ion.android.common
 
-import com.fasterxml.jackson.core.type.TypeReference
 import edu.isel.ion.android.common.ionwebapi.IIonWebAPI
 import edu.isel.ion.android.common.model.Course
 import edu.isel.ion.android.common.model.CourseSummary
 import edu.isel.ion.android.course_details.CourseProperties
-import edu.isel.ion.android.course_details.CourseSummaryProperties
 import edu.isel.ion.android.course_details.toCourse
-import edu.isel.ion.android.course_details.toCourseSummary
 import java.net.URI
-
-typealias SirenCourse = SirenEntity<CourseProperties>
 
 /*
     This type represents a course repository, it should request

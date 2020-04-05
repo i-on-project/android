@@ -7,9 +7,10 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
+import edu.isel.ion.android.SharedViewModel
 import edu.isel.ion.android.common.model.CourseSummary
 
-class CoursesListAdapter(private val model : CoursesViewModel) :
+class CoursesListAdapter(private val model : CoursesViewModel, private val sharedViewModel: SharedViewModel) :
     RecyclerView.Adapter<CoursesListAdapter.CourseViewHolder>() {
 
     // Create new views (invoked by the layout manager)
@@ -20,7 +21,7 @@ class CoursesListAdapter(private val model : CoursesViewModel) :
         // create a new view
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_courses, parent, false)
-        return CourseViewHolder(view)
+        return CourseViewHolder(view,sharedViewModel)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -32,16 +33,16 @@ class CoursesListAdapter(private val model : CoursesViewModel) :
     override fun getItemCount() = model.courses.size
 
     // Provides a reference to the views for each data item
-    class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class CourseViewHolder(private val view: View, private val sharedViewModel: SharedViewModel) : RecyclerView.ViewHolder(view) {
 
         private val courseName = view.findViewById<TextView>(R.id.textview_courses_list_item_course)
 
         fun bindTo(courseSummary: CourseSummary) {
             courseName.text = courseSummary.acronym
             view.setOnClickListener {
+                sharedViewModel.courseSummary.postValue(courseSummary)
                 view.findNavController().navigate(R.id.action_courses_to_course_details)
             }
-            //TODO("Bind to courseSummary")
         }
     }
 }

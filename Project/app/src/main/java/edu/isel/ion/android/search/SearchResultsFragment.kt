@@ -7,15 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import edu.isel.ion.android.R
 import edu.isel.ion.android.SEARCH_KEY
+import edu.isel.ion.android.SharedViewModel
+import edu.isel.ion.android.SharedViewModelProvider
 
 /**
  * A simple [Fragment] subclass.
  */
 class SearchResultsFragment : Fragment() {
+
+    /*
+        This view model is shared between fragments and the MainActivity
+     */
+    private val sharedViewModel : SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +38,13 @@ class SearchResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val searchQuery = arguments!!.getString(SEARCH_KEY)
+
+        /*
+        Obtaining search text from shared view model
+         */
+        sharedViewModel.searchText.observe(viewLifecycleOwner,Observer<String>{
+            Toast.makeText(context,it,Toast.LENGTH_LONG).show()
+        })
     }
 
 }

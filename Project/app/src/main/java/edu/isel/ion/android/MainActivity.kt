@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     }
     private val navController : NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost)
+    }
+    private val sharedViewModel : SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(this,SharedViewModelProvider())[SharedViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,22 +102,18 @@ class MainActivity : AppCompatActivity() {
                      */
                         navController.navigate(
                             R.id.navigation_search_results,
-                            bundleOf(SEARCH_KEY to query),
+                            null,
                             NavOptions.Builder().setPopUpTo(navController.currentDestination!!.id,false)
                                 .build()
                         )
-                    } else {
-                        /*
-                            Once the user is already at the search results, there is no need
-                            to navigate to the same destination, so we are planning on having a
-                            MutableLiveData which is set and the fragment automatically updates
-                            the search results.
-                         */
                     }
+                    /**Passing query text to [SearchResultsFragment]*/
+                    sharedViewModel.searchText.value = query
+
                     return true;
                 }
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //TODO While the search text is changing
+                    //TODO While the code is changing
                     return true;
                 }
             })

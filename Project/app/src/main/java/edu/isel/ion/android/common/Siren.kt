@@ -99,16 +99,13 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(SubEntity::class.java) 
 
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): SubEntity {
         val node = p!!.readValueAsTree() as TreeNode
-
         //If property "properties" exists then it must be an EmbeddedEntity
         if (node.get("properties") != null) {
             return p!!.getCodec().treeToValue(node, EmbeddedEntity::class.java)
         }
         return p!!.getCodec().treeToValue(node, EmbeddedLink::class.java)
     }
-
 }
-
 
 
 /*
