@@ -27,12 +27,4 @@ class CoursesViewModel(private val coursesRepository: CourseRepository) : ViewMo
         }
     }
 
-
-
-
-
-
-
-
-
 }

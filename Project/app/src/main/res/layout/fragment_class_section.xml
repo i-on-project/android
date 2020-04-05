@@ -7,7 +7,7 @@
     tools:context=".ClassSectionFragment">
 
     <ImageView
-        android:id="@+id/imageview_class_section_favorite"
+        android:id="@+id/imageView_class_section_favorite"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_favorite_border_red_24dp"
@@ -15,15 +15,15 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:contentDescription="@string/imageView_favorite" />
 
     <TextView
-        android:id="@+id/textview_class_section_title"
+        android:id="@+id/textView_class_section_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="The Class Title"
+        android:hint="@string/hint_classTitle"
         android:textSize="@dimen/all_text_18"
-        app:layout_constraintTop_toBottomOf="@id/imageview_class_section_favorite"
+        app:layout_constraintTop_toBottomOf="@id/imageView_class_section_favorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_class_section_title">
+        app:layout_constraintTop_toBottomOf="@id/textView_class_section_title">
 
         <TextView
             android:id="@+id/textview_course_details_label_course"
@@ -84,31 +84,31 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout_class_section_labels">
 
         <TextView
-            android:id="@+id/textview_class_section_course"
+            android:id="@+id/textView_class_section_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_teacher"
+            android:id="@+id/textView_class_section_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_class"
+            android:id="@+id/textView_class_section_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_id"
+            android:id="@+id/textView_class_section_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_events"
+            android:id="@+id/textView_class_section_events"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>

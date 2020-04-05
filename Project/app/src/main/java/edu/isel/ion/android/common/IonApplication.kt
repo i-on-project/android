@@ -7,13 +7,14 @@ import edu.isel.ion.android.common.ionwebapi.MockIonWebAPI
 /*
 
     This class is used to hold instances that need the singleton pattern,
-    its fields are accessable from any point in the appliation.
+    its fields are accessible from any point in the application.
 
  */
 class IonApplication : Application() {
 
     companion object {
-        var coursesRepository: CourseRepository = CourseRepository(MockIonWebAPI())
+        lateinit var coursesRepository: CourseRepository
+        lateinit var classSectionRepository: ClassSectionRepository
     }
 
     override fun onCreate() {
@@ -24,24 +25,22 @@ class IonApplication : Application() {
          the singleton design pattern when instantiating an
          AppDatabase object. Each RoomDatabase instance is fairly expensive.
         */
-        val db = Room.databaseBuilder(
+
+        /*val db = Room.databaseBuilder(
             applicationContext,
             Database::class.java,
             "app-db"
-        ).build()
+        ).build()*/
 
         /*
         Using Mocks
          */
         val webAPI = MockIonWebAPI()
 
-
-        coursesRepository = CourseRepository(webAPI)
-        
-        
-
-
         //TODO Instanciate repositories and pass the db to them
+        coursesRepository = CourseRepository(webAPI)
+        classSectionRepository = ClassSectionRepository(webAPI)
+
     }
 
 }
