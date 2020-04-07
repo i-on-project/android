@@ -3,7 +3,7 @@
 **Solution**: Saving data, which is not frequently altered, locally.
 This is the ideal solution, but it's not viable since there is data that doens't changed for years, e.g: the details of a course. This means that our local database would have to save details from all courses from all programmes. And since the memory of the typical smartphone is very limited this would be a bad ideia. The solution is a hybrid, save some data locally and some remotely. 
 
-![Approach](/resources/api_request_flowchart.png)
+![Approach](resources/api_request_flowchart.png)
 
 **But which data should be saved and which shouldn't?**
 
