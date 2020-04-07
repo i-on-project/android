@@ -2,10 +2,10 @@ package edu.isel.ion.android.schedule
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import edu.isel.ion.android.R
 
 /**
@@ -18,7 +18,7 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.println(Log.DEBUG,"Schedule Fragment", "Is creating schedule fragment")
+        Log.println(Log.DEBUG, "Schedule Fragment", "Is creating schedule fragment")
 
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }

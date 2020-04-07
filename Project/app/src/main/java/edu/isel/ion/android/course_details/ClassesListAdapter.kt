@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
 
-class ClassesListAdapter(model : CourseDetailsViewModel) :
+class ClassesListAdapter(model: CourseDetailsViewModel) :
     RecyclerView.Adapter<ClassesListAdapter.ClassViewHolder>() {
 
     // Create new views (invoked by the layout manager)

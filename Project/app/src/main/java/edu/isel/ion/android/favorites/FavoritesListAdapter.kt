@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
 
-class FavoritesListAdapter(model : FavoritesViewModel) :
+class FavoritesListAdapter(model: FavoritesViewModel) :
     RecyclerView.Adapter<FavoritesListAdapter.FavoriteViewHolder>() {
 
     // Create new views (invoked by the layout manager)
