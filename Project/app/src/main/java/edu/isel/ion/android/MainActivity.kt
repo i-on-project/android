@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity() {
      *
      *  Note : The code inside this method came with the template activity with bottom navigation
      */
+
     private fun setupBottomBarBehaviour() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
