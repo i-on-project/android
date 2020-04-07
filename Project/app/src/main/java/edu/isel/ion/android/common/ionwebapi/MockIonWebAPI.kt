@@ -79,7 +79,7 @@ class MockIonWebAPI : IIonWebAPI {
         "${COURSES_PATH}/m1" -> m1Mock
         "${COURSES_PATH}/alga" -> algaMock
         "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
-        "${COURSES_PATH_V0}/alga${CLASSES_PATH}/s1920v/1d" -> algaClassSectionMock
+        "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/1d" -> algaClassSectionMock
         else -> throw Exception("Uri not implemented or invalid")
     }
 

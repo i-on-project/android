@@ -12,7 +12,9 @@ import java.net.URI
 class ClassesRepository(private val ionWebAPI: IIonWebAPI) {
 
     suspend fun getClassSection(classSummary: ClassSummary): ClassSection {
-        return ionWebAPI.getFromURI<ClassSectionProperties>(classSummary.detailsUri).toClassSection()
+        return ionWebAPI
+            .getFromURI<ClassSectionProperties>(classSummary.detailsUri)
+            .toClassSection()
     }
 
     suspend fun getClassesFromCourse(course : Course) : List<ClassSummary> {

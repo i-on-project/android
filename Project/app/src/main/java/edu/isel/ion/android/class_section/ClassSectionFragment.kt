@@ -47,6 +47,7 @@ class ClassSectionFragment : Fragment() {
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(sharedViewModel.classSummary)
+
         viewModel.observeForClassSectionData(this) {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm

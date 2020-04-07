@@ -37,14 +37,14 @@ class CoursesFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this,CoursesViewModelProvider())[CoursesViewModel :: class.java]
 
-        //Request all courses from the WebAPI
-        viewModel.getAllCourses()
-
         //Courses List Setup
         val coursesList = view.findViewById<RecyclerView>(R.id.recyclerview_courses_list)
-        coursesList.layoutManager = LinearLayoutManager(context)
         val coursesListAdapter = CoursesListAdapter(viewModel,sharedViewModel)
+        coursesList.layoutManager = LinearLayoutManager(context)
         coursesList.adapter = coursesListAdapter
+
+        //Request all courses from the WebAPI
+        viewModel.getAllCourses()
 
         viewModel.observeCoursesLiveData(this) {
             coursesListAdapter.notifyDataSetChanged()
