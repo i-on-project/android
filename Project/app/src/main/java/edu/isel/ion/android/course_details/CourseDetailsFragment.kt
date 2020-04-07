@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.ion.android.R
@@ -55,14 +54,20 @@ class CourseDetailsFragment : Fragment(), CoroutineScope {
 
         viewModel.getCourseDetails(sharedViewModel.courseSummary) {
             courseFullName.text = it.name
-            courseYear.text = "1" //TODO Get course year
+            courseYear.text = "1ºAno" //TODO Get course year
             courseSemester.text = "1ºSemestre" //TODO Get course term
+            viewModel.getCourseClasses(it)
         }
         
         //Course classes list recycler view
-        //val classesList = view.findViewById<RecyclerView>(R.id.recyclerview_course_details_classes_list)
-        //classesList.layoutManager = LinearLayoutManager(context) //TODO Confirm if this is the right context
-        //classesList.adapter = ClassesListAdapter(viewModel)
+        val classesList = view.findViewById<RecyclerView>(R.id.recyclerview_course_details_classes_list)
+        classesList.layoutManager = LinearLayoutManager(context) //TODO Confirm if this is the right context
+        val classesListAdapter = ClassesListAdapter(viewModel,sharedViewModel)
+        classesList.adapter = classesListAdapter
+
+        viewModel.observeClassesListLiveData(viewLifecycleOwner) {
+            classesListAdapter.notifyDataSetChanged()
+        }
     }
 
 

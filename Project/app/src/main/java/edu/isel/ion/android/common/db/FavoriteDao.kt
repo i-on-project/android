@@ -15,5 +15,4 @@ interface FavoriteDao {
     @Query("SELECT * FROM ClassSection INNER JOIN Favorite ON ClassSection.id = Favorite.class_section")
     suspend fun findAllFavorites() : List<ClassSection>
 
-
 }

@@ -33,4 +33,6 @@
     <string name="label_semester">Semester</string>
     <string name="title_curricular_terms">Curricular Terms</string>
     <string name="title_course_details">Course Details</string>
+    <string name="imageView_favorite">favorite_icon</string>
+    <string name="hint_classTitle">The Class Title</string>
 </resources>

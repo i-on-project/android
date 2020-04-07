@@ -10,8 +10,13 @@ import java.net.URI
  */
 @Entity
 data class ClassSection(
-    val course: String,
-    @ColumnInfo(name = "calendar_term")val calendarTerm: String,
-    @PrimaryKey val id: String,
+    val course: String?,
+    @ColumnInfo(name = "calendar_term")val calendarTerm: String?,
+    @PrimaryKey val id: String?,
     @ColumnInfo(name = "calendar_uri") val calendarURI: URI?
+)
+
+data class ClassSummary(
+    val id : String?,
+    val detailsUri : URI
 )

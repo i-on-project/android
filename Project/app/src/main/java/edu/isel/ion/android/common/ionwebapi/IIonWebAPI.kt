@@ -9,7 +9,7 @@ interface IIonWebAPI {
     /*
         This is used when the class to parse is generic type
      */
-    suspend fun <T>getFromURI(uri : URI, sirenEntity : SirenEntity<T>) : SirenEntity<T>
+    suspend fun <T>getFromURI(uri : URI) : SirenEntity<T>
 
     suspend fun <T>getFromURI(uri : URI,  clazz : Class<T>) : T
 

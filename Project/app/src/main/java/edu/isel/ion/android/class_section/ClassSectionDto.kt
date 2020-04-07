@@ -19,11 +19,17 @@ data class ClassSectionProperties(
  */
 fun SirenEntity<ClassSectionProperties>.toClassSection(): ClassSection {
     var calendarURI: URI? = (entities!!.first() as EmbeddedEntity<*>).links?.first()?.href
+    properties as LinkedHashMap<String, String>
 
     return ClassSection(
-        course = properties!!.course,
-        calendarTerm = properties.clazz,
-        id = properties.id,
+        course = properties["course"],
+        calendarTerm = properties["class"],
+        id = properties["id"],
         calendarURI = calendarURI
     )
 }
+
+data class ClassListProperties(
+    val course : String,
+    val calendarTerm : String
+)

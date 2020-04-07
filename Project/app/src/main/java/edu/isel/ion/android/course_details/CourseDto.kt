@@ -28,10 +28,10 @@ data class CourseSummaryProperties @JsonCreator constructor(
 fun SirenEntity<CourseProperties>.toCourse(): Course {
     val classesLink: URI? = (entities!!.first() as EmbeddedEntity<*>).links?.first()?.href
     val eventsLink: URI? = (entities.last() as EmbeddedEntity<*>).links?.first()?.href
-
+    properties as LinkedHashMap<String,String>
     return Course(
-        acronym = properties!!.acronym,
-        name = properties.name,
+        acronym = properties["acronym"]!!,
+        name = properties["name"]!!,
         classesUri = classesLink,
         eventsUri = eventsLink
     )

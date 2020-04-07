@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     fun setupBackButton() {
         onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()
+            navController.popBackStack()
         }
     }
 

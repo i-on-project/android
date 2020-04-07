@@ -10,9 +10,9 @@ class CoursesViewModel(private val coursesRepository: CourseRepository) : ViewMo
     private val coursesLiveData  = MutableLiveData<List<CourseSummary>>()
 
     fun observeCoursesLiveData(lifecycleOwner: LifecycleOwner,
-                               onUpdate : (List<CourseSummary>) -> Unit) {
+                               onUpdate : () -> Unit) {
         coursesLiveData.observe(lifecycleOwner,Observer<List<CourseSummary>> {
-            onUpdate(it)
+            onUpdate()
         })
     }
 
@@ -26,13 +26,5 @@ class CoursesViewModel(private val coursesRepository: CourseRepository) : ViewMo
             coursesLiveData.postValue(allCourses)
         }
     }
-
-
-
-
-
-
-
-
 
 }
