@@ -30,6 +30,10 @@
     <string name="teacher_name_start">Prof.</string>
     <string name="app_label">i-on</string>
     <string name="search_hint">Class name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="label_semester">Semester</string>
     <string name="title_curricular_terms">Curricular Terms</string>
     <string name="title_course_details">Course Details</string>
