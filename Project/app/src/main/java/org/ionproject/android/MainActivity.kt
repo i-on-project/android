@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost)
     }
-    private val sharedViewModel: SharedViewModel by lazy(
-        LazyThreadSafetyMode.NONE
-    ) {
+    private val sharedViewModel: SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(
             this,
             SharedViewModelProvider()
@@ -59,7 +57,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupBackButton() {
         onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()
-            navController.popBackStack()
         }
     }
 
@@ -121,11 +118,7 @@ class MainActivity : AppCompatActivity() {
             if (currDestination != R.id.navigation_search_results) {
                 /* Navigating to the SearchResultsFragment and ensuring
             that when the user presses the back button it returns to
-            the destination from which search was called. The query text
-            is passed as a bundle.
-
-            This approach is probably temporary, we are planning on having a shared viewmodel
-            between the fragments
+            the destination from which search was called. 
              */
                 navController.navigate(
                     R.id.navigation_search_results,

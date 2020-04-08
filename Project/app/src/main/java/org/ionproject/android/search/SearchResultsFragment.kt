@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import org.ionproject.android.android.R
+import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 
 /**
  * A simple [Fragment] subclass.
@@ -18,8 +20,8 @@ class SearchResultsFragment : Fragment() {
     /*
         This view model is shared between fragments and the MainActivity
      */
-    private val sharedViewModel: _root_ide_package_.org.ionproject.android.SharedViewModel by activityViewModels {
-        _root_ide_package_.org.ionproject.android.SharedViewModelProvider()
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
     }
 
     override fun onCreateView(

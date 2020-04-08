@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="org.ionproject.android.android.home.HomeFragment"
+        android:name="org.ionproject.android.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,13 +17,13 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="org.ionproject.android.android.schedule.ScheduleFragment"
+        android:name="org.ionproject.android.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="org.ionproject.android.android.favorites.FavoritesFragment"
+        android:name="org.ionproject.android.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -34,13 +34,13 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_class_section"
-        android:name="org.ionproject.android.android.ClassSectionFragment"
+        android:name="org.ionproject.android.ClassSectionFragment"
         android:label="@string/title_class_section"
         tools:layout="@layout/fragment_class_section" />
 
     <fragment
         android:id="@+id/navigation_curricular_terms"
-        android:name="org.ionproject.android.android.curricular_terms.CurricularTermsFragment"
+        android:name="org.ionproject.android.curricular_terms.CurricularTermsFragment"
         android:label="@string/title_curricular_terms"
         tools:layout="@layout/fragment_curricular_terms" >
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/navigation_courses"
-        android:name="org.ionproject.android.android.courses.CoursesFragment"
+        android:name="org.ionproject.android.courses.CoursesFragment"
         android:label="@string/title_courses"
         tools:layout="@layout/fragment_courses" >
         <action
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/navigation_course_details"
-        android:name="org.ionproject.android.android.course_details.CourseDetailsFragment"
+        android:name="org.ionproject.android.course_details.CourseDetailsFragment"
         android:label="@string/title_course_details"
         tools:layout="@layout/fragment_course_details" >
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_search_results"
-        android:name="org.ionproject.android.android.search.SearchResultsFragment"
+        android:name="org.ionproject.android.search.SearchResultsFragment"
         android:label="fragment_search_results"
         tools:layout="@layout/fragment_search_results" />
 

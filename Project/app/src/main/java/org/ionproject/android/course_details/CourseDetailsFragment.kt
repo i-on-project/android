@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -26,8 +28,8 @@ class CourseDetailsFragment : Fragment(), CoroutineScope {
     /*
         This view model is shared between fragments and the MainActivity
      */
-    private val sharedViewModel: _root_ide_package_.org.ionproject.android.SharedViewModel by activityViewModels {
-        _root_ide_package_.org.ionproject.android.SharedViewModelProvider()
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
     }
 
     override fun onCreateView(

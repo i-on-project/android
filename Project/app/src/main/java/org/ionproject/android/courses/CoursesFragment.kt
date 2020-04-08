@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 
 /**
  * A simple [Fragment] subclass.
@@ -19,8 +21,8 @@ class CoursesFragment : Fragment() {
     /*
         This view model is shared between fragments and the MainActivity
      */
-    private val sharedViewModel: _root_ide_package_.org.ionproject.android.SharedViewModel by activityViewModels {
-        _root_ide_package_.org.ionproject.android.SharedViewModelProvider()
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
     }
 
     override fun onCreateView(

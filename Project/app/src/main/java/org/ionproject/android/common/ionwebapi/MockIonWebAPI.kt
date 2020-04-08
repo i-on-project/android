@@ -8,7 +8,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.android.common.SirenEntity
+import org.ionproject.android.common.SirenEntity
 import java.net.URI
 
 private const val COURSES_PATH_V0 = "/v0/courses"

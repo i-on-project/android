@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.ClassSummary
 
 class ClassesListAdapter(
     private val model: CourseDetailsViewModel,
-    private val sharedViewModel: _root_ide_package_.org.ionproject.android.SharedViewModel
+    private val sharedViewModel: SharedViewModel
 ) :
     RecyclerView.Adapter<ClassesListAdapter.ClassViewHolder>() {
 
@@ -37,7 +38,7 @@ class ClassesListAdapter(
     // Provides a reference to the views for each data item
     class ClassViewHolder(
         private val view: View,
-        private val sharedViewModel: _root_ide_package_.org.ionproject.android.SharedViewModel
+        private val sharedViewModel: SharedViewModel
     ) :
         RecyclerView.ViewHolder(view) {
 

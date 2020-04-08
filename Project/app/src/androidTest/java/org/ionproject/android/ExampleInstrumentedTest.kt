@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("edu.isel.ion.android", appContext.packageName)
+        assertEquals("org.ionproject.android", appContext.packageName)
     }
 }
