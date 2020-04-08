@@ -15,8 +15,8 @@ import org.ionproject.android.SharedViewModelProvider
 
 class CourseDetailsFragment : Fragment() {
 
-    /*
-        This view model is shared between fragments and the MainActivity
+    /**
+     * This view model is shared between fragments and the MainActivity
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
@@ -33,11 +33,11 @@ class CourseDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Obtaining View Model
+        // Obtaining View Model
         val viewModel = ViewModelProviders
             .of(this, CoursesDetailsViewModelProvider())[CourseDetailsViewModel::class.java]
 
-        //Setting up all course details
+        // Setting up all course details
         val courseFullName = textview_course_details_full_name
         val courseYear = textview_course_details_year
         val courseSemester = textview_course_details_semester
@@ -51,8 +51,9 @@ class CourseDetailsFragment : Fragment() {
 
         //Course classes list recycler view
         val classesList = recyclerview_course_details_classes_list
-        classesList.layoutManager =
-            LinearLayoutManager(context) //TODO Confirm if this is the right context
+        //TODO: Confirm if this is the right context
+        classesList.layoutManager = LinearLayoutManager(context)
+
         val classesListAdapter = ClassesListAdapter(viewModel, sharedViewModel)
         classesList.adapter = classesListAdapter
 
@@ -60,6 +61,5 @@ class CourseDetailsFragment : Fragment() {
             classesListAdapter.notifyDataSetChanged()
         }
     }
-
 
 }

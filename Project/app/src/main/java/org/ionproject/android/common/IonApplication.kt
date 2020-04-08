@@ -1,15 +1,13 @@
 package org.ionproject.android.common
 
 import android.app.Application
-import androidx.room.Room
-import org.ionproject.android.common.db.Database
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
+import org.ionproject.android.common.repositories.ClassesRepository
+import org.ionproject.android.common.repositories.CourseRepository
 
-/*
-
-    This class is used to hold instances that need the singleton pattern,
-    its fields are accessible from any point in the application.
-
+/**
+ * This class is used to hold instances that need the singleton pattern,
+ * its fields are accessible from any point in the application.
  */
 class IonApplication : Application() {
 
@@ -21,27 +19,24 @@ class IonApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        /*
-         Our app runs in a single process therefore we follow
-         the singleton design pattern when instantiating an
-         AppDatabase object. Each RoomDatabase instance is fairly expensive.
-        */
+        /**
+         * Our app runs in a single process therefore we follow
+         * the singleton design pattern when instantiating an
+         * AppDatabase object. Each RoomDatabase instance is fairly expensive.
+         */
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            Database::class.java,
-            "app-db"
-        ).build()
+        //TODO: Create an instance of RoomDatabase
 
-        /*
-        Using Mocks
+        /**
+         * Using Mocks
          */
         val webAPI = MockIonWebAPI()
 
-        //TODO Pass the db to the repos
-        coursesRepository = CourseRepository(webAPI)
-        classesRepository = ClassesRepository(webAPI)
-
+        //TODO: Pass the database to the repositories
+        coursesRepository =
+            CourseRepository(webAPI)
+        classesRepository =
+            ClassesRepository(webAPI)
     }
 
 }

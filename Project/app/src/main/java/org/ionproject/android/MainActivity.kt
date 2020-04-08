@@ -21,17 +21,19 @@ import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
 
 class MainActivity : AppCompatActivity() {
 
-    /*
-    lazy initialization with ThreadSafetyMode to NONE because we are sure that
-    they will only be accessed via the UI thread, therefore we don't require a double-checked lock,
-    which is the default
+    /**
+     * lazy initialization with ThreadSafetyMode to NONE because we are sure that
+     * they will only be accessed via the UI thread, therefore we don't require a double-checked lock,
+     * which is the default
      */
     private val topBar: Toolbar by lazy(LazyThreadSafetyMode.NONE) {
         toolbar_main
     }
+
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost)
     }
+
     private val sharedViewModel: SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(
             this,
@@ -85,13 +87,18 @@ class MainActivity : AppCompatActivity() {
             menu
         )
 
-        // Get the SearchView and set the searchable configuration
+        // Get the SearchView and set the searchable configuration.
+
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val menuSearchItem =
-            menu?.findItem(R.id.action_search)
+
+        val menuSearchItem = menu?.findItem(R.id.action_search)
+
         (menuSearchItem?.actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            isSubmitButtonEnabled = true //Add search submit button
+
+            // Add search submit button
+            isSubmitButtonEnabled = true
+
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     queryTextSubmitBehaviour(query)
@@ -99,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //TODO While the search text is changing
+                    //TODO: While the search text is changing
                     return true
                 }
             })
@@ -107,19 +114,22 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    /*
-    Called when user submits a search.
-    This method exists because otherwise onCreateOptionsMenu
-    becomes too large and loses legibility.
+    /**
+     * Called when user submits a search.
+     * This method exists because otherwise onCreateOptionsMenu
+     * becomes too large and loses legibility.
+     *
+     * @param query The query to search
      */
     private fun queryTextSubmitBehaviour(query: String) {
         val currDestination = navController.currentDestination?.id
         if (currDestination != null) {
             if (currDestination != R.id.navigation_search_results) {
-                /* Navigating to the SearchResultsFragment and ensuring
-            that when the user presses the back button it returns to
-            the destination from which search was called.
-             */
+                /**
+                 *  Navigating to the SearchResultsFragment and ensuring
+                 * that when the user presses the back button it returns to
+                 * the destination from which search was called.
+                 */
                 navController.navigate(
                     R.id.navigation_search_results,
                     null,
@@ -129,15 +139,16 @@ class MainActivity : AppCompatActivity() {
                     ).build()
                 )
             }
-            /**Passing query text to [SearchResultsFragment]*/
+            // Passing query text to [SearchResultsFragment]
             sharedViewModel.searchText.value = query
 
             return
         }
-        /*
-        When this method is called the backstack is never empty because we always have a fragment on display
-        within the nav_host. In the worst case only the home fragment is in the stack. This means that if this exception
-        is thrown something really bad must have happened.
+
+        /**
+         * When this method is called the backstack is never empty because we always have a fragment on display
+         * within the nav_host. In the worst case only the home fragment is in the stack. This means that if this exception
+         * is thrown something really bad must have happened.
          */
         throw IllegalStateException("Navigation back stack is empty!")
     }
@@ -147,10 +158,10 @@ class MainActivity : AppCompatActivity() {
      * Enables the back button on the top bar
      */
     private fun setupTopBarBehaviour() {
-        //Sets up the top action bar as a custom toolbar
+        // Sets up the top action bar as a custom toolbar
         setSupportActionBar(topBar)
 
-        //Add back button support
+        // Add back button support
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -164,8 +175,11 @@ class MainActivity : AppCompatActivity() {
      */
 
     private fun setupBottomBarBehaviour() {
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        /**
+         * Passing each menu ID as a set of Ids because each
+         * menu should be considered as top level destinations.
+         */
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_favorites,
@@ -173,11 +187,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_schedule
             )
         )
+
         /**
          * Ensures the title in the action bar is updated according to the selected item
          * in the bottom navigation bar
          */
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         /**
          * Sets up an {@link OnDestinationChangedListener} on the {@link BottomNavigationView} for
          * use with a {@link NavController}. This will call

@@ -3,9 +3,9 @@ package org.ionproject.android.courses
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.list_item_courses.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.CourseSummary
@@ -13,8 +13,7 @@ import org.ionproject.android.common.model.CourseSummary
 class CoursesListAdapter(
     private val model: CoursesViewModel,
     private val sharedViewModel: SharedViewModel
-) :
-    RecyclerView.Adapter<CoursesListAdapter.CourseViewHolder>() {
+) : RecyclerView.Adapter<CoursesListAdapter.CourseViewHolder>() {
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(
@@ -42,15 +41,15 @@ class CoursesListAdapter(
     ) :
         RecyclerView.ViewHolder(view) {
 
-        private val courseName = view.findViewById<TextView>(R.id.textview_courses_list_item_course)
+        private val course = view.button_courses_list_item_course
 
         /**
          * Binds the properties of a [CourseSummary] to a view [CourseViewHolder],
          * and sets a click listener to navigate to the course details
          */
         fun bindTo(courseSummary: CourseSummary) {
-            courseName.text = courseSummary.acronym
-            view.setOnClickListener {
+            course.text = courseSummary.acronym
+            course.setOnClickListener {
                 sharedViewModel.courseSummaryLiveData.postValue(courseSummary)
                 view.findNavController().navigate(R.id.action_courses_to_course_details)
             }

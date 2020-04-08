@@ -11,7 +11,7 @@ class CoursesViewModelProvider : ViewModelProvider.Factory {
             CoursesViewModel::class.java -> CoursesViewModel(
                 IonApplication.coursesRepository
             )
-            else -> throw IllegalArgumentException("Class ${modelClass} not supported by this provider")
+            else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T
     }
 }

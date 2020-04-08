@@ -3,10 +3,10 @@ package org.ionproject.android.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-/*
-    Type used to instanciate the HomeViewModel,
-    ensures that the ViewModel survives even after
-    screen rotation
+/**
+ *  Type used to instanciate the HomeViewModel,
+ *  ensures that the ViewModel survives even after
+ *  screen rotation
  */
 class HomeViewModelProvider : ViewModelProvider.Factory {
 

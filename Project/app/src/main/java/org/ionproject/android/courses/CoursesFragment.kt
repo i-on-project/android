@@ -18,8 +18,8 @@ import org.ionproject.android.SharedViewModelProvider
  */
 class CoursesFragment : Fragment() {
 
-    /*
-        This view model is shared between fragments and the MainActivity
+    /**
+     * This view model is shared between fragments and the MainActivity
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()

@@ -1,8 +1,8 @@
 package org.ionproject.android.class_section
 
-import org.ionproject.android.common.EmbeddedEntity
-import org.ionproject.android.common.SirenEntity
 import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.siren.EmbeddedEntity
+import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 
 /**
@@ -15,11 +15,21 @@ data class ClassSectionProperties(
 )
 
 /**
+ * Represents a class list information when searching for all classes in
+ * a course details presentation
+ */
+data class ClassListProperties(
+    val course: String,
+    val calendarTerm: String
+)
+
+/**
  * Extension method to convert an [SirenEntity] to a [ClassSection]
  */
 fun SirenEntity<ClassSectionProperties>.toClassSection(): ClassSection {
-    var calendarURI: URI? = (entities!!.first() as EmbeddedEntity<*>).links?.first()?.href
+    val calendarURI: URI? = (entities?.first() as EmbeddedEntity<*>).links?.first()?.href
     properties as LinkedHashMap<String, String>
+
     return ClassSection(
         course = properties["course"],
         calendarTerm = properties["class"],
@@ -27,8 +37,3 @@ fun SirenEntity<ClassSectionProperties>.toClassSection(): ClassSection {
         calendarURI = calendarURI
     )
 }
-
-data class ClassListProperties(
-    val course: String,
-    val calendarTerm: String
-)

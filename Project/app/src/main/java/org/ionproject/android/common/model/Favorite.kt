@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 
-
 /**
  *  This type represents a class section selected by the user in the context of this application.
  */
@@ -18,4 +17,3 @@ data class Favorite(
     @ColumnInfo(name = "calendar_term") val calendarTerm: CalendarTerm,
     @ColumnInfo(name = "class_section") val classSection: String
 )
-

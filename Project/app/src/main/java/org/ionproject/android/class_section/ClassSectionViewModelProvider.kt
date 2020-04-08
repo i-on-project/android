@@ -11,7 +11,7 @@ class ClassSectionViewModelProvider : ViewModelProvider.Factory {
             ClassSectionViewModel::class.java -> ClassSectionViewModel(
                 IonApplication.classesRepository
             )
-            else -> throw IllegalArgumentException("Class ${modelClass} not supported by this provider")
+            else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T
     }
 

@@ -1,4 +1,4 @@
-package org.ionproject.android.common
+package org.ionproject.android.common.siren
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser
@@ -16,11 +16,15 @@ import java.net.URI
  *  but modified by João Silva and Diogo Santos
  */
 
+const val APPLICATION_TYPE = "application"
+const val SIREN_SUBTYPE = "vnd.siren+json"
+const val JSON_SUBTYPE = "json"
+const val JSON_HOME_SUBTYPE = "json-home"
+const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
 
 /**
  * For details regarding the Siren media type, see <a href="https://github.com/kevinswiber/siren">Siren</a>
  */
-
 data class SirenEntity<T>(
     @JsonProperty("class") val clazz: List<String>? = null,
     val properties: T? = null,
@@ -29,7 +33,6 @@ data class SirenEntity<T>(
     val actions: List<SirenAction>? = null,
     val title: String? = null
 )
-
 
 /**
  * Class whose instances represent links as they are represented in Siren.
@@ -69,7 +72,6 @@ data class SirenAction(
 /**
  * Base class for admissible sub entities, namely, [EmbeddedLink] and [EmbeddedEntity].
  */
-
 @JsonDeserialize(using = SubEntityDeserializer::class)
 sealed class SubEntity
 
@@ -95,13 +97,17 @@ data class EmbeddedEntity<T>(
 ) : SubEntity()
 
 
-class SubEntityDeserializer : StdDeserializer<SubEntity>(SubEntity::class.java) {
+class SubEntityDeserializer : StdDeserializer<SubEntity>(
+    SubEntity::class.java
+) {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): SubEntity {
         val node: TreeNode = p.readValueAsTree()
 
-        //If property "properties" or "links" or "actions" exists then
-        // it must be an EmbeddedEntity
+        /**
+         * If property "properties" or "links" or "actions" exists then
+         * it must be an EmbeddedEntity
+         */
         return p.codec.treeToValue(
             node,
             if (node.get("properties") != null ||
@@ -113,50 +119,3 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(SubEntity::class.java) 
     }
 
 }
-
-/*
-    Represents an HTTP Method
- */
-enum class HttpMethod {
-    GET,
-    POST,
-    PUT,
-    DELETE,
-    HEAD,
-    PATCH,
-    CONNECT,
-    OPTIONS,
-    TRACE
-}
-
-
-const val APPLICATION_TYPE = "application"
-const val SIREN_SUBTYPE = "vnd.siren+json"
-const val JSON_SUBTYPE = "json"
-const val JSON_HOME_SUBTYPE = "json-home"
-const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
-
-/*
-    Represents the media type of an http request
- */
-
-enum class MediaType {
-
-    @JsonProperty("${APPLICATION_TYPE}/${JSON_SUBTYPE}")
-    JSON,
-
-    @JsonProperty("${APPLICATION_TYPE}/${SIREN_SUBTYPE}")
-    SIREN,
-
-    @JsonProperty("${APPLICATION_TYPE}/${JSON_HOME_SUBTYPE}")
-    JSON_HOME,
-
-    @JsonProperty("${APPLICATION_TYPE}/${URL_ENCODED_SUBTYPE}")
-    URL_ENCODED
-
-}
-
-
-
-
-

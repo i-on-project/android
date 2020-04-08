@@ -1,14 +1,11 @@
 package org.ionproject.android.common.ionwebapi
 
 import android.util.Log
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.common.SirenEntity
+import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 
 private const val COURSES_PATH_V0 = "/v0/courses"
@@ -17,30 +14,17 @@ private const val COURSES_PATH = "/courses"
 
 class MockIonWebAPI : IIonWebAPI {
 
-    private val objectMapper: ObjectMapper by lazy {
-        ObjectMapper().apply {
-            enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        }
-    }
-
     private val jacksonObjMapper = jacksonObjectMapper()
 
-    /*
-        This is using the IO Dispacher, which is optimized to perform disk or network I/O
-        outside of the main thread. Examples include using the Room component,
-        reading from or writing to files, and running any network operations.
+    /**
+     *  This is using the IO Dispacher, which is optimized to perform disk or network I/O
+     *  outside of the main thread. Examples include using the Room component,
+     *  reading from or writing to files, and running any network operations.
      */
 
     override suspend fun <T> getFromURI(uri: URI): SirenEntity<T> {
-        val json = get(uri)
-        return parse(json)
-    }
-
-
-    override suspend fun <T> getFromURI(uri: URI, clazz: Class<T>): T {
-        val json = get(uri)
-        return parse(json, clazz)
+        val responseBody: String = get(uri)
+        return parse(responseBody)
     }
 
     private suspend fun get(uri: URI): String =
@@ -48,11 +32,11 @@ class MockIonWebAPI : IIonWebAPI {
             route(uri)
         }
 
-    private suspend fun <T> parse(json: String): SirenEntity<T> =
+    private suspend fun <T> parse(responseBody: String): SirenEntity<T> =
         withContext(Dispatchers.Default) {
             Log.println(Log.DEBUG, "COURSES", "Started parsing to SirenEntity")
             val res = kotlin.runCatching {
-                jacksonObjMapper.readValue<SirenEntity<T>>(json)
+                jacksonObjMapper.readValue<SirenEntity<T>>(responseBody)
             }
             if (res.isFailure)
                 Log.println(
@@ -63,12 +47,6 @@ class MockIonWebAPI : IIonWebAPI {
             else
                 Log.println(Log.DEBUG, "COURSES", "Successfully parsed to SirenEntity")
             res.getOrNull()!!
-        }
-
-
-    private suspend fun <T> parse(json: String, clazz: Class<T>): T =
-        withContext(Dispatchers.Default) {
-            objectMapper.readValue(json, clazz)
         }
 
     private fun route(uri: URI): String = when (uri.path) {
@@ -85,15 +63,15 @@ class MockIonWebAPI : IIonWebAPI {
 
 }
 
-/*
-    Computer generated mocks
+/**
+ *  Computer generated mocks
  */
 
-//All courses
+// All courses
 private const val allCoursesMock =
     "{\"class\":[\"course\",\"collection\"],\"properties\":{},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"item\"],\"properties\":{\"acronym\":\"PG\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/pg\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/pg/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]},{\"class\":[\"class\"],\"rel\":[\"item\"],\"properties\":{\"acronym\":\"E\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/e\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/e/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]},{\"class\":[\"class\"],\"rel\":[\"item\"],\"properties\":{\"acronym\":\"LSD\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/lsd\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/lsd/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]},{\"class\":[\"class\"],\"rel\":[\"item\"],\"properties\":{\"acronym\":\"M1\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/m1\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/m1/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]},{\"class\":[\"class\"],\"rel\":[\"item\"],\"properties\":{\"acronym\":\"ALGA\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/alga\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/alga/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]}],\"actions\":[{\"name\":\"add-item\",\"title\":\"Add a new Course\",\"method\":\"POST\",\"href\":\"/v0/courses\",\"isTemplated\":false,\"type\":\"application/json\",\"fields\":[]},{\"name\":\"search\",\"title\":\"Search items\",\"method\":\"GET\",\"href\":\"/v0/courses\",\"isTemplated\":true,\"type\":\"application/vnd.siren+json\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses?page=1&limit=2\"},{\"rel\":[\"next\"],\"href\":\"/courses?page=2&limit=2\"},{\"rel\":[\"previous\"],\"href\":\"/courses?page=0&limit=2\"}]}"
 
-//Courses
+// Courses
 private const val pgMock =
     "{\"class\":[\"course\"],\"properties\":{\"acronym\":\"PG\",\"name\":\"Programação\"},\"entities\":[{\"class\":[\"class\",\"collection\"],\"rel\":[\"class\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/pg/classes\"},{\"rel\":[\"course\"],\"href\":\"/courses/pg\"}]},{\"class\":[\"event\",\"collection\"],\"rel\":[\"event\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/pg/events\"},{\"rel\":[\"course\"],\"href\":\"/courses/pg\"}]}],\"actions\":[{\"name\":\"delete\",\"title\":\"Delete course\",\"method\":\"DELETE\",\"isTemplated\":false,\"href\":\"/v0/courses/pg\",\"fields\":[]},{\"name\":\"edit\",\"title\":\"Edit course\",\"method\":\"PATCH\",\"isTemplated\":false,\"type\":\"application/json\",\"href\":\"/v0/courses/pg\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/pg\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/pg/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]}"
 private const val eMock =
@@ -183,13 +161,10 @@ private const val tarMock =
 private const val gapMock =
     "{\"class\":[\"course\"],\"properties\":{\"acronym\":\"GAP\",\"name\":\"Gestão e Avaliação de Projetos\"},\"entities\":[{\"class\":[\"class\",\"collection\"],\"rel\":[\"class\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/gap/classes\"},{\"rel\":[\"course\"],\"href\":\"/courses/gap\"}]},{\"class\":[\"event\",\"collection\"],\"rel\":[\"event\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/gap/events\"},{\"rel\":[\"course\"],\"href\":\"/courses/gap\"}]}],\"actions\":[{\"name\":\"delete\",\"title\":\"Delete course\",\"method\":\"DELETE\",\"isTemplated\":false,\"href\":\"/v0/courses/gap\",\"fields\":[]},{\"name\":\"edit\",\"title\":\"Edit course\",\"method\":\"PATCH\",\"isTemplated\":false,\"type\":\"application/json\",\"href\":\"/v0/courses/gap\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/courses/gap\"},{\"rel\":[\"current\"],\"href\":\"/v0/courses/gap/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/courses\"}]}"
 
-//Course classes
+// Course classes
 private const val algaClassesMock =
     "{\"class\":[\"class\"],\"properties\":{\"course\":\"ALGA\",\"calendar term\":\"1920v\"},\"entities\":[{\"class\":[\"class\",\"section\"],\"properties\":{\"id\":\"1d\"},\"rel\":[\"item\"],\"title\":\"Class Section of Course ALGA at Calendar Term 1920v\",\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/1920v/1d\"}]},{\"class\":[\"class\",\"section\"],\"properties\":{\"id\":\"1n\"},\"rel\":[\"item\"],\"title\":\"Class Section of Course ALGA at Calendar Term 1920v\",\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/1920v/1n\"}]},{\"class\":[\"calendar\"],\"rel\":[\"calendar\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/s1920v/calendar\"}]}],\"actions\":[{\"name\":\"delete\",\"title\":\"Delete class\",\"method\":\"DELETE\",\"isTemplated\":false,\"href\":\"/v0/courses/alga/classes/1920v\",\"fields\":[]},{\"name\":\"edit\",\"title\":\"Edit class\",\"method\":\"PATCH\",\"isTemplated\":false,\"type\":\"application/json\",\"href\":\"/v0/courses/alga/classes/1920v\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/1920v\"},{\"rel\":[\"collection\"],\"href\":\"/v0/courses/alga/classes/\"}]}"
 
-//Class Section
+// Class Section
 private const val algaClassSectionMock =
     "{\"class\":[\"class\",\"section\"],\"properties\":{\"course\":\"ALGA\",\"class\":\"s1920v\",\"id\":\"1D\"},\"entities\":[{\"class\":[\"calendar\"],\"rel\":[\"/rel/calendar\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/s1920v/1d/calendar\"}]}],\"actions\":[{\"name\":\"enroll\",\"title\":\"Enroll class section\",\"method\":\"POST\",\"href\":\"/v0/courses/alga/classes/s1920v/1d/enroll\",\"type\":\"application/x-www-form-urlencoded\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/alga/classes/s1920v/1d\"},{\"rel\":[\"collection\"],\"href\":\"/v0/courses/alga/classes/s1920v\"}]}"
-
-
-

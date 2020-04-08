@@ -2,11 +2,11 @@ package org.ionproject.android.course_details
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.ClassesRepository
-import org.ionproject.android.common.CourseRepository
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.repositories.ClassesRepository
+import org.ionproject.android.common.repositories.CourseRepository
 
 class CourseDetailsViewModel(
     private val courseRepository: CourseRepository,
@@ -20,16 +20,18 @@ class CourseDetailsViewModel(
      *  @param courseSummary summary representation of a course
      *  @param callback to be executed once the course details are available
      */
-    fun getCourseDetails(courseSummary: CourseSummary, onResult: (Course) -> Unit) {
-        viewModelScope.launch {
-            val course = courseRepository.getCourseDetails(courseSummary)
-            onResult(course)
-        }
+    fun getCourseDetails(courseSummary: CourseSummary?, onResult: (Course) -> Unit) {
+        if (courseSummary != null)
+            viewModelScope.launch {
+                val course = courseRepository.getCourseDetails(courseSummary)
+                onResult(course)
+            }
     }
 
-    val classesListLiveData = MutableLiveData<List<ClassSummary>>()
+    private val classesListLiveData = MutableLiveData<List<ClassSummary>>()
 
-    val classesList get() = classesListLiveData.value ?: emptyList()
+    val classesList
+        get() = classesListLiveData.value ?: emptyList()
 
 
     fun observeClassesListLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {

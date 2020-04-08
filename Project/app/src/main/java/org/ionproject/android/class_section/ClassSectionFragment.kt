@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.class_section.ClassSectionViewModel
 import org.ionproject.android.class_section.ClassSectionViewModelProvider
 
@@ -16,8 +16,8 @@ import org.ionproject.android.class_section.ClassSectionViewModelProvider
  */
 class ClassSectionFragment : Fragment() {
 
-    /*
-        This view model is shared between fragments and the MainActivity
+    /**
+     * This view model is shared between fragments and the MainActivity
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
@@ -38,12 +38,12 @@ class ClassSectionFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, ClassSectionViewModelProvider())[ClassSectionViewModel::class.java]
 
-        //Class Section View Holder Setup
-        val titleTextView = view.findViewById<TextView>(R.id.textView_class_section_title)
-        val courseTextView = view.findViewById<TextView>(R.id.textView_class_section_course)
-        val teacherTextView = view.findViewById<TextView>(R.id.textView_class_section_teacher)
-        val classTermTextView = view.findViewById<TextView>(R.id.textView_class_section_class)
-        val classIDTextView = view.findViewById<TextView>(R.id.textView_class_section_id)
+        // Class Section View Holder Setup
+        val titleTextView = textView_class_section_title
+        val courseTextView = textView_class_section_course
+        val teacherTextView = textView_class_section_teacher
+        val classTermTextView = textView_class_section_class
+        val classIDTextView = textView_class_section_id
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(sharedViewModel.classSummary)

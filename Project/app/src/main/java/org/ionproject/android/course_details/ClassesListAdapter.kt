@@ -3,9 +3,9 @@ package org.ionproject.android.course_details
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.list_item_classes.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.ClassSummary
@@ -13,8 +13,7 @@ import org.ionproject.android.common.model.ClassSummary
 class ClassesListAdapter(
     private val model: CourseDetailsViewModel,
     private val sharedViewModel: SharedViewModel
-) :
-    RecyclerView.Adapter<ClassesListAdapter.ClassViewHolder>() {
+) : RecyclerView.Adapter<ClassesListAdapter.ClassViewHolder>() {
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(
@@ -39,17 +38,13 @@ class ClassesListAdapter(
     class ClassViewHolder(
         private val view: View,
         private val sharedViewModel: SharedViewModel
-    ) :
-        RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
-        private val className = view.findViewById<TextView>(R.id.textview_classes_list_item_name)
-        private val teacherName =
-            view.findViewById<TextView>(R.id.textview_classes_list_item_teacher)
+        private val classItem = view.button_classes_list_item_class
 
         fun bindTo(classSummary: ClassSummary) {
-            className.text = classSummary.id
-            teacherName.text = "Paulo Pereira" //TODO Get teacher name
-            view.setOnClickListener {
+            classItem.text = classSummary.id
+            classItem.setOnClickListener {
                 sharedViewModel.classSummary = classSummary
                 view.findNavController().navigate(R.id.action_course_details_to_class_section)
             }

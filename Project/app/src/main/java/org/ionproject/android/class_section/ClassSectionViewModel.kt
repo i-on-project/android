@@ -2,16 +2,11 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.ClassesRepository
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.repositories.ClassesRepository
 
-private const val COURSE = "course"
-private const val CALENDAR_TERM = "calendarTerm"
-private const val KLASS = "class"
-
-class ClassSectionViewModel(private val classSectionRepository: ClassesRepository) :
-    ViewModel() {
+class ClassSectionViewModel(private val classSectionRepository: ClassesRepository) : ViewModel() {
 
     private val classSectionLiveData = MutableLiveData<ClassSection>()
 
