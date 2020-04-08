@@ -1,6 +1,8 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import androidx.room.Room
+import org.ionproject.android.common.db.Database
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 
 /*
@@ -25,18 +27,18 @@ class IonApplication : Application() {
          AppDatabase object. Each RoomDatabase instance is fairly expensive.
         */
 
-        /*val db = Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             applicationContext,
             Database::class.java,
             "app-db"
-        ).build()*/
+        ).build()
 
         /*
         Using Mocks
          */
         val webAPI = MockIonWebAPI()
 
-        //TODO Instanciate repositories and pass the db to them
+        //TODO Pass the db to the repos
         coursesRepository = CourseRepository(webAPI)
         classesRepository = ClassesRepository(webAPI)
 

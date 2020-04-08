@@ -4,26 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.android.synthetic.main.fragment_course_details.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
-import kotlin.coroutines.CoroutineContext
 
-/**
- * A simple [Fragment] subclass.
- */
-class CourseDetailsFragment : Fragment(), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+class CourseDetailsFragment : Fragment() {
 
     /*
         This view model is shared between fragments and the MainActivity
@@ -48,9 +38,9 @@ class CourseDetailsFragment : Fragment(), CoroutineScope {
             .of(this, CoursesDetailsViewModelProvider())[CourseDetailsViewModel::class.java]
 
         //Setting up all course details
-        val courseFullName = view.findViewById<TextView>(R.id.textview_course_details_full_name)
-        val courseYear = view.findViewById<TextView>(R.id.textview_course_details_year)
-        val courseSemester = view.findViewById<TextView>(R.id.textview_course_details_semester)
+        val courseFullName = textview_course_details_full_name
+        val courseYear = textview_course_details_year
+        val courseSemester = textview_course_details_semester
 
         viewModel.getCourseDetails(sharedViewModel.courseSummary) {
             courseFullName.text = it.name
@@ -60,8 +50,7 @@ class CourseDetailsFragment : Fragment(), CoroutineScope {
         }
 
         //Course classes list recycler view
-        val classesList =
-            view.findViewById<RecyclerView>(R.id.recyclerview_course_details_classes_list)
+        val classesList = recyclerview_course_details_classes_list
         classesList.layoutManager =
             LinearLayoutManager(context) //TODO Confirm if this is the right context
         val classesListAdapter = ClassesListAdapter(viewModel, sharedViewModel)

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.ionproject.android.R
 
 class HomeFragment : Fragment() {
@@ -31,12 +31,13 @@ class HomeFragment : Fragment() {
         val navController = findNavController()
 
         //Courses button
-        view.findViewById<Button>(R.id.button_home_courses).setOnClickListener {
+        button_home_courses.setOnClickListener {
+            //TODO Swap navigation from courses to curricular terms
             navController.navigate(R.id.navigation_courses)
         }
 
         //Calendar button
-        view.findViewById<Button>(R.id.button_home_calendar).setOnClickListener {
+        button_home_calendar.setOnClickListener {
             TODO("Calendar fragment and navigation element")
         }
     }

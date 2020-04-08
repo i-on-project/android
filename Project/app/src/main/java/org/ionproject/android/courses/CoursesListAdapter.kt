@@ -44,6 +44,10 @@ class CoursesListAdapter(
 
         private val courseName = view.findViewById<TextView>(R.id.textview_courses_list_item_course)
 
+        /**
+         * Binds the properties of a [CourseSummary] to a view [CourseViewHolder],
+         * and sets a click listener to navigate to the course details
+         */
         fun bindTo(courseSummary: CourseSummary) {
             courseName.text = courseSummary.acronym
             view.setOnClickListener {

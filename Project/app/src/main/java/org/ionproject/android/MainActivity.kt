@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             if (currDestination != R.id.navigation_search_results) {
                 /* Navigating to the SearchResultsFragment and ensuring
             that when the user presses the back button it returns to
-            the destination from which search was called. 
+            the destination from which search was called.
              */
                 navController.navigate(
                     R.id.navigation_search_results,

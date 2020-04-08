@@ -123,7 +123,10 @@ enum class HttpMethod {
     PUT,
     DELETE,
     HEAD,
-    PATCH
+    PATCH,
+    CONNECT,
+    OPTIONS,
+    TRACE
 }
 
 
