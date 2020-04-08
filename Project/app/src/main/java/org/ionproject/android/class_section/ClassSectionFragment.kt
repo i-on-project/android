@@ -39,9 +39,7 @@ class ClassSectionFragment : Fragment() {
             .of(this, ClassSectionViewModelProvider())[ClassSectionViewModel::class.java]
 
         // Class Section View Holder Setup
-        val titleTextView = textView_class_section_title
         val courseTextView = textView_class_section_course
-        val teacherTextView = textView_class_section_teacher
         val classTermTextView = textView_class_section_class
         val classIDTextView = textView_class_section_id
 

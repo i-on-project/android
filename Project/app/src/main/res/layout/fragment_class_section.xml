@@ -19,16 +19,6 @@
         app:buttonTint="@android:color/black"
         />
 
-    <TextView
-        android:id="@+id/textView_class_section_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_classTitle"
-        android:textSize="@dimen/all_text_18"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <LinearLayout
         android:id="@+id/linearLayout_class_section_labels"
         android:layout_width="wrap_content"
@@ -37,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_class_section_title">
+        app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite">
 
         <TextView
             android:id="@+id/textview_course_details_label_course"
@@ -45,13 +35,6 @@
             android:layout_height="wrap_content"
             android:text="@string/label_course"
             android:textSize="@dimen/all_text_18" />
-
-        <TextView
-            android:id="@+id/textview_class_section_label_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_teacher"
-            android:textSize="@dimen/all_text_18"/>
 
         <TextView
             android:id="@+id/textview_class_section_class_label"
@@ -65,13 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_id"
-            android:textSize="@dimen/all_text_18" />
-
-        <TextView
-            android:id="@+id/textview_class_section_events_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_events"
             android:textSize="@dimen/all_text_18" />
     </LinearLayout>
 
@@ -92,12 +68,6 @@
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textView_class_section_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-
-        <TextView
             android:id="@+id/textView_class_section_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,12 +75,6 @@
 
         <TextView
             android:id="@+id/textView_class_section_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-
-        <TextView
-            android:id="@+id/textView_class_section_events"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
