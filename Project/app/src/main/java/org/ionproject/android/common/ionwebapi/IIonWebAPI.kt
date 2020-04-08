@@ -6,8 +6,9 @@ import java.net.URI
 interface IIonWebAPI {
 
     /**
-     * This is used when the class to parse is generic type
+     * This method should perform an http request to the i-on Web API and parse the response to
+     * Siren Entity
      */
-    suspend fun <T> getFromURI(uri: URI): SirenEntity<T>
+    suspend fun getFromURI(uri: URI): SirenEntity
 
 }

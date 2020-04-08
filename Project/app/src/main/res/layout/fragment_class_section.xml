@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ClassSectionFragment">
 
-    <ImageView
-        android:id="@+id/imageView_class_section_favorite"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_favorite_border_red_24dp"
+    <CheckBox
+        android:id="@+id/checkbox_class_section_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/imageView_favorite" />
+        android:contentDescription="@string/imageView_favorite"
+        android:button="@drawable/selector_favorite_24dp"
+        app:buttonTint="@android:color/black"
+        />
 
     <TextView
         android:id="@+id/textView_class_section_title"
@@ -23,7 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_classTitle"
         android:textSize="@dimen/all_text_18"
-        app:layout_constraintTop_toBottomOf="@id/imageView_class_section_favorite"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

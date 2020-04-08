@@ -25,9 +25,9 @@ const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
 /**
  * For details regarding the Siren media type, see <a href="https://github.com/kevinswiber/siren">Siren</a>
  */
-data class SirenEntity<T>(
+data class SirenEntity(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: T? = null,
+    val properties: HashMap<String, String>? = null, //Using hashmap because it uses less memory then linkedHashMap
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: List<SirenAction>? = null,
@@ -86,10 +86,10 @@ data class EmbeddedLink(
 ) : SubEntity()
 
 @JsonDeserialize(using = JsonDeserializer.None::class)
-data class EmbeddedEntity<T>(
+data class EmbeddedEntity(
     val rel: List<String>,
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: T? = null,
+    val properties: HashMap<String, String>? = null,
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: SirenAction? = null,
@@ -119,3 +119,10 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
     }
 
 }
+
+/**
+ * This exception should be thrown when someone tries to convert from a [SirenEntity]
+ * to its incorrect model type from the application
+ */
+class MappingFromSirenException(message: String) : Exception(message)
+

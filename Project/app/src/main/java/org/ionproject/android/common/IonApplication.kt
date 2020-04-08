@@ -1,6 +1,7 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
@@ -27,10 +28,13 @@ class IonApplication : Application() {
 
         //TODO: Create an instance of RoomDatabase
 
-        /**
-         * Using Mocks
-         */
-        val webAPI = MockIonWebAPI()
+        //TODO Inject dependencies with dagger instead of here
+
+        //Used to map string http responses to SirenEntities
+        val ionMapper = JacksonIonMapper()
+
+        //Using mocks
+        val webAPI = MockIonWebAPI(ionMapper)
 
         //TODO: Pass the database to the repositories
         coursesRepository =
