@@ -8,6 +8,7 @@
     <string name="title_class">Class</string>
     <string name="title_class_section">Class Section</string>
     <string name="title_search">Search</string>
+    <string name="title_search_results">Search Results</string>
 
     <string name="optional_courses">Optional Courses</string>
     <string name="coordinator">Coordinator</string>
@@ -34,5 +35,10 @@
     <string name="title_curricular_terms">Curricular Terms</string>
     <string name="title_course_details">Course Details</string>
     <string name="imageView_favorite">favorite_icon</string>
-    <string name="hint_classTitle">The Class Title</string>
+    <string name="imageButton_clear_recent_search">Clear recent search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_clear_search">Are you sure you want to delete all your recent search queries?</string>
+
 </resources>

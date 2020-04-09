@@ -10,7 +10,17 @@ import org.ionproject.android.common.model.CourseSummary
 class SharedViewModel : ViewModel() {
 
     // Search text used to pass data from search bar to searchResultFragment
-    lateinit var searchText: String
+    private val searchText = MutableLiveData<String>()
+    val queryText: String?
+        get() = searchText.value
+
+    fun observeQueryText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) {
+        searchText.observe(lifecycleOwner, Observer { onUpdate(it) })
+    }
+
+    fun setQueryText(searchQuery: String) {
+        searchText.postValue(searchQuery)
+    }
 
     // Shared course summary
     lateinit var courseSummary: CourseSummary

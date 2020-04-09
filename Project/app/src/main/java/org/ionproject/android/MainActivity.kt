@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -17,7 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-
+import org.ionproject.android.search.ClearSearchDialogFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -88,12 +89,11 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Get the SearchView and set the searchable configuration.
-
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        val menuSearchItem = menu?.findItem(R.id.action_search)
+        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
 
-        (menuSearchItem?.actionView as SearchView).apply {
+        searchView.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
             // Add search submit button
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             // Passing query text to [SearchResultsFragment]
-            sharedViewModel.searchText = query
+            sharedViewModel.setQueryText(query)
 
             return
         }
@@ -202,5 +202,11 @@ class MainActivity : AppCompatActivity() {
          * destination changes.
          */
         bottomnavview_main.setupWithNavController(navController)
+    }
+
+    // Method to be called when user wants to clear recent search history
+    fun tryClearSearch(menuItem: MenuItem) {
+        val clearFragment = ClearSearchDialogFragment()
+        clearFragment.show(supportFragmentManager, "clear")
     }
 }

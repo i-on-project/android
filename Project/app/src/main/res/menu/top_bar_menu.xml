@@ -5,6 +5,13 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/title_search"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="ifRoom|withText|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
+        android:id="@+id/imageView_clear_recent_search_history"
+        android:icon="@drawable/ic_history_white_24dp"
+        android:title="@string/imageButton_clear_recent_search"
+        android:onClick="tryClearSearch"
+        app:showAsAction="ifRoom"/>
 </menu>
