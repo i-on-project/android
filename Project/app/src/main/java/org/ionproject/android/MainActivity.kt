@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             // Passing query text to [SearchResultsFragment]
-            sharedViewModel.searchText.value = query
+            sharedViewModel.searchText = query
 
             return
         }

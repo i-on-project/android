@@ -34,9 +34,10 @@ class SearchResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         /** Obtaining search text from shared view model */
-        sharedViewModel.searchText.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        })
+        val searchText = sharedViewModel.searchText
+
+        Toast.makeText(context, searchText, Toast.LENGTH_LONG).show()
+
     }
 
 }

@@ -1,5 +1,8 @@
 package org.ionproject.android.common.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.net.URI
 
 /**
