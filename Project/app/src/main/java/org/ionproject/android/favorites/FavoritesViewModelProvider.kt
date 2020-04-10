@@ -1,16 +1,15 @@
-package org.ionproject.android.class_section
+package org.ionproject.android.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ionproject.android.common.IonApplication
 
-class ClassSectionViewModelProvider : ViewModelProvider.Factory {
-
+class FavoritesViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            ClassSectionViewModel::class.java -> ClassSectionViewModel(
-                IonApplication.classesRepository,
-                IonApplication.favoritesRepository
+            FavoritesViewModel::class.java -> FavoritesViewModel(
+                IonApplication.favoritesRepository,
+                IonApplication.calendarTermRepository
             )
             else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T

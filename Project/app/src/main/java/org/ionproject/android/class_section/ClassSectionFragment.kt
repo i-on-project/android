@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
@@ -11,9 +12,6 @@ import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.class_section.ClassSectionViewModel
 import org.ionproject.android.class_section.ClassSectionViewModelProvider
 
-/**
- * A simple [Fragment] subclass.
- */
 class ClassSectionFragment : Fragment() {
 
     /**
@@ -22,6 +20,17 @@ class ClassSectionFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
     }
+
+    /**
+     * Obtaining Class Section's View Model
+     */
+    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(
+            this,
+            ClassSectionViewModelProvider()
+        )[ClassSectionViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +42,6 @@ class ClassSectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Obtaining Class Section's View Model
-        val viewModel = ViewModelProviders
-            .of(this, ClassSectionViewModelProvider())[ClassSectionViewModel::class.java]
 
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
@@ -50,6 +55,26 @@ class ClassSectionFragment : Fragment() {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm
             classIDTextView.text = it.id
+            setupCheckboxBehaviour(checkbox_class_section_favorite)
+        }
+    }
+
+    /**
+     * Defines what happens when the checkbox is clicked
+     */
+    private fun setupCheckboxBehaviour(checkBox: CheckBox) {
+        viewModel.isThisClassSectionFavorite {
+            checkBox.isChecked = it
+        }
+        checkBox.setOnClickListener {
+            val isChecked = checkBox.isChecked
+            if (isChecked) {
+                if (!viewModel.addClassSectionToFavorites())
+                    checkBox.isChecked = false
+            } else {
+                if (!viewModel.removeClassSectionFromFavorites())
+                    checkBox.isChecked = true
+            }
         }
     }
 }
