@@ -12,6 +12,6 @@
         android:id="@+id/imageView_clear_recent_search_history"
         android:icon="@drawable/ic_history_white_24dp"
         android:title="@string/imageButton_clear_recent_search"
-        android:onClick="tryClearSearch"
+        android:onClick="createClearDialog"
         app:showAsAction="ifRoom"/>
 </menu>

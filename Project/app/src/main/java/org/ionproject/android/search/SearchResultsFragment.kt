@@ -39,8 +39,8 @@ class SearchResultsFragment : Fragment() {
             // Save the search query
             SearchRecentSuggestions(
                 context,
-                SearchSuggestionProvider.AUTHORITY,
-                SearchSuggestionProvider.MODE
+                RecentSuggestionsProvider.AUTHORITY,
+                RecentSuggestionsProvider.MODE
             ).saveRecentQuery(query, null)
         }
     }

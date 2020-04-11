@@ -18,9 +18,7 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <action android:name="android.intent.action.SEARCH" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- This enables the search widget -->
@@ -29,8 +27,14 @@
         </activity>
 
         <provider
-            android:authorities="org.ionproject.android.search.SearchSuggestionProvider"
-            android:name=".search.SearchSuggestionProvider">
+            android:authorities="org.ionproject.android.search.RecentSuggestionsProvider"
+            android:name=".search.RecentSuggestionsProvider">
+        </provider>
+
+        <provider
+            android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
+            android:name=".search.SearchCustomSuggestionsProvider"
+            android:permission="readPermission">
         </provider>
     </application>
 

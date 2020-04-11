@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Method to be called when user wants to clear recent search history
-    fun tryClearSearch(menuItem: MenuItem) {
+    fun createClearDialog(menuItem: MenuItem) {
         val clearFragment = ClearSearchDialogFragment()
         clearFragment.show(supportFragmentManager, "clear")
     }

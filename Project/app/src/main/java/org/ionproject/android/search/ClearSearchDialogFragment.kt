@@ -17,16 +17,22 @@ class ClearSearchDialogFragment : DialogFragment() {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
 
-            builder.setMessage("Are you sure you want to delete all your recent search queries?")
-                .setPositiveButton("Yes") { _, _ ->
-                    SearchSuggestionProvider.clearHistory(context)
+            builder.apply {
+                setTitle("Clear history")
+                setMessage("Are you sure you want to delete all your recent search queries?")
+                setNegativeButton("Cancel") { _, _ ->
+                    dismiss()
+                }
+                setPositiveButton("Confirm") { _, _ ->
+                    RecentSuggestionsProvider.clearHistory(context)
                     Toast.makeText(
                         context,
                         "Recent search history has been cleared",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                .setNegativeButton("No") { _, _ -> dismiss() }
+            }
+
             builder.create()
         } ?: throw IllegalArgumentException("Activity cannot be null")
     }
