@@ -2,6 +2,8 @@
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="@string/app_label"
     android:hint="@string/search_hint"
-    android:searchSuggestAuthority="org.ionproject.android.search.RecentSuggestionsProvider"
-    android:searchSuggestSelection=" ?">
+    android:searchSuggestAuthority="org.ionproject.android.search.SearchCustomSuggestionsProvider"
+    android:searchSuggestPath="suggestions"
+    android:searchSuggestIntentAction="android.intent.action.VIEW"
+    android:queryAfterZeroResults="true">
 </searchable>

@@ -7,6 +7,7 @@ import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
+import org.ionproject.android.common.repositories.SuggestionsMockRepository
 import org.ionproject.android.search.SearchCustomSuggestionsProvider
 
 /**
@@ -18,6 +19,7 @@ class IonApplication : Application() {
     companion object {
         lateinit var coursesRepository: CourseRepository
         lateinit var classesRepository: ClassesRepository
+        lateinit var suggestionsMockRepository: SuggestionsMockRepository
         lateinit var db: AppDatabase
     }
 
@@ -45,6 +47,7 @@ class IonApplication : Application() {
         //TODO: Pass the database to the repositories
         coursesRepository = CourseRepository(webAPI)
         classesRepository = ClassesRepository(webAPI)
+        suggestionsMockRepository = SuggestionsMockRepository(db)
     }
 
 }

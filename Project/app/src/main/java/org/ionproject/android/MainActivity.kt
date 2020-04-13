@@ -2,7 +2,9 @@ package org.ionproject.android
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.addCallback
@@ -19,6 +21,8 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
 import org.ionproject.android.search.ClearSearchDialogFragment
+
+const val TAG = "ION_PROJECT"
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +49,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        when(intent.action){
+            Intent.ACTION_SEARCH -> {
+                intent.getStringExtra(SearchManager.QUERY).also {query ->
+                    Log.v(TAG,"Searching information for query = $query")
+                }
+            }
+            Intent.ACTION_VIEW -> {
+                Log.v(TAG, "Suggestion = ${intent.data}")
+            }
+        }
 
         setupTopBarBehaviour()
         setupBottomBarBehaviour()

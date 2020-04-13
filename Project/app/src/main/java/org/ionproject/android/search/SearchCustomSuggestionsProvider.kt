@@ -1,34 +1,33 @@
 package org.ionproject.android.search
 
+import android.app.SearchManager
 import android.content.ContentProvider
 import android.content.ContentValues
-import android.content.UriMatcher
 import android.database.Cursor
+import android.database.MatrixCursor
 import android.net.Uri
 import androidx.room.Room
-import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.db.SuggestionDAO
-
-private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-    addURI(
-        SearchCustomSuggestionsProvider.AUTHORITY,
-        SearchCustomSuggestionsProvider.PATH,
-        1
-    )
-}
+import java.util.*
 
 class SearchCustomSuggestionsProvider : ContentProvider() {
+
+    companion object {
+        const val AUTHORITY = "org.ionproject.android.search.SearchCustomSuggestionsProvider"
+    }
 
     private lateinit var db: AppDatabase
     private lateinit var suggestionsDAO: SuggestionDAO
 
-    companion object {
-        const val AUTHORITY = "org.ionproject.android.search.SearchCustomSuggestionsProvider"
-        const val PATH = "suggestions"
-    }
+    private val COLUMNS = arrayOf(
+        "_id", // must include this column
+        SearchManager.SUGGEST_COLUMN_TEXT_1, // The string that is presented as a suggestion
+        SearchManager.SUGGEST_COLUMN_INTENT_DATA // Data that is used when forming the suggestion's intent
+    )
 
     override fun onCreate(): Boolean {
+        //TODO: Try to get the IonApplication db instance!
         db = Room
             .databaseBuilder(context!!, AppDatabase::class.java, "database-name")
             .build()
@@ -43,18 +42,15 @@ class SearchCustomSuggestionsProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        var localSortOrder: String = sortOrder ?: ""
-        var localSelection: String = selection ?: ""
+        val query = uri.lastPathSegment?.toLowerCase(Locale.ROOT) ?: ""
+        val suggestions = suggestionsDAO.getSuggestions("$query%")
 
-        when (sUriMatcher.match(uri)) {
-            1 -> {
-                if (localSortOrder.isEmpty()) {
-                    localSortOrder = "_ID ASC"
-                }
-            }
-            else -> throw IllegalArgumentException("Invalid URI")
-        }
-        TODO("Not uet implemented")
+        val cursor = MatrixCursor(COLUMNS)
+
+        for (suggestion in suggestions)
+            cursor.addRow(arrayOf(suggestion._ID, suggestion.className, suggestion.className))
+
+        return cursor
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
@@ -75,6 +71,6 @@ class SearchCustomSuggestionsProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        return "vnd.org.ionproject.android.dir/$AUTHORITY.$PATH"
+        TODO("Not yet implemented")
     }
 }

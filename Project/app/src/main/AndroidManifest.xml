@@ -27,14 +27,14 @@
         </activity>
 
         <provider
-            android:authorities="org.ionproject.android.search.RecentSuggestionsProvider"
-            android:name=".search.RecentSuggestionsProvider">
-        </provider>
-
-        <provider
             android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
             android:name=".search.SearchCustomSuggestionsProvider"
-            android:permission="readPermission">
+            android:readPermission="true">
+        </provider>
+        
+        <provider
+            android:authorities="org.ionproject.android.search.RecentSuggestionsProvider"
+            android:name=".search.RecentSuggestionsProvider">
         </provider>
     </application>
 

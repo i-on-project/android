@@ -1,5 +1,6 @@
 package org.ionproject.android.common.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -7,12 +8,15 @@ import androidx.room.Query
 
 @Dao
 interface SuggestionDAO {
-    @Query("SELECT * FROM Suggestion")
-    fun getAll(): List<Suggestion>
+    @Query("Select * from Suggestion")
+    fun getAllSuggestions(): LiveData<List<Suggestion>>
+
+    @Query("SELECT _ID, class_name FROM Suggestion where class_name LIKE :word")
+    fun getSuggestions(word: String): List<Suggestion>
 
     @Insert
-    fun insertAll(vararg classSections: Suggestion)
+    suspend fun insertAll(vararg classSections: Suggestion)
 
     @Delete
-    fun delete(classSection: Suggestion)
+    suspend fun delete(classSection: Suggestion)
 }
