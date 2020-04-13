@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.Favorite
+import org.ionproject.android.common.model.ClassSummary
 
 /**
  * This type represents a Favorite repository, ir performs requests
@@ -21,9 +21,9 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      *
      * @param favorite is the favorite to add
      */
-    suspend fun addFavorite(favorite: Favorite) =
+    suspend fun addFavorite(classSummary: ClassSummary) =
         withContext(Dispatchers.IO) {
-            favoriteDao.insertFavorite(favorite)
+            favoriteDao.insertFavorite(classSummary)
         }
 
 
@@ -32,27 +32,33 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      *
      * @param favorite is the favorite to remove
      */
-    suspend fun removeFavorite(favorite: Favorite) =
+    suspend fun removeFavorite(classSummary: ClassSummary) =
         withContext(Dispatchers.IO) {
-            val result = favoriteDao.deleteFavorite(favorite)
-            if(result == 0)
-                throw Exception("NOT FUCKING DELETING YOU PRICK")
+            favoriteDao.deleteFavorite(classSummary)
         }
 
     /**
      * Obtains all favorite from a calendar term
      *
      * @param curricularTerm the string representation of a calendar term
-     * @return a list of favorites from a specific term
+     * @return a LiveData list of favorites from a specific term
+     *
+     * This method returns a livedata instead of being a suspend function because
+     * this way its easy to remove items from table favorites and automatically update the UI
      */
-    fun getFavoritesFromTerm(calendarTerm: CalendarTerm): LiveData<List<Favorite>> =
-            favoriteDao.findFavoritesFromCalendarTerm("s${calendarTerm.name}")
+    fun getFavoritesFromTerm(calendarTerm: CalendarTerm): LiveData<List<ClassSummary>> =
+        favoriteDao.findFavoritesFromCalendarTerm(calendarTerm.name)
 
     /**
      * Checks if a favorite exist
      */
-    suspend fun favoriteExists(favorite : Favorite) : Boolean {
-        if(favoriteDao.favoriteExists(favorite.course,favorite.calendarTerm,favorite.classSection) > 0)
+    suspend fun favoriteExists(classSummary: ClassSummary): Boolean {
+        if (favoriteDao.favoriteExists(
+                classSummary.course,
+                classSummary.calendarTerm,
+                classSummary.name
+            ) > 0
+        )
             return true
         return false
     }

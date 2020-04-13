@@ -14,11 +14,14 @@ fun SirenEntity.toCourse(): Course {
     val classesLink: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
     val eventsLink: URI? = (entities.last() as EmbeddedEntity).links?.first()?.href
 
-    if (properties != null && properties["acronym"] != null && properties["name"] != null) {
+    val acronym = properties?.get("acronym")
+    val name = properties?.get("name")
+
+    if (properties != null && acronym != null && name != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
-            acronym = properties["acronym"]!!,
-            name = properties["name"]!!,
+            acronym = acronym,
+            name = name,
             classesUri = classesLink,
             eventsUri = eventsLink
         )
@@ -32,22 +35,34 @@ fun SirenEntity.toCourse(): Course {
 fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
     val classesSummary = mutableListOf<ClassSummary>()
 
-    entities?.forEach {
-        val embeddedEntity = (it as EmbeddedEntity)
+    val course = properties?.get("course")
+    val calendarTerm = properties?.get("calendar term")
 
-        val clazz = embeddedEntity.clazz?.first()
-        val id = embeddedEntity.properties?.get("id")
-        val uri = embeddedEntity.links?.first()?.href
+    if (course != null && calendarTerm != null) {
+        entities?.forEach {
+            val embeddedEntity = (it as EmbeddedEntity)
 
-        //There is an event sub-entity which is not from the class "class", which we must exclude
-        if (clazz == "class") {
-            if (id != null && uri != null)
-                classesSummary.add(ClassSummary(id = id, detailsUri = uri))
-            else
-                throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+            val clazz = embeddedEntity.clazz?.first()
+            val name = embeddedEntity.properties?.get("id")
+            val detailsUri = embeddedEntity.links?.first()?.href
+
+            //There is an event sub-entity which is not from the class "class", which we must exclude
+            if (clazz == "class") {
+                if (name != null && detailsUri != null)
+                    classesSummary.add(
+                        ClassSummary(
+                            name = name,
+                            course = course,
+                            calendarTerm = calendarTerm,
+                            detailsUri = detailsUri
+                        )
+                    )
+                else
+                    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+            }
         }
-
+        return classesSummary
     }
-    return classesSummary
+    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
 }
 

@@ -8,12 +8,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
 /**
@@ -26,6 +29,13 @@ class FavoritesFragment : Fragment() {
             this,
             FavoritesViewModelProvider()
         )[FavoritesViewModel::class.java]
+    }
+
+    /**
+     * This view model is shared between fragments and the MainActivity
+     */
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
     }
 
     override fun onCreateView(
@@ -43,27 +53,33 @@ class FavoritesFragment : Fragment() {
         setupCalendarTermSpinner(spinner_favorites_calendar_terms)
     }
 
+    /**
+     * Ensures the favorites list is updated with the favorites
+     * inside the database.
+     * Adds the swipe action to delete a favorite.
+     */
     private fun setupFavoritesListBehaviour(favoritesList: RecyclerView) {
         //TODO Confirm if this is the right context
         favoritesList.layoutManager = LinearLayoutManager(context)
 
-        val favoritesListAdapter = FavoritesListAdapter(viewModel)
+        val favoritesListAdapter = FavoritesListAdapter(viewModel, sharedViewModel)
         favoritesList.adapter = favoritesListAdapter
 
         val itemTouchHelper = ItemTouchHelper(
-            FavoritesListAdapter.SwipeToDelete(favoritesListAdapter))
+            FavoritesListAdapter.SwipeToDelete(viewModel)
+        )
         itemTouchHelper.attachToRecyclerView(favoritesList)
 
-        var count = 2
-
         viewModel.observeFavorites(viewLifecycleOwner) {
-            if(count > 0) {
-                favoritesListAdapter.notifyDataSetChanged()
-                --count
-            }
+            favoritesListAdapter.notifyDataSetChanged()
         }
     }
 
+    /**
+     * Updates the spinner with the calendar terms from the local db
+     * Ensures that when an item is selected, the favorites are updated
+     * according to that calendar term
+     */
     private fun setupCalendarTermSpinner(spinner: Spinner) {
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item
@@ -71,8 +87,6 @@ class FavoritesFragment : Fragment() {
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
             spinnerAdapter.addAll(it)
-            spinnerAdapter.notifyDataSetChanged()
-            viewModel.getFavoritesFromCalendarTerm(it[0]) //Search for favorites
         }
 
         //Ensures that when an item is selected in the spinner the favorites list is updated
@@ -87,6 +101,7 @@ class FavoritesFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = viewModel.calendarTerms[position]
+                //Searching for the favorites of the selected calendar term
                 viewModel.getFavoritesFromCalendarTerm(selectedItem)
             }
 

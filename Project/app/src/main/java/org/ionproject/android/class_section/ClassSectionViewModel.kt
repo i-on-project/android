@@ -1,10 +1,10 @@
 package org.ionproject.android.class_section
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.common.model.Favorite
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
 
@@ -13,22 +13,20 @@ class ClassSectionViewModel(
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
-    private val classSectionLiveData = MutableLiveData<ClassSection>()
-    private val classSection: ClassSection? get() = classSectionLiveData.value
+    /**
+     * Current class section obtained from Web API
+     */
+    private lateinit var currClassSection: ClassSection
 
-    fun getClassSectionDetails(classSummary: ClassSummary) {
+    /**
+     * Obtains a classSection from WebApi and updated the UI with the result
+     */
+    fun getClassSectionDetails(classSummary: ClassSummary, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
-            val classSectionData =
+            currClassSection =
                 classSectionRepository.getClassSection(classSummary)
-            classSectionLiveData.postValue(classSectionData)
+            onResult(currClassSection)
         }
-    }
-
-    fun observeForClassSectionData(
-        lifecycleOwner: LifecycleOwner,
-        onUpdate: (ClassSection) -> Unit
-    ) {
-        classSectionLiveData.observe(lifecycleOwner, Observer(onUpdate))
     }
 
     /**
@@ -37,21 +35,11 @@ class ClassSectionViewModel(
      * otherwise true. This is required because the user might click the checkbox before the API
      * returns the result.
      */
-    fun addClassSectionToFavorites(): Boolean {
-        val thisClassSection = classSection
-        if (thisClassSection != null) {
-            val favorite = Favorite(
-                thisClassSection.calendarTerm,
-                thisClassSection.id,
-                thisClassSection.course
-            )
-            viewModelScope.launch {
-                classSectionRepository.addClassSectionToDb(thisClassSection)
-                favoriteRepository.addFavorite(favorite)
-            }
-            return true
+    fun addClassToFavorites(classSummary: ClassSummary) {
+        viewModelScope.launch {
+            classSectionRepository.addClassSectionToDb(currClassSection)
+            favoriteRepository.addFavorite(classSummary)
         }
-        return false
     }
 
     /**
@@ -60,41 +48,21 @@ class ClassSectionViewModel(
      * otherwise true. This is required because the user might click the checkbox before the API
      * returns the result.
      */
-    fun removeClassSectionFromFavorites(): Boolean {
-        val thisClassSection = classSection
-        if (thisClassSection != null) {
-            val favorite = Favorite(
-                thisClassSection.calendarTerm,
-                thisClassSection.id,
-                thisClassSection.course
-            )
-            viewModelScope.launch {
-                favoriteRepository.removeFavorite(favorite)
-                classSectionRepository.removeClassSectionFromDb(thisClassSection)
-            }
-            return true
+    fun removeClassFromFavorites(classSummary: ClassSummary) {
+        viewModelScope.launch {
+            favoriteRepository.removeFavorite(classSummary)
+            classSectionRepository.removeClassSectionFromDb(currClassSection)
         }
-        return false
     }
 
     /**
      * Checks if this class section is a favorite
      */
-    fun isThisClassSectionFavorite(onUpdate: (Boolean) -> Unit): Boolean {
-        val thisClassSection = classSection
-        if (thisClassSection != null) {
-            val favorite = Favorite(
-                thisClassSection.calendarTerm,
-                thisClassSection.id,
-                thisClassSection.course
+    fun isThisClassFavorite(classSummary: ClassSummary, onUpdate: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            onUpdate(
+                favoriteRepository.favoriteExists(classSummary)
             )
-            viewModelScope.launch {
-                onUpdate(
-                    favoriteRepository.favoriteExists(favorite)
-                )
-            }
-            return true
         }
-        return false
     }
 }

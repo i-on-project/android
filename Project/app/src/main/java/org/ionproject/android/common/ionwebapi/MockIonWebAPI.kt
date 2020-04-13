@@ -35,11 +35,11 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH}/lsd" -> lsdMock
         "${COURSES_PATH}/m1" -> m1Mock
         "${COURSES_PATH}/alga" -> algaMock
-        "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
-        "${COURSES_PATH}/pg${CLASSES_PATH}" -> pgClassesMock
-        "${COURSES_PATH}/lsd${CLASSES_PATH}" -> lsdClassesMock
-        "${COURSES_PATH}/m1${CLASSES_PATH}" -> m1ClassesMock
-        "${COURSES_PATH}/e${CLASSES_PATH}" -> eClassesMock
+        "${COURSES_PATH}/alga${CLASSES_PATH}/1920v" -> algaClassesMock
+        "${COURSES_PATH}/pg${CLASSES_PATH}/1920v" -> pgClassesMock
+        "${COURSES_PATH}/lsd${CLASSES_PATH}/1920v" -> lsdClassesMock
+        "${COURSES_PATH}/m1${CLASSES_PATH}/1920v" -> m1ClassesMock
+        "${COURSES_PATH}/e${CLASSES_PATH}/1920v" -> eClassesMock
         "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/1d" -> algaClassSection1DMock
         "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/1n" -> algaClassSection1NMock
         "${COURSES_PATH_V0}/pg${CLASSES_PATH}/1920v/1n" -> pgClassSection1NMock

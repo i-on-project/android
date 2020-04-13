@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
@@ -34,9 +33,10 @@ class SearchResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         /** Obtaining search text from shared view model */
-        sharedViewModel.searchText.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        })
+        val searchText = sharedViewModel.searchText
+
+        Toast.makeText(context, searchText, Toast.LENGTH_LONG).show()
+
     }
 
 }

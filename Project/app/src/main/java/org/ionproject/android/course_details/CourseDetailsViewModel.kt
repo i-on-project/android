@@ -2,15 +2,18 @@ package org.ionproject.android.course_details
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
 
 class CourseDetailsViewModel(
     private val courseRepository: CourseRepository,
-    private val classesRepository: ClassesRepository
+    private val classesRepository: ClassesRepository,
+    private val calendarTermRepository: CalendarTermRepository
 ) : ViewModel() {
 
     /**
@@ -45,10 +48,25 @@ class CourseDetailsViewModel(
      *  @param course detailed representation of a course
      *  @param callback to be executed once the class list is available
      */
-    fun getCourseClasses(course: Course) {
+    fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
         viewModelScope.launch {
-            val classes = classesRepository.getClassesFromCourse(course)
+            val classes = classesRepository.getClassesFromCourse(course, calendarTerm)
             classesListLiveData.postValue(classes)
         }
+    }
+
+    /**
+     * Calendar terms Section
+     */
+    private val calendarTermsLiveData = liveData {
+        val calendarTerms = calendarTermRepository.getAllCalendarTerm()
+        emit(calendarTerms)
+    }
+    val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
+    fun observeCalendarTerms(
+        lifecycleOwner: LifecycleOwner,
+        onUpdate: (List<CalendarTerm>) -> Unit
+    ) {
+        calendarTermsLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 }

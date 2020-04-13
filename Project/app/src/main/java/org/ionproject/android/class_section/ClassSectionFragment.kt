@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.class_section.ClassSectionViewModel
 import org.ionproject.android.class_section.ClassSectionViewModelProvider
+import org.ionproject.android.common.model.ClassSummary
 
 class ClassSectionFragment : Fragment() {
 
@@ -19,6 +20,13 @@ class ClassSectionFragment : Fragment() {
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
+    }
+
+    /**
+     * Class passed via SharedViewmodel
+     */
+    private val currClassSummary: ClassSummary by lazy {
+        sharedViewModel.classSummary
     }
 
     /**
@@ -42,19 +50,25 @@ class ClassSectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupClassSectionDetails()
+    }
 
+    /**
+     * Requests the details of the current class and updates
+     * the respective UI elements with them.
+     */
+    private fun setupClassSectionDetails() {
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
         val classIDTextView = textView_class_section_id
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(sharedViewModel.classSummary)
-
-        viewModel.observeForClassSectionData(this) {
+        viewModel.getClassSectionDetails(currClassSummary) {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm
-            classIDTextView.text = it.id
+            classIDTextView.text = it.name
+            //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
         }
     }
@@ -63,17 +77,16 @@ class ClassSectionFragment : Fragment() {
      * Defines what happens when the checkbox is clicked
      */
     private fun setupCheckboxBehaviour(checkBox: CheckBox) {
-        viewModel.isThisClassSectionFavorite {
+        //If the checks box was checked before, then it must be updated
+        viewModel.isThisClassFavorite(currClassSummary) {
             checkBox.isChecked = it
         }
         checkBox.setOnClickListener {
             val isChecked = checkBox.isChecked
             if (isChecked) {
-                if (!viewModel.addClassSectionToFavorites())
-                    checkBox.isChecked = false
+                viewModel.addClassToFavorites(currClassSummary)
             } else {
-                if (!viewModel.removeClassSectionFromFavorites())
-                    checkBox.isChecked = true
+                viewModel.removeClassFromFavorites(currClassSummary)
             }
         }
     }

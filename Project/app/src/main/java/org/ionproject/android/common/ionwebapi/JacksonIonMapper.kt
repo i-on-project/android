@@ -29,7 +29,7 @@ class JacksonIonMapper : IIonMapper {
                     "COURSES",
                     "Failed parsing to SirenEntity, exception : ${res.exceptionOrNull()}"
                 )
-                throw res.exceptionOrNull()!! //This will never return null here
+                throw res.exceptionOrNull()!!
             }
             Log.println(Log.DEBUG, "COURSES", "Successfully parsed to SirenEntity")
             res.getOrNull()!!

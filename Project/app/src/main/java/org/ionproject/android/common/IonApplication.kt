@@ -44,7 +44,6 @@ class IonApplication : Application() {
         //Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
 
-        //TODO: Pass the database to the repositories
         coursesRepository =
             CourseRepository(webAPI)
         classesRepository =
