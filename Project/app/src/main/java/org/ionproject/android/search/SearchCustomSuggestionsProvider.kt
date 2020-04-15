@@ -6,35 +6,26 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import androidx.room.Room
-import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.db.SuggestionDAO
+import org.ionproject.android.common.IonApplication
 import java.util.*
 
 class SearchCustomSuggestionsProvider : ContentProvider() {
 
-    companion object {
-        const val AUTHORITY = "org.ionproject.android.search.SearchCustomSuggestionsProvider"
-    }
-
-    private lateinit var db: AppDatabase
-    private lateinit var suggestionsDAO: SuggestionDAO
-
-    private val COLUMNS = arrayOf(
-        "_id", // must include this column
+    private val columns = arrayOf(
+        "_id", // Must include this column
         SearchManager.SUGGEST_COLUMN_TEXT_1, // The string that is presented as a suggestion
         SearchManager.SUGGEST_COLUMN_INTENT_DATA // Data that is used when forming the suggestion's intent
     )
 
     override fun onCreate(): Boolean {
-        //TODO: Try to get the IonApplication db instance!
-        db = Room
-            .databaseBuilder(context!!, AppDatabase::class.java, "database-name")
-            .build()
-        suggestionsDAO = db.suggestionDAO()
         return true
     }
 
+    /**
+     * Query the database for all suggestions started with [query].
+     *
+     * @return [cursor] All suggestions retrieved from the database.
+     */
     override fun query(
         uri: Uri,
         projection: Array<out String>?,
@@ -43,9 +34,9 @@ class SearchCustomSuggestionsProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         val query = uri.lastPathSegment?.toLowerCase(Locale.ROOT) ?: ""
-        val suggestions = suggestionsDAO.getSuggestions("$query%")
+        val suggestions = IonApplication.db.suggestionDAO().getSuggestions("$query%")
 
-        val cursor = MatrixCursor(COLUMNS)
+        val cursor = MatrixCursor(columns)
 
         for (suggestion in suggestions)
             cursor.addRow(arrayOf(suggestion._ID, suggestion.className, suggestion.className))

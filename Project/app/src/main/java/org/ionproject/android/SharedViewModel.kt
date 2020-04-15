@@ -14,9 +14,8 @@ class SharedViewModel : ViewModel() {
     val queryText: String?
         get() = searchText.value
 
-    fun observeQueryText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) {
+    fun observeQueryText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) =
         searchText.observe(lifecycleOwner, Observer { onUpdate(it) })
-    }
 
     fun setQueryText(searchQuery: String) {
         searchText.postValue(searchQuery)

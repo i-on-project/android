@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -20,9 +19,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-import org.ionproject.android.search.ClearSearchDialogFragment
-
-const val TAG = "ION_PROJECT"
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,17 +45,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        when(intent.action){
-            Intent.ACTION_SEARCH -> {
-                intent.getStringExtra(SearchManager.QUERY).also {query ->
-                    Log.v(TAG,"Searching information for query = $query")
-                }
-            }
-            Intent.ACTION_VIEW -> {
-                Log.v(TAG, "Suggestion = ${intent.data}")
-            }
-        }
 
         setupTopBarBehaviour()
         setupBottomBarBehaviour()
@@ -114,6 +99,11 @@ class MainActivity : AppCompatActivity() {
             // Add search submit button
             isSubmitButtonEnabled = true
 
+            /**
+             * We must redefine the [setOnQueryTextListener] in order to get query introduced
+             * by the user and pass it to the [SearchResultsFragment]. This is a fragment
+             * responsible to present information depending on the query.
+             */
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     queryTextSubmitBehaviour(query)
@@ -121,7 +111,25 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //TODO: While the search text is changing
+                    return true
+                }
+            })
+
+            /**
+             * We must redefine the [setOnSuggestionListener] in order to get the suggestion
+             * query from the search view cursor's adapter to deliver it to the
+             * [SearchResultsFragment].
+             */
+            setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    return true
+                }
+
+                override fun onSuggestionClick(position: Int): Boolean {
+                    val cursor = searchView.suggestionsAdapter.cursor
+                    cursor.moveToPosition(position)
+                    val suggestion: String = cursor.getString(2)
+                    searchView.setQuery(suggestion,true)
                     return true
                 }
             })
@@ -219,9 +227,4 @@ class MainActivity : AppCompatActivity() {
         bottomnavview_main.setupWithNavController(navController)
     }
 
-    // Method to be called when user wants to clear recent search history
-    fun createClearDialog(menuItem: MenuItem) {
-        val clearFragment = ClearSearchDialogFragment()
-        clearFragment.show(supportFragmentManager, "clear")
-    }
 }

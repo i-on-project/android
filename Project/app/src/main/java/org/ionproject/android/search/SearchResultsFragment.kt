@@ -33,15 +33,9 @@ class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // We just want to make a Toast of the search query text, for now...
         sharedViewModel.observeQueryText(this) { query ->
             Toast.makeText(context, "Query = $query", Toast.LENGTH_SHORT).show()
-
-            // Save the search query
-            SearchRecentSuggestions(
-                context,
-                RecentSuggestionsProvider.AUTHORITY,
-                RecentSuggestionsProvider.MODE
-            ).saveRecentQuery(query, null)
         }
     }
 

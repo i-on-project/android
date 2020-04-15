@@ -7,11 +7,4 @@
         android:title="@string/title_search"
         app:showAsAction="ifRoom|withText|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-
-    <item
-        android:id="@+id/imageView_clear_recent_search_history"
-        android:icon="@drawable/ic_history_white_24dp"
-        android:title="@string/imageButton_clear_recent_search"
-        android:onClick="createClearDialog"
-        app:showAsAction="ifRoom"/>
 </menu>

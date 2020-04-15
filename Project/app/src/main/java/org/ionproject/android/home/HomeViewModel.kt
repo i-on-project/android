@@ -11,7 +11,9 @@ import org.ionproject.android.common.repositories.SuggestionsMockRepository
 
 class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewModel() {
 
-    private val suggestionsLiveData = MutableLiveData<List<Suggestion>>()
+    private val suggestionsLiveData by lazy(LazyThreadSafetyMode.NONE) {
+        repository.getSuggestions()
+    }
 
     val suggestions : List<Suggestion>
         get() = suggestionsLiveData.value ?: emptyList()
@@ -26,12 +28,9 @@ class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewMod
         })
     }
 
-    fun getAllSuggestions() = repository.getSuggestions()
-
     fun insertMocks() {
         viewModelScope.launch {
             repository.insertSuggestionMocks()
         }
-
     }
 }
