@@ -6,13 +6,39 @@
     android:padding="5dp"
     android:id="@+id/calendar_list_item"
     >
-    <TextView
+
+    <ImageView
+        android:id="@+id/imageview_list_item_calendar_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
+        app:layout_constraintBottom_toTopOf="@id/textview_list_item_calendar_day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/shape_circle_5dp"
+        >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/textview_list_item_calendar_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         >
     </TextView>
+
+    <ImageView
+        android:id="@+id/imageview_list_item_calendar_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="-1dp"
+        android:background="@drawable/shape_circle_30dp"
+        >
+    </ImageView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
