@@ -11,13 +11,22 @@ import org.ionproject.android.common.model.CourseSummary
  */
 class SharedViewModel : ViewModel() {
 
-    // Search text used to pass data from search bar to searchResultFragment
+    /**
+     * searchText is used to pass data from [MainActivity.topBar]
+    to [org.ionproject.android.search.SearchResultsFragment]
+     */
     lateinit var searchText: String
 
-    // Shared course summary between course
+    /**
+     * courseSummary is used to pass data from [org.ionproject.android.courses.CoursesFragment]
+    to [org.ionproject.android.course_details.CourseDetailsFragment]
+     */
     lateinit var courseSummary: CourseSummary
 
-    // Shared class summary between class list, favorites and class section
+    /**
+     * classSummary is used to pass data from [org.ionproject.android.course_details.CourseDetailsFragment]
+    and [org.ionproject.android.favorites.FavoritesFragment] to [org.ionproject.android.class_section.ClassSectionFragment]
+     */
     lateinit var classSummary: ClassSummary
 
 }

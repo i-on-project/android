@@ -1,6 +1,5 @@
 package org.ionproject.android.common.ionwebapi
 
-import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.Dispatchers
@@ -19,19 +18,6 @@ class JacksonIonMapper : IIonMapper {
      */
     override suspend fun parse(responseBody: String): SirenEntity =
         withContext(Dispatchers.Default) {
-            Log.println(Log.DEBUG, "COURSES", "Started parsing to SirenEntity")
-            val res = kotlin.runCatching {
-                jacksonObjMapper.readValue<SirenEntity>(responseBody)
-            }
-            if (res.isFailure) {
-                Log.println(
-                    Log.DEBUG,
-                    "COURSES",
-                    "Failed parsing to SirenEntity, exception : ${res.exceptionOrNull()}"
-                )
-                throw res.exceptionOrNull()!!
-            }
-            Log.println(Log.DEBUG, "COURSES", "Successfully parsed to SirenEntity")
-            res.getOrNull()!!
+            jacksonObjMapper.readValue<SirenEntity>(responseBody)
         }
 }
