@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home_to_curricular_terms"
             app:destination="@id/navigation_curricular_terms" />
+        <action
+            android:id="@+id/action_home_to_calendar"
+            app:destination="@id/navigation_calendar" />
     </fragment>
 
     <fragment
@@ -67,5 +70,10 @@
             android:id="@+id/action_course_details_to_class_section"
             app:destination="@id/navigation_class_section" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="org.ionproject.android.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
 </navigation>
