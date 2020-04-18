@@ -18,6 +18,6 @@ class JacksonIonMapper : IIonMapper {
      */
     override suspend fun parse(responseBody: String): SirenEntity =
         withContext(Dispatchers.Default) {
-            jacksonObjMapper.readValue(responseBody)
+            jacksonObjMapper.readValue<SirenEntity>(responseBody)
         }
 }

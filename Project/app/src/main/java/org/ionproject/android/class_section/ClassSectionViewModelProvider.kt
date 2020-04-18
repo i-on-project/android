@@ -9,7 +9,8 @@ class ClassSectionViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ClassSectionViewModel::class.java -> ClassSectionViewModel(
-                IonApplication.classesRepository
+                IonApplication.classesRepository,
+                IonApplication.favoritesRepository
             )
             else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T

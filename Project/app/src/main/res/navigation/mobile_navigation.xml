@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_class_section"
-        android:name="org.ionproject.android.ClassSectionFragment"
+        android:name="org.ionproject.android.class_section.ClassSectionFragment"
         android:label="@string/title_class_section"
         tools:layout="@layout/fragment_class_section" />
 

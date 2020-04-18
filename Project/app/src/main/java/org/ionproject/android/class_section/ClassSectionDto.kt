@@ -12,14 +12,16 @@ import java.net.URI
 fun SirenEntity.toClassSection(): ClassSection {
     val calendarURI: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
 
-    if (properties != null && properties["course"] != null && properties["class"] != null
-        && properties["id"] != null
-    ) {
+    val course = properties?.get("course")
+    val clazz = properties?.get("class")
+    val name = properties?.get("id")
+
+    if (properties != null && course != null && clazz != null && name != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return ClassSection(
-            course = properties["course"]!!,
-            calendarTerm = properties["class"]!!,
-            id = properties["id"]!!,
+            course = course,
+            calendarTerm = clazz,
+            name = name,
             calendarURI = calendarURI
         )
     }

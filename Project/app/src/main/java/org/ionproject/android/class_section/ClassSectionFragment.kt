@@ -1,19 +1,19 @@
-package org.ionproject.android
+package org.ionproject.android.class_section
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_class_section.*
-import org.ionproject.android.class_section.ClassSectionViewModel
-import org.ionproject.android.class_section.ClassSectionViewModelProvider
+import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.model.ClassSummary
 
-/**
- * A simple [Fragment] subclass.
- */
 class ClassSectionFragment : Fragment() {
 
     /**
@@ -22,6 +22,24 @@ class ClassSectionFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
     }
+
+    /**
+     * Class passed via SharedViewmodel
+     */
+    private val currClassSummary: ClassSummary by lazy {
+        sharedViewModel.classSummary
+    }
+
+    /**
+     * Obtaining Class Section's View Model
+     */
+    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(
+            this,
+            ClassSectionViewModelProvider()
+        )[ClassSectionViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,23 +51,44 @@ class ClassSectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupClassSectionDetails()
+    }
 
-        // Obtaining Class Section's View Model
-        val viewModel = ViewModelProviders
-            .of(this, ClassSectionViewModelProvider())[ClassSectionViewModel::class.java]
-
+    /**
+     * Requests the details of the current class and updates
+     * the respective UI elements with them.
+     */
+    private fun setupClassSectionDetails() {
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
         val classIDTextView = textView_class_section_id
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(sharedViewModel.classSummary)
-
-        viewModel.observeForClassSectionData(this) {
+        viewModel.getClassSectionDetails(currClassSummary) {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm
-            classIDTextView.text = it.id
+            classIDTextView.text = it.name
+            //Setup checkbox behaviour only after the details of the class are obtained
+            setupCheckboxBehaviour(checkbox_class_section_favorite)
+        }
+    }
+
+    /**
+     * Defines what happens when the checkbox is clicked
+     */
+    private fun setupCheckboxBehaviour(checkBox: CheckBox) {
+        //If the checks box was checked before, then it must be updated
+        viewModel.isThisClassFavorite(currClassSummary) {
+            checkBox.isChecked = it
+        }
+        checkBox.setOnClickListener {
+            val isChecked = checkBox.isChecked
+            if (isChecked) {
+                viewModel.addClassToFavorites(currClassSummary)
+            } else {
+                viewModel.removeClassFromFavorites(currClassSummary)
+            }
         }
     }
 }

@@ -35,4 +35,7 @@
     <string name="title_course_details">Course Details</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="hint_classTitle">The Class Title</string>
+
+    <string name="label_favorites_placeholder">%1$s - %2$s</string>
+    <string name="label_calendar_term">Calendar term</string>
 </resources>

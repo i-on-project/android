@@ -65,6 +65,7 @@ data class SirenAction(
         val name: String,
         val type: String? = null,
         val value: String? = null,
+        @JsonProperty("class") val clazz: String? = null,
         val title: String? = null
     )
 }

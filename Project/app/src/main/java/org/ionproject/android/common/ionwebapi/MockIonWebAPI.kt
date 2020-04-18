@@ -9,6 +9,7 @@ import java.net.URISyntaxException
 private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
 private const val COURSES_PATH = "/courses"
+private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 
@@ -34,11 +35,11 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH}/lsd" -> lsdMock
         "${COURSES_PATH}/m1" -> m1Mock
         "${COURSES_PATH}/alga" -> algaMock
-        "${COURSES_PATH}/alga${CLASSES_PATH}" -> algaClassesMock
-        "${COURSES_PATH}/pg${CLASSES_PATH}" -> pgClassesMock
-        "${COURSES_PATH}/lsd${CLASSES_PATH}" -> lsdClassesMock
-        "${COURSES_PATH}/m1${CLASSES_PATH}" -> m1ClassesMock
-        "${COURSES_PATH}/e${CLASSES_PATH}" -> eClassesMock
+        "${COURSES_PATH}/alga${CLASSES_PATH}/1920v" -> algaClassesMock
+        "${COURSES_PATH}/pg${CLASSES_PATH}/1920v" -> pgClassesMock
+        "${COURSES_PATH}/lsd${CLASSES_PATH}/1920v" -> lsdClassesMock
+        "${COURSES_PATH}/m1${CLASSES_PATH}/1920v" -> m1ClassesMock
+        "${COURSES_PATH}/e${CLASSES_PATH}/1920v" -> eClassesMock
         "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/1d" -> algaClassSection1DMock
         "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/1n" -> algaClassSection1NMock
         "${COURSES_PATH_V0}/pg${CLASSES_PATH}/1920v/1n" -> pgClassSection1NMock
@@ -49,6 +50,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH_V0}/m1${CLASSES_PATH}/1920v/1n" -> m1ClassSection1NMock
         "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/1d" -> eClassSection1DMock
         "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/1n" -> eClassSection1NMock
+        "${CALENDAR_TERMS_PATH_V0}" -> calendarTermsMock
         else -> throw URISyntaxException(uri.path, "Uri not implemented or invalid")
     }
 
@@ -111,3 +113,52 @@ private const val eClassSection1DMock =
     "{\"class\":[\"class\",\"section\"],\"properties\":{\"course\":\"E\",\"class\":\"s1920v\",\"id\":\"1D\"},\"entities\":[{\"class\":[\"calendar\"],\"rel\":[\"/rel/calendar\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1d/calendar\"}]}],\"actions\":[{\"name\":\"enroll\",\"title\":\"Enroll class section\",\"method\":\"POST\",\"href\":\"/v0/courses/e/classes/s1920v/1d/enroll\",\"type\":\"application/x-www-form-urlencoded\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1d\"},{\"rel\":[\"collection\"],\"href\":\"/v0/courses/e/classes/s1920v\"}]}"
 private const val eClassSection1NMock =
     "{\"class\":[\"class\",\"section\"],\"properties\":{\"course\":\"E\",\"class\":\"s1920v\",\"id\":\"1N\"},\"entities\":[{\"class\":[\"calendar\"],\"rel\":[\"/rel/calendar\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1n/calendar\"}]}],\"actions\":[{\"name\":\"enroll\",\"title\":\"Enroll class section\",\"method\":\"POST\",\"href\":\"/v0/courses/e/classes/s1920v/1n/enroll\",\"type\":\"application/x-www-form-urlencoded\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1n\"},{\"rel\":[\"collection\"],\"href\":\"/v0/courses/e/classes/s1920v\"}]}"
+
+//Calendar terms
+private const val calendarTermsMock = "{\n" +
+        "  \"class\": [ \"term\", \"collection\" ],\n" +
+        "  \"properties\": { },\n" +
+        "  \"entities\": [\n" +
+        "    {\n" +
+        "      \"class\": [ \"term\" ],\n" +
+        "      \"rel\": [ \"item\" ], \n" +
+        "      \"properties\": { \n" +
+        "        \"name\": \"1920v\"\n" +
+        "      },\n" +
+        "      \"links\": [\n" +
+        "        { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920v\" },\n" +
+        "        { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" }\n" +
+        "      ]\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"class\": [ \"term\" ],\n" +
+        "      \"rel\": [ \"item\" ], \n" +
+        "      \"properties\": { \n" +
+        "        \"name\": \"1920i\"\n" +
+        "      },\n" +
+        "      \"links\": [\n" +
+        "        { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920i\" },\n" +
+        "        { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" }\n" +
+        "      ]\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"actions\": [\n" +
+        "    {\n" +
+        "      \"name\": \"search\",\n" +
+        "      \"title\": \"Search items\",\n" +
+        "      \"method\": \"GET\",\n" +
+        "      \"href\": \"/v0/calendar-terms\",\n" +
+        "      \"isTemplated\": true,\n" +
+        "      \"type\": \"application/vnd.siren+json\",\n" +
+        "      \"fields\": [\n" +
+        "        { \"name\": \"limit\", \"type\": \"number\", \"class\": \"param/limit\" },\n" +
+        "        { \"name\": \"page\", \"type\": \"number\", \"class\": \"param/page\" }\n" +
+        "      ]\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"links\": [\n" +
+        "    { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms?page=1&limit=2\" },\n" +
+        "    { \"rel\": [ \"next\" ], \"href\": \"/v0/calendar-terms?page=2&limit=2\" },\n" +
+        "    { \"rel\": [ \"previous\" ], \"href\": \"/v0/calendar-terms?page=0&limit=2\" }\n" +
+        "  ]\n" +
+        "}"
