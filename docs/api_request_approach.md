@@ -4,7 +4,7 @@
  **Problem :** Navigation through out the app requires multiple API requests, which take time to process (http request + parsing from siren). For example, right now, going from courses to classSection requires 4 API requests which is a lot, and this a very common action within the app.
 
 **Solution**: Saving data, which is not frequently altered, locally.
-This is the ideal solution, but it's not viable since there is data that doens't changed for years, e.g: the details of a course. This means that our local database would have to save details from all courses from all programmes. And since the memory of the typical smartphone is very limited this would be a bad ideia. The solution is a hybrid, save some data locally and some remotely. 
+This is the ideal solution, but it's not viable since there is data that doesn't changed for years, e.g: the details of a course. This means that our local database would have to save details from all courses from all programmes. And since the memory of the typical smartphone is very limited this would be a bad ideia. The solution is a hybrid, save some data locally and some remotely. 
 
 **But which data should be saved and which shouldn't?**
 
