@@ -8,6 +8,7 @@
     <string name="title_class">Class</string>
     <string name="title_class_section">Class Section</string>
     <string name="title_search">Search</string>
+    <string name="title_search_results">Search results</string>
 
     <string name="optional_courses">Optional Courses</string>
     <string name="coordinator">Coordinator</string>
@@ -33,14 +34,30 @@
     <string name="label_semester">Semester</string>
     <string name="title_curricular_terms">Curricular Terms</string>
     <string name="title_course_details">Course Details</string>
+    <string name="imageView_favorite">favorite_icon</string>
+    <string name="hint_classTitle">The Class Title</string>
+
     <string name="monday_short">MON</string>
     <string name="tuesday_short">TUE</string>
-    <string name="wednesday_short">WEN</string>
+    <string name="wednesday_short">WED</string>
     <string name="thursday_short">THU</string>
     <string name="friday_short">FRI</string>
     <string name="saturday_short">SAT</string>
     <string name="sunday_short">SUN</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_favorites_placeholder">%1$s - %2$s</string>
+    <string name="label_calendar_term">Calendar term</string>
+
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="october">October</string>
+    <string name="september">September</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
 </resources>

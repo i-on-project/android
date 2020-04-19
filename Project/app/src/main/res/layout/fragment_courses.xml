@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".courses.CoursesFragment"
-    android:padding="@dimen/fragments_padding_20"
+    android:padding="@dimen/fragments_padding_10"
     >
 
     <androidx.recyclerview.widget.RecyclerView
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/optional_courses"
-        app:layout_constraintTop_toBottomOf="@id/recyclerview_courses_list">
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_courses_list"
+        >
     </Button>
 
 

@@ -4,28 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClassSectionFragment">
+    tools:context=".class_section.ClassSectionFragment">
 
-    <ImageView
-        android:id="@+id/imageview_class_section_favorite"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_favorite_border_red_24dp"
+    <CheckBox
+        android:id="@+id/checkbox_class_section_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/imageView_favorite"
+        android:button="@drawable/selector_favorite_24dp"
+        app:buttonTint="@android:color/black"
         />
-
-    <TextView
-        android:id="@+id/textview_class_section_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="The Class Title"
-        android:textSize="@dimen/all_text_18"
-        app:layout_constraintTop_toBottomOf="@id/imageview_class_section_favorite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:id="@+id/linearLayout_class_section_labels"
@@ -35,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_class_section_title">
+        app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite">
 
         <TextView
             android:id="@+id/textview_course_details_label_course"
@@ -43,13 +35,6 @@
             android:layout_height="wrap_content"
             android:text="@string/label_course"
             android:textSize="@dimen/all_text_18" />
-
-        <TextView
-            android:id="@+id/textview_class_section_label_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_teacher"
-            android:textSize="@dimen/all_text_18"/>
 
         <TextView
             android:id="@+id/textview_class_section_class_label"
@@ -64,13 +49,6 @@
             android:layout_height="wrap_content"
             android:text="@string/label_id"
             android:textSize="@dimen/all_text_18" />
-
-        <TextView
-            android:id="@+id/textview_class_section_events_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_events"
-            android:textSize="@dimen/all_text_18" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,31 +62,19 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout_class_section_labels">
 
         <TextView
-            android:id="@+id/textview_class_section_course"
+            android:id="@+id/textView_class_section_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_teacher"
+            android:id="@+id/textView_class_section_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-
-        <TextView
-            android:id="@+id/textview_class_section_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-
-        <TextView
-            android:id="@+id/textview_class_section_events"
+            android:id="@+id/textView_class_section_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/all_text_18"/>

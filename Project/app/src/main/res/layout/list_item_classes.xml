@@ -1,49 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/all_list_item_padding_20"
-    android:id="@+id/classes_list_item">
+    android:id="@+id/classes_list_item"
+    style="@style/AppTheme">
 
-    <!-- Class name -->
-    <TextView
-        android:id="@+id/textview_classes_list_item_name"
+    <Button
+        android:id="@+id/button_classes_list_item_class"
+        style="?attr/materialButtonOutlinedStyle"
         android:text="Class name"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textColor="@color/secondaryColor"
         android:textSize="17sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <!-- Teacher name section -->
-    <TextView
-        android:id="@+id/textview_classes_list_item_teacher_start"
-        android:text="@string/teacher_name_start"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textColor="@color/secondaryLightColor"
-        app:layout_constraintTop_toBottomOf="@id/textview_classes_list_item_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/textview_classes_list_item_teacher"
-        />
-    <TextView
-        android:id="@+id/textview_classes_list_item_teacher"
-        android:text="Teacher name"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="5dp"
-        android:textColor="@color/secondaryLightColor"
-        app:layout_constraintTop_toBottomOf="@id/textview_classes_list_item_name"
-        app:layout_constraintLeft_toRightOf="@id/textview_classes_list_item_teacher_start"
+        android:padding="@dimen/fragments_padding_20"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

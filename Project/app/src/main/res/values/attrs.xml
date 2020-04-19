@@ -10,19 +10,16 @@
         <attr name="monthTextColor" format="color"/>
         <attr name="yearTextColor" format="color"/>
         <attr name="weekDaysTextColor" format="color"/>
-        <attr name="monthDaysTextColor" format="color"/>
 
         <!-- Text Sizes -->
         <attr name="monthTextSize" format="dimension"/>
         <attr name="yearTextSize" format="dimension"/>
         <attr name="weekDaysTextSize" format="dimension"/>
-        <attr name="monthDaysTextSize" format="dimension"/>
 
         <!-- Text Styles -->
         <attr name="monthTextStyle" format="reference"/>
         <attr name="yearTextStyle" format="reference"/>
         <attr name="weekDaysTextStyle" format="reference"/>
-        <attr name="monthDaysTextStyle" format="reference"/>
 
         <!-- Grid Style -->
         <attr name="gridStyle" format="reference"/>
