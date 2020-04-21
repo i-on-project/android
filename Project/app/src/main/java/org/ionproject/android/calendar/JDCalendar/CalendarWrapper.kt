@@ -1,4 +1,4 @@
-package org.ionproject.android.calendar
+package org.ionproject.android.calendar.JDCalendar
 
 import android.content.Context
 import org.ionproject.android.R
@@ -17,7 +17,6 @@ class CalendarWrapper {
     val dayOfWeek get() = calendar.get(Calendar.DAY_OF_WEEK)
     val isToday get() = calendar.time.compareTo(today) == 0
 
-
     fun moveForwardMonth() = calendar.add(Calendar.MONTH, +1)
     fun moveBackwardMonth() = calendar.add(Calendar.MONTH, -1)
 
@@ -29,6 +28,13 @@ class CalendarWrapper {
     fun moveForwardDay() = calendar.add(Calendar.DAY_OF_MONTH, +1)
 
     fun getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
+
+    fun daysFromCurrent(it: Int): CalendarWrapper {
+        val calendar = CalendarWrapper()
+        calendar.calendar.time = this.calendar.time
+        calendar.calendar.add(Calendar.DAY_OF_MONTH,it)
+        return calendar
+    }
 
     private enum class Month(private val monthResId: Int) {
         JANUARY(R.string.january),

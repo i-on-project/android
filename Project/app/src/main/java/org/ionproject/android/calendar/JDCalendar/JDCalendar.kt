@@ -1,14 +1,16 @@
-package org.ionproject.android.calendar
+package org.ionproject.android.calendar.JDCalendar
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GestureDetectorCompat
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
 import org.ionproject.android.R
-import java.util.*
+import org.ionproject.android.calendar.JDCalendarAdapter
 
 
 class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
@@ -64,6 +66,14 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
                     R.styleable.JDCalendar_weekDaysTextColor,
                     Color.BLACK
                 )
+                nextButtonColor = getColor(
+                    R.styleable.JDCalendar_nextButtonColor,
+                    Color.BLACK
+                )
+                prevButtonColor = getColor(
+                    R.styleable.JDCalendar_prevButtonColor,
+                    Color.BLACK
+                )
                 monthTextSize = getDimension(
                     R.styleable.JDCalendar_monthTextSize,
                     30F
@@ -106,6 +116,8 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var monthTextColor: Int? = null
     private var yearTextColor: Int? = null
     private var weekDaysTextColor: Int? = null
+    private var nextButtonColor: Int? = null
+    private var prevButtonColor: Int? = null
     //Sizes
     private var monthTextSize: Float? = null
     private var yearTextSize: Float? = null
@@ -116,9 +128,19 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var weekDaysTextStyle: Int? = null
     private var gridStyle: Int? = null
 
-    private val calendar = CalendarWrapper()
+    /**
+     * This is used to maintain track of the calendar.
+     * Contains an instance of java calendar, which has
+     * methods to move the calendar, such as moveForwardMonth() to advance a month
+     */
+    private val calendar =
+        CalendarWrapper()
 
-    private val baseAdapter = BaseCalendarAdapter(adapter, calendar)
+    private val baseAdapter =
+        BaseCalendarAdapter(
+            adapter,
+            calendar
+        )
 
     //Constraint layout view components
     private val gridView = gridview_calendar
@@ -142,19 +164,25 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
      */
     /**
      * Updates the view components with the values
-     * from the custom properties (e.g textColot, textSize etc..)
+     * from the custom attributes (e.g textColot, textSize etc..)
      */
-    private fun applyCustomProperties() {
+    private fun applyCustomAttributes() {
         applyColors()
         applySizes()
         //applyStyle()
     }
 
+    /**
+     * Applies all color custom attributes to its respective views
+     * (e.g TextColor or TextBackgroundColor)
+     */
     private fun applyColors() {
         topSectionBackgroundColor?.let { topSection.setBackgroundColor(it) }
         weekDaysHeaderBackgroundColor?.let { calendarHeader.setBackgroundColor(it) }
         monthTextColor?.let { monthTextView.setTextColor(it) }
         yearTextColor?.let { yearTextView.setTextColor(it) }
+        nextButtonColor?.let { nextButton.setColorFilter(it) }
+        prevButtonColor?.let { prevButton.setColorFilter(it) }
         weekDaysTextColor?.let {
             monTextView.setTextColor(it)
             tueTextView.setTextColor(it)
@@ -166,6 +194,10 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
+    /**
+     * Applies all dimension custom attributes to its respective views
+     * (e.g TextSize)
+     */
     private fun applySizes() {
         monthTextSize?.let { monthTextView.textSize = it }
         yearTextSize?.let { yearTextView.textSize = it }
@@ -180,12 +212,16 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
+    /**
+     * Applies all style custom attributes to its respective views
+     * (e.g TextSize)
+     */
     private fun applyStyle() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     init {
-        applyCustomProperties()
+        applyCustomAttributes()
         gridView.adapter = baseAdapter
         updateTopSection() //Setting current month
         nextButton.setOnClickListener {
@@ -198,13 +234,38 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             baseAdapter.notifyDataSetChanged()
             updateTopSection()
         }
+
+        val gestor = GestureDetectorCompat(context, object : GestureListener() {
+            override fun onSwipeRight() {
+                calendar.moveBackwardMonth()
+                baseAdapter.notifyDataSetChanged()
+                updateTopSection()
+            }
+
+            override fun onSwipeLeft() {
+                calendar.moveForwardMonth()
+                baseAdapter.notifyDataSetChanged()
+                updateTopSection()
+            }
+
+
+        })
+
+        gridView.setOnTouchListener(object : OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                gestor.onTouchEvent(event)
+                return true
+            }
+
+        })
+
+
     }
 
     private fun updateTopSection() {
-        monthTextView.setText(calendar.getMonthName(context))
-        yearTextView.setText("${calendar.year}")
+        monthTextView.text = calendar.getMonthName(context)
+        yearTextView.text = "${calendar.year}"
     }
-
 
 
 }

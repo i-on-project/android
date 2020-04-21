@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".calendar.CalendarFragment">
 
-    <org.ionproject.android.calendar.JDCalendar
+    <org.ionproject.android.calendar.JDCalendar.JDCalendar
         android:id="@+id/jdcalendar_calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         custom:topSectionBackgroundColor="@color/primaryLightColor"
-        custom:weekDaysHeaderBackgroundColor="@color/secondaryLightColor"
+        custom:yearTextColor="@color/primaryTextColor"
+        custom:monthTextColor="@color/primaryTextColor"
+        custom:prevButtonColor="@color/primaryTextColor"
+        custom:nextButtonColor="@color/primaryTextColor"
         />
 
 </FrameLayout>

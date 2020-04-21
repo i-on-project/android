@@ -1,6 +1,5 @@
-package org.ionproject.android.calendar
+package org.ionproject.android.calendar.JDCalendar
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -33,10 +32,10 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        if(parent == null)
+        if (parent == null)
             throw IllegalArgumentException("Parent is null")
         var vh: T? = viewHolders.elementAtOrNull(position)
-        if(vh == null) {
+        if (vh == null) {
             vh = calendarAdapter.onCreateViewHolder(parent)
             viewHolders.add(vh)
         }
@@ -67,21 +66,25 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
         If the week day is sunday, its value is 1 because in USA the weeks start in sunday
         therefore we have to add 5 instead of subtracting 2
          */
-        if (weekDay == Calendar.SUNDAY)
-            calendar.moveDays(-(weekDay + 5))
+        /*calendar = if (weekDay == Calendar.SUNDAY)
+            calendar.daysFromCurrent(-(weekDay + 5))
         else
-            calendar.moveDays(-(weekDay - 2))
+            calendar.daysFromCurrent(-(weekDay - 2))
 
-        while (daysList.count() < NUMB_OF_DAYS) {
-            val monthOfDay = calendar.month
-            daysList.add(Day(calendar.day,monthOfDay == currMonth,calendar.isToday))
-            calendar.moveForwardDay()
-        }
+        daysList.addAll((0..NUMB_OF_DAYS).map {
+            val calendar = calendar.daysFromCurrent(it)
+            Day(
+                value = calendar.day,
+                isDayOfCurrMonth = calendar.month == currMonth,
+                isToday = calendar.isToday
+            )
+        })*/
+
         /*
         Revert calendar to curr month, day 1 because otherwise when we add or
         subtract a month it may advance an additional month
          */
-        calendar.moveTo(currYear,currMonth,1)
+        calendar.moveTo(currYear, currMonth, 1)
     }
 
     override fun notifyDataSetChanged() {
@@ -93,6 +96,7 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
 
     override fun getItemId(position: Int): Long = viewHolders[position].hashCode().toLong()
 
-    override fun getCount(): Int = NUMB_OF_DAYS
+    override fun getCount(): Int =
+        NUMB_OF_DAYS
 }
 

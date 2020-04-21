@@ -23,5 +23,9 @@
 
         <!-- Grid Style -->
         <attr name="gridStyle" format="reference"/>
+
+        <!-- Button Colors -->
+        <attr name="nextButtonColor" format="color"/>
+        <attr name="prevButtonColor" format="color"/>
     </declare-styleable>
 </resources>

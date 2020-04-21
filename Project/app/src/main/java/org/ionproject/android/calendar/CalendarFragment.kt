@@ -24,6 +24,5 @@ class CalendarFragment : Fragment() {
 
         val jdCalendar = jdcalendar_calendar
         jdCalendar.adapter = JDCalendarAdapter()
-
     }
 }
