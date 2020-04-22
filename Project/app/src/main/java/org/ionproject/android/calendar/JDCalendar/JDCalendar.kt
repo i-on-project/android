@@ -128,18 +128,9 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var weekDaysTextStyle: Int? = null
     private var gridStyle: Int? = null
 
-    /**
-     * This is used to maintain track of the calendar.
-     * Contains an instance of java calendar, which has
-     * methods to move the calendar, such as moveForwardMonth() to advance a month
-     */
-    private val calendar =
-        CalendarWrapper()
-
     private val baseAdapter =
         BaseCalendarAdapter(
-            adapter,
-            calendar
+            adapter
         )
 
     //Constraint layout view components
@@ -225,26 +216,22 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gridView.adapter = baseAdapter
         updateTopSection() //Setting current month
         nextButton.setOnClickListener {
-            calendar.moveForwardMonth()
-            baseAdapter.notifyDataSetChanged()
+            baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(1)
             updateTopSection()
         }
         prevButton.setOnClickListener {
-            calendar.moveBackwardMonth()
-            baseAdapter.notifyDataSetChanged()
+            baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(-1)
             updateTopSection()
         }
 
         val gestor = GestureDetectorCompat(context, object : GestureListener() {
             override fun onSwipeRight() {
-                calendar.moveBackwardMonth()
-                baseAdapter.notifyDataSetChanged()
+                baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(-1)
                 updateTopSection()
             }
 
             override fun onSwipeLeft() {
-                calendar.moveForwardMonth()
-                baseAdapter.notifyDataSetChanged()
+                baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(1)
                 updateTopSection()
             }
 
@@ -256,15 +243,14 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
                 gestor.onTouchEvent(event)
                 return true
             }
-
         })
 
 
     }
 
     private fun updateTopSection() {
-        monthTextView.text = calendar.getMonthName(context)
-        yearTextView.text = "${calendar.year}"
+        monthTextView.text = baseAdapter.calendar.getMonthName(context)
+        yearTextView.text = "${baseAdapter.calendar.year}"
     }
 
 
