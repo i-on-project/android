@@ -114,7 +114,6 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout_course_details_term_selection_section"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

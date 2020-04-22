@@ -21,7 +21,7 @@
     <string name="label_curricular_term">Curricular Term:</string>
     <string name="label_classes">Classes:</string>
     <string name="label_enroll">Enroll:</string>
-    <string name="label_class">Class:</string>
+    <string name="label_class">Class</string>
     <string name="label_id">ID:</string>
     <string name="label_events">Events:</string>
     <string name="label_teacher">Teacher:</string>
@@ -38,4 +38,5 @@
 
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
+    <string name="label_calendar_termV2">Calendar term:</string>
 </resources>
