@@ -5,10 +5,7 @@ import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
-import org.ionproject.android.common.repositories.CalendarTermRepository
-import org.ionproject.android.common.repositories.ClassesRepository
-import org.ionproject.android.common.repositories.CourseRepository
-import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.common.repositories.*
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -21,6 +18,7 @@ class IonApplication : Application() {
         lateinit var classesRepository: ClassesRepository
         lateinit var favoritesRepository: FavoriteRepository
         lateinit var calendarTermRepository: CalendarTermRepository
+        lateinit var eventsRepository: EventsRepository
     }
 
     override fun onCreate() {
@@ -52,6 +50,8 @@ class IonApplication : Application() {
             FavoriteRepository(db.FavoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI)
+        eventsRepository =
+            EventsRepository(webAPI)
     }
 
 }

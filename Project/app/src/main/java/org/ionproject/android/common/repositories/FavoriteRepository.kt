@@ -8,7 +8,7 @@ import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 
 /**
- * This type represents a Favorite repository, ir performs requests
+ * This type represents a Favorite repository, it performs requests
  * to the local database.
  *
  * All methods run the coroutines with the [Dispatchers.IO]
