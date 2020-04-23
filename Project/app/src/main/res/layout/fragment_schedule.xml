@@ -2,42 +2,148 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".schedule.ScheduleFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_schedule_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/primaryLightColor"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:src="@drawable/ic_left_arrow_black_24dp"
-        >
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
     <!-- Hours -->
+    <ImageView
+        android:id="@+id/button_schedule_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/label_return"
+        android:src="@drawable/ic_left_arrow_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
+        app:layout_constraintEnd_toEndOf="@id/recyclerview_schedule_hours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
         android:id="@+id/recyclerview_schedule_hours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/button_schedule_back"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintEnd_toEndOf="@+id/button_schedule_back"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
+        tools:listitem="@layout/list_item_schedule_hours_minutes" />
+
+    <!-- Days of the week -->
+    <LinearLayout
+        android:id="@+id/linearlayout_schedule_weekdays_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_schedule_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_calendar_header_monday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/monday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_tuesday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/tuesday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_wednesday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/wednesday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_thursday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/thursday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_friday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/friday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_saturday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/saturday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_sunday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_outline"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/fragments_padding_10"
+            android:text="@string/sunday"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <GridView
-        android:layout_width="wrap_content"
+        android:id="@+id/gridview_schedule_events"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:gravity="center_horizontal"
         android:numColumns="7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/recyclerview_schedule_hours"
-        >
-    </GridView>
+        android:stretchMode="columnWidth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_schedule_hours"
+        app:layout_constraintTop_toBottomOf="@id/linearlayout_schedule_weekdays_header"
+        tools:listitem="@layout/grid_item_schedule"></GridView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
