@@ -6,19 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".schedule.ScheduleFragment">
 
-    <TextView
-        android:id="@+id/text_schedule"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_schedule_back"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="@string/title_schedule"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@color/primaryLightColor"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:src="@drawable/ic_left_arrow_black_24dp"
+        >
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <!-- Hours -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recyclerview_schedule_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/button_schedule_back"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/recyclerview_schedule_hours"
+        >
+    </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
