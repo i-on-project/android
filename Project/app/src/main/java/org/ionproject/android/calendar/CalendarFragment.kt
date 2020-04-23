@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
+import org.ionproject.android.calendar.JDCalendar.JDCalendarAdapter
 
 class CalendarFragment : Fragment() {
 
@@ -24,9 +25,10 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val jdCalendar = jdcalendar_calendar
-        val calendarAdapter = JDCalendarAdapter { day, view ->
-            Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT).show()
-        }
+        val calendarAdapter =
+            JDCalendarAdapter { day, view ->
+                Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT).show()
+            }
         jdCalendar.adapter = calendarAdapter
     }
 }

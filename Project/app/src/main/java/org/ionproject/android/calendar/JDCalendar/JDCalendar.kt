@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
 import org.ionproject.android.R
-import org.ionproject.android.calendar.JDCalendarAdapter
 
 /**
  * This type represents a calendar and exposes some properties and methods for customization
