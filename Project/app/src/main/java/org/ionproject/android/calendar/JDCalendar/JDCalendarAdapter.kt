@@ -36,7 +36,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
     }
 
     class JDViewHolder(
-        private val view: View,
+        view: View,
         private val monthDayOnClick: MonthDayClickListener
     ) :
         CalendarAdapter.ViewHolder(view) {
