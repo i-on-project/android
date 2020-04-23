@@ -26,7 +26,7 @@ class CalendarFragment : Fragment() {
 
         val jdCalendar = jdcalendar_calendar
         val calendarAdapter =
-            JDCalendarAdapter { day, view ->
+            JDCalendarAdapter { day, view, ImageView ->
                 Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT).show()
             }
         jdCalendar.adapter = calendarAdapter

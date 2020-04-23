@@ -29,6 +29,8 @@ val Calendar.isToday: Boolean
         return day == today.day && month == today.month && year == today.year
     }
 
+const val NUMBER_OF_WEEK_DAYS = 7
+
 /**
  * Returns a new calendar instance which
  * has been advanced N days from the day
@@ -76,6 +78,49 @@ val Calendar.lastDayOfMonth: Int
         calendar.add(Calendar.DAY_OF_MONTH, -1)
         return calendar.day
     }
+
+/**
+ * Updates [daysList] with a new list containing the days of the current
+ * month represented in the calendar
+ *
+ * Logic:
+ * Check on which week day the month starts (e.g tuesday,friday)
+ * Obtain previous month days (e.g 29,30)
+ * Obtain current month days (e.g 01,02,03,04,05,06...31)
+ * Obtain next month days (e.g 1,2)
+ */
+fun Calendar.getDaysOfMonth(): List<Day> {
+
+    var movedCalendar = this.firstDayOfMonth()
+
+    val currMonth = movedCalendar.month
+    //Get day of week on which the month starts
+    val weekDay = movedCalendar.dayOfWeek
+
+    val numbOfDays =
+        if (weekDay == Calendar.SATURDAY && movedCalendar.lastDayOfMonth == 31 || weekDay == Calendar.SUNDAY)
+            6 * NUMBER_OF_WEEK_DAYS
+        else
+            5 * NUMBER_OF_WEEK_DAYS
+
+    //If the week day is sunday, its value is 1 because in USA the weeks start in sunday
+    //therefore we have to add 5 instead of subtracting 2
+    movedCalendar = if (weekDay == Calendar.SUNDAY)
+        movedCalendar.daysFromNow(-(weekDay + 5))
+    else
+        movedCalendar.daysFromNow(-(weekDay - 2))
+
+    return (0 until numbOfDays).map {
+        val calendar = movedCalendar.daysFromNow(it)
+        Day(
+            value = calendar.day,
+            isDayOfCurrMonth = calendar.month == currMonth,
+            isToday = calendar.isToday
+        )
+
+    }
+}
+
 
 /** Return the name of the month at which this instance is at */
 fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)

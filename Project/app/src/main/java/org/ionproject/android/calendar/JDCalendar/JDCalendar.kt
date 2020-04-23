@@ -22,9 +22,9 @@ import org.ionproject.android.R
  */
 class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
-    /**
-     * ----------------------------------Public methods-----------------------------------
-     */
+
+     //----------------------------------Public methods-----------------------------------
+
     var adapter = JDCalendarAdapter()
         set(value) {
             field = value
@@ -32,12 +32,10 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
 
 
-    /*
-    Inflating calendar layout, this has to be done before obtaining
-    the items from the UI. Since it is above the properties, it is executed first.
 
-    Obtaining the custom attributes values and assigning them to fields.
-     */
+    // Inflating calendar layout, this has to be done before obtaining
+    // the items from the UI. Since it is above the properties, it is executed first.
+    // Obtaining the custom attributes values and assigning them to fields.
     init {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.view_jdcalendar, this, true)
@@ -115,8 +113,8 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
-    //Custom Attributes
-    //Colors
+    // Custom Attributes
+    // Colors
     private var topSectionBackgroundColor: Int? = null
     private var weekDaysHeaderBackgroundColor: Int? = null
     private var monthDaysGridBackGroundColor: Int? = null
@@ -125,22 +123,22 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var weekDaysTextColor: Int? = null
     private var nextButtonColor: Int? = null
     private var prevButtonColor: Int? = null
-    //Sizes
+    // Sizes
     private var monthTextSize: Float? = null
     private var yearTextSize: Float? = null
     private var weekDaysTextSize: Float? = null
-    //Styles
+    // Styles
     private var monthTextStyle: Int? = null
     private var yearTextStyle: Int? = null
     private var weekDaysTextStyle: Int? = null
     private var gridStyle: Int? = null
 
-    //Constraint layout view components
+    // Constraint layout view components
     private val gridView = gridview_calendar
     private val topSection = layout_date_display
     private val calendarHeader = layout_calendar_header
     private val exportButton = imageview_calendar_export
-    //Public properties
+    // Public properties
     val nextButton = imageview_calendar_next
     val prevButton = imageview_calendar_prev
     val monthTextView = textview_date_display_month
@@ -199,9 +197,9 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         })
     }
 
-    /**
-     * --------------------------Private methods-----------------------------------
-     */
+
+     //--------------------------Private methods-----------------------------------
+
     /**
      * Updates the view components with the values
      * from the custom attributes (e.g textColot, textSize etc..)
