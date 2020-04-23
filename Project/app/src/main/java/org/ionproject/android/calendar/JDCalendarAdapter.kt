@@ -9,16 +9,27 @@ import org.ionproject.android.R
 import org.ionproject.android.calendar.JDCalendar.CalendarAdapter
 import org.ionproject.android.calendar.JDCalendar.Day
 
-class JDCalendarAdapter : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
+typealias MonthDayClickListener = ((Day, View) -> Unit)?
 
-    override fun onCreateViewHolder(parent: ViewGroup): JDViewHolder {
-        //TODO Check the attach to root parameter
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.grid_item_jdcalendar, parent, false)
-        return JDViewHolder(view)
+class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
+
+    /**
+     * Registers a listener for the OnClickEvent off all days of the month
+     */
+    constructor(monthDayClickListener: MonthDayClickListener) : this() {
+        this.monthDayClickListener = monthDayClickListener
     }
 
-    class JDViewHolder(view: View) : CalendarAdapter.ViewHolder(view) {
+    private var monthDayClickListener: MonthDayClickListener = null
+
+    override fun onCreateViewHolder(parent: ViewGroup): JDViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.grid_item_jdcalendar, parent, false)
+        return JDViewHolder(view, monthDayClickListener)
+    }
+
+    class JDViewHolder(private val view: View, private val monthDayOnClick: MonthDayClickListener) :
+        CalendarAdapter.ViewHolder(view) {
 
         val dayTextView = view.textview_list_item_calendar_day
         val eventImageView = view.imageview_list_item_calendar_event
@@ -33,6 +44,11 @@ class JDCalendarAdapter : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
                 textColor = Color.LTGRAY
             dayTextView.setTextColor(textColor)
             dayTextView.text = "${day.value}"
+            monthDayOnClick?.let { onClick ->
+                view.setOnClickListener {
+                    onClick(day, view)
+                }
+            }
         }
     }
 }

@@ -12,7 +12,15 @@ import kotlinx.android.synthetic.main.view_jdcalendar.view.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.JDCalendarAdapter
 
-
+/**
+ * This type represents a calendar and exposes some properties and methods for customization
+ *
+ * The instantiation logic is as follows:
+ * 1ª - first init block inflates the layout and obtain the custom attributes
+ * 2ª - view properties are instantiated now that the layout has been inflated
+ * 3ª - second init block applies custom attributes and behaviour to the views
+ * that have now been instantiated
+ */
 class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
     /**
@@ -128,27 +136,69 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var weekDaysTextStyle: Int? = null
     private var gridStyle: Int? = null
 
+    //Constraint layout view components
+    private val gridView = gridview_calendar
+    private val topSection = layout_date_display
+    private val calendarHeader = layout_calendar_header
+    private val exportButton = imageview_calendar_export
+    //Public properties
+    val nextButton = imageview_calendar_next
+    val prevButton = imageview_calendar_prev
+    val monthTextView = textview_date_display_month
+    val yearTextView = textview_date_display_year
+    val mondayTextView = textview_calendar_header_monday
+    val tuesdayTextView = textview_calendar_header_tuesday
+    val wednesday = textview_calendar_header_wednesday
+    val thursdayTextView = textview_calendar_header_thursday
+    val fridayTextView = textview_calendar_header_friday
+    val saturdayTextView = textview_calendar_header_saturday
+    val sundayTextView = textview_calendar_header_sunday
+
+    /**
+     * Based adapter which is used by the gridview to instantiate the child views.
+     * Also holds the calendar instance.
+     */
     private val baseAdapter =
         BaseCalendarAdapter(
             adapter
         )
 
-    //Constraint layout view components
-    private val gridView = gridview_calendar
-    private val topSection = layout_date_display
-    private val calendarHeader = layout_calendar_header
-    private val nextButton = imageview_calendar_next
-    private val prevButton = imageview_calendar_prev
-    private val exportButton = imageview_calendar_export
-    private val monthTextView = textview_date_display_month
-    private val yearTextView = textview_date_display_year
-    private val monTextView = textview_calendar_header_monday
-    private val tueTextView = textview_calendar_header_tuesday
-    private val wedTextView = textview_calendar_header_wednesday
-    private val thuTextView = textview_calendar_header_thursday
-    private val friTextView = textview_calendar_header_friday
-    private val satTextView = textview_calendar_header_saturday
-    private val sunTextView = textview_calendar_header_sunday
+    /**
+     * Applies all custom attributes to its respective view elements
+     * Adds behaviour to each view element.
+     */
+    init {
+        applyCustomAttributes()
+        gridView.adapter = baseAdapter
+        updateTopSection() //Setting current month
+        nextButton.setOnClickListener {
+            baseAdapter.advanceMonths(1)
+            updateTopSection()
+        }
+        prevButton.setOnClickListener {
+            baseAdapter.advanceMonths(-1)
+            updateTopSection()
+        }
+
+        val gestor = GestureDetectorCompat(context, object : GestureListener() {
+            override fun onSwipeRight() {
+                baseAdapter.advanceMonths(-1)
+                updateTopSection()
+            }
+
+            override fun onSwipeLeft() {
+                baseAdapter.advanceMonths(1)
+                updateTopSection()
+            }
+        })
+
+        gridView.setOnTouchListener(object : OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                gestor.onTouchEvent(event)
+                return true
+            }
+        })
+    }
 
     /**
      * --------------------------Private methods-----------------------------------
@@ -175,13 +225,13 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         nextButtonColor?.let { nextButton.setColorFilter(it) }
         prevButtonColor?.let { prevButton.setColorFilter(it) }
         weekDaysTextColor?.let {
-            monTextView.setTextColor(it)
-            tueTextView.setTextColor(it)
-            wedTextView.setTextColor(it)
-            thuTextView.setTextColor(it)
-            friTextView.setTextColor(it)
-            satTextView.setTextColor(it)
-            sunTextView.setTextColor(it)
+            mondayTextView.setTextColor(it)
+            tuesdayTextView.setTextColor(it)
+            wednesday.setTextColor(it)
+            thursdayTextView.setTextColor(it)
+            fridayTextView.setTextColor(it)
+            saturdayTextView.setTextColor(it)
+            sundayTextView.setTextColor(it)
         }
     }
 
@@ -193,13 +243,13 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         monthTextSize?.let { monthTextView.textSize = it }
         yearTextSize?.let { yearTextView.textSize = it }
         weekDaysTextSize?.let {
-            monTextView.textSize = it
-            tueTextView.textSize = it
-            wedTextView.textSize = it
-            thuTextView.textSize = it
-            friTextView.textSize = it
-            satTextView.textSize = it
-            sunTextView.textSize = it
+            mondayTextView.textSize = it
+            tuesdayTextView.textSize = it
+            wednesday.textSize = it
+            thursdayTextView.textSize = it
+            fridayTextView.textSize = it
+            saturdayTextView.textSize = it
+            sundayTextView.textSize = it
         }
     }
 
@@ -211,43 +261,9 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    init {
-        applyCustomAttributes()
-        gridView.adapter = baseAdapter
-        updateTopSection() //Setting current month
-        nextButton.setOnClickListener {
-            baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(1)
-            updateTopSection()
-        }
-        prevButton.setOnClickListener {
-            baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(-1)
-            updateTopSection()
-        }
-
-        val gestor = GestureDetectorCompat(context, object : GestureListener() {
-            override fun onSwipeRight() {
-                baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(-1)
-                updateTopSection()
-            }
-
-            override fun onSwipeLeft() {
-                baseAdapter.calendar = baseAdapter.calendar.monthsFromNow(1)
-                updateTopSection()
-            }
-
-
-        })
-
-        gridView.setOnTouchListener(object : OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                gestor.onTouchEvent(event)
-                return true
-            }
-        })
-
-
-    }
-
+    /**
+     * Updates the text of month and year of the calendar.
+     */
     private fun updateTopSection() {
         monthTextView.text = baseAdapter.calendar.getMonthName(context)
         yearTextView.text = "${baseAdapter.calendar.year}"
