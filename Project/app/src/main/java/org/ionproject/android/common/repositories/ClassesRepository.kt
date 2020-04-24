@@ -9,6 +9,7 @@ import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
+import org.ionproject.android.common.siren.SirenEntity
 import org.ionproject.android.course_details.toClassSummaryList
 import java.net.URI
 
@@ -19,7 +20,7 @@ class ClassesRepository(
 
     suspend fun getClassSection(classSummary: ClassSummary): ClassSection {
         return ionWebAPI
-            .getFromURI(classSummary.detailsUri)
+            .getFromURI(classSummary.detailsUri, SirenEntity::class.java)
             .toClassSection()
     }
 
@@ -35,7 +36,10 @@ class ClassesRepository(
     ): List<ClassSummary> {
         if (course.classesUri != null) {
             return ionWebAPI
-                .getFromURI(course.classesUri.fromCalendarTerm(calendarTerm))
+                .getFromURI(
+                    course.classesUri.fromCalendarTerm(calendarTerm),
+                    SirenEntity::class.java
+                )
                 .toClassSummaryList()
         }
         //Some courses may not have classes in a certain term, in those cases we return an emptyList

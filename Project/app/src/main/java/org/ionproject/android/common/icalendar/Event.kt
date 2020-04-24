@@ -9,9 +9,9 @@ import org.ionproject.android.common.siren.SubEntity
  */
 data class Event(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: EventProperties? = null,
+    val properties: EventProperties,
     val entities: SubEntity,
-    val links: SirenLink? = null
+    val links: List<SirenLink>
 )
 
 data class EventProperties(

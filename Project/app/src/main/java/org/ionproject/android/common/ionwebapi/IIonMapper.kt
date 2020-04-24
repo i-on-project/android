@@ -8,6 +8,6 @@ interface IIonMapper {
     This method should parse a String response from
     the i-on Web API to a [SirenEntity]
      */
-    suspend fun parse(responseBody: String): SirenEntity
+    suspend fun <T> parse(responseBody: String, klass: Class<T>): T
 
 }

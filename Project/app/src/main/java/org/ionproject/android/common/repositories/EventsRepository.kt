@@ -1,7 +1,9 @@
 package org.ionproject.android.common.repositories
 
+import org.ionproject.android.common.icalendar.Event
+import org.ionproject.android.common.icalendar.ExamSummary
+import org.ionproject.android.common.icalendar.toExamSummary
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 
 /**
@@ -16,7 +18,9 @@ class EventsRepository(
     /**
      * This will be a test to get 1st PG Exam from semester 1920v
      */
-    suspend fun getFirstPGExam(uri: URI): SirenEntity {
-        return ionWebAPI.getFromURI(uri)
+    suspend fun getFirstPGExam(uri: URI): ExamSummary {
+        return ionWebAPI
+            .getFromURI(uri, Event::class.java)
+            .toExamSummary()
     }
 }

@@ -3,6 +3,7 @@ package org.ionproject.android.common.repositories
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.siren.SirenEntity
 import org.ionproject.android.course_details.toCourse
 import org.ionproject.android.courses.toCourseSummaryList
 import java.net.URI
@@ -25,7 +26,9 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
     suspend fun getAllCourses(): List<CourseSummary> {
         //TODO This variable is temporary, its here until the read API has curricular terms
         val uri = URI("/v0/courses")
-        return ionWebAPI.getFromURI(uri).toCourseSummaryList()
+        return ionWebAPI
+            .getFromURI(uri, SirenEntity::class.java)
+            .toCourseSummaryList()
     }
 
     /**
@@ -36,7 +39,8 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
      */
     suspend fun getCourseDetails(courseSummary: CourseSummary): Course {
         return ionWebAPI.getFromURI(
-            courseSummary.detailsUri
+            courseSummary.detailsUri,
+            SirenEntity::class.java
         ).toCourse()
     }
 
