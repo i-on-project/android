@@ -5,48 +5,37 @@
     style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".schedule.ScheduleFragment">
-
-    <!-- Hours -->
-    <ImageView
-        android:id="@+id/button_schedule_back"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/label_return"
-        android:src="@drawable/ic_left_arrow_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
-        app:layout_constraintEnd_toEndOf="@id/recyclerview_schedule_hours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_schedule_hours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/button_schedule_back"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
-        tools:listitem="@layout/list_item_schedule_hours_minutes" />
+    tools:context=".schedule.ScheduleFragment"
+    android:theme="@style/AppTheme"
+    >
 
     <!-- Days of the week -->
     <LinearLayout
         android:id="@+id/linearlayout_schedule_weekdays_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_schedule_back"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Hours -->
+        <Button
+            android:id="@+id/button_schedule_back"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/label_return"
+            android:drawableLeft="@drawable/ic_left_arrow_black_24dp"
+            />
 
         <TextView
             android:id="@+id/textview_calendar_header_monday"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/monday"
@@ -58,8 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/tuesday"
@@ -71,8 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/wednesday"
@@ -84,8 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/thursday"
@@ -97,8 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/friday"
@@ -110,8 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/saturday"
@@ -123,8 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_rectangle_outline"
-            android:backgroundTint="@android:color/white"
+            android:background="@drawable/shape_rectangle_primary_color"
             android:gravity="center"
             android:padding="@dimen/fragments_padding_10"
             android:text="@string/sunday"
@@ -132,18 +115,14 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/gridview_schedule_events"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_schedule_hours"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:gravity="center_horizontal"
-        android:numColumns="7"
-        android:stretchMode="columnWidth"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerview_schedule_hours"
-        app:layout_constraintTop_toBottomOf="@id/linearlayout_schedule_weekdays_header"
-        tools:listitem="@layout/grid_item_schedule"></GridView>
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
+        tools:listitem="@layout/list_item_schedule_hours_minutes" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
