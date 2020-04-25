@@ -17,7 +17,7 @@ class MomentUnitTests {
     fun additionOverflow_isCorrect() {
         val moment = Moment(23,0)
         val newMoment = moment + Moment.OneHour
-        assertEquals(1, newMoment.hours)
+        assertEquals(0, newMoment.hours)
     }
 
     @Test
