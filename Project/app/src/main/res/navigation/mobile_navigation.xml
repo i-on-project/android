@@ -72,5 +72,10 @@
         android:name="org.ionproject.android.search.SearchResultsFragment"
         android:label="fragment_search_results"
         tools:layout="@layout/fragment_search_results" />
+    <fragment
+        android:id="@+id/programmesFragment"
+        android:name="org.ionproject.android.programmes.ProgrammesFragment"
+        android:label="fragment_programmes"
+        tools:layout="@layout/fragment_programmes" />
 
 </navigation>
