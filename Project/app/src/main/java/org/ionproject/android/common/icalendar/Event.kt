@@ -9,25 +9,29 @@ import org.ionproject.android.common.siren.SubEntity
  */
 data class Event(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: EventProperties,
-    val entities: SubEntity,
+    val properties: Properties,
+    val entities: List<SubEntity>,
     val links: List<SirenLink>
 )
 
-data class EventProperties(
-    val uid: ParameterValue,
-    val summary: ParameterValue? = null,
-    val description: ParameterValue? = null,
-    val categories: ParameterValue? = null,
-    val created: ParameterValue,
-    val dtstamp: ParameterValue? = null,
-    val dtstart: ParameterValue,
-    val dtend: ParameterValue? = null,
-    val duration: ParameterValue? = null
+data class Properties(
+    val type: String? = null,
+    val properties: EventProperties
 )
 
-data class ParameterValue(
-    val parameters: Any,
-    val value: Any
+data class EventProperties(
+    val uid: Value,
+    val summary: Value? = null,
+    val description: Value? = null,
+    val categories: Value? = null,
+    val created: Value? = null,
+    val dtstamp: Value? = null,
+    val dtstart: Value? = null,
+    val dtend: Value? = null,
+    val duration: Value? = null
+)
+
+data class Value(
+    val value: String
 )
 

@@ -8,11 +8,13 @@ import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.ClassSummary
+import java.net.URI
 
 class ClassSectionFragment : Fragment() {
 
@@ -69,8 +71,30 @@ class ClassSectionFragment : Fragment() {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm
             classIDTextView.text = it.name
+
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
+
+            // Get all exams for this course
+            requestExamEvents()
+        }
+    }
+
+    private fun requestExamEvents() {
+        val examsList = recyclerview_class_section_exams
+        val examsListAdapter = ExamsListAdapter(viewModel)
+
+        examsList.layoutManager = LinearLayoutManager(context)
+        examsList.adapter = examsListAdapter
+
+        // TODO: Don't make hardcoded uris to get exams
+        val uris = listOf(
+            URI("/v0/courses/1/classes/1920v/calendar/1234"),
+            URI("/v0/courses/1/classes/1920v/calendar/1235")
+        )
+
+        viewModel.getExams(uris) {
+            examsListAdapter.notifyDataSetChanged()
         }
     }
 

@@ -25,6 +25,7 @@
     <string name="label_id">ID:</string>
     <string name="label_events">Events:</string>
     <string name="label_teacher">Teacher:</string>
+    <string name="label_exams">Exams:</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>

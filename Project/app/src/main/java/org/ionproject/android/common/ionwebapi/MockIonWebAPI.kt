@@ -8,7 +8,6 @@ import java.net.URISyntaxException
 private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
 private const val COURSES_PATH = "/courses"
-private const val CALENDAR_COMPONENTS = "calendar/components"
 private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
@@ -50,16 +49,16 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH_V0}/m1${CLASSES_PATH}/1920v/1n" -> m1ClassSection1NMock
         "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/1d" -> eClassSection1DMock
         "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/1n" -> eClassSection1NMock
-        "${COURSES_PATH_V0}/pg${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1234" -> pg1stexam
-        "${COURSES_PATH_V0}/pg${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1235" -> pg2ndexam
-        "${COURSES_PATH_V0}/lsd${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1236" -> lsd1stexam
-        "${COURSES_PATH_V0}/lsd${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1237" -> lsd2ndexam
-        "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1238" -> alga1stExam
-        "${COURSES_PATH_V0}/alga${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1239" -> alga2ndExam
-        "${COURSES_PATH_V0}/m1${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1240" -> m1FirstExam
-        "${COURSES_PATH_V0}/m1${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1241" -> m1SecondExam
-        "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1242" -> e1stExam
-        "${COURSES_PATH_V0}/e${CLASSES_PATH}/1920v/${CALENDAR_COMPONENTS}/1243" -> e2ndExam
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/calendar/1234" -> pg1stexam
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/calendar/1235" -> pg2ndexam
+        "${COURSES_PATH_V0}/2${CLASSES_PATH}/1920v/calendar/1236" -> lsd1stexam
+        "${COURSES_PATH_V0}/2${CLASSES_PATH}/1920v/calendar/1237" -> lsd2ndexam
+        "${COURSES_PATH_V0}/3${CLASSES_PATH}/1920v/calendar/1238" -> alga1stExam
+        "${COURSES_PATH_V0}/3${CLASSES_PATH}/1920v/calendar/1239" -> alga2ndExam
+        "${COURSES_PATH_V0}/4${CLASSES_PATH}/1920v/calendar/1240" -> m1FirstExam
+        "${COURSES_PATH_V0}/4${CLASSES_PATH}/1920v/calendar/1241" -> m1SecondExam
+        "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v/calendar/1242" -> e1stExam
+        "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v/calendar/1243" -> e2ndExam
         CALENDAR_TERMS_PATH_V0 -> calendarTermsMock
         else -> throw URISyntaxException(uri.path, "Uri not implemented or invalid")
     }

@@ -1,17 +1,27 @@
 package org.ionproject.android.class_section
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.ionproject.android.common.icalendar.ExamSummary
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.repositories.ClassesRepository
+import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import java.net.URI
 
 class ClassSectionViewModel(
+    private val eventsRepository: EventsRepository,
     private val classSectionRepository: ClassesRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
+
+    private val examsLiveData = MutableLiveData<List<ExamSummary>>()
+
+    val exams: List<ExamSummary>
+        get() = examsLiveData.value ?: emptyList()
 
     /**
      * Current class section obtained from Web API
@@ -63,6 +73,14 @@ class ClassSectionViewModel(
             onUpdate(
                 favoriteRepository.favoriteExists(classSummary)
             )
+        }
+    }
+
+    fun getExams(uris: List<URI>, onResult:() -> Unit) {
+        viewModelScope.launch {
+            val exams: List<ExamSummary> = uris.map { eventsRepository.getExamFromCourse(it) }
+            examsLiveData.postValue(exams)
+            onResult()
         }
     }
 }
