@@ -6,6 +6,7 @@ import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 import java.net.URISyntaxException
 
+private const val PROGRAMMES_PATH_V0 = "/v0/programmes"
 private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
 private const val COURSES_PATH = "/courses"
@@ -29,6 +30,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         }
 
     private fun route(uri: URI): String = when (uri.path) {
+        PROGRAMMES_PATH_V0 -> allProgrammesMock
         COURSES_PATH_V0 -> allCoursesMock
         "${COURSES_PATH}/pg" -> pgMock
         "${COURSES_PATH}/e" -> eMock
@@ -59,6 +61,15 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 /**
  *  Computer generated mocks
  */
+
+// All programmes
+private const val allProgrammesMock = "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/\" } ] }"
+
+// Programme Details
+private const val leicMock = "{ \"class\": [ \"programme\" ], \"properties\": { \"id\": 1, \"name\": \"Licenciatura em Engenharia Informática e de Computadores\", \"acronym\": \"LEIC\", \"termSize\": 6 }, \"entities\": [ { \"class\": [ \"offer\" ], \"title\": \"LS Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"CourseId\": 2, \"TermNumber\": 3 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/1\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"AED Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"CourseId\": 5, \"TermNumber\": 3 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/2\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"POO Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"CourseId\": 4, \"TermNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/3\"} ] } ], \"actions\": [ { \"name\": \"edit-programme\", \"title\": \"Edit Programme\", \"method\": \"PUT\", \"href\": \"/v0/programmes/1\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeName\", \"type\": \"text\"}, { \"name\": \"Acronym\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] }, { \"name\": \"add-offer\", \"title\": \"Add Offer\", \"method\": \"POST\", \"href\": \"/v0/programmes/1/offers\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"CourseId\", \"type\": \"number\"}, { \"name\": \"CurricularTerm\", \"type\": \"number\" }, { \"name\": \"Optional\", \"type\": \"boolean\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" }, { \"rel\": [ \"up\" ], \"href\": \"/v0/programmes/\" } ] }"
+
+// Programme Offers
+private const val pgOfferMock = "{ \"class\": [ \"offer\" ], \"properties\": { \"id\": 1, \"acronym\": \"PG\", \"termNumber\": 1, \"optional\": \"false\" }, \"entities\": [ { \"class\": [ \"course\" ], \"rel\": [ \"/rel/course/\" ], \"links\": [ {\"rel\": [ \"self\" ], \"href\": \"/v0/courses/1\"} ] } ], \"actions\": [ { \"name\": \"edit\", \"title\": \"Edit Offer\", \"method\": \"PUT\", \"type\": \"application/json\", \"href\": \"/v0/programmes/1/offers/1\", \"fields\": [ { \"name\": \"Acronym\", \"type\": \"text\"}, { \"name\": \"TermNumber\", \"type\": \"number\"}, { \"name\": \"Optional\", \"type\": \"boolean\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/1\" } { \"rel\": [ \"related\" ], \"href\": \"/v0/programmes/1\" } ] }"
 
 // All courses
 private const val allCoursesMock =
@@ -115,50 +126,4 @@ private const val eClassSection1NMock =
     "{\"class\":[\"class\",\"section\"],\"properties\":{\"course\":\"E\",\"class\":\"s1920v\",\"id\":\"1N\"},\"entities\":[{\"class\":[\"calendar\"],\"rel\":[\"/rel/calendar\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1n/calendar\"}]}],\"actions\":[{\"name\":\"enroll\",\"title\":\"Enroll class section\",\"method\":\"POST\",\"href\":\"/v0/courses/e/classes/s1920v/1n/enroll\",\"type\":\"application/x-www-form-urlencoded\",\"fields\":[]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/e/classes/s1920v/1n\"},{\"rel\":[\"collection\"],\"href\":\"/v0/courses/e/classes/s1920v\"}]}"
 
 //Calendar terms
-private const val calendarTermsMock = "{\n" +
-        "  \"class\": [ \"term\", \"collection\" ],\n" +
-        "  \"properties\": { },\n" +
-        "  \"entities\": [\n" +
-        "    {\n" +
-        "      \"class\": [ \"term\" ],\n" +
-        "      \"rel\": [ \"item\" ], \n" +
-        "      \"properties\": { \n" +
-        "        \"name\": \"1920v\"\n" +
-        "      },\n" +
-        "      \"links\": [\n" +
-        "        { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920v\" },\n" +
-        "        { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" }\n" +
-        "      ]\n" +
-        "    },\n" +
-        "    {\n" +
-        "      \"class\": [ \"term\" ],\n" +
-        "      \"rel\": [ \"item\" ], \n" +
-        "      \"properties\": { \n" +
-        "        \"name\": \"1920i\"\n" +
-        "      },\n" +
-        "      \"links\": [\n" +
-        "        { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920i\" },\n" +
-        "        { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" }\n" +
-        "      ]\n" +
-        "    }\n" +
-        "  ],\n" +
-        "  \"actions\": [\n" +
-        "    {\n" +
-        "      \"name\": \"search\",\n" +
-        "      \"title\": \"Search items\",\n" +
-        "      \"method\": \"GET\",\n" +
-        "      \"href\": \"/v0/calendar-terms\",\n" +
-        "      \"isTemplated\": true,\n" +
-        "      \"type\": \"application/vnd.siren+json\",\n" +
-        "      \"fields\": [\n" +
-        "        { \"name\": \"limit\", \"type\": \"number\", \"class\": \"param/limit\" },\n" +
-        "        { \"name\": \"page\", \"type\": \"number\", \"class\": \"param/page\" }\n" +
-        "      ]\n" +
-        "    }\n" +
-        "  ],\n" +
-        "  \"links\": [\n" +
-        "    { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms?page=1&limit=2\" },\n" +
-        "    { \"rel\": [ \"next\" ], \"href\": \"/v0/calendar-terms?page=2&limit=2\" },\n" +
-        "    { \"rel\": [ \"previous\" ], \"href\": \"/v0/calendar-terms?page=0&limit=2\" }\n" +
-        "  ]\n" +
-        "}"
+private const val calendarTermsMock = "{ \"class\": [ \"calendar-term\", \"collection\" ], \"properties\": { }, \"entities\": [ { \"class\": [ \"term\" ], \"rel\": [ \"item\" ], \"properties\": { \"name\": \"1920v\" }, \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920v\" }, { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" } ] }, { \"class\": [ \"term\" ], \"rel\": [ \"item\" ], \"properties\": { \"name\": \"1920i\" }, \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms/1920i\" }, { \"rel\": [ \"collection\" ], \"href\": \"/v0/calendar-terms\" } ] } ], \"actions\": [ { \"name\": \"search\", \"title\": \"Search items\", \"method\": \"GET\", \"href\": \"/v0/calendar-terms\", \"isTemplated\": true, \"type\": \"application/vnd.siren+json\", \"fields\": [ { \"name\": \"limit\", \"type\": \"number\", \"class\": \"param/limit\" }, { \"name\": \"page\", \"type\": \"number\", \"class\": \"param/page\" } ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/calendar-terms?page=1&limit=2\" }, { \"rel\": [ \"next\" ], \"href\": \"/v0/calendar-terms?page=2&limit=2\" }, { \"rel\": [ \"previous\" ], \"href\": \"/v0/calendar-terms?page=0&limit=2\" } ] }"

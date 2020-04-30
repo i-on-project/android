@@ -62,13 +62,13 @@ class ClassSectionFragment : Fragment() {
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
-        val classIDTextView = textView_class_section_id
+        val calendarTermTextView = textView_class_section_calendar_term
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(currClassSummary) {
             courseTextView.text = it.course
-            classTermTextView.text = it.calendarTerm
-            classIDTextView.text = it.name
+            classTermTextView.text = it.name
+            calendarTermTextView.text = it.calendarTerm
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
         }

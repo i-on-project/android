@@ -6,11 +6,11 @@ import androidx.lifecycle.liveData
 import org.ionproject.android.common.model.Programme
 import org.ionproject.android.common.repositories.ProgrammesRepository
 
-class ProgrammesViewModel(private val programmesRepository : ProgrammesRepository) : ViewModel() {
+class ProgrammesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
 
-    val programmes: List<Programme>
+    val programmes: List<Programme> get() = programmesLiveData.value ?: emptyList()
 
-    private val programmesLiveData : LiveData<List<Programme>> = liveData {
+    private val programmesLiveData: LiveData<List<Programme>> = liveData {
         emit(programmesRepository.getAllProgrammes())
     }
 }
