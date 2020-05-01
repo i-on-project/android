@@ -49,7 +49,8 @@ data class SirenLink(
  */
 data class SirenAction(
     val name: String,
-    val href: URI,
+    val summary: String? = null,
+    val href: String,
     val title: String? = null,
     val clazz: List<String>? = null,
     val method: HttpMethod? = null,
@@ -108,6 +109,7 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
         /**
          * If property "properties" or "links" or "actions" exists then
          * it must be an EmbeddedEntity
+         * else is an EmbeddedLink
          */
         return p.codec.treeToValue(
             node,

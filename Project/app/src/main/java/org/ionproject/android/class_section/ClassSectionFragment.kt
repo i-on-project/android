@@ -75,11 +75,32 @@ class ClassSectionFragment : Fragment() {
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
 
+            // Get all lectures for this class section
+            requestLectureEvents()
+
             // Get all exams for this course
             requestExamEvents()
         }
     }
 
+    /**
+     * Gets all lectures for this class section
+     */
+    private fun requestLectureEvents() {
+        val lecturesList = recyclerview_class_section_lectures
+        val lecturesListAdapter = LecturesListAdapter(viewModel)
+
+        lecturesList.layoutManager = LinearLayoutManager(context)
+        lecturesList.adapter = lecturesListAdapter
+
+        viewModel.getLectures {
+            lecturesListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * Gets all exams for this class
+     */
     private fun requestExamEvents() {
         val examsList = recyclerview_class_section_exams
         val examsListAdapter = ExamsListAdapter(viewModel)

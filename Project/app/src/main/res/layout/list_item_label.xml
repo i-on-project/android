@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView_examName"
+        android:id="@+id/textView_label_example"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Label Item"
         android:textSize="@dimen/all_text_18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

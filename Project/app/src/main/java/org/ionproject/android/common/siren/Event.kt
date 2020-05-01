@@ -1,8 +1,6 @@
-package org.ionproject.android.common.icalendar
+package org.ionproject.android.common.siren
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.ionproject.android.common.siren.SirenLink
-import org.ionproject.android.common.siren.SubEntity
 
 /**
  * This is a representation for a Event type, which is a iCalendar type.
@@ -16,10 +14,10 @@ data class Event(
 
 data class Properties(
     val type: String? = null,
-    val properties: EventProperties
+    val properties: ComponentProperties
 )
 
-data class EventProperties(
+data class ComponentProperties(
     val uid: Value,
     val summary: Value? = null,
     val description: Value? = null,
@@ -28,10 +26,22 @@ data class EventProperties(
     val dtstamp: Value? = null,
     val dtstart: Value? = null,
     val dtend: Value? = null,
-    val duration: Value? = null
+    val duration: Value? = null,
+    val rrule: Rules? = null
 )
 
 data class Value(
-    val value: String
+    val value: List<String>
 )
+
+data class Rules(
+    val value: RuleValues
+)
+
+data class RuleValues(
+    val freq: String,
+    val until: String,
+    val byDay: List<String>
+)
+
 

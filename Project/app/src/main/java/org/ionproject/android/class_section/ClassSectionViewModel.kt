@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.icalendar.ExamSummary
+import org.ionproject.android.common.ExamSummary
+import org.ionproject.android.common.Lecture
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.repositories.ClassesRepository
@@ -18,7 +19,11 @@ class ClassSectionViewModel(
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
+    private val lecturesLiveData = MutableLiveData<List<Lecture>>()
     private val examsLiveData = MutableLiveData<List<ExamSummary>>()
+
+    val lectures: List<Lecture>
+        get() = lecturesLiveData.value ?: emptyList()
 
     val exams: List<ExamSummary>
         get() = examsLiveData.value ?: emptyList()
@@ -76,10 +81,23 @@ class ClassSectionViewModel(
         }
     }
 
-    fun getExams(uris: List<URI>, onResult:() -> Unit) {
+    /**
+     * Gets all exams for this class
+     */
+    fun getExams(uris: List<URI>, onResult: () -> Unit) {
         viewModelScope.launch {
             val exams: List<ExamSummary> = uris.map { eventsRepository.getExamFromCourse(it) }
             examsLiveData.postValue(exams)
+            onResult()
+        }
+    }
+
+    fun getLectures(onResult: () -> Unit) {
+        viewModelScope.launch {
+            // TODO: Don't make hardcoded lecturers uris
+            val uri = URI("/v0/courses/pg/classes/s1920v/1n/calendar")
+            val lectures: List<Lecture> = eventsRepository.getLectures(uri)
+            lecturesLiveData.postValue(lectures)
             onResult()
         }
     }

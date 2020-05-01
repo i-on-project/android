@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_exam.view.*
+import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.icalendar.ExamSummary
+import org.ionproject.android.common.ExamSummary
 
 class ExamsListAdapter(
     private val model: ClassSectionViewModel
@@ -14,7 +14,7 @@ class ExamsListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamsViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_exam, parent, false)
+            .inflate(R.layout.list_item_label, parent, false)
         return ExamsViewHolder(view)
     }
 
@@ -28,7 +28,7 @@ class ExamsListAdapter(
         private val view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        private val examName = view.textView_examName
+        private val examName = view.textView_label_example
 
         fun bindTo(examSummary: ExamSummary) {
             examName.text = examSummary.summary

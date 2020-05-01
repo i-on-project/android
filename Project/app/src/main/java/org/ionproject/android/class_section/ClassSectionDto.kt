@@ -11,7 +11,6 @@ import java.net.URI
  */
 fun SirenEntity.toClassSection(): ClassSection {
     val calendarURI: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
-
     val course = properties?.get("course")
     val clazz = properties?.get("class")
     val name = properties?.get("id")

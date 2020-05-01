@@ -26,6 +26,9 @@
     <string name="label_events">Events:</string>
     <string name="label_teacher">Teacher:</string>
     <string name="label_exams">Exams:</string>
+    <string name="label_favorites_placeholder">%1$s - %2$s</string>
+    <string name="label_calendar_term">Calendar term</string>
+    <string name="label_lectures">Lectures:</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
@@ -36,7 +39,4 @@
     <string name="title_course_details">Course Details</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="hint_classTitle">The Class Title</string>
-
-    <string name="label_favorites_placeholder">%1$s - %2$s</string>
-    <string name="label_calendar_term">Calendar term</string>
 </resources>
