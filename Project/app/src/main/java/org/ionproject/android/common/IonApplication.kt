@@ -5,10 +5,7 @@ import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
-import org.ionproject.android.common.repositories.CalendarTermRepository
-import org.ionproject.android.common.repositories.ClassesRepository
-import org.ionproject.android.common.repositories.CourseRepository
-import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.common.repositories.*
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -17,6 +14,7 @@ import org.ionproject.android.common.repositories.FavoriteRepository
 class IonApplication : Application() {
 
     companion object {
+        lateinit var programmesRepository: ProgrammesRepository
         lateinit var coursesRepository: CourseRepository
         lateinit var classesRepository: ClassesRepository
         lateinit var favoritesRepository: FavoriteRepository
@@ -44,6 +42,8 @@ class IonApplication : Application() {
         //Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
 
+        programmesRepository =
+            ProgrammesRepository(webAPI)
         coursesRepository =
             CourseRepository(webAPI)
         classesRepository =

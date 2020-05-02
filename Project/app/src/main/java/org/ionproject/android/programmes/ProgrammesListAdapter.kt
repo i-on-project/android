@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_programme.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.model.Programme
+import org.ionproject.android.common.model.ProgrammeSummary
 
 class ProgrammesListAdapter(private val model: ProgrammesViewModel) :
     RecyclerView.Adapter<ProgrammesListAdapter.ProgrammeViewHolder>() {
@@ -17,17 +17,19 @@ class ProgrammesListAdapter(private val model: ProgrammesViewModel) :
         return ProgrammeViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.programmes.count()
+    override fun getItemCount(): Int = model.programmeSummaries.count()
 
     override fun onBindViewHolder(holder: ProgrammeViewHolder, position: Int) {
-        holder.bindTo(model.programmes[position])
+        holder.bindTo(model.programmeSummaries[position])
     }
 
     class ProgrammeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val buttonProgramme = view.button_programmes_list_item_programme
 
-        fun bindTo(programme: Programme) {
+        fun bindTo(programmeSummary: ProgrammeSummary) {
+            buttonProgramme.text = programmeSummary.acronym
+
 
         }
 

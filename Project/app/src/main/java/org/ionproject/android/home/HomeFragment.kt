@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         // Courses button
         button_home_courses.setOnClickListener {
             //TODO: Swap navigation from courses to curricular terms
-            navController.navigate(R.id.navigation_courses)
+            navController.navigate(R.id.navigation_programmes)
         }
 
         // Calendar button
