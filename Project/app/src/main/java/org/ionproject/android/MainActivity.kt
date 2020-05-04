@@ -82,18 +82,15 @@ class MainActivity : AppCompatActivity() {
      *
      * This method is called by the framework after OnCreate but before it finishes
      */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(
-            R.menu.top_bar_menu,
-            menu
-        )
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar_menu, menu)
 
         // Get the SearchView and set the searchable configuration.
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+        val searchView = menu.findItem(R.id.action_search)?.actionView as? SearchView
 
-        searchView.apply {
+        searchView?.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
             // Add search submit button

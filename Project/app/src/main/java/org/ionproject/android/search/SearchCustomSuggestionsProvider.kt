@@ -32,7 +32,7 @@ class SearchCustomSuggestionsProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor? {
+    ): Cursor {
         val query = uri.lastPathSegment?.toLowerCase(Locale.ROOT) ?: ""
         val suggestions = IonApplication.db.suggestionDAO().getSuggestions("$query%")
 
