@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -26,6 +27,12 @@ class HomeFragment : Fragment() {
         // Obtaining view model
         val viewModel = ViewModelProviders
             .of(this, HomeViewModelProvider())[HomeViewModel::class.java]
+
+        // Insert custom search suggestions mocks to the database
+        viewModel.observeSuggestionsLiveData(viewLifecycleOwner) {
+            if(it.isEmpty())
+                viewModel.insertMocks()
+        }
 
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
