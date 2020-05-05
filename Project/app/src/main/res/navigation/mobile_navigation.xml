@@ -76,6 +76,19 @@
         android:id="@+id/navigation_programmes"
         android:name="org.ionproject.android.programmes.ProgrammesFragment"
         android:label="@string/title_programmes"
-        tools:layout="@layout/fragment_programmes" />
+        tools:layout="@layout/fragment_programmes" >
+        <action
+            android:id="@+id/action_programmes_to_programme_details"
+            app:destination="@id/navigation_programme_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_programme_details"
+        android:name="org.ionproject.android.programmeDetails.ProgrammeDetailsFragment"
+        android:label="@string/title_programme_details"
+        tools:layout="@layout/fragment_programme_details" >
+        <action
+            android:id="@+id/action_programme_details_to_courses"
+            app:destination="@id/navigation_courses" />
+    </fragment>
 
 </navigation>

@@ -16,7 +16,7 @@ class CurricularTermsListAdapter(private val model: CurricularTermsViewModel) :
     ): CurricularTermViewHolder {
         // create a new view
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_curricular_terms, parent, false)
+            .inflate(R.layout.list_item_calendar_terms, parent, false)
         return CurricularTermViewHolder(view)
     }
 

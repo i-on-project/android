@@ -44,8 +44,8 @@ fun SirenEntity.toProgramme(): Programme {
     entities?.forEach {
         val embeddedEntity = (it as EmbeddedEntity)
 
-        val courseId = embeddedEntity.properties?.get("CourseId")
-        val termNumber = embeddedEntity.properties?.get("TermNumber")
+        val courseId = embeddedEntity.properties?.get("courseId")
+        val termNumber = embeddedEntity.properties?.get("termNumber")
         val detailsUri = embeddedEntity.links?.first()?.href
 
         if (courseId != null && termNumber != null && detailsUri != null)

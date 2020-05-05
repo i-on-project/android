@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
@@ -13,9 +14,6 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-/**
- * A simple [Fragment] subclass.
- */
 class CoursesFragment : Fragment() {
 
     /**
@@ -46,11 +44,21 @@ class CoursesFragment : Fragment() {
         coursesList.layoutManager = LinearLayoutManager(context)
         coursesList.adapter = coursesListAdapter
 
-        //Request all courses from the WebAPI
-        viewModel.getAllCourses()
+        //Request courses from a specific term from the WebAPI
+        viewModel.getAllCoursesFromCurricularTerm(
+            sharedViewModel.programme,
+            sharedViewModel.curricularTerm
+        )
 
         viewModel.observeCoursesLiveData(this) {
             coursesListAdapter.notifyDataSetChanged()
+        }
+
+        button_courses_optional_courses.setOnClickListener {
+            if (viewModel.changeListType())
+                (it as Button).text = "Optional courses"
+            else
+                (it as Button).text = "Mandatory courses"
         }
 
     }

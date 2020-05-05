@@ -24,6 +24,7 @@ data class ProgrammeSummary(
 
 /**
  * This type represents a ProgrammeOffer in the context of this application.
+ * A programmeOffer is the same as a ClassSummary and Favorite
  */
 data class ProgrammeOffer(
     val id: Int,

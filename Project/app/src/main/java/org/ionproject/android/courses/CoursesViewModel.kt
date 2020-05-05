@@ -1,35 +1,75 @@
 package org.ionproject.android.courses
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.model.CourseSummary
-import org.ionproject.android.common.repositories.CourseRepository
+import org.ionproject.android.common.model.Programme
+import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.repositories.ProgrammesRepository
 
-class CoursesViewModel(private val coursesRepository: CourseRepository) : ViewModel() {
+class CoursesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
 
-    private val coursesLiveData = MutableLiveData<List<CourseSummary>>()
+    private val programmeOffersLiveData = MutableLiveData<List<ProgrammeOffer>>()
 
     fun observeCoursesLiveData(
         lifecycleOwner: LifecycleOwner,
         onUpdate: () -> Unit
     ) {
-        coursesLiveData.observe(lifecycleOwner, Observer {
+        programmeOffersLiveData.observe(lifecycleOwner, Observer {
             onUpdate()
         })
     }
 
-    val courses: List<CourseSummary>
-        get() = coursesLiveData.value ?: emptyList()
+    /**
+     * This should be checked, might not work
+     */
+    private val mandatoryCourses = mutableListOf<ProgrammeOffer>()
+    private val optionalCourses = mutableListOf<ProgrammeOffer>()
+
+    private var areMandatory = true
+
+    val programmeOffers: List<ProgrammeOffer>
+        get() = programmeOffersLiveData.value ?: emptyList()
 
     /**
-     * Launches a coroutine which will be obtaining all courses and updating the live data.
-     * This coroutines is launched with [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
+     * Launches multiplie coroutines which will be obtaining programmeOffers and updating the live data.
+     * The coroutines are launched with [kotlinx.coroutines.MainCoroutineDispatcher.immediate].
      */
-    fun getAllCourses() {
+    fun getAllCoursesFromCurricularTerm(programme: Programme, curricularTerm: Int) {
         viewModelScope.launch {
-            val allCourses = coursesRepository.getAllCourses()
-            coursesLiveData.postValue(allCourses)
+            val deferredOffers = mutableListOf<Deferred<ProgrammeOffer>>()
+            //Launching parallel coroutines to increase HTTP requests efficiency
+            for (programmeOfferSummary in programme.programmeOffers) {
+                if (programmeOfferSummary.termNumber == curricularTerm)
+                    deferredOffers.add(async {
+                        programmesRepository.getProgrammeOfferDetails(
+                            programmeOfferSummary
+                        )
+                    })
+            }
+            //Await for results and then separate courses in mandatory and optional
+            deferredOffers.awaitAll().forEach {
+                if (it.optional)
+                    optionalCourses.add(it)
+                else
+                    mandatoryCourses.add(it)
+            }
+            programmeOffersLiveData.postValue(mandatoryCourses)
         }
     }
 
+    /**
+     * Update [programmeOffers] content from mandatory courses to optional courses
+    or vice-versa
+     */
+    fun changeListType(): Boolean {
+        areMandatory = !areMandatory
+        if (areMandatory)
+            programmeOffersLiveData.postValue(mandatoryCourses)
+        else
+            programmeOffersLiveData.postValue(optionalCourses)
+        return areMandatory
+    }
 }
