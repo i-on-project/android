@@ -29,6 +29,7 @@ class IonApplication : Application() {
          * the singleton design pattern when instantiating an
          * AppDatabase object. Each RoomDatabase instance is fairly expensive.
          */
+
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "ion-database"
@@ -42,16 +43,11 @@ class IonApplication : Application() {
         //Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
 
-        coursesRepository =
-            CourseRepository(webAPI)
-        classesRepository =
-            ClassesRepository(webAPI, db.ClassSectionDao())
-        favoritesRepository =
-            FavoriteRepository(db.FavoriteDao())
-        calendarTermRepository =
-            CalendarTermRepository(webAPI)
-        eventsRepository =
-            EventsRepository(webAPI)
+        coursesRepository = CourseRepository(webAPI)
+        classesRepository = ClassesRepository(webAPI, db.ClassSectionDao())
+        favoritesRepository = FavoriteRepository(db.FavoriteDao())
+        calendarTermRepository = CalendarTermRepository(webAPI)
+        eventsRepository = EventsRepository(webAPI)
     }
 
 }

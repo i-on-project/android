@@ -35,34 +35,26 @@ fun SirenEntity.toCourse(): Course {
 fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
     val classesSummary = mutableListOf<ClassSummary>()
 
-    val course = properties?.get("course")
-    val calendarTerm = properties?.get("calendar term")
+    val course = properties?.get("courseAcr")
+    val calendarTerm = properties?.get("calendarTerm")
 
     if (course != null && calendarTerm != null) {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 
-            val clazz = embeddedEntity.clazz?.first()
-            val name = embeddedEntity.properties?.get("id")
-            val detailsUri = embeddedEntity.links?.first()?.href
-
             //There is an event sub-entity which is not from the class "class", which we must exclude
-            if (clazz == "class") {
+            if (embeddedEntity.clazz?.first() == "class") {
+                val name = embeddedEntity.properties?.get("id")
+                val detailsUri = embeddedEntity.links?.first()?.href
+
                 if (name != null && detailsUri != null)
-                    classesSummary.add(
-                        ClassSummary(
-                            name = name,
-                            course = course,
-                            calendarTerm = calendarTerm,
-                            detailsUri = detailsUri
-                        )
-                    )
+                    classesSummary.add(ClassSummary(name, course, calendarTerm, detailsUri))
                 else
-                    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+                    throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
             }
         }
         return classesSummary
     }
-    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+    throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
 }
 

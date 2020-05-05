@@ -12,7 +12,7 @@ import java.net.URI
 data class ClassSection(
     val course: String,
     @ColumnInfo(name = "calendar_term") val calendarTerm: String, //Should be a foreign key in the future
-    @PrimaryKey val name: String,
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "calendar_uri") val calendarURI: URI?
 )
 

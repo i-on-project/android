@@ -34,16 +34,16 @@ class ClassesRepository(
         course: Course,
         calendarTerm: CalendarTerm
     ): List<ClassSummary> {
+        var classes = emptyList<ClassSummary>()
+
         if (course.classesUri != null) {
-            return ionWebAPI
-                .getFromURI(
-                    course.classesUri.fromCalendarTerm(calendarTerm),
-                    SirenEntity::class.java
-                )
-                .toClassSummaryList()
+            classes = ionWebAPI.getFromURI(
+                course.classesUri.fromCalendarTerm(calendarTerm),
+                SirenEntity::class.java
+            ).toClassSummaryList()
         }
         //Some courses may not have classes in a certain term, in those cases we return an emptyList
-        return emptyList()
+        return classes
     }
 
     /**

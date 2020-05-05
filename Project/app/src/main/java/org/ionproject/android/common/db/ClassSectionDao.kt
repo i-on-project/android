@@ -9,7 +9,7 @@ interface ClassSectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertClassSection(classSection: ClassSection)
 
-    @Query("SELECT * FROM ClassSection WHERE name = :classSection")
+    @Query("SELECT * FROM ClassSection WHERE id = :classSection")
     suspend fun findClassSectionById(classSection: String): ClassSection
 
     @Delete

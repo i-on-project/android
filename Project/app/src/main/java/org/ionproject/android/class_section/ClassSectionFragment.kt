@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import java.net.URI
 
@@ -70,13 +71,13 @@ class ClassSectionFragment : Fragment() {
         viewModel.getClassSectionDetails(currClassSummary) {
             courseTextView.text = it.course
             classTermTextView.text = it.calendarTerm
-            classIDTextView.text = it.name
+            classIDTextView.text = it.id
 
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
 
             // Get all lectures for this class section
-            requestLectureEvents()
+            requestLectureEvents(it)
 
             // Get all exams for this course
             requestExamEvents()
@@ -86,14 +87,14 @@ class ClassSectionFragment : Fragment() {
     /**
      * Gets all lectures for this class section
      */
-    private fun requestLectureEvents() {
+    private fun requestLectureEvents(classSection: ClassSection) {
         val lecturesList = recyclerview_class_section_lectures
         val lecturesListAdapter = LecturesListAdapter(viewModel)
 
         lecturesList.layoutManager = LinearLayoutManager(context)
         lecturesList.adapter = lecturesListAdapter
 
-        viewModel.getLectures {
+        viewModel.getLectures(classSection.calendarURI) {
             lecturesListAdapter.notifyDataSetChanged()
         }
     }

@@ -1,5 +1,6 @@
 package org.ionproject.android.class_section
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,8 +39,7 @@ class ClassSectionViewModel(
      */
     fun getClassSectionDetails(classSummary: ClassSummary, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
-            currClassSection =
-                classSectionRepository.getClassSection(classSummary)
+            currClassSection = classSectionRepository.getClassSection(classSummary)
             onResult(currClassSection)
         }
     }
@@ -92,11 +92,11 @@ class ClassSectionViewModel(
         }
     }
 
-    fun getLectures(onResult: () -> Unit) {
+    fun getLectures(uri: URI?, onResult: () -> Unit) {
         viewModelScope.launch {
-            // TODO: Don't make hardcoded lecturers uris
-            val uri = URI("/v0/courses/pg/classes/s1920v/1n/calendar")
-            val lectures: List<Lecture> = eventsRepository.getLectures(uri)
+            // TODO: Don't make hard coded uris, for now we only have 1 lectures mock
+            val uriMock = URI("/v0/courses/1/classes/s1920v/11D/calendar")
+            val lectures: List<Lecture> = eventsRepository.getLectures(uriMock)
             lecturesLiveData.postValue(lectures)
             onResult()
         }

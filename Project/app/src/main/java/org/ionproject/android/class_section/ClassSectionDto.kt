@@ -11,18 +11,13 @@ import java.net.URI
  */
 fun SirenEntity.toClassSection(): ClassSection {
     val calendarURI: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
-    val course = properties?.get("course")
-    val clazz = properties?.get("class")
-    val name = properties?.get("id")
+    val course = properties?.get("courseAcr")
+    val calendarTerm = properties?.get("calendarTerm")
+    val id = properties?.get("id")
 
-    if (properties != null && course != null && clazz != null && name != null) {
-        //Using double bang operator because we are sure this properties cannot be null here
-        return ClassSection(
-            course = course,
-            calendarTerm = clazz,
-            name = name,
-            calendarURI = calendarURI
-        )
+    if (course != null && calendarTerm != null && id != null) {
+        return ClassSection(course, calendarTerm, id, calendarURI)
     }
-    throw MappingFromSirenException("Cannot convert ${this} to ClassSection")
+
+    throw MappingFromSirenException("Cannot convert $this to ClassSection")
 }
