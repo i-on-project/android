@@ -97,7 +97,7 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     //Get day of week on which the month starts
     val weekDay = movedCalendar.dayOfWeek
 
-    val numbOfDays =
+    val numberOfDays =
         if (weekDay == Calendar.SATURDAY && movedCalendar.lastDayOfMonth == 31 || weekDay == Calendar.SUNDAY)
             6 * NUMBER_OF_WEEK_DAYS
         else
@@ -110,7 +110,7 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     else
         movedCalendar.daysFromNow(-(weekDay - 2))
 
-    return (0 until numbOfDays).map {
+    return (0 until numberOfDays).map {
         val calendar = movedCalendar.daysFromNow(it)
         Day(
             value = calendar.day,

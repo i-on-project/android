@@ -23,14 +23,13 @@ import org.ionproject.android.R
 class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
 
-     //----------------------------------Public methods-----------------------------------
+    //----------------------------------Public methods-----------------------------------
 
     var adapter = JDCalendarAdapter()
         set(value) {
             field = value
             baseAdapter.setAdapter(value)
         }
-
 
 
     // Inflating calendar layout, this has to be done before obtaining
@@ -198,7 +197,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
 
-     //--------------------------Private methods-----------------------------------
+    //--------------------------Private methods-----------------------------------
 
     /**
      * Updates the view components with the values
