@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
@@ -45,8 +45,8 @@ class ScheduleFragment : Fragment() {
         }
 
         val intervalsList = recyclerview_schedule_hours
-        intervalsList.layoutManager = LinearLayoutManager(context)
-        intervalsList.adapter = HoursListAdapter(
+        intervalsList.layoutManager = GridLayoutManager(context, 8)
+        intervalsList.adapter = ScheduleGridAdapter(
             startHours = Moment(8, 0),
             endHours = Moment(23, 0)
         )

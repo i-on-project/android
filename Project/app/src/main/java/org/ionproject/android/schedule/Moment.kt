@@ -34,13 +34,17 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
     operator fun plus(moment: Moment): Moment {
         var newHours = hours + moment.hours
         if (newHours > 23) {
-            val divVal = (newHours / 23).toInt()
-            newHours = newHours - 23 * divVal
+            if (newHours == 24)
+                newHours = 0
+            else
+                newHours = newHours - 23
         }
 
         var newMinutes = minutes + moment.minutes
         if (newMinutes > 59) {
             newHours += 1
+            if (newHours == 24)
+                newHours = 0
             newMinutes -= 60
         }
 

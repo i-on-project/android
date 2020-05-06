@@ -9,7 +9,7 @@ class MomentUnitTests {
 
     @Test
     fun addition_isCorrect() {
-        val moment = Moment.ThirtyMinutes +Moment.ThirtyMinutes + Moment.OneHour
+        val moment = Moment.ThirtyMinutes + Moment.ThirtyMinutes + Moment.OneHour
         assertEquals(2, moment.hours)
     }
 

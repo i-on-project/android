@@ -119,10 +119,12 @@
         android:id="@+id/recyclerview_schedule_hours"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearlayout_schedule_weekdays_header"
-        tools:listitem="@layout/list_item_schedule_hours_minutes" />
+        tools:listitem="@layout/grid_item_schedule_hours_minutes" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
