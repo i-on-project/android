@@ -27,7 +27,9 @@ data class ComponentProperties(
     val dtstart: Value? = null,
     val dtend: Value? = null,
     val duration: Value? = null,
-    val rrule: Rules? = null
+    val rrule: Rules? = null,
+    val attachment: Value? = null,
+    val due: Value? = null
 )
 
 data class Value(

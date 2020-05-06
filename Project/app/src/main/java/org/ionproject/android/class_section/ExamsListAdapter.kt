@@ -24,9 +24,7 @@ class ExamsListAdapter(
         holder.bindTo(model.exams[position])
     }
 
-    class ExamsViewHolder(
-        private val view: View
-    ) : RecyclerView.ViewHolder(view) {
+    class ExamsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val examName = view.textView_label_example
 

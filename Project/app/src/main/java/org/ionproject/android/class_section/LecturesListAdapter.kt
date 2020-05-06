@@ -24,9 +24,7 @@ class LecturesListAdapter(
         holder.bindTo(model.lectures[position])
     }
 
-    class LecturesViewHolder(
-        private val view: View
-    ) : RecyclerView.ViewHolder(view) {
+    class LecturesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val lectureSummary = view.textView_label_example
 

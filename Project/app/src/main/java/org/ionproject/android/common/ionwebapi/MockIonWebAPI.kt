@@ -40,7 +40,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v" -> eClassesMock
         "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/11D" -> pgClassSection11DMock
         "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/12D" -> pgClassSection12DMock
-        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/1ND" -> pgClassSection11NMock
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/11N" -> pgClassSection11NMock
         "${COURSES_PATH_V0}/2${CLASSES_PATH}/1920v/11D" -> lsdClassSection11DMock
         "${COURSES_PATH_V0}/2${CLASSES_PATH}/1920v/12D" -> lsdClassSection12DMock
         "${COURSES_PATH_V0}/2${CLASSES_PATH}/1920v/11N" -> lsdClassSection11NMock
@@ -63,7 +63,8 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH_V0}/4${CLASSES_PATH}/1920v/calendar/1239" -> alga2ndExam
         "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v/calendar/1242" -> e1stExam
         "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v/calendar/1243" -> e2ndExam
-        "${COURSES_PATH_V0}/1${CLASSES_PATH}/s1920v/11D/calendar" -> pg11Dlectures
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/11D/calendar" -> pg11Dlectures
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/calendar/123490" -> pg11DWorkAssignment1
         CALENDAR_TERMS_PATH_V0 -> calendarTermsMock
         else -> throw URISyntaxException(uri.path, "Uri not implemented or invalid")
     }
@@ -171,3 +172,9 @@ private val e2ndExam =
 // Lectures mock
 private val pg11Dlectures =
     "{\"class\":[\"calendar\"],\"properties\":{\"type\":\"calendar\",\"properties\":{\"prodid\":{\"value\":\"/v0/courses/1/classes/1920v/sections/11D\"},\"version\":{\"value\":\"2.0\"}},\"subComponents\":[{\"type\":\"event\",\"properties\":{\"uid\":{\"value\":\"event/45678\"},\"summary\":{\"value\":\"Theory Class WAD-1920v\"},\"description\":{\"value\":\"Theory Class of the WAD-1920v class.\"},\"categories\":{\"value\":[\"Lecture\",\"Theory Class\"]},\"dtstamp\":{\"value\":\"2020-02-10T10:34:24Z\"},\"dtstart\":{\"value\":\"2020-03-19T11:00:00Z\"},\"duration\":{\"value\":\"PT03H00M00S\"},\"rrule\":{\"value\":{\"freq\":\"WEEKLY\",\"until\":\"2020-06-10T00:00:00Z\",\"byDay\":[\"TH\"]}}}},{\"type\":\"event\",\"properties\":{\"uid\":{\"value\":\"event/45679\"},\"summary\":{\"value\":\"Theory Class WAD-1920v\"},\"description\":{\"value\":\"Theory Class of the WAD-1920v class.\"},\"categories\":{\"value\":[\"Lecture\",\"Theory Class\"]},\"dtstamp\":{\"value\":\"2020-02-10T10:34:24Z\"},\"dtstart\":{\"value\":\"2020-03-16T11:00:00Z\"},\"duration\":{\"value\":\"PT01H30M00S\"},\"rrule\":{\"value\":{\"freq\":\"WEEKLY\",\"until\":\"2020-06-10T00:00:00Z\",\"byDay\":[\"MO\"]}}}}]},\"entities\":[{\"class\":[\"class\",\"section\"],\"rel\":[\"/rel/class-section\"],\"properties\":{\"uid\":\"61D\",\"lecturer\":1010},\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v\"}]}],\"actions\":[{\"name\":\"search\",\"summary\":\"Search components\",\"method\":\"GET\",\"href\":\"/v0/courses/1/classes/1920v/calendar{?type,startBefore,startAfter,endBefore,endAfter,summary}\",\"isTemplated\":true,\"type\":\"application/x-www-form-urlencoded\",\"fields\":[{\"name\":\"type\",\"type\":\"text\",\"class\":\"https://example.org/param/free-text-query\"},{\"name\":\"startBefore\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"startAfter\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"endBefore\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"endAfter\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"summary\",\"type\":\"text\",\"class\":\"https://example.org/param/free-text-query\"}]},{\"name\":\"add-item\",\"title\":\"Add Item\",\"method\":\"POST\",\"href\":\"/v0/courses/1/classes/1920v/calendar\",\"isTemplated\":false,\"type\":\"application/json\",\"fields\":[]},{\"name\":\"batch-delete\",\"title\":\"Delete multiple items\",\"method\":\"DELETE\",\"isTemplated\":true,\"href\":\"/v0/courses/1/classes/1920v/calendar{?type}\",\"fields\":[{\"name\":\"type\",\"type\":\"text\",\"class\":\"https://example.org/param/free-text-query\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v/61D/calendar\"},{\"rel\":[\"about\"],\"href\":\"/v0/courses/1/classes/1920v/61D\"}]}"
+
+// Work assignments mock
+private const val pg11DWorkAssignment1 =
+    "{\"class\":[\"todo\"],\"properties\":{\"uid\":{\"value\":\"todo/123490\"},\"summary\":{\"value\":\"PG 1st Serie\"},\"description\":{\"value\":\"First serie of exercises for the PG course during the 1920v semester\"},\"attachment\":{\"value\":\"https://github.com/isel-leic-pg/1920v-public/wiki/phase-1\"},\"categories\":{\"value\":[\"Evaluation\",\"Assignment\",\"Programming\"]},\"created\":{\"value\":\"2020-02-10T10:34:20Z\"},\"dtstamp\":{\"value\":\"2020-02-12T12:24:50Z\"},\"due\":{\"value\":\"2020-03-19T23:59:59Z\"}},\"entities\":[{\"class\":[\"class\"],\"rel\":[\"/rels/class\"],\"properties\":{\"classId\":\"1\",\"termId\":\"1\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v\"},{\"rel\":[\"term\"],\"href\":\"/v0/terms/1\"},{\"rel\":[\"course\"],\"href\":\"/v0/courses/1\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v/calendar/123490\"},{\"rel\":[\"service-doc\"],\"href\":\"https://github.com/isel-leic-pg/1920v-public/wiki/phase-1\"},{\"rel\":[\"about\"],\"href\":\"/v0/courses/1/classes/1920v\"}]}"
+
+

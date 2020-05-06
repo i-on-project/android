@@ -16,6 +16,15 @@ class CourseDetailsViewModel(
     private val calendarTermRepository: CalendarTermRepository
 ) : ViewModel() {
 
+    private val classesListLiveData = MutableLiveData<List<ClassSummary>>()
+
+    val classesList
+        get() = classesListLiveData.value ?: emptyList()
+
+    fun observeClassesListLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
+        classesListLiveData.observe(lifecycleOwner, Observer { onUpdate() })
+    }
+
     /**
      *  Requests the details of a course from the API
      *  and calls onResult once the result is available
@@ -29,16 +38,6 @@ class CourseDetailsViewModel(
                 val course = courseRepository.getCourseDetails(courseSummary)
                 onResult(course)
             }
-    }
-
-    private val classesListLiveData = MutableLiveData<List<ClassSummary>>()
-
-    val classesList
-        get() = classesListLiveData.value ?: emptyList()
-
-
-    fun observeClassesListLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
-        classesListLiveData.observe(lifecycleOwner, Observer { onUpdate() })
     }
 
     /**
@@ -63,6 +62,7 @@ class CourseDetailsViewModel(
         emit(calendarTerms)
     }
     val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
+
     fun observeCalendarTerms(
         lifecycleOwner: LifecycleOwner,
         onUpdate: (List<CalendarTerm>) -> Unit

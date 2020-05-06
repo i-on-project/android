@@ -1,12 +1,10 @@
 package org.ionproject.android.common.repositories
 
-import org.ionproject.android.common.ExamSummary
-import org.ionproject.android.common.Lecture
+import org.ionproject.android.common.*
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.siren.Event
 import org.ionproject.android.common.siren.ICalendar
-import org.ionproject.android.common.toCalendarSummary
-import org.ionproject.android.common.toExamSummary
+import org.ionproject.android.common.siren.Todo
 import java.net.URI
 
 /**
@@ -35,4 +33,9 @@ class EventsRepository(
             .getFromURI(calendarURI, ICalendar::class.java)
             .toCalendarSummary()
     }
+
+    suspend fun getWorkAssignment(uri: URI): TodoSummary =
+        ionWebAPI
+            .getFromURI(uri, Todo::class.java)
+            .toTodoSummary()
 }
