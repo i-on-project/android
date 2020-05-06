@@ -18,7 +18,6 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
 
-
 class MainActivity : AppCompatActivity() {
 
     /**
@@ -81,24 +80,25 @@ class MainActivity : AppCompatActivity() {
      *
      * This method is called by the framework after OnCreate but before it finishes
      */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(
-            R.menu.top_bar_menu,
-            menu
-        )
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar_menu, menu)
 
         // Get the SearchView and set the searchable configuration.
-
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        val menuSearchItem = menu?.findItem(R.id.action_search)
+        val searchView = menu.findItem(R.id.action_search)?.actionView as? SearchView
 
-        (menuSearchItem?.actionView as SearchView).apply {
+        searchView?.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
             // Add search submit button
             isSubmitButtonEnabled = true
 
+            /**
+             * We must redefine the [setOnQueryTextListener] in order to get query introduced
+             * by the user and pass it to the [SearchResultsFragment]. This is a fragment
+             * responsible to present information depending on the query.
+             */
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     queryTextSubmitBehaviour(query)
@@ -106,7 +106,25 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //TODO: While the search text is changing
+                    return true
+                }
+            })
+
+            /**
+             * We must redefine the [setOnSuggestionListener] in order to get the suggestion
+             * query from the search view cursor's adapter to deliver it to the
+             * [SearchResultsFragment].
+             */
+            setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    return true
+                }
+
+                override fun onSuggestionClick(position: Int): Boolean {
+                    val cursor = searchView.suggestionsAdapter.cursor
+                    cursor.moveToPosition(position)
+                    val suggestion: String = cursor.getString(2)
+                    searchView.setQuery(suggestion, true)
                     return true
                 }
             })
@@ -140,7 +158,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             // Passing query text to [SearchResultsFragment]
-            sharedViewModel.searchText = query
+            sharedViewModel.setQueryText(query)
 
             return
         }
@@ -203,4 +221,5 @@ class MainActivity : AppCompatActivity() {
          */
         bottomnavview_main.setupWithNavController(navController)
     }
+
 }

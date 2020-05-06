@@ -1,3 +1,0 @@
-package org.ionproject.android.search
-
-class SearchSuggestionProvider

@@ -13,9 +13,6 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-/**
- * A simple [Fragment] subclass.
- */
 class ProgrammesFragment : Fragment() {
 
     /**
@@ -40,6 +37,7 @@ class ProgrammesFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, ProgrammesViewModelProvider())[ProgrammesViewModel::class.java]
 
+        //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
         recyclerview_programmes_list.adapter = adapter
         recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)

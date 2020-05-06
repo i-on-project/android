@@ -18,15 +18,21 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <action android:name="android.intent.action.SEARCH" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- This enables the search widget -->
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
+
+        <!-- Content Provider for custom search suggestions -->
+        <provider
+            android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
+            android:name=".search.SearchCustomSuggestionsProvider"
+            android:readPermission="true">
+        </provider>
+
     </application>
 
 </manifest>

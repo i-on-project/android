@@ -56,9 +56,9 @@ class CoursesFragment : Fragment() {
 
         button_courses_optional_courses.setOnClickListener {
             if (viewModel.changeListType())
-                (it as Button).text = "Optional courses"
+                (it as Button).text = it.resources.getString(R.string.optional_courses)
             else
-                (it as Button).text = "Mandatory courses"
+                (it as Button).text = it.resources.getString(R.string.mandatory_courses)
         }
 
     }

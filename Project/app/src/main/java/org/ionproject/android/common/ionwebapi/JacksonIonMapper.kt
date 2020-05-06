@@ -16,8 +16,9 @@ class JacksonIonMapper : IIonMapper {
      *
      * @param responseBody is the i-on Web API response body
      */
-    override suspend fun parse(responseBody: String): SirenEntity =
+    override suspend fun parseToSirenEntity(responseBody: String): SirenEntity =
         withContext(Dispatchers.Default) {
             jacksonObjMapper.readValue<SirenEntity>(responseBody)
         }
+
 }

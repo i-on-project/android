@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_programme_details.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
@@ -43,10 +43,11 @@ class ProgrammeDetailsFragment : Fragment() {
         programmeViewModel.getCourseDetails(sharedViewModel.programmeSummary) {
             textview_programme_details_name.text = it.name
             textview_programme_details_acronym.text = it.acronym
-            recyclerview_programme_details_terms.layoutManager = LinearLayoutManager(context)
+            recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)
             recyclerview_programme_details_terms.adapter =
                 TermsListAdapter(it.termSize, sharedViewModel)
-            sharedViewModel.programme = it //Sharing programme with CoursesFragment
+            sharedViewModel.programme =
+                it //Sharing programme here otherwise it have to be passed to TermsListAdapter
         }
     }
 

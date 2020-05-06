@@ -11,8 +11,8 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_home_to_curricular_terms"
-            app:destination="@id/navigation_curricular_terms" />
+            android:id="@+id/action_home_to_programmes"
+            app:destination="@id/navigation_programmes" />
     </fragment>
 
     <fragment
@@ -39,16 +39,6 @@
         tools:layout="@layout/fragment_class_section" />
 
     <fragment
-        android:id="@+id/navigation_curricular_terms"
-        android:name="org.ionproject.android.curricular_terms.CurricularTermsFragment"
-        android:label="@string/title_curricular_terms"
-        tools:layout="@layout/fragment_curricular_terms" >
-        <action
-            android:id="@+id/action_curricular_terms_to_courses"
-            app:destination="@id/navigation_courses" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_courses"
         android:name="org.ionproject.android.courses.CoursesFragment"
         android:label="@string/title_courses"
@@ -70,7 +60,7 @@
     <fragment
         android:id="@+id/navigation_search_results"
         android:name="org.ionproject.android.search.SearchResultsFragment"
-        android:label="fragment_search_results"
+        android:label="@string/title_search_results"
         tools:layout="@layout/fragment_search_results" />
     <fragment
         android:id="@+id/navigation_programmes"

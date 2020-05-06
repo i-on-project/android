@@ -22,25 +22,23 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
         })
     }
 
-    /**
-     * This should be checked, might not work
-     */
-    private val mandatoryCourses = mutableListOf<ProgrammeOffer>()
-    private val optionalCourses = mutableListOf<ProgrammeOffer>()
+    private var mandatoryCourses = emptyList<ProgrammeOffer>()
+    private var optionalCourses = emptyList<ProgrammeOffer>()
 
+    //Indicates if the current list in liveData is the mandatoryCourses
     private var areMandatory = true
 
     val programmeOffers: List<ProgrammeOffer>
         get() = programmeOffersLiveData.value ?: emptyList()
 
     /**
-     * Launches multiplie coroutines which will be obtaining programmeOffers and updating the live data.
+     * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
      * The coroutines are launched with [kotlinx.coroutines.MainCoroutineDispatcher.immediate].
      */
     fun getAllCoursesFromCurricularTerm(programme: Programme, curricularTerm: Int) {
         viewModelScope.launch {
             val deferredOffers = mutableListOf<Deferred<ProgrammeOffer>>()
-            //Launching parallel coroutines to increase HTTP requests efficiency
+            //Launching parallel coroutines to increase the speed of the method execution
             for (programmeOfferSummary in programme.programmeOffers) {
                 if (programmeOfferSummary.termNumber == curricularTerm)
                     deferredOffers.add(async {
@@ -49,27 +47,38 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
                         )
                     })
             }
+
+            val newMandatoryCourses = mutableListOf<ProgrammeOffer>()
+            val newOptionalCourses = mutableListOf<ProgrammeOffer>()
+
             //Await for results and then separate courses in mandatory and optional
             deferredOffers.awaitAll().forEach {
                 if (it.optional)
-                    optionalCourses.add(it)
+                    newOptionalCourses.add(it)
                 else
-                    mandatoryCourses.add(it)
+                    newMandatoryCourses.add(it)
             }
+
+            mandatoryCourses = newMandatoryCourses
+            optionalCourses = newOptionalCourses
+
             programmeOffersLiveData.postValue(mandatoryCourses)
         }
     }
 
     /**
      * Update [programmeOffers] content from mandatory courses to optional courses
-    or vice-versa
+    or vice-versa.
+     * @returns true if the new list type is mandatory else false
      */
     fun changeListType(): Boolean {
         areMandatory = !areMandatory
-        if (areMandatory)
-            programmeOffersLiveData.postValue(mandatoryCourses)
-        else
-            programmeOffersLiveData.postValue(optionalCourses)
+        programmeOffersLiveData.postValue(
+            if (areMandatory)
+                mandatoryCourses
+            else
+                optionalCourses
+        )
         return areMandatory
     }
 }

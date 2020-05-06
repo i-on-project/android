@@ -12,12 +12,14 @@ private const val CLASSES_PATH = "/classes"
 private const val COURSES_PATH = "/courses"
 private const val OFFERS_PATH = "/offers"
 private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
+private const val ROOT_PATH =
+    "/v0" //TODO We should consider using "/" instead to support the most recent version
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 
     override suspend fun getFromURI(uri: URI): SirenEntity {
         val responseBody: String = get(uri)
-        return ionMapper.parse(responseBody)
+        return ionMapper.parseToSirenEntity(responseBody)
     }
 
     /**
@@ -68,7 +70,6 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 /**
  *  Computer generated mocks
  */
-
 // All programmes
 private const val allProgrammesMock =
     "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/\" } ] }"

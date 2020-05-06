@@ -17,6 +17,8 @@ class IonApplication : Application() {
         lateinit var programmesRepository: ProgrammesRepository
         lateinit var coursesRepository: CourseRepository
         lateinit var classesRepository: ClassesRepository
+        lateinit var suggestionsMockRepository: SuggestionsMockRepository
+        lateinit var db: AppDatabase
         lateinit var favoritesRepository: FavoriteRepository
         lateinit var calendarTermRepository: CalendarTermRepository
     }
@@ -42,6 +44,8 @@ class IonApplication : Application() {
         //Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
 
+        IonApplication.db = db
+
         programmesRepository =
             ProgrammesRepository(webAPI)
         coursesRepository =
@@ -52,6 +56,8 @@ class IonApplication : Application() {
             FavoriteRepository(db.FavoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI)
+        suggestionsMockRepository =
+            SuggestionsMockRepository(db)
     }
 
 }
