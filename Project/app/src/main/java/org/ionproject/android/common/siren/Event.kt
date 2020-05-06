@@ -29,7 +29,8 @@ data class ComponentProperties(
     val duration: Value? = null,
     val rrule: Rules? = null,
     val attachment: Value? = null,
-    val due: Value? = null
+    val due: Value? = null,
+    val relatedTo: List<Related>? = null
 )
 
 data class Value(
@@ -46,4 +47,11 @@ data class RuleValues(
     val byDay: List<String>
 )
 
+data class Related(
+    val parameters: RelType? = null,
+    val value: String
+)
 
+data class RelType(
+    val reltype: String
+)

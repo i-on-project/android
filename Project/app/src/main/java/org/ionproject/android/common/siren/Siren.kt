@@ -129,3 +129,4 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
  */
 class MappingFromSirenException(message: String) : Exception(message)
 
+fun String?.toURI() = URI(this ?: "")

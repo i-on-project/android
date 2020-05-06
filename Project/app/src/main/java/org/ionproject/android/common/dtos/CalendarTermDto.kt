@@ -1,4 +1,4 @@
-package org.ionproject.android.common
+package org.ionproject.android.common.dtos
 
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.siren.EmbeddedEntity

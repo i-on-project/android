@@ -2,9 +2,10 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.ExamSummary
-import org.ionproject.android.common.Lecture
-import org.ionproject.android.common.TodoSummary
+import org.ionproject.android.common.dtos.ExamSummary
+import org.ionproject.android.common.dtos.JournalSummary
+import org.ionproject.android.common.dtos.Lecture
+import org.ionproject.android.common.dtos.TodoSummary
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.repositories.ClassesRepository
@@ -23,21 +24,39 @@ class ClassSectionViewModel(
      */
     private lateinit var currClassSection: ClassSection
 
+    /**
+     * All Livedatas used to store information returned by sending
+     * a request to the Repositories.
+     * These livedatas should be private and we must have public getters in order
+     * to return information holden by these livedatas.
+     */
     private val lecturesLiveData = MutableLiveData<List<Lecture>>()
     private val examsLiveData = MutableLiveData<List<ExamSummary>>()
     private val workAssignmentsLiveData = MutableLiveData<List<TodoSummary>>()
+    private val journalsLiveData = MutableLiveData<List<JournalSummary>>()
 
+    // Public getter to return lecturesLiveData information
     val lectures: List<Lecture>
         get() = lecturesLiveData.value ?: emptyList()
 
+    // Public getter to return examsLiveData information
     val exams: List<ExamSummary>
         get() = examsLiveData.value ?: emptyList()
 
+    // Public getter to return workAssignments information
     val workAssignments: List<TodoSummary>
         get() = workAssignmentsLiveData.value ?: emptyList()
 
+    // Public getter to return journals information
+    val journals: List<JournalSummary>
+        get() = journalsLiveData.value ?: emptyList()
+
     /**
-     * Obtains a classSection from WebApi and updated the UI with the result
+     * Obtains a classSection details information from the [classSectionRepository]
+     * and update UI with the result
+     *
+     * @param classSummary The class summary's details to be collected
+     * @param onResult callback to be called when the classSection details has been collected
      */
     fun getClassSectionDetails(classSummary: ClassSummary, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
@@ -65,9 +84,7 @@ class ClassSectionViewModel(
      */
     fun getLectures(uri: URI?) {
         viewModelScope.launch {
-            // TODO: Don't make hard coded uris, for now we only have 1 lecture mock
-            val uriMock = URI("/v0/courses/1/classes/1920v/11D/calendar")
-            val lectures: List<Lecture> = eventsRepository.getLectures(uriMock)
+            val lectures: List<Lecture> = eventsRepository.getLectures(uri)
             lecturesLiveData.postValue(lectures)
         }
     }
@@ -75,33 +92,78 @@ class ClassSectionViewModel(
     /**
      * Gets all work assignments available for the [currClassSection] class section to be done
      *
-     * @param uri The uri to get information about all work assignments to be done
+     * @param uris The uri to get information about all work assignments to be done
      */
-    fun getWorkAssignments(uri: List<URI>) {
+    fun getWorkAssignments(uris: List<URI>) {
         viewModelScope.launch {
             // TODO: workAssignments requests can be parallel
-            val workAssignments = uri.map {
+            val workAssignments = uris.map {
                 eventsRepository.getWorkAssignment(it)
             }
             workAssignmentsLiveData.postValue(workAssignments)
         }
     }
 
+    /**
+     * Request all journals associated to a class section
+     *
+     * @param uris The uris to get information about the journals
+     */
+    fun getJournals(uris: List<URI>) {
+        viewModelScope.launch {
+            // TODO: journals request can be parallel
+            val journals = uris.map {
+                eventsRepository.getJournals(it)
+            }
+            journalsLiveData.postValue(journals)
+        }
+    }
+
+    /**
+     * Observes if [examsLiveData]'s information has changed.
+     *
+     * @param lifeCycle The activity's lifecycle
+     * @param onResult callback to be called when [examsLiveData]'s information has changed
+     */
     fun observeExamsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
         examsLiveData.observe(lifeCycle, Observer {
             onResult()
         })
     }
 
+    /**
+     * Observes if [lecturesLiveData]'s information has changed.
+     *
+     * @param lifeCycle The activity's lifecycle
+     * @param onResult callback to be called when [lecturesLiveData]'s information has changed
+     */
     fun observeLecturesList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
         lecturesLiveData.observe(lifeCycle, Observer {
             onResult()
         })
     }
 
+    /**
+     * Observes if [workAssignmentsLiveData]'s information has changed.
+     *
+     * @param lifeCycle The activity's lifecycle
+     * @param onResult callback to be called when [workAssignmentsLiveData]'s information has changed
+     */
     fun observeWorkAssignmentsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
         workAssignmentsLiveData.observe(lifeCycle, Observer {
             onResult()
+        })
+    }
+
+    /**
+     * Observes if [journalsLiveData]'s information has changed.
+     *
+     * @param lifeCycle The activity's lifecycle
+     * @param onResult callback to be called when [journalsLiveData]'s information has changed
+     */
+    fun observerJournalsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
+        journalsLiveData.observe(lifeCycle, Observer {
+            onResult
         })
     }
 

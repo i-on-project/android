@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.Lecture
+import org.ionproject.android.common.dtos.Lecture
 
 class LecturesListAdapter(
     private val model: ClassSectionViewModel

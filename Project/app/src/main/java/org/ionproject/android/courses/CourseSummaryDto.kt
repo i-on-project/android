@@ -4,6 +4,7 @@ import org.ionproject.android.common.model.CourseSummary
 import org.ionproject.android.common.siren.EmbeddedEntity
 import org.ionproject.android.common.siren.MappingFromSirenException
 import org.ionproject.android.common.siren.SirenEntity
+import java.net.URI
 
 /**
  *  Converts from a [SirenEntity] to [List] of [CourseSummary]
@@ -15,12 +16,12 @@ fun SirenEntity.toCourseSummaryList(): List<CourseSummary> {
         val embeddedEntity = (it as EmbeddedEntity)
 
         val acr = embeddedEntity.properties?.get("acronym")
-        val detailsUri = embeddedEntity.links?.first()?.href
+        val detailsUri: URI? = embeddedEntity.links?.first()?.href
 
         if (acr != null && detailsUri != null)
             coursesList.add(CourseSummary(acronym = acr, detailsUri = detailsUri))
         else
-            throw MappingFromSirenException("Cannot convert ${this} to List of CourseSummary")
+            throw MappingFromSirenException("Cannot convert $this to List of CourseSummary")
     }
 
     return coursesList

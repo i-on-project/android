@@ -65,6 +65,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         "${COURSES_PATH_V0}/5${CLASSES_PATH}/1920v/calendar/1243" -> e2ndExam
         "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/11D/calendar" -> pg11Dlectures
         "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/calendar/123490" -> pg11DWorkAssignment1
+        "${COURSES_PATH_V0}/1${CLASSES_PATH}/1920v/calendar/123497" -> pgExamJournal
         CALENDAR_TERMS_PATH_V0 -> calendarTermsMock
         else -> throw URISyntaxException(uri.path, "Uri not implemented or invalid")
     }
@@ -177,4 +178,7 @@ private val pg11Dlectures =
 private const val pg11DWorkAssignment1 =
     "{\"class\":[\"todo\"],\"properties\":{\"uid\":{\"value\":\"todo/123490\"},\"summary\":{\"value\":\"PG 1st Serie\"},\"description\":{\"value\":\"First serie of exercises for the PG course during the 1920v semester\"},\"attachment\":{\"value\":\"https://github.com/isel-leic-pg/1920v-public/wiki/phase-1\"},\"categories\":{\"value\":[\"Evaluation\",\"Assignment\",\"Programming\"]},\"created\":{\"value\":\"2020-02-10T10:34:20Z\"},\"dtstamp\":{\"value\":\"2020-02-12T12:24:50Z\"},\"due\":{\"value\":\"2020-03-19T23:59:59Z\"}},\"entities\":[{\"class\":[\"class\"],\"rel\":[\"/rels/class\"],\"properties\":{\"classId\":\"1\",\"termId\":\"1\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v\"},{\"rel\":[\"term\"],\"href\":\"/v0/terms/1\"},{\"rel\":[\"course\"],\"href\":\"/v0/courses/1\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v/calendar/123490\"},{\"rel\":[\"service-doc\"],\"href\":\"https://github.com/isel-leic-pg/1920v-public/wiki/phase-1\"},{\"rel\":[\"about\"],\"href\":\"/v0/courses/1/classes/1920v\"}]}"
 
+// Journal
+private const val pgExamJournal =
+    "{\"class\":[\"journal\"],\"properties\":{\"uid\":{\"value\":\"journal/123497\"},\"summary\":{\"value\":\"Error in 1st PG Exam\"},\"description\":{\"value\":\"The first exercise had and ambigous question that resulted in both answers B and C being correct. Therefore both will be awarded full marks.\"},\"categories\":{\"value\":[\"Error\",\"Evaluation\",\"Exam\",\"Programming\"]},\"created\":{\"value\":\"2020-02-10T10:34:20Z\"},\"dtstamp\":{\"value\":\"2020-02-12T12:24:50Z\"},\"dtstart\":{\"value\":\"2020-03-19T14:00:00Z\"},\"relatedTo\":[{\"value\":\"/v0/courses/1/classes/1920v/calendar/1234\"},{\"parameters\":{\"reltype\":\"SIBLING\"},\"value\":\"/v0/courses/1/classes/1920v/calendar/123485\"}]},\"entities\":[{\"class\":[\"class\"],\"rel\":[\"/rels/class\"],\"properties\":{\"classId\":\"1\",\"termId\":\"1\"},\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v\"},{\"rel\":[\"term\"],\"href\":\"/v0/terms/1\"},{\"rel\":[\"course\"],\"href\":\"/v0/courses/1\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1/classes/1920v/calendar/123497\"},{\"rel\":[\"about\"],\"href\":\"/v0/courses/1/classes/1920v\"},{\"rel\":[\"related\"],\"href\":[\"/v0/courses/1/classes/1920v/calendar/1234\",\"/v0/courses/1/classes/1920v/calendar/123485\"]}]}"
 

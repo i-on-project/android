@@ -40,4 +40,5 @@
     <string name="imageView_favorite">favorite_icon</string>
     <string name="hint_classTitle">The Class Title</string>
     <string name="label_todo">Todo:</string>
+    <string name="label_journals">Journals:</string>
 </resources>

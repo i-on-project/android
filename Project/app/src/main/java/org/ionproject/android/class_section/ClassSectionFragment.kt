@@ -64,6 +64,13 @@ class ClassSectionFragment : Fragment() {
         WorkAssignmentsAdapter(viewModel)
     }
 
+    /**
+     * Journals's adapter
+     */
+    private val journalsAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        JournalsAdapter(viewModel)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,6 +84,7 @@ class ClassSectionFragment : Fragment() {
         setupLecturesList()
         setupExamsList()
         setupWorkAssignmentsList()
+        setupJournalsList()
         setupClassSectionDetails()
     }
 
@@ -107,6 +115,9 @@ class ClassSectionFragment : Fragment() {
 
             // Get all work assignments for this class section
             requestWorkAssignments()
+
+            // Get all journals for this class section
+            requestJournals()
         }
     }
 
@@ -138,13 +149,23 @@ class ClassSectionFragment : Fragment() {
     }
 
     /**
+     * Setup the class section's journal list with [journalsAdapter] as his adapter.
+     */
+    private fun setupJournalsList() {
+        val journalsList = recyclerview_class_section_journals
+        journalsList.layoutManager = LinearLayoutManager(context)
+        journalsList.adapter = journalsAdapter
+    }
+
+    /**
      * Setup the class section's work assignments with []
      */
     private fun requestWorkAssignments() {
-        // TODO: Don't make hard coded uris, for now we only have 1 work assignment mock
-        val uriMock = URI("/v0/courses/1/classes/1920v/calendar/123490")
+        // TODO: Hardcoded URI to get work assignments mocks
+        val uris = listOf(
+            URI("/v0/courses/1/classes/1920v/calendar/123490")
+        )
 
-        val uris = listOf<URI>(uriMock)
         viewModel.getWorkAssignments(uris)
         viewModel.observeWorkAssignmentsList(this) {
             workAssignmentsAdapter.notifyDataSetChanged()
@@ -155,7 +176,10 @@ class ClassSectionFragment : Fragment() {
      * Gets all lectures for this class section
      */
     private fun requestLectureEvents(classSection: ClassSection) {
-        viewModel.getLectures(classSection.calendarURI)
+        // TODO: Hardcoded uri to get lectures mock
+        val uri = URI("/v0/courses/1/classes/1920v/11D/calendar")
+
+        viewModel.getLectures(uri)
         viewModel.observeLecturesList(this) {
             lecturesListAdapter.notifyDataSetChanged()
         }
@@ -165,7 +189,7 @@ class ClassSectionFragment : Fragment() {
      * Gets all exams for this class
      */
     private fun requestExamEvents() {
-        // TODO: Don't make hardcoded uris to get exams
+        // TODO: Hardcoded URI to get exam mocks
         val uris = listOf(
             URI("/v0/courses/1/classes/1920v/calendar/1234"),
             URI("/v0/courses/1/classes/1920v/calendar/1235")
@@ -174,6 +198,21 @@ class ClassSectionFragment : Fragment() {
         viewModel.getExams(uris)
         viewModel.observeExamsList(this) {
             examsListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * Gets all journals for this class section
+     */
+    private fun requestJournals() {
+        // TODO: Hardcoded URI to get journal mocks
+        val uris = listOf(
+            URI("/v0/courses/1/classes/1920v/calendar/123497")
+        )
+
+        viewModel.getJournals(uris)
+        viewModel.observerJournalsList(this) {
+            journalsAdapter.notifyDataSetChanged()
         }
     }
 

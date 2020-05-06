@@ -30,45 +30,52 @@
         app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite">
 
         <TextView
-            android:id="@+id/textview_course_details_label_course"
+            android:id="@+id/textView_course_details_label_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_course"
             android:textSize="@dimen/all_text_18" />
 
         <TextView
-            android:id="@+id/textview_class_section_class_label"
+            android:id="@+id/textView_class_section_class_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_class"
             android:textSize="@dimen/all_text_18" />
 
         <TextView
-            android:id="@+id/textview_class_section_id_label"
+            android:id="@+id/textView_class_section_id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_id"
             android:textSize="@dimen/all_text_18" />
 
         <TextView
-            android:id="@+id/textview_class_section_lectures"
+            android:id="@+id/textView_class_section_lectures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_lectures"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_exams"
+            android:id="@+id/textView_class_section_exams"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_exams"
             android:textSize="@dimen/all_text_18"/>
 
         <TextView
-            android:id="@+id/textview_class_section_Todos"
+            android:id="@+id/textView_class_section_Todos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_todo"
+            android:textSize="@dimen/all_text_18"/>
+
+        <TextView
+            android:id="@+id/textView_class_section_Journals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_journals"
             android:textSize="@dimen/all_text_18"/>
     </LinearLayout>
 
@@ -113,6 +120,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_class_section_todos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_item_label"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_class_section_journals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_item_label"/>

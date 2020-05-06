@@ -26,7 +26,7 @@ fun SirenEntity.toCourse(): Course {
             eventsUri = eventsLink
         )
     }
-    throw MappingFromSirenException("Cannot convert ${this} to Course")
+    throw MappingFromSirenException("Cannot convert $this to Course")
 }
 
 /**
@@ -45,7 +45,7 @@ fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
             //There is an event sub-entity which is not from the class "class", which we must exclude
             if (embeddedEntity.clazz?.first() == "class") {
                 val name = embeddedEntity.properties?.get("id")
-                val detailsUri = embeddedEntity.links?.first()?.href
+                val detailsUri: URI? = embeddedEntity.links?.first()?.href
 
                 if (name != null && detailsUri != null)
                     classesSummary.add(ClassSummary(name, course, calendarTerm, detailsUri))

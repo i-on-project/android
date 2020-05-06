@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.TodoSummary
+import org.ionproject.android.common.dtos.TodoSummary
 
 class WorkAssignmentsAdapter(
     private val model: ClassSectionViewModel
