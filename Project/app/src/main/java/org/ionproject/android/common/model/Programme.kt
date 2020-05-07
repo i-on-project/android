@@ -6,21 +6,27 @@ import java.net.URI
  * This type represents a Programme in the context of this application.
  */
 data class Programme(
-    val id: Int,
+    override val id: Int,
     val name: String,
     val acronym: String,
     val termSize: Int,
-    val programmeOffers: List<ProgrammeOfferSummary>
-)
+    val programmeOffers: List<ProgrammeOfferSummary>,
+    override val selfUri: URI
+): IResource {
+    override val type: ResourceType = ResourceType.PROGRAMME
+}
 
 /**
  * This type represents a the summary of a Programme in the context of this application.
  */
 data class ProgrammeSummary(
-    val id: Int,
+    override val id: Int,
     val acronym: String,
-    val detailsUri: URI
-)
+    val detailsUri: URI,
+    override val selfUri: URI
+): IResource {
+    override val type: ResourceType = ResourceType.PROGRAMME_SUMMARY
+}
 
 /**
  * This type represents a ProgrammeOffer in the context of this application.

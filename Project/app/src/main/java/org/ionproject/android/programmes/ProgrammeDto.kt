@@ -17,13 +17,15 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
         val id = embeddedEntity.properties?.get("id")
         val acr = embeddedEntity.properties?.get("acronym")
         val detailsUri = embeddedEntity.links?.first()?.href
+        val selfUri = this.links?.first()?.href
 
-        if (id != null && acr != null && detailsUri != null)
+        if (id != null && acr != null && detailsUri != null && selfUri != null)
             programmesList.add(
                 ProgrammeSummary(
                     id = id.toInt(),
                     acronym = acr,
-                    detailsUri = detailsUri
+                    detailsUri = detailsUri,
+                    selfUri = selfUri
                 )
             )
         else
@@ -38,6 +40,7 @@ fun SirenEntity.toProgramme(): Programme {
     val acr = properties?.get("acronym")
     val name = properties?.get("name")
     val termSize = properties?.get("termSize")
+    val selfUri = links?.first()?.href
 
     val programmeOfferSummaryList = mutableListOf<ProgrammeOfferSummary>()
 
@@ -60,13 +63,14 @@ fun SirenEntity.toProgramme(): Programme {
             throw MappingFromSirenException("Cannot convert ${it} to ProgrammeOfferSummary")
     }
 
-    if (id != null && acr != null && name != null && termSize != null) {
+    if (id != null && acr != null && name != null && termSize != null && selfUri != null) {
         return Programme(
             id = id.toInt(),
             name = name,
             acronym = acr,
             termSize = termSize.toInt(),
-            programmeOffers = programmeOfferSummaryList
+            programmeOffers = programmeOfferSummaryList,
+            selfUri = selfUri
         )
     }
     throw MappingFromSirenException("Cannot convert ${this} to Programme")
