@@ -1,15 +1,16 @@
-package org.ionproject.android.common.dtos
+package org.ionproject.android.common.model
 
-import org.ionproject.android.common.siren.Todo
+import org.ionproject.android.common.dto.Todo
 import java.net.URI
+import java.time.LocalDateTime
+import java.util.*
 
 class TodoSummary(
     val uid: String,
     val summary: String?,
     val description: String?,
     val attachment: URI?,
-    //TODO: Change due date for a object of Date type ex: 2020-03-19 23:59:59
-    val due: String? = "????/??/?? ??:??:??"
+    val due: LocalDateTime?
 )
 
 fun Todo.toTodoSummary() =
@@ -18,5 +19,5 @@ fun Todo.toTodoSummary() =
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),
         attachment = URI(properties.attachment?.value?.get(0) ?: ""),
-        due = properties.due?.value?.get(0)
+        due = properties.due?.value?.get(0)?.toLocalDate()
     )

@@ -1,6 +1,6 @@
-package org.ionproject.android.common.dtos
+package org.ionproject.android.common.model
 
-import org.ionproject.android.common.siren.ICalendar
+import org.ionproject.android.common.dto.ICalendar
 
 class Lecture(
     val uid: String,

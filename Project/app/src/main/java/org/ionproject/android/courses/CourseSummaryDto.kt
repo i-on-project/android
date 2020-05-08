@@ -1,9 +1,9 @@
 package org.ionproject.android.courses
 
 import org.ionproject.android.common.model.CourseSummary
-import org.ionproject.android.common.siren.EmbeddedEntity
-import org.ionproject.android.common.siren.MappingFromSirenException
-import org.ionproject.android.common.siren.SirenEntity
+import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.MappingFromSirenException
+import org.ionproject.android.common.dto.SirenEntity
 import java.net.URI
 
 /**

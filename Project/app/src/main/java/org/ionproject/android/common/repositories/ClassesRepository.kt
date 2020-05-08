@@ -9,7 +9,7 @@ import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.siren.SirenEntity
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.course_details.toClassSummaryList
 import java.net.URI
 

@@ -2,9 +2,9 @@ package org.ionproject.android.course_details
 
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.siren.EmbeddedEntity
-import org.ionproject.android.common.siren.MappingFromSirenException
-import org.ionproject.android.common.siren.SirenEntity
+import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.MappingFromSirenException
+import org.ionproject.android.common.dto.SirenEntity
 import java.net.URI
 
 /**
@@ -50,7 +50,9 @@ fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
                 if (name != null && detailsUri != null)
                     classesSummary.add(ClassSummary(name, course, calendarTerm, detailsUri))
                 else
-                    throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
+                    throw MappingFromSirenException(
+                        "Cannot convert $this to List of ClassSummary"
+                    )
             }
         }
         return classesSummary

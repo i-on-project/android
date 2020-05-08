@@ -1,4 +1,4 @@
-package org.ionproject.android.common.siren
+package org.ionproject.android.common.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

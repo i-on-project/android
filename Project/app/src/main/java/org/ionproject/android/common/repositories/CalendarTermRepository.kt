@@ -1,10 +1,9 @@
 package org.ionproject.android.common.repositories
 
-
-import org.ionproject.android.common.dtos.toCalendarTermList
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.siren.SirenEntity
+import org.ionproject.android.common.model.toCalendarTermList
+import org.ionproject.android.common.dto.SirenEntity
 import java.net.URI
 
 //TODO This should not be hardcoded, otherwise if its altered we have to refactor the code

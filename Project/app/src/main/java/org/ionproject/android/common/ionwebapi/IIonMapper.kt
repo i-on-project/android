@@ -1,6 +1,6 @@
 package org.ionproject.android.common.ionwebapi
 
-import org.ionproject.android.common.siren.SirenEntity
+import org.ionproject.android.common.dto.SirenEntity
 
 interface IIonMapper {
 

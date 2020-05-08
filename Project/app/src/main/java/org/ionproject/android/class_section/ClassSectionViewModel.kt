@@ -2,10 +2,10 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.dtos.ExamSummary
-import org.ionproject.android.common.dtos.JournalSummary
-import org.ionproject.android.common.dtos.Lecture
-import org.ionproject.android.common.dtos.TodoSummary
+import org.ionproject.android.common.model.ExamSummary
+import org.ionproject.android.common.model.JournalSummary
+import org.ionproject.android.common.model.Lecture
+import org.ionproject.android.common.model.TodoSummary
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.repositories.ClassesRepository
