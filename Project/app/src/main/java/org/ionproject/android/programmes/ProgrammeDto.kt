@@ -1,9 +1,6 @@
 package org.ionproject.android.programmes
 
-import org.ionproject.android.common.model.Programme
-import org.ionproject.android.common.model.ProgrammeOffer
-import org.ionproject.android.common.model.ProgrammeOfferSummary
-import org.ionproject.android.common.model.ProgrammeSummary
+import org.ionproject.android.common.model.*
 import org.ionproject.android.common.siren.EmbeddedEntity
 import org.ionproject.android.common.siren.MappingFromSirenException
 import org.ionproject.android.common.siren.SirenEntity
@@ -35,8 +32,8 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
     return programmesList
 }
 
-fun SirenEntity.toProgramme(): Programme {
-    val id = properties?.get("id")
+fun SirenEntity.toProgramme(): ProgrammeWithOffers {
+    val programmeId = properties?.get("id")
     val acr = properties?.get("acronym")
     val name = properties?.get("name")
     val termSize = properties?.get("termSize")
@@ -44,53 +41,60 @@ fun SirenEntity.toProgramme(): Programme {
 
     val programmeOfferSummaryList = mutableListOf<ProgrammeOfferSummary>()
 
-    entities?.forEach {
-        val embeddedEntity = (it as EmbeddedEntity)
+    if (programmeId != null && acr != null && name != null && termSize != null && selfUri != null) {
+        entities?.forEach {
+            val embeddedEntity = (it as EmbeddedEntity)
 
-        val courseId = embeddedEntity.properties?.get("courseId")
-        val termNumber = embeddedEntity.properties?.get("termNumber")
-        val detailsUri = embeddedEntity.links?.first()?.href
+            val courseId = embeddedEntity.properties?.get("courseId")
+            val termNumber = embeddedEntity.properties?.get("termNumber")
+            val detailsUri = embeddedEntity.links?.first()?.href
 
-        if (courseId != null && termNumber != null && detailsUri != null)
-            programmeOfferSummaryList.add(
-                ProgrammeOfferSummary(
-                    courseId = courseId.toInt(),
-                    termNumber = termNumber.toInt(),
-                    detailsUri = detailsUri
+            if (courseId != null && termNumber != null && detailsUri != null)
+                programmeOfferSummaryList.add(
+                    ProgrammeOfferSummary(
+                        courseId = courseId.toInt(),
+                        termNumber = termNumber.toInt(),
+                        detailsUri = detailsUri,
+                        programmeId = programmeId.toInt()
+                    )
                 )
-            )
-        else
-            throw MappingFromSirenException("Cannot convert ${it} to ProgrammeOfferSummary")
-    }
-
-    if (id != null && acr != null && name != null && termSize != null && selfUri != null) {
-        return Programme(
-            id = id.toInt(),
-            name = name,
-            acronym = acr,
-            termSize = termSize.toInt(),
-            programmeOffers = programmeOfferSummaryList,
-            selfUri = selfUri
+            else
+                throw MappingFromSirenException("Cannot convert ${it} to ProgrammeOfferSummary")
+        }
+        return ProgrammeWithOffers(
+            programme = Programme(
+                id = programmeId.toInt(),
+                name = name,
+                acronym = acr,
+                termSize = termSize.toInt(),
+                selfUri = selfUri
+            ),
+            programmeOffers = programmeOfferSummaryList
         )
     }
     throw MappingFromSirenException("Cannot convert ${this} to Programme")
 }
 
-fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
+fun SirenEntity.toProgrammeOffer(programmeId: Int): ProgrammeOffer {
     val id = properties?.get("id")
     val acr = properties?.get("acronym")
     val termNumber = properties?.get("termNumber")
     val optional = properties?.get("optional")
+    val selfUri = links?.first()?.href
 
     val detailsUri = (entities?.first() as EmbeddedEntity).links?.first()?.href
 
-    if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null) {
+    if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null && selfUri
+        != null
+    ) {
         return ProgrammeOffer(
             id = id.toInt(),
             acronym = acr,
             termNumber = termNumber.toInt(),
             optional = optional.toBoolean(),
-            detailsUri = detailsUri
+            detailsUri = detailsUri,
+            programmeId = programmeId,
+            selfUri = selfUri
         )
     }
     throw MappingFromSirenException("Cannot convert ${this} to ProgrammeOffer")

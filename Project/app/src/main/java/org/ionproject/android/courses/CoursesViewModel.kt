@@ -5,8 +5,8 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.model.Programme
 import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.repositories.ProgrammesRepository
 
 class CoursesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
@@ -35,11 +35,14 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
      * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
      * The coroutines are launched with [kotlinx.coroutines.MainCoroutineDispatcher.immediate].
      */
-    fun getAllCoursesFromCurricularTerm(programme: Programme, curricularTerm: Int) {
+    fun getAllCoursesFromCurricularTerm(
+        programmeOfferSummaries: List<ProgrammeOfferSummary>,
+        curricularTerm: Int
+    ) {
         viewModelScope.launch {
             val deferredOffers = mutableListOf<Deferred<ProgrammeOffer>>()
             //Launching parallel coroutines to increase the speed of the method execution
-            for (programmeOfferSummary in programme.programmeOffers) {
+            for (programmeOfferSummary in programmeOfferSummaries) {
                 if (programmeOfferSummary.termNumber == curricularTerm)
                     deferredOffers.add(async {
                         programmesRepository.getProgrammeOfferDetails(

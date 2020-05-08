@@ -7,6 +7,7 @@ import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
+import org.ionproject.android.common.workers.WorkerManagerFacade
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -24,6 +25,7 @@ class IonApplication : Application() {
         lateinit var favoritesRepository: FavoriteRepository private set
         lateinit var calendarTermRepository: CalendarTermRepository private set
         lateinit var workerRepository: WorkerRepository private set
+        lateinit var workerManagerFacade: WorkerManagerFacade private set
     }
 
     override fun onCreate() {
@@ -50,8 +52,12 @@ class IonApplication : Application() {
         IonApplication.db = db
         ionWebAPI = webAPI
 
+        workerRepository =
+            WorkerRepository(db.workerDao())
+        workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
+
         programmesRepository =
-            ProgrammesRepository(webAPI)
+            ProgrammesRepository(webAPI, db.programmeDao(), workerManagerFacade)
         coursesRepository =
             CourseRepository(webAPI)
         classesRepository =
@@ -62,8 +68,6 @@ class IonApplication : Application() {
             CalendarTermRepository(webAPI)
         suggestionsMockRepository =
             SuggestionsMockRepository(db)
-        workerRepository =
-            WorkerRepository(db.workerDao())
     }
 
 }

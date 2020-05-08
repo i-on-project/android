@@ -1,10 +1,12 @@
 package org.ionproject.android.common.ionwebapi
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 import java.net.URISyntaxException
+import kotlin.random.Random
 
 private const val PROGRAMMES_PATH_V0 = "/v0/programmes"
 private const val COURSES_PATH_V0 = "/v0/courses"
@@ -29,6 +31,9 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
      */
     private suspend fun get(uri: URI): String =
         withContext(Dispatchers.IO) {
+            //Chaos filter which simulates request delay, from 50ms to 500ms
+            val randomdelay = Random.nextLong(50, 500)
+            delay(randomdelay)
             route(uri)
         }
 
@@ -72,11 +77,11 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
  */
 // All programmes
 private const val allProgrammesMock =
-    "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/\" } ] }"
+    "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes\" } ] }"
 
 // Programme Details
 private const val leicMock =
-    "{ \"class\": [ \"programme\" ], \"properties\": { \"id\": 1, \"name\": \"Licenciatura em Engenharia Informática e de Computadores\", \"acronym\": \"LEIC\", \"termSize\": 6 }, \"entities\": [ { \"class\": [ \"offer\" ], \"title\": \"PG Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 1, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/1\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"LSD Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 2, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/2\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"M1 Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 3, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/3\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"ALGA Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 4, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/4\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"E Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 1, \"termNumber\": 5 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/5\"} ] } ], \"actions\": [ { \"name\": \"edit-programme\", \"title\": \"Edit Programme\", \"method\": \"PUT\", \"href\": \"/v0/programmes/1\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeName\", \"type\": \"text\"}, { \"name\": \"Acronym\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] }, { \"name\": \"add-offer\", \"title\": \"Add Offer\", \"method\": \"POST\", \"href\": \"/v0/programmes/1/offers\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"CourseId\", \"type\": \"number\"}, { \"name\": \"CurricularTerm\", \"type\": \"number\" }, { \"name\": \"Optional\", \"type\": \"boolean\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" }, { \"rel\": [ \"up\" ], \"href\": \"/v0/programmes/\" } ] }"
+    "{ \"class\": [ \"programme\" ], \"properties\": { \"id\": 1, \"name\": \"Licenciatura em Engenharia Informática e de Computadores\", \"acronym\": \"LEIC\", \"termSize\": 6 }, \"entities\": [ { \"class\": [ \"offer\" ], \"title\": \"PG Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 1, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/1\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"LSD Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 2, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/2\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"M1 Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 3, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/3\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"ALGA Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 4, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/4\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"E Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"courseId\": 5, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/5\"} ] } ], \"actions\": [ { \"name\": \"edit-programme\", \"title\": \"Edit Programme\", \"method\": \"PUT\", \"href\": \"/v0/programmes/1\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeName\", \"type\": \"text\"}, { \"name\": \"Acronym\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] }, { \"name\": \"add-offer\", \"title\": \"Add Offer\", \"method\": \"POST\", \"href\": \"/v0/programmes/1/offers\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"CourseId\", \"type\": \"number\"}, { \"name\": \"CurricularTerm\", \"type\": \"number\" }, { \"name\": \"Optional\", \"type\": \"boolean\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" }, { \"rel\": [ \"up\" ], \"href\": \"/v0/programmes\" } ] }"
 
 // Programme Offers
 private const val pgOfferMock =

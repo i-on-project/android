@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
-import org.ionproject.android.common.model.IResource
 
 /**
  * Base worker contains all the worker managing logic like adding to database,
@@ -22,7 +21,7 @@ abstract class NumberedCoroutineWorker(
         params
     ) {
 
-    private val workerRepository by lazy {
+    private val workerRepository by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.workerRepository
     }
 
@@ -44,9 +43,9 @@ abstract class NumberedCoroutineWorker(
     abstract suspend fun lastJob(resourceId: Int)
 
     override suspend fun doWork(): Result {
-        val workerId = inputData.getInt(WORKER_ID_KEY, -1)
+        val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
 
-        //ProgrammeId is mandatory for work execution therefore throw exceptions if it doesn't come
+        // workerId is mandatory for work execution therefore throw exceptions if it doesn't come
         if (workerId == -1)
             throw IllegalArgumentException("${this::class.simpleName} did not receive a worker Id")
 
@@ -55,13 +54,13 @@ abstract class NumberedCoroutineWorker(
         workerRepository.updateWorker(worker)
 
         if (worker.currNumberOfJobs == 0) {
-            //Worker has finished all its jobs so perform lastJob
+            // Worker has finished all its jobs so perform lastJob
             lastJob(worker.resourceId)
             workerRepository.deleteWorker(worker)
             return Result.failure()
         }
 
-        //Worker still jobs to perform
+        // Worker still has jobs to perform
         job(worker.resourceId)
         return Result.success()
     }

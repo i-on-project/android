@@ -2,10 +2,8 @@ package org.ionproject.android.common.workers
 
 import android.content.Context
 import androidx.work.*
-import org.ionproject.android.common.db.WorkerDao
 import org.ionproject.android.common.model.BackgroundWorker
 import org.ionproject.android.common.model.IResource
-import org.ionproject.android.common.model.ResourceType
 import org.ionproject.android.common.repositories.WorkerRepository
 import java.util.concurrent.TimeUnit
 
@@ -38,7 +36,11 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
                 resourceType = resource.type
             )
         )
-        val work = PeriodicWorkRequest.Builder(workerClass, workImportance.repeatInterval, workImportance.repeatIntervalTimeUnit)
+        val work = PeriodicWorkRequest.Builder(
+            workerClass,
+            workImportance.repeatInterval,
+            workImportance.repeatIntervalTimeUnit
+        )
             .setConstraints(
                 //This constraints should be reconsidered, especially in very important work that generates notifications like for an event
                 Constraints.Builder()
@@ -48,11 +50,17 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
                     .setRequiresBatteryNotLow(true)
                     .build()
             )
-            .setInputData(workDataOf(
-                WORKER_ID_KEY to workerId
-            ))
+            .setInputData(
+                workDataOf(
+                    WORKER_ID_KEY to workerId
+                )
+            )
             .build()
         workManager.enqueue(work)
+    }
+
+    suspend fun resetWorkerJobsByResource(resource: IResource) {
+        workerRepository.resetWorkerJobsByResource(resource)
     }
 }
 
@@ -70,7 +78,7 @@ enum class WorkImportance {
     NOT_IMPORTANT {
         override val repeatInterval: Long = 7
         override val repeatIntervalTimeUnit: TimeUnit = TimeUnit.DAYS
-        override val numberOfJobs: Int = 52 // Avg number of weeks in an year
+        override val numberOfJobs: Int = 1 // Avg number of weeks in an year
     };
 
     abstract val repeatInterval: Long

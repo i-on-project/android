@@ -2,7 +2,6 @@ package org.ionproject.android.common.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.net.URI
 
 @Entity
 data class BackgroundWorker(

@@ -12,19 +12,22 @@ abstract class WorkerDao {
     abstract suspend fun getWorkerById(id: Int): BackgroundWorker
 
     @Query("SELECT * FROM BackgroundWorker WHERE resourceId = :resourceId AND resourceType = :resourceType")
-    abstract suspend fun _getWorkerByResource(resourceId: Int, resourceType: ResourceType) : BackgroundWorker
+    abstract suspend fun _getWorkerByResource(
+        resourceId: Int,
+        resourceType: ResourceType
+    ): BackgroundWorker
 
-    suspend fun getWorkerByResource(resource: IResource) = _getWorkerByResource(resource.id,resource.type)
+    suspend fun getWorkerByResource(resource: IResource) =
+        _getWorkerByResource(resource.id, resource.type)
 
     @Insert
-    abstract suspend fun insertWorker(worker: BackgroundWorker): Int
+    abstract suspend fun insertWorker(worker: BackgroundWorker): Long
 
     @Delete
     abstract suspend fun deleteWorker(worker: BackgroundWorker)
 
     @Update
     abstract suspend fun updateWorker(worker: BackgroundWorker)
-
 
 
 }

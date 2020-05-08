@@ -1,5 +1,7 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.net.URI
 
 /**
@@ -9,12 +11,17 @@ import java.net.URI
  * siren representation which means we don't need to have hard-coded
  * uris.
  */
+@Entity
 data class Course(
+    @PrimaryKey override val id: Int,
     val acronym: String,
     val name: String,
     val classesUri: URI?, //This is the URI used to navigate to this course classes
-    val eventsUri: URI? //This is the URI used to navigate to this course events
-)
+    val eventsUri: URI?, //This is the URI used to navigate to this course events
+    override val selfUri: URI
+) : IResource {
+    override val type: ResourceType = ResourceType.COURSE
+}
 
 /**
  *
@@ -25,3 +32,4 @@ data class CourseSummary(
     val acronym: String,
     val detailsUri: URI
 )
+

@@ -14,16 +14,20 @@ fun SirenEntity.toCourse(): Course {
     val classesLink: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
     val eventsLink: URI? = (entities.last() as EmbeddedEntity).links?.first()?.href
 
+    val id = properties?.get("id")
     val acronym = properties?.get("acronym")
     val name = properties?.get("name")
+    val selfUri = links?.first()?.href
 
-    if (properties != null && acronym != null && name != null) {
+    if (id != null && properties != null && acronym != null && name != null && selfUri != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
+            id = id.toInt(),
             acronym = acronym,
             name = name,
             classesUri = classesLink,
-            eventsUri = eventsLink
+            eventsUri = eventsLink,
+            selfUri = selfUri
         )
     }
     throw MappingFromSirenException("Cannot convert ${this} to Course")
