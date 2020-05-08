@@ -2,12 +2,10 @@ package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.Event
 import java.net.URI
-import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class ExamSummary(
     val uid: String,
@@ -35,7 +33,7 @@ fun Event.toExamSummary() = ExamSummary(
 
 private val formatter = DateTimeFormatter.ISO_INSTANT
 
-fun String.toLocalDate() : LocalDateTime {
+fun String.toLocalDate(): LocalDateTime {
     val instant = Instant.from(formatter.parse(this))
     return LocalDateTime.ofInstant(instant, ZoneOffset.UTC)
 }

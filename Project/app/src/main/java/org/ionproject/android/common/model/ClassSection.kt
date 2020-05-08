@@ -21,9 +21,9 @@ data class ClassSection(
  *  because the information holded is exactly the same,
  *  which means there is no need to have separate types.
  */
-@Entity(tableName = "Favorite", primaryKeys = ["name", "course", "calendar_term"])
+@Entity(tableName = "Favorite", primaryKeys = ["id", "course", "calendar_term"])
 data class ClassSummary(
-    val name: String,
+    val id: String,
     val course: String,
     @ColumnInfo(name = "calendar_term") val calendarTerm: String, //Should be a foreign key in the future
     @ColumnInfo(name = "details_uri") val detailsUri: URI

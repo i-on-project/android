@@ -47,7 +47,7 @@ class FavoritesListAdapter(
             classItem.text = view.resources.getString(
                 R.string.label_favorites_placeholder,
                 favorite.course,
-                favorite.name
+                favorite.id
             )
             classItem.setOnClickListener {
                 sharedViewModel.classSummary = favorite

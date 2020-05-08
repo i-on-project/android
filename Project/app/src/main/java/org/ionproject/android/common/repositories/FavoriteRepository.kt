@@ -56,7 +56,7 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
         if (favoriteDao.favoriteExists(
                 classSummary.course,
                 classSummary.calendarTerm,
-                classSummary.name
+                classSummary.id
             ) > 0
         )
             return true

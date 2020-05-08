@@ -43,7 +43,7 @@ class ClassesListAdapter(
         private val classItem = view.button_classes_list_item_class
 
         fun bindTo(classSummary: ClassSummary) {
-            classItem.text = classSummary.name
+            classItem.text = classSummary.id
             classItem.setOnClickListener {
                 sharedViewModel.classSummary = classSummary
                 view.findNavController().navigate(R.id.action_course_details_to_class_section)

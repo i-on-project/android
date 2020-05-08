@@ -27,6 +27,12 @@ class HomeFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, HomeViewModelProvider())[HomeViewModel::class.java]
 
+        // Insert custom search suggestions mocks to the database
+        viewModel.observeSuggestionsLiveData(viewLifecycleOwner) {
+            if (it.isEmpty())
+                viewModel.insertMocks()
+        }
+
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
 

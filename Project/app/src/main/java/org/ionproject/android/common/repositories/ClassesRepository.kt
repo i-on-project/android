@@ -4,12 +4,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.class_section.toClassSection
 import org.ionproject.android.common.db.ClassSectionDao
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.course_details.toClassSummaryList
 import java.net.URI
 

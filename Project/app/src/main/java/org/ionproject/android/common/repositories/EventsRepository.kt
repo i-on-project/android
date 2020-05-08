@@ -1,11 +1,11 @@
 package org.ionproject.android.common.repositories
 
-import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.*
 import org.ionproject.android.common.dto.Event
 import org.ionproject.android.common.dto.ICalendar
 import org.ionproject.android.common.dto.Journal
 import org.ionproject.android.common.dto.Todo
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.model.*
 import java.net.URI
 
 /**

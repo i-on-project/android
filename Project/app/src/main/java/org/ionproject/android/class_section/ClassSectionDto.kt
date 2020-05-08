@@ -1,9 +1,9 @@
 package org.ionproject.android.class_section
 
-import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.dto.EmbeddedEntity
 import org.ionproject.android.common.dto.MappingFromSirenException
 import org.ionproject.android.common.dto.SirenEntity
+import org.ionproject.android.common.model.ClassSection
 import java.net.URI
 
 /**

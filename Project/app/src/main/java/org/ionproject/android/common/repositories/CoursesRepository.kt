@@ -1,9 +1,9 @@
 package org.ionproject.android.common.repositories
 
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.model.CourseSummary
-import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.course_details.toCourse
 import org.ionproject.android.courses.toCourseSummaryList
 import java.net.URI

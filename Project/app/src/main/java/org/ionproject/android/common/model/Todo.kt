@@ -3,7 +3,6 @@ package org.ionproject.android.common.model
 import org.ionproject.android.common.dto.Todo
 import java.net.URI
 import java.time.LocalDateTime
-import java.util.*
 
 class TodoSummary(
     val uid: String,
