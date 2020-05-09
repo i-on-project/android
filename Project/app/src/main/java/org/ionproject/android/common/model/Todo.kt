@@ -2,14 +2,14 @@ package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.Todo
 import java.net.URI
-import java.time.LocalDateTime
+import java.util.*
 
 class TodoSummary(
     val uid: String,
     val summary: String?,
     val description: String?,
     val attachment: URI?,
-    val due: LocalDateTime?
+    val due: Calendar?
 )
 
 fun Todo.toTodoSummary() =
@@ -18,5 +18,5 @@ fun Todo.toTodoSummary() =
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),
         attachment = URI(properties.attachment?.value?.get(0) ?: ""),
-        due = properties.due?.value?.get(0)?.toLocalDate()
+        due = properties.due?.value?.get(0)?.toCalendar()
     )
