@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/constraintlayout_jdcalendar"
+    >
+
+    <!-- Top Section Month Year and Buttons-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_date_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/imageview_calendar_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_left_black_24dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/linearlayout_date_display"/>
+
+        <!-- Date display month and year-->
+        <LinearLayout
+            android:id="@+id/linearlayout_date_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/textview_date_display_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:textColor="#222222"
+                android:textSize="30sp"
+                android:textStyle="normal"
+                android:text="April"
+                android:layout_marginRight="10dp"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/textview_date_display_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:textColor="#222222"
+                android:textSize="30sp"
+                android:textStyle="normal"
+                android:text="2020">
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageview_calendar_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_right_black_24dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/linearlayout_date_display"/>
+
+        <ImageView
+            android:id="@+id/imageview_calendar_export"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/ic_import_export_black_24dp"
+            >
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Days of the week -->
+    <LinearLayout
+        android:id="@+id/layout_calendar_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_date_display">
+
+        <TextView
+            android:id="@+id/textview_calendar_header_monday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/monday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_tuesday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/tuesday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_wednesday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/wednesday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_thursday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/thursday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_friday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/friday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_saturday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/saturday_short"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textview_calendar_header_sunday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/sunday_short"
+            android:textColor="#222222" />
+    </LinearLayout>
+
+    <!-- Day of the month -->
+    <GridView
+        android:id="@+id/gridview_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_calendar_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/grid_item_jdcalendar"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

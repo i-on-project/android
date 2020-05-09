@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="JDCalendar">
+        <!-- Background Colors -->
+        <attr name="topSectionBackgroundColor" format="color"/>
+        <attr name="weekDaysHeaderBackgroundColor" format="color"/>
+        <attr name="monthDaysGridBackgroundColor" format="color"/>
+        
+        <!--Text Colors -->
+        <attr name="monthTextColor" format="color"/>
+        <attr name="yearTextColor" format="color"/>
+        <attr name="weekDaysTextColor" format="color"/>
+
+        <!-- Text Sizes -->
+        <attr name="monthTextSize" format="dimension"/>
+        <attr name="yearTextSize" format="dimension"/>
+        <attr name="weekDaysTextSize" format="dimension"/>
+
+        <!-- Text Styles -->
+        <attr name="monthTextStyle" format="reference"/>
+        <attr name="yearTextStyle" format="reference"/>
+        <attr name="weekDaysTextStyle" format="reference"/>
+
+        <!-- Grid Style -->
+        <attr name="gridStyle" format="reference"/>
+
+        <!-- Button Colors -->
+        <attr name="nextButtonColor" format="color"/>
+        <attr name="prevButtonColor" format="color"/>
+    </declare-styleable>
+</resources>
