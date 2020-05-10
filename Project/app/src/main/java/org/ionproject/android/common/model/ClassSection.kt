@@ -2,30 +2,33 @@ package org.ionproject.android.common.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.net.URI
 
 /**
  *  This type represents a Class Section in the context of this application.
  */
-@Entity
+@Entity(primaryKeys = ["id", "courseAcronym", "calendar_term"])
 data class ClassSection(
-    val course: String,
+    val id: String,
+    val courseAcronym: String,
     @ColumnInfo(name = "calendar_term") val calendarTerm: String, //Should be a foreign key in the future
-    @PrimaryKey val name: String,
-    @ColumnInfo(name = "calendar_uri") val calendarURI: URI?
-)
+    @ColumnInfo(name = "calendar_uri") val calendarURI: URI?,
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
 /**
  *  Represents a class summary, and when saved it represents a favorite,
- *  because the information holded is exactly the same,
+ *  because the information held is exactly the same,
  *  which means there is no need to have separate types.
  */
-@Entity(tableName = "Favorite", primaryKeys = ["name", "course", "calendar_term"])
+@Entity(tableName = "Favorite", primaryKeys = ["id", "courseAcronym", "calendar_term"])
 data class ClassSummary(
-    val name: String,
-    val course: String,
+    val id: String,
+    val courseAcronym: String,
     @ColumnInfo(name = "calendar_term") val calendarTerm: String, //Should be a foreign key in the future
-    @ColumnInfo(name = "details_uri") val detailsUri: URI
-)
+    @ColumnInfo(name = "details_uri") val detailsUri: URI,
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 

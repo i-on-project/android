@@ -33,6 +33,13 @@ class CourseDetailsFragment : Fragment() {
             .of(this, CoursesDetailsViewModelProvider())[CourseDetailsViewModel::class.java]
     }
 
+    /**
+     * Classes List's Adapter
+     */
+    private val classesListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        ClassesListAdapter(viewModel, sharedViewModel)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,8 +76,6 @@ class CourseDetailsFragment : Fragment() {
     private fun setupCourseClassesList(classesList: RecyclerView) {
         //TODO: Confirm if this is the right context
         classesList.layoutManager = LinearLayoutManager(context)
-
-        val classesListAdapter = ClassesListAdapter(viewModel, sharedViewModel)
         classesList.adapter = classesListAdapter
 
         viewModel.observeClassesListLiveData(viewLifecycleOwner) {

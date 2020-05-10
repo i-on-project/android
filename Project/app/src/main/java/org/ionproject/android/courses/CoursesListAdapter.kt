@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_courses.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
-import org.ionproject.android.common.model.CourseSummary
 import org.ionproject.android.common.model.ProgrammeOffer
 
 class CoursesListAdapter(

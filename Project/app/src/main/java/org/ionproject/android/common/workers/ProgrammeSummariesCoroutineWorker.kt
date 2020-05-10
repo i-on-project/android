@@ -3,6 +3,7 @@ package org.ionproject.android.common.workers
 import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.programmes.toProgrammeSummaryList
 
@@ -19,13 +20,12 @@ class ProgrammeSummariesCoroutineWorker(
         IonApplication.ionWebAPI
     }
 
-    override suspend fun job(resourceId: Int) {
+    override suspend fun job() {
         val programmeSummariesLocal = programmesDao.getAllProgrammeSummaries()
         val programmeSummariesServer =
-            ionWebAPI.getFromURI(programmeSummariesLocal.first().selfUri).toProgrammeSummaryList()
-        if (programmeSummariesServer.count() > programmeSummariesLocal.count())
-            programmesDao.updateProgrammeSummaries(programmeSummariesServer)
-        else if (programmeSummariesServer.count() < programmeSummariesLocal.count()) {
+            ionWebAPI.getFromURI(programmeSummariesLocal.first().selfUri, SirenEntity::class.java)
+                .toProgrammeSummaryList()
+        if (programmeSummariesServer.count() != programmeSummariesLocal.count()) {
             programmesDao.deleteAllProgrammeSummaries()
             programmesDao.insertProgrammeSummaries(programmeSummariesServer)
         } else {
@@ -39,7 +39,7 @@ class ProgrammeSummariesCoroutineWorker(
         }
     }
 
-    override suspend fun lastJob(resourceId: Int) {
+    override suspend fun lastJob() {
         programmesDao.deleteAllProgrammeSummaries()
     }
 }

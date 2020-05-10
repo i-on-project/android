@@ -11,27 +11,25 @@ import java.net.URI
  */
 @Entity
 data class Programme(
-    @PrimaryKey override val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val acronym: String,
     val termSize: Int,
-    override val selfUri: URI
-) : IResource {
-    override var type: ResourceType = ResourceType.PROGRAMME
-}
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
 /**
  * This type represents a the summary of a Programme in the context of this application.
  */
 @Entity
 data class ProgrammeSummary(
-    @PrimaryKey override val id: Int,
+    @PrimaryKey val id: Int,
     val acronym: String,
     val detailsUri: URI,
-    override val selfUri: URI
-) : IResource {
-    override var type: ResourceType = ResourceType.PROGRAMME_SUMMARY
-}
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
 
 data class ProgrammeWithOffers(
@@ -50,24 +48,23 @@ data class ProgrammeWithOffers(
  * This type represents a ProgrammeOffer in the context of this application.
  * A programmeOffer is the same as a ClassSummary and Favorite
  */
-@Entity(primaryKeys = ["id", "programmeId"])
+@Entity
 data class ProgrammeOffer(
-    override val id: Int,
+    @PrimaryKey val id: Int,
     val acronym: String,
     val termNumber: Int,
     val optional: Boolean,
     val detailsUri: URI,
-    val programmeId: Int,
-    override val selfUri: URI
-) : IResource {
-    override var type: ResourceType = ResourceType.PROGRAMME_OFFER
-}
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
 /**
  * This type represents a ProgrammeOfferSummary in the context of this application.
  */
-@Entity(primaryKeys = ["courseId", "programmeId"])
+@Entity
 data class ProgrammeOfferSummary(
+    @PrimaryKey val id: Int,
     val courseId: Int,
     val termNumber: Int,
     val detailsUri: URI,

@@ -1,9 +1,9 @@
 package org.ionproject.android.programmes
 
+import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.MappingFromSirenException
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.*
-import org.ionproject.android.common.siren.EmbeddedEntity
-import org.ionproject.android.common.siren.MappingFromSirenException
-import org.ionproject.android.common.siren.SirenEntity
 
 fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
     val programmesList = mutableListOf<ProgrammeSummary>()
@@ -45,13 +45,15 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 
+            val id = embeddedEntity.properties?.get("id")
             val courseId = embeddedEntity.properties?.get("courseId")
             val termNumber = embeddedEntity.properties?.get("termNumber")
             val detailsUri = embeddedEntity.links?.first()?.href
 
-            if (courseId != null && termNumber != null && detailsUri != null)
+            if (id != null && courseId != null && termNumber != null && detailsUri != null)
                 programmeOfferSummaryList.add(
                     ProgrammeOfferSummary(
+                        id = id.toInt(),
                         courseId = courseId.toInt(),
                         termNumber = termNumber.toInt(),
                         detailsUri = detailsUri,
@@ -75,7 +77,7 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
     throw MappingFromSirenException("Cannot convert ${this} to Programme")
 }
 
-fun SirenEntity.toProgrammeOffer(programmeId: Int): ProgrammeOffer {
+fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
     val id = properties?.get("id")
     val acr = properties?.get("acronym")
     val termNumber = properties?.get("termNumber")
@@ -93,7 +95,6 @@ fun SirenEntity.toProgrammeOffer(programmeId: Int): ProgrammeOffer {
             termNumber = termNumber.toInt(),
             optional = optional.toBoolean(),
             detailsUri = detailsUri,
-            programmeId = programmeId,
             selfUri = selfUri
         )
     }

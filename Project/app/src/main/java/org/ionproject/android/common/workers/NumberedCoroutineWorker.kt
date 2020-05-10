@@ -28,19 +28,15 @@ abstract class NumberedCoroutineWorker(
     /**
      * Regular worker job, should request resource from WebAPi
      * compare to the one in Db and updates if there are differences
-     *
-     * @param resourceId is the id of the resource it is managing
      */
-    abstract suspend fun job(resourceId: Int)
+    abstract suspend fun job()
 
     /**
      * The last job of the worker, should
      * remove the resource it is managing
      * from the db
-     *
-     * @param resourceId is the id of the resource it is managing
      */
-    abstract suspend fun lastJob(resourceId: Int)
+    abstract suspend fun lastJob()
 
     override suspend fun doWork(): Result {
         val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
@@ -55,13 +51,13 @@ abstract class NumberedCoroutineWorker(
 
         if (worker.currNumberOfJobs == 0) {
             // Worker has finished all its jobs so perform lastJob
-            lastJob(worker.resourceId)
+            lastJob()
             workerRepository.deleteWorker(worker)
             return Result.failure()
         }
 
         // Worker still has jobs to perform
-        job(worker.resourceId)
+        job()
         return Result.success()
     }
 

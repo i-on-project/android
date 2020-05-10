@@ -13,23 +13,12 @@ import java.net.URI
  */
 @Entity
 data class Course(
-    @PrimaryKey override val id: Int,
+    @PrimaryKey val id: Int,
     val acronym: String,
     val name: String,
     val classesUri: URI?, //This is the URI used to navigate to this course classes
     val eventsUri: URI?, //This is the URI used to navigate to this course events
-    override val selfUri: URI
-) : IResource {
-    override val type: ResourceType = ResourceType.COURSE
-}
-
-/**
- *
- * This type represents the summary of a [Course] ,
- * which means it does not include all of its details
- */
-data class CourseSummary(
-    val acronym: String,
-    val detailsUri: URI
-)
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 

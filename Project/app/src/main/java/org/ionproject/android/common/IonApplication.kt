@@ -26,6 +26,7 @@ class IonApplication : Application() {
         lateinit var calendarTermRepository: CalendarTermRepository private set
         lateinit var workerRepository: WorkerRepository private set
         lateinit var workerManagerFacade: WorkerManagerFacade private set
+        lateinit var eventsRepository: EventsRepository
     }
 
     override fun onCreate() {
@@ -57,17 +58,29 @@ class IonApplication : Application() {
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
         programmesRepository =
-            ProgrammesRepository(webAPI, db.programmeDao(), workerManagerFacade)
+            ProgrammesRepository(
+                webAPI,
+                db.programmeDao(),
+                db.programmeOfferDao(),
+                workerManagerFacade
+            )
         coursesRepository =
-            CourseRepository(webAPI)
+            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
-            ClassesRepository(webAPI, db.classSectionDao())
+            ClassesRepository(
+                webAPI,
+                db.classSectionDao(),
+                db.classSummaryDao(),
+                workerManagerFacade
+            )
         favoritesRepository =
             FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI)
         suggestionsMockRepository =
             SuggestionsMockRepository(db)
+        eventsRepository =
+            EventsRepository(webAPI)
     }
 
 }

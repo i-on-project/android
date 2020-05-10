@@ -9,6 +9,7 @@ class ClassSectionViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ClassSectionViewModel::class.java -> ClassSectionViewModel(
+                IonApplication.eventsRepository,
                 IonApplication.classesRepository,
                 IonApplication.favoritesRepository
             )

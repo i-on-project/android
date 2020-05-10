@@ -2,7 +2,6 @@ package org.ionproject.android.common.repositories
 
 import org.ionproject.android.common.db.WorkerDao
 import org.ionproject.android.common.model.BackgroundWorker
-import org.ionproject.android.common.model.IResource
 
 class WorkerRepository(private val workerDao: WorkerDao) {
 
@@ -14,9 +13,10 @@ class WorkerRepository(private val workerDao: WorkerDao) {
 
     suspend fun updateWorker(worker: BackgroundWorker) = workerDao.updateWorker(worker)
 
-    suspend fun resetWorkerJobsByResource(resource: IResource) {
-        val worker = workerDao.getWorkerByResource(resource)
+    suspend fun resetWorkerJobsById(id: Int) {
+        val worker = workerDao.getWorkerById(id)
         worker.resetNumberOfJobs()
+        updateWorker(worker)
     }
 
 }

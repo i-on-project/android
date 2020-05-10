@@ -14,10 +14,11 @@ import org.ionproject.android.common.model.*
         Programme::class,
         ProgrammeSummary::class,
         ProgrammeOffer::class,
-        ProgrammeOfferSummary::class
+        ProgrammeOfferSummary::class,
+        Course::class
     ), version = 1
 )
-@TypeConverters(URIConverter::class, ResourceTypeConverter::class)
+@TypeConverters(URIConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun suggestionDAO(): SuggestionDAO
     abstract fun favoriteDao(): FavoriteDao
@@ -25,4 +26,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun workerDao(): WorkerDao
     abstract fun programmeDao(): ProgrammeDao
     abstract fun programmeOfferDao(): ProgrammeOfferDao
+    abstract fun courseDao(): CourseDao
+    abstract fun classSummaryDao(): ClassSummaryDao
 }

@@ -1,4 +1,4 @@
-package org.ionproject.android.common.siren
+package org.ionproject.android.common.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser
@@ -49,7 +49,8 @@ data class SirenLink(
  */
 data class SirenAction(
     val name: String,
-    val href: URI,
+    val summary: String? = null,
+    val href: String,
     val title: String? = null,
     val clazz: List<String>? = null,
     val method: HttpMethod? = null,
@@ -108,6 +109,7 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
         /**
          * If property "properties" or "links" or "actions" exists then
          * it must be an EmbeddedEntity
+         * else is an EmbeddedLink
          */
         return p.codec.treeToValue(
             node,
@@ -127,3 +129,4 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
  */
 class MappingFromSirenException(message: String) : Exception(message)
 
+fun String?.toURI() = URI(this ?: "")

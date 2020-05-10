@@ -23,7 +23,7 @@ interface FavoriteDao {
     @Delete
     suspend fun deleteFavorite(classSummary: ClassSummary): Int
 
-    @Query("SELECT COUNT(*) FROM Favorite WHERE course = :course AND calendar_term=:calendarTerm AND name=:classSection")
+    @Query("SELECT COUNT(*) FROM Favorite WHERE courseAcronym = :course AND calendar_term=:calendarTerm AND id=:classSection")
     suspend fun favoriteExists(course: String, calendarTerm: String, classSection: String): Int
 
 }

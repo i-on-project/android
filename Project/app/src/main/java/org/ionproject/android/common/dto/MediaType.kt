@@ -1,4 +1,4 @@
-package org.ionproject.android.common.siren
+package org.ionproject.android.common.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -16,5 +16,8 @@ enum class MediaType {
     JSON_HOME,
 
     @JsonProperty("$APPLICATION_TYPE/$URL_ENCODED_SUBTYPE")
-    URL_ENCODED
+    URL_ENCODED,
+
+    @JsonProperty("*/*")
+    ANY_TYPE
 }
