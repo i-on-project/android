@@ -55,8 +55,10 @@ class ClassSectionViewModel(
      */
     fun getClassSectionDetails(classSummary: ClassSummary, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
-            currClassSection = classSectionRepository.getClassSection(classSummary)
-            onResult(currClassSection)
+            classSectionRepository.getClassSection(classSummary)?.let {
+                currClassSection = it
+                onResult(it)
+            }
         }
     }
 
@@ -170,7 +172,6 @@ class ClassSectionViewModel(
      */
     fun addClassToFavorites(classSummary: ClassSummary) {
         viewModelScope.launch {
-            classSectionRepository.addClassSectionToDb(currClassSection)
             favoriteRepository.addFavorite(classSummary)
         }
     }
@@ -184,7 +185,6 @@ class ClassSectionViewModel(
     fun removeClassFromFavorites(classSummary: ClassSummary) {
         viewModelScope.launch {
             favoriteRepository.removeFavorite(classSummary)
-            classSectionRepository.removeClassSectionFromDb(currClassSection)
         }
     }
 

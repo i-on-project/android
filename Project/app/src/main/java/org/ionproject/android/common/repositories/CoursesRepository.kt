@@ -1,11 +1,10 @@
 package org.ionproject.android.common.repositories
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CourseDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
@@ -27,27 +26,23 @@ class CourseRepository(
      *
      * @param courseSummary is the summary representation of a course
      */
-    suspend fun getCourseDetails(programmeOffer: ProgrammeOffer, onResult: (Course) -> Unit) =
-        coroutineScope {
+    suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
+        withContext(Dispatchers.IO) {
             var course = courseDao.getCourseById(programmeOffer.id)
 
             if (course == null) {
                 course =
                     ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
                         .toCourse()
-                launch {
-                    val workerId = workerManagerFacade.enqueueWorkForCourse(
-                        course,
-                        WorkImportance.IMPORTANT
-                    )
-                    course.workerId = workerId
-                    courseDao.insertCourse(course)
-                }
+                val workerId = workerManagerFacade.enqueueWorkForCourse(
+                    course,
+                    WorkImportance.IMPORTANT
+                )
+                course.workerId = workerId
+                courseDao.insertCourse(course)
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(course)
             }
-
-            onResult(course)
+            course
         }
-
 }

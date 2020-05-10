@@ -13,9 +13,8 @@ class ProgrammesViewModel(private val programmesRepository: ProgrammesRepository
 
     init {
         viewModelScope.launch {
-            programmesRepository.getAllProgrammes {
-                programmesLiveData.postValue(it)
-            }
+            val programmes = programmesRepository.getAllProgrammes()
+            programmesLiveData.postValue(programmes)
         }
     }
 

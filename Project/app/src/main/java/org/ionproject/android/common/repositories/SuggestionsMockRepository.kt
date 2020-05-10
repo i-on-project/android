@@ -3,7 +3,7 @@ package org.ionproject.android.common.repositories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.db.Suggestion
+import org.ionproject.android.common.model.Suggestion
 
 class SuggestionsMockRepository(private val db: AppDatabase) {
 

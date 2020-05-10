@@ -15,7 +15,8 @@ import org.ionproject.android.common.model.*
         ProgrammeSummary::class,
         ProgrammeOffer::class,
         ProgrammeOfferSummary::class,
-        Course::class
+        Course::class,
+        CalendarTerm::class
     ), version = 1
 )
 @TypeConverters(URIConverter::class)
@@ -28,4 +29,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun programmeOfferDao(): ProgrammeOfferDao
     abstract fun courseDao(): CourseDao
     abstract fun classSummaryDao(): ClassSummaryDao
+    abstract fun calendarTermDao(): CalendarTermDao
 }

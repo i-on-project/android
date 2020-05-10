@@ -1,8 +1,6 @@
 package org.ionproject.android.common.repositories
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.ionproject.android.class_section.toClassSection
 import org.ionproject.android.common.db.ClassSectionDao
@@ -10,7 +8,6 @@ import org.ionproject.android.common.db.ClassSummaryDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.workers.WorkImportance
@@ -25,11 +22,28 @@ class ClassesRepository(
     private val workerManagerFacade: WorkerManagerFacade
 ) {
 
-    suspend fun getClassSection(classSummary: ClassSummary): ClassSection {
-        return ionWebAPI
-            .getFromURI(classSummary.detailsUri, SirenEntity::class.java)
-            .toClassSection()
-    }
+    suspend fun getClassSection(classSummary: ClassSummary) =
+        withContext(Dispatchers.IO) {
+            var classSection = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
+                classSummary.id,
+                classSummary.courseAcronym,
+                classSummary.calendarTerm
+            )
+            if (classSection == null) {
+                classSection =
+                    ionWebAPI.getFromURI(classSummary.detailsUri, SirenEntity::class.java)
+                        .toClassSection()
+                val workerId = workerManagerFacade.enqueueWorkForClassSection(
+                    classSection,
+                    WorkImportance.VERY_IMPORTANT
+                )
+                classSection.workerId = workerId
+                classSectionDao.insertClassSection(classSection)
+            } else {
+                workerManagerFacade.resetWorkerJobsByCacheable(classSection)
+            }
+            classSection
+        }
 
     //Adds the calendar term to the classes URI
     private fun URI.fromCalendarTerm(calendarTerm: CalendarTerm): URI {
@@ -39,9 +53,8 @@ class ClassesRepository(
 
     suspend fun getClassesFromCourse(
         course: Course,
-        calendarTerm: CalendarTerm,
-        onResult: (List<ClassSummary>) -> Unit
-    ) = coroutineScope {
+        calendarTerm: CalendarTerm
+    ) = withContext(Dispatchers.IO) {
         var classes = classSummaryDao.getClassSummariesByCourseAndCalendarTerm(
             course.acronym,
             calendarTerm.name
@@ -51,45 +64,20 @@ class ClassesRepository(
                 course.classesUri.fromCalendarTerm(calendarTerm),
                 SirenEntity::class.java
             ).toClassSummaryList()
-            if (!classes.isEmpty())
-                launch {
-                    val workerId = workerManagerFacade.enqueueWorkForClassSummaries(
-                        classes,
-                        WorkImportance.IMPORTANT
-                    )
-                    for (classSummary in classes) {
-                        classSummary.workerId = workerId
-                    }
-                    classSummaryDao.insertClassSummaries(classes)
+            if (!classes.isEmpty()) {
+                val workerId = workerManagerFacade.enqueueWorkForClassSummaries(
+                    classes,
+                    WorkImportance.IMPORTANT
+                )
+                for (classSummary in classes) {
+                    classSummary.workerId = workerId
                 }
+                classSummaryDao.insertClassSummaries(classes)
+            }
         } else {
             workerManagerFacade.resetWorkerJobsByCacheable(classes[0])
         }
         //Some courses may not have classes in a certain term, in those cases we return an emptyList
-        onResult(classes)
-    }
-
-    /**
-     * Runs the coroutine with the [Dispatchers.IO]
-     * which is optimized to perform disk or network I/O outside of the main thread.
-     *
-     * @param classSection is the classSection to add to the db
-     */
-    suspend fun addClassSectionToDb(classSection: ClassSection) {
-        withContext(Dispatchers.IO) {
-            classSectionDao.insertClassSection(classSection)
-        }
-    }
-
-    /**
-     * Runs the coroutine with the [Dispatchers.IO]
-     * which is optimized to perform disk or network I/O outside of the main thread.
-     *
-     * @param classSection is the classSection to remove from the db
-     */
-    suspend fun removeClassSectionFromDb(classSection: ClassSection) {
-        withContext(Dispatchers.IO) {
-            classSectionDao.deleteClassSection(classSection)
-        }
+        classes
     }
 }

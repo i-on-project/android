@@ -76,7 +76,7 @@ class IonApplication : Application() {
         favoritesRepository =
             FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
-            CalendarTermRepository(webAPI)
+            CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
         suggestionsMockRepository =
             SuggestionsMockRepository(db)
         eventsRepository =

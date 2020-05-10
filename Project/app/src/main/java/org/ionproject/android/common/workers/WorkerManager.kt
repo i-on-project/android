@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit
 
 const val WORKER_ID_KEY = "19x781x2b"
 const val PROGRAMME_ID_KEY = "c4094c20"
-const val PROGRAMME_OFFER_SUMMARIES_ID_KEY = "rxtnxn2g"
 const val PROGRAMME_OFFER_ID_KEY = "4crcnc34r"
 const val COURSE_DETAILS_ID_KEY = "2xm0h2r0x"
 const val CLASS_SUMMARIES_COURSE_KEY = "20xh38nx2"
@@ -81,6 +80,13 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
         CLASS_SECTION_ID_KEY to classSection.id,
         CLASS_SECTION_CALENDAR_TERM_KEY to classSection.calendarTerm,
         CLASS_SECTION_COURSE_KEY to classSection.courseAcronym
+    )
+
+    suspend fun enqueueWorkForAllCalendarTerms(
+        workImportance: WorkImportance
+    ) = enqueueWorkWithInputData(
+        workImportance,
+        CalendarTermsWorker::class.java
     )
 
     /**

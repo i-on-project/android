@@ -2,9 +2,7 @@ package org.ionproject.android.programmeDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.repositories.ProgrammesRepository
@@ -25,11 +23,8 @@ class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepo
     ) {
         if (programmeSummary != null)
             viewModelScope.launch {
-                val programme = programmesRepository.getProgrammeDetails(programmeSummary) {
-                    withContext(Dispatchers.Main) {
-                        onResult(it)
-                    }
-                }
+                val programme = programmesRepository.getProgrammeDetails(programmeSummary)
+                programme?.let(onResult)
             }
     }
 

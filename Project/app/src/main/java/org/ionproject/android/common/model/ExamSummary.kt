@@ -38,7 +38,7 @@ fun String?.toCalendar(): Calendar? {
     val calendar = Calendar.getInstance()
     val date = formatter.parse(this)
 
-    if(date != null) {
+    if (date != null) {
         calendar.time = date
         return calendar
     }

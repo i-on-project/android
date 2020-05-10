@@ -35,7 +35,7 @@ class CourseDetailsViewModel(
     fun getCourseDetails(programmeOffer: ProgrammeOffer?, onResult: (Course) -> Unit) {
         if (programmeOffer != null)
             viewModelScope.launch {
-                courseRepository.getCourseDetails(programmeOffer, onResult)
+                courseRepository.getCourseDetails(programmeOffer)?.let(onResult)
             }
     }
 
@@ -48,10 +48,8 @@ class CourseDetailsViewModel(
      */
     fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
         viewModelScope.launch {
-            val classes = classesRepository.getClassesFromCourse(course, calendarTerm) {
-                classesListLiveData.postValue(it)
-            }
-
+            val classes = classesRepository.getClassesFromCourse(course, calendarTerm)
+            classesListLiveData.postValue(classes)
         }
     }
 

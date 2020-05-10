@@ -40,7 +40,7 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
         curricularTerm: Int
     ) {
         viewModelScope.launch {
-            val deferredOffers = mutableListOf<Deferred<ProgrammeOffer>>()
+            val deferredOffers = mutableListOf<Deferred<ProgrammeOffer?>>()
             //Launching parallel coroutines to increase the speed of the method execution
             for (programmeOfferSummary in programmeOfferSummaries) {
                 if (programmeOfferSummary.termNumber == curricularTerm)
@@ -56,10 +56,12 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
 
             //Await for results and then separate courses in mandatory and optional
             deferredOffers.awaitAll().forEach {
-                if (it.optional)
-                    newOptionalCourses.add(it)
-                else
-                    newMandatoryCourses.add(it)
+                it?.let {
+                    if (it.optional)
+                        newOptionalCourses.add(it)
+                    else
+                        newMandatoryCourses.add(it)
+                }
             }
 
             mandatoryCourses = newMandatoryCourses

@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.db.Suggestion
+import org.ionproject.android.common.model.Suggestion
 import org.ionproject.android.common.repositories.SuggestionsMockRepository
 
 class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewModel() {
