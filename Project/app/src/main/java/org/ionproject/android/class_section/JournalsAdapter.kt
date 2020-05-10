@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.model.JournalSummary
+import org.ionproject.android.common.model.Journal
 
 class JournalsAdapter(
     private val model: ClassSectionViewModel
@@ -27,7 +27,7 @@ class JournalsAdapter(
     class JournalViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val journalSummary = view.textView_label_example
 
-        fun bindTo(journalInfo: JournalSummary) {
+        fun bindTo(journalInfo: Journal) {
             journalSummary.text = journalInfo.summary
         }
     }

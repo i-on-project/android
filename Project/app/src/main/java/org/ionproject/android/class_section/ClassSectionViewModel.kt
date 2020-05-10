@@ -26,24 +26,24 @@ class ClassSectionViewModel(
      * to return information holden by these livedatas.
      */
     private val lecturesLiveData = MutableLiveData<List<Lecture>>()
-    private val examsLiveData = MutableLiveData<List<ExamSummary>>()
-    private val workAssignmentsLiveData = MutableLiveData<List<TodoSummary>>()
-    private val journalsLiveData = MutableLiveData<List<JournalSummary>>()
+    private val examsLiveData = MutableLiveData<List<Exam>>()
+    private val workAssignmentsLiveData = MutableLiveData<List<Todo>>()
+    private val journalsLiveData = MutableLiveData<List<Journal>>()
 
     // Public getter to return lecturesLiveData information
     val lectures: List<Lecture>
         get() = lecturesLiveData.value ?: emptyList()
 
     // Public getter to return examsLiveData information
-    val exams: List<ExamSummary>
+    val exams: List<Exam>
         get() = examsLiveData.value ?: emptyList()
 
     // Public getter to return workAssignments information
-    val workAssignments: List<TodoSummary>
+    val workAssignments: List<Todo>
         get() = workAssignmentsLiveData.value ?: emptyList()
 
     // Public getter to return journals information
-    val journals: List<JournalSummary>
+    val journals: List<Journal>
         get() = journalsLiveData.value ?: emptyList()
 
     /**
@@ -60,6 +60,16 @@ class ClassSectionViewModel(
         }
     }
 
+    fun getEvents(uri: URI) {
+        viewModelScope.launch {
+            val events = eventsRepository.getEvents(uri)
+            examsLiveData.postValue(events.exams)
+            lecturesLiveData.postValue(events.lectures)
+            workAssignmentsLiveData.postValue(events.todos)
+            journalsLiveData.postValue(events.journals)
+        }
+    }
+
     /**
      * Gets all exams available for the [currClassSection] class section
      *
@@ -67,7 +77,7 @@ class ClassSectionViewModel(
      */
     fun getExams(uris: List<URI>) {
         viewModelScope.launch {
-            val exams: List<ExamSummary> = uris.map { eventsRepository.getExamFromCourse(it) }
+            val exams: List<Exam> = uris.map { eventsRepository.getExamFromCourse(it) }
             examsLiveData.postValue(exams)
         }
     }

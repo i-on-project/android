@@ -23,14 +23,13 @@ import org.ionproject.android.R
 class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
 
-     //----------------------------------Public methods-----------------------------------
+    //----------------------------------Public methods-----------------------------------
 
     var adapter = JDCalendarAdapter()
         set(value) {
             field = value
             baseAdapter.setAdapter(value)
         }
-
 
 
     // Inflating calendar layout, this has to be done before obtaining
@@ -123,10 +122,12 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var weekDaysTextColor: Int? = null
     private var nextButtonColor: Int? = null
     private var prevButtonColor: Int? = null
+
     // Sizes
     private var monthTextSize: Float? = null
     private var yearTextSize: Float? = null
     private var weekDaysTextSize: Float? = null
+
     // Styles
     private var monthTextStyle: Int? = null
     private var yearTextStyle: Int? = null
@@ -138,6 +139,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val topSection = layout_date_display
     private val calendarHeader = layout_calendar_header
     private val exportButton = imageview_calendar_export
+
     // Public properties
     val nextButton = imageview_calendar_next
     val prevButton = imageview_calendar_prev
@@ -198,7 +200,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
 
-     //--------------------------Private methods-----------------------------------
+    //--------------------------Private methods-----------------------------------
 
     /**
      * Updates the view components with the values

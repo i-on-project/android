@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 /**
  * This is a representation for a Calendar type, which is a iCalendar type.
  */
-data class ICalendar(
+data class ICalendarDto(
     @JsonProperty("class") val clazz: List<String>? = null,
     val properties: CalendarProperties,
     val entities: List<SubEntity>,
@@ -16,7 +16,7 @@ data class ICalendar(
 data class CalendarProperties(
     val type: String,
     val properties: CalendarCreator,
-    val subComponents: List<Properties>
+    val subComponents: List<EventProperties>
 )
 
 data class CalendarCreator(

@@ -1,10 +1,11 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.common.dto.Todo
+import org.ionproject.android.common.dto.ComponentProperties
+import org.ionproject.android.common.dto.TodoDto
 import java.net.URI
 import java.util.*
 
-class TodoSummary(
+class Todo(
     val uid: String,
     val summary: String?,
     val description: String?,
@@ -12,8 +13,11 @@ class TodoSummary(
     val due: Calendar?
 )
 
-fun Todo.toTodoSummary() =
-    TodoSummary(
+fun TodoDto.toTodoSummary() = createTodo(properties)
+
+
+fun createTodo(properties: ComponentProperties) =
+    Todo(
         uid = properties.uid.value[0],
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),

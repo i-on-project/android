@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
+import org.ionproject.android.common.dto.enums.HttpMethod
+import org.ionproject.android.common.dto.enums.MediaType
 import java.net.URI
 
 /**

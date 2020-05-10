@@ -1,9 +1,9 @@
 package org.ionproject.android.common.repositories
 
-import org.ionproject.android.common.dto.Event
-import org.ionproject.android.common.dto.ICalendar
-import org.ionproject.android.common.dto.Journal
-import org.ionproject.android.common.dto.Todo
+import org.ionproject.android.common.dto.EventDto
+import org.ionproject.android.common.dto.ICalendarDto
+import org.ionproject.android.common.dto.JournalDto
+import org.ionproject.android.common.dto.TodoDto
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.*
 import java.net.URI
@@ -22,10 +22,10 @@ class EventsRepository(
      *
      * @return Exam information collected from the Web API
      */
-    suspend fun getExamFromCourse(uri: URI): ExamSummary {
+    suspend fun getExamFromCourse(uri: URI): Exam {
         return ionWebAPI
-            .getFromURI(uri, Event::class.java)
-            .toExamSummary()
+            .getFromURI(uri, EventDto::class.java)
+            .toExam()
     }
 
     /**
@@ -39,7 +39,7 @@ class EventsRepository(
         if (calendarURI == null)
             return emptyList()
         return ionWebAPI
-            .getFromURI(calendarURI, ICalendar::class.java)
+            .getFromURI(calendarURI, ICalendarDto::class.java)
             .toCalendarSummary()
     }
 
@@ -50,9 +50,9 @@ class EventsRepository(
      *
      * @return Work Assignment information collected from the Web API
      */
-    suspend fun getWorkAssignment(uri: URI): TodoSummary =
+    suspend fun getWorkAssignment(uri: URI): Todo =
         ionWebAPI
-            .getFromURI(uri, Todo::class.java)
+            .getFromURI(uri, TodoDto::class.java)
             .toTodoSummary()
 
     /**
@@ -62,8 +62,13 @@ class EventsRepository(
      *
      * @return Journal information collected from the Web API
      */
-    suspend fun getJournals(uri: URI): JournalSummary =
+    suspend fun getJournals(uri: URI): Journal =
         ionWebAPI
-            .getFromURI(uri, Journal::class.java)
-            .toJournalSummary()
+            .getFromURI(uri, JournalDto::class.java)
+            .toJournal()
+
+    suspend fun getEvents(uri: URI): Events =
+        ionWebAPI
+            .getFromURI(uri, ICalendarDto::class.java)
+            .toEventsSummary()
 }

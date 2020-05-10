@@ -14,14 +14,19 @@ import java.util.*
 
 /** Returns the current year at which this instance is at */
 val Calendar.year get() = get(Calendar.YEAR)
+
 /** Returns the current month at which this instance is at */
 val Calendar.month get() = get(Calendar.MONTH)
+
 /** Returns the current week at which this instance is at */
 val Calendar.week get() = get(Calendar.WEEK_OF_MONTH)
+
 /** Returns the current day of month at which this instance is at */
 val Calendar.day get() = get(Calendar.DAY_OF_MONTH)
+
 /** Returns the current day of week at which this instance is at */
 val Calendar.dayOfWeek get() = get(Calendar.DAY_OF_WEEK)
+
 /** Returns true if the current day at which this instance is at is today*/
 val Calendar.isToday: Boolean
     get() {

@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty
 /**
  * This is a representation for a Event type, which is a iCalendar type.
  */
-data class Event(
+data class EventDto(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: Properties,
+    val properties: EventProperties,
     val entities: List<SubEntity>,
     val links: List<SirenLink>
 )
 
-data class Properties(
+data class EventProperties(
     val type: String? = null,
     val properties: ComponentProperties
 )

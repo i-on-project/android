@@ -1,6 +1,7 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.common.dto.ICalendar
+import org.ionproject.android.common.dto.ComponentProperties
+import org.ionproject.android.common.dto.ICalendarDto
 
 class Lecture(
     val uid: String,
@@ -11,17 +12,18 @@ class Lecture(
     val day: String? = null
 )
 
-fun ICalendar.toCalendarSummary(): List<Lecture> =
-    properties.subComponents.map {
-        Lecture(
-            uid = it.properties.uid.value[0],
-            summary = it.properties.summary?.value?.get(0),
-            description = it.properties.description?.value?.get(0),
-            start = it.properties.dtstamp?.value?.get(0)?.getHours(),
-            duration = it.properties.duration?.value?.get(0),
-            day = it.properties.rrule?.value?.byDay?.get(0)
-        )
-    }
+fun ICalendarDto.toCalendarSummary(): List<Lecture> =
+    properties.subComponents.map { createLecture(it.properties) }
+
+fun createLecture(properties: ComponentProperties) =
+    Lecture(
+        uid = properties.uid.value[0],
+        summary = properties.summary?.value?.get(0),
+        description = properties.description?.value?.get(0),
+        start = properties.dtstamp?.value?.get(0)?.getHours(),
+        duration = properties.duration?.value?.get(0),
+        day = properties.rrule?.value?.byDay?.get(0)
+    )
 
 fun String.getHours(): String {
     val info = split("T")

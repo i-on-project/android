@@ -107,18 +107,25 @@ class ClassSectionFragment : Fragment() {
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkbox_class_section_favorite)
 
+            requestEvents(it.calendarURI)
             // Get all lectures for this class section
-            requestLectureEvents(it)
+            //requestLectureEvents(it)
 
             // Get all exams for this course
-            requestExamEvents()
+            //requestExamEvents()
 
             // Get all work assignments for this class section
-            requestWorkAssignments()
+            //requestWorkAssignments()
 
             // Get all journals for this class section
-            requestJournals()
+            //requestJournals()
         }
+    }
+
+    private fun requestEvents(uri: URI?) {
+        if (uri == null)
+            return
+        viewModel.getEvents(uri)
     }
 
     /**

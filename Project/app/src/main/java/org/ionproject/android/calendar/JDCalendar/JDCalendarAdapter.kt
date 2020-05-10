@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.grid_item_jdcalendar.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.IonApplication
-import org.ionproject.android.common.db.FavoriteDao
 
 typealias MonthDayClickListener = ((Day, View, ImageView) -> Unit)?
 
@@ -42,7 +40,8 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
         private val monthDayOnClick: MonthDayClickListener
     ) : CalendarAdapter.ViewHolder(view) {
 
-        val dayTextView = view.textview_list_item_calendar_day //Contains the text of the day (e.g 1,2..)
+        val dayTextView =
+            view.textview_list_item_calendar_day //Contains the text of the day (e.g 1,2..)
         val eventImageView = view.imageview_list_item_calendar_event //The event circle small circle
 
         override fun bind(day: Day) {
