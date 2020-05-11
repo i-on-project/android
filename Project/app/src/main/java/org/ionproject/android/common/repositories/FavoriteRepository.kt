@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Favorite
 
 /**
  * This type represents a Favorite repository, it performs requests
@@ -21,9 +22,17 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      *
      * @param favorite is the favorite to add
      */
-    suspend fun addFavorite(classSummary: ClassSummary) =
+    suspend fun addClassToFavorites(classSummary: ClassSummary) =
         withContext(Dispatchers.IO) {
-            favoriteDao.insertFavorite(classSummary)
+            favoriteDao.insertFavorite(
+                Favorite(
+                    classSummary.id,
+                    classSummary.courseAcronym,
+                    classSummary.calendarTerm,
+                    classSummary.detailsUri,
+                    classSummary.selfUri
+                )
+            )
         }
 
 
@@ -32,10 +41,24 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      *
      * @param favorite is the favorite to remove
      */
-    suspend fun removeFavorite(classSummary: ClassSummary) =
+    suspend fun removeFavorite(favorite: Favorite) =
         withContext(Dispatchers.IO) {
-            favoriteDao.deleteFavorite(classSummary)
+            favoriteDao.deleteFavorite(favorite)
         }
+
+    suspend fun removeClassFromFavorites(classSummary: ClassSummary) {
+        withContext(Dispatchers.IO) {
+            favoriteDao.deleteFavorite(
+                Favorite(
+                    classSummary.id,
+                    classSummary.courseAcronym,
+                    classSummary.calendarTerm,
+                    classSummary.detailsUri,
+                    classSummary.selfUri
+                )
+            )
+        }
+    }
 
     /**
      * Obtains all favorite from a calendar term
@@ -46,13 +69,13 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      * This method returns a livedata instead of being a suspend function because
      * this way its easy to remove items from table favorites and automatically update the UI
      */
-    fun getFavoritesFromTerm(calendarTerm: CalendarTerm): LiveData<List<ClassSummary>> =
+    fun getFavoritesFromTerm(calendarTerm: CalendarTerm): LiveData<List<Favorite>> =
         favoriteDao.findFavoritesFromCalendarTerm(calendarTerm.name)
 
     /**
      * Checks if a favorite exist
      */
-    suspend fun favoriteExists(classSummary: ClassSummary): Boolean {
+    suspend fun isClassFavorite(classSummary: ClassSummary): Boolean {
         if (favoriteDao.favoriteExists(
                 classSummary.courseAcronym,
                 classSummary.calendarTerm,

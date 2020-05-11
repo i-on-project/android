@@ -16,7 +16,8 @@ import org.ionproject.android.common.model.*
         ProgrammeOffer::class,
         ProgrammeOfferSummary::class,
         Course::class,
-        CalendarTerm::class
+        CalendarTerm::class,
+        Favorite::class
     ), version = 1
 )
 @TypeConverters(URIConverter::class)

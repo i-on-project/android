@@ -172,7 +172,7 @@ class ClassSectionViewModel(
      */
     fun addClassToFavorites(classSummary: ClassSummary) {
         viewModelScope.launch {
-            favoriteRepository.addFavorite(classSummary)
+            favoriteRepository.addClassToFavorites(classSummary)
         }
     }
 
@@ -184,7 +184,7 @@ class ClassSectionViewModel(
      */
     fun removeClassFromFavorites(classSummary: ClassSummary) {
         viewModelScope.launch {
-            favoriteRepository.removeFavorite(classSummary)
+            favoriteRepository.removeClassFromFavorites(classSummary)
         }
     }
 
@@ -194,7 +194,7 @@ class ClassSectionViewModel(
     fun isThisClassFavorite(classSummary: ClassSummary, onUpdate: (Boolean) -> Unit) {
         viewModelScope.launch {
             onUpdate(
-                favoriteRepository.favoriteExists(classSummary)
+                favoriteRepository.isClassFavorite(classSummary)
             )
         }
     }
