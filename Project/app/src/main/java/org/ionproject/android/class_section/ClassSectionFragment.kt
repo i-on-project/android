@@ -108,24 +108,7 @@ class ClassSectionFragment : Fragment() {
             setupCheckboxBehaviour(checkbox_class_section_favorite)
 
             requestEvents(it.calendarURI)
-            // Get all lectures for this class section
-            //requestLectureEvents(it)
-
-            // Get all exams for this course
-            //requestExamEvents()
-
-            // Get all work assignments for this class section
-            //requestWorkAssignments()
-
-            // Get all journals for this class section
-            //requestJournals()
         }
-    }
-
-    private fun requestEvents(uri: URI?) {
-        if (uri == null)
-            return
-        viewModel.getEvents(uri)
     }
 
     /**
@@ -165,62 +148,17 @@ class ClassSectionFragment : Fragment() {
     }
 
     /**
-     * Setup the class section's work assignments with []
+     * Request all events available for the class section [currClassSummary]
      */
-    private fun requestWorkAssignments() {
-        // TODO: Hardcoded URI to get work assignments mocks
-        val uris = listOf(
-            URI("/v0/courses/1/classes/1920v/calendar/123490")
-        )
+    private fun requestEvents(uri: URI?) {
+        if (uri == null)
+            return
+        viewModel.getEvents(uri)
 
-        viewModel.getWorkAssignments(uris)
-        viewModel.observeWorkAssignmentsList(this) {
-            workAssignmentsAdapter.notifyDataSetChanged()
-        }
-    }
-
-    /**
-     * Gets all lectures for this class section
-     */
-    private fun requestLectureEvents(classSection: ClassSection) {
-        // TODO: Hardcoded uri to get lectures mock
-        val uri = URI("/v0/courses/1/classes/1920v/11D/calendar")
-
-        viewModel.getLectures(uri)
-        viewModel.observeLecturesList(this) {
-            lecturesListAdapter.notifyDataSetChanged()
-        }
-    }
-
-    /**
-     * Gets all exams for this class
-     */
-    private fun requestExamEvents() {
-        // TODO: Hardcoded URI to get exam mocks
-        val uris = listOf(
-            URI("/v0/courses/1/classes/1920v/calendar/1234"),
-            URI("/v0/courses/1/classes/1920v/calendar/1235")
-        )
-
-        viewModel.getExams(uris)
-        viewModel.observeExamsList(this) {
-            examsListAdapter.notifyDataSetChanged()
-        }
-    }
-
-    /**
-     * Gets all journals for this class section
-     */
-    private fun requestJournals() {
-        // TODO: Hardcoded URI to get journal mocks
-        val uris = listOf(
-            URI("/v0/courses/1/classes/1920v/calendar/123497")
-        )
-
-        viewModel.getJournals(uris)
-        viewModel.observerJournalsList(this) {
-            journalsAdapter.notifyDataSetChanged()
-        }
+        viewModel.observeExamsList(this) { examsListAdapter.notifyDataSetChanged() }
+        viewModel.observeLecturesList(this) { lecturesListAdapter.notifyDataSetChanged() }
+        viewModel.observeWorkAssignmentsList(this) { workAssignmentsAdapter.notifyDataSetChanged() }
+        viewModel.observerJournalsList(this) { journalsAdapter.notifyDataSetChanged() }
     }
 
     /**
