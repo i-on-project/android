@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
-import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import java.net.URI
 

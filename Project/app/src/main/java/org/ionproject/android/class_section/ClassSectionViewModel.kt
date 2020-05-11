@@ -101,7 +101,6 @@ class ClassSectionViewModel(
      */
     fun getWorkAssignments(uris: List<URI>) {
         viewModelScope.launch {
-            // TODO: workAssignments requests can be parallel
             val workAssignments = uris.map {
                 eventsRepository.getWorkAssignment(it)
             }
@@ -116,7 +115,6 @@ class ClassSectionViewModel(
      */
     fun getJournals(uris: List<URI>) {
         viewModelScope.launch {
-            // TODO: journals request can be parallel
             val journals = uris.map {
                 eventsRepository.getJournals(it)
             }
@@ -168,7 +166,7 @@ class ClassSectionViewModel(
      */
     fun observerJournalsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
         journalsLiveData.observe(lifeCycle, Observer {
-            onResult
+            onResult()
         })
     }
 

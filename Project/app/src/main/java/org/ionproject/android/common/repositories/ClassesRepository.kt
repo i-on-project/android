@@ -18,11 +18,10 @@ class ClassesRepository(
     private val classSectionDao: ClassSectionDao
 ) {
 
-    suspend fun getClassSection(classSummary: ClassSummary): ClassSection {
-        return ionWebAPI
+    suspend fun getClassSection(classSummary: ClassSummary): ClassSection =
+        ionWebAPI
             .getFromURI(classSummary.detailsUri, SirenEntity::class.java)
             .toClassSection()
-    }
 
     //Adds the calendar term to the classes URI
     private fun URI.fromCalendarTerm(calendarTerm: CalendarTerm): URI {
