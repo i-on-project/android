@@ -37,16 +37,13 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: Improve this, getFavorites then getEvents
-        viewModel.getFavoriteClassesFromCurrentTerm()
-        viewModel.observeFavorites(this) {
-            viewModel.getEvents(it)
-            viewModel.observeEvents(this) { events ->
+        val jdCalendar = jdcalendar_calendar
+
+        viewModel.getFavoriteClassesFromCurrentTerm(this) { classesSummary ->
+            viewModel.getEvents(classesSummary) { events ->
                 createCalendar(events)
             }
         }
-
-        val jdCalendar = jdcalendar_calendar
 
         val calendarAdapter = JDCalendarAdapter { day, view, ImageView ->
             Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT).show()

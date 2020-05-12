@@ -1,9 +1,10 @@
 package org.ionproject.android.calendar
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ionproject.android.TAG
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.CalendarTermRepository
@@ -18,19 +19,21 @@ class CalendarViewModel(
     private val classesRepository: ClassesRepository
 ) : ViewModel() {
 
-    private val favoritesLiveData = MutableLiveData<List<ClassSummary>>()
-    private val eventsLiveData = MutableLiveData<List<Events>>()
-
-    fun getFavoriteClassesFromCurrentTerm() {
+    fun getFavoriteClassesFromCurrentTerm(
+        lifecycleOwner: LifecycleOwner,
+        onResult: (List<ClassSummary>) -> Unit
+    ) {
         viewModelScope.launch {
             val currentTerm = calendarTermRepository.getAllCalendarTerm().first()
             val favorites = favoriteRepository.getFavoritesFromTerm(currentTerm)
-            // TODO: Fix this bug - Receiving null from FavoritesRepository
-            favoritesLiveData.postValue(favorites.value)
+            favorites.observe(lifecycleOwner, Observer { onResult(it) })
         }
     }
 
-    fun getEvents(classes: List<ClassSummary>) {
+    fun getEvents(
+        classes: List<ClassSummary>,
+        onResult: (List<Events>) -> Unit
+    ) {
         viewModelScope.launch {
             val events = classes.mapNotNull {
                 val classSection = classesRepository.getClassSection(it)
@@ -38,20 +41,8 @@ class CalendarViewModel(
                 if (uri != null) eventsRepository.getEvents(uri)
                 else null
             }
-            eventsLiveData.postValue(events)
+            onResult(events)
         }
-    }
-
-    fun observeFavorites(lifecycleOwner: LifecycleOwner, onResult: (List<ClassSummary>) -> Unit) {
-        favoritesLiveData.observe(lifecycleOwner, Observer {
-            onResult(it ?: emptyList())
-        })
-    }
-
-    fun observeEvents(lifecycleOwner: LifecycleOwner, onResult: (List<Events>) -> Unit) {
-        eventsLiveData.observe(lifecycleOwner, Observer {
-            onResult(it)
-        })
     }
 
 }
