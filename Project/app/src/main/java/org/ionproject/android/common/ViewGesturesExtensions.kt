@@ -93,7 +93,7 @@ fun View.addSwipeUpGesture(
 
                     val deltaY = touchedY - startY
 
-                    if (deltaY < 0) { // Has user moved finger to right?
+                    if (deltaY < 0) { // Has user moved finger up?
                         if (velocityTracker.yVelocity >= 3) // Was it a fast swipe?
                             view.alpha = 0F
                         else {

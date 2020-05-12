@@ -97,7 +97,8 @@ class FavoritesListAdapter(
 
         /**
          * Overriding this method to add background and icon, while sliding
-         * the view to the side.
+         * the view to the side as recommended here:
+         * https://material.io/design/interaction/gestures.html#types-of-gestures
          */
         override fun onChildDraw(
             c: Canvas,
