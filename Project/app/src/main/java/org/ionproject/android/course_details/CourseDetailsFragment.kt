@@ -10,12 +10,15 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_course_details.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
 
@@ -44,6 +47,9 @@ class CourseDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCourseDetails()
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
+        }
     }
 
     /**
@@ -69,6 +75,12 @@ class CourseDetailsFragment : Fragment() {
     private fun setupCourseClassesList(classesList: RecyclerView) {
         //TODO: Confirm if this is the right context
         classesList.layoutManager = LinearLayoutManager(context)
+        classesList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         val classesListAdapter = ClassesListAdapter(viewModel, sharedViewModel)
         classesList.adapter = classesListAdapter

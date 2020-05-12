@@ -40,4 +40,6 @@
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
     <string name="label_calendar_termV2">Calendar term:</string>
+    <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
+    <string name="label_favorite_undo">Undo</string>
 </resources>

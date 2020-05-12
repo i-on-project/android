@@ -1,7 +1,6 @@
 package org.ionproject.android.search
 
 import android.os.Bundle
-import android.provider.SearchRecentSuggestions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

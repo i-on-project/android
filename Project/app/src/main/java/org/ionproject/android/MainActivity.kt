@@ -2,9 +2,7 @@ package org.ionproject.android
 
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -126,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     val cursor = searchView.suggestionsAdapter.cursor
                     cursor.moveToPosition(position)
                     val suggestion: String = cursor.getString(2)
-                    searchView.setQuery(suggestion,true)
+                    searchView.setQuery(suggestion, true)
                     return true
                 }
             })
