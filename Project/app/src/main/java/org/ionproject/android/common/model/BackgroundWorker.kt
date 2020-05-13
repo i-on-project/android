@@ -22,7 +22,10 @@ data class BackgroundWorker(
 /**
  * Implies that the type is managed by a worker
  * who will ensure that the resource that is
- * in the Db is always up to date
+ * in the local Db is always up to date.
+ *
+ * This is required so that the number of jobs associated with a worker
+ * can be reset only by knowing the resource which it is associated with.
  */
 interface ICacheable {
     val workerId: Int

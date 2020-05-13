@@ -32,7 +32,7 @@ class CalendarTermRepository(
                     .getFromURI(CALENDAR_TERMS_URI, SirenEntity::class.java)
                     .toCalendarTermList()
                 val workerId =
-                    workerManagerFacade.enqueueWorkForAllCalendarTerms(WorkImportance.IMPORTANT)
+                    workerManagerFacade.enqueueWorkForAllCalendarTerms(WorkImportance.NOT_IMPORTANT)
                 for (calendarTerm in calendarTerms)
                     calendarTerm.workerId = workerId
                 calendarTermDao.insertCalendarTerms(calendarTerms)

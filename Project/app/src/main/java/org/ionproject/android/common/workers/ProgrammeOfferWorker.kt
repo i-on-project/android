@@ -6,10 +6,10 @@ import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.programmes.toProgrammeOffer
 
-class ProgrammeOfferCoroutineWorker(
+class ProgrammeOfferWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val programmeOfferDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.programmeOfferDao()
@@ -23,7 +23,7 @@ class ProgrammeOfferCoroutineWorker(
         inputData.getInt(PROGRAMME_OFFER_ID_KEY, -1)
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         if (programmeOfferId != -1) {
             val programmeOfferLocal = programmeOfferDao.getProgrammeOfferById(programmeOfferId)
             if (programmeOfferLocal != null) {
@@ -34,7 +34,9 @@ class ProgrammeOfferCoroutineWorker(
                     programmeOfferDao.updateProgrammeOffer(programmeOfferServer)
                 }
             }
+            return true
         }
+        return false
     }
 
     override suspend fun lastJob() {

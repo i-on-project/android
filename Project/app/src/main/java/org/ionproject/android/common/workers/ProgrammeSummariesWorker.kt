@@ -7,10 +7,10 @@ import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.programmes.toProgrammeSummaryList
 
-class ProgrammeSummariesCoroutineWorker(
+class ProgrammeSummariesWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val programmesDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.programmeDao()
@@ -20,7 +20,7 @@ class ProgrammeSummariesCoroutineWorker(
         IonApplication.ionWebAPI
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         val programmeSummariesLocal = programmesDao.getAllProgrammeSummaries()
         val programmeSummariesServer =
             ionWebAPI.getFromURI(programmeSummariesLocal.first().selfUri, SirenEntity::class.java)
@@ -37,6 +37,7 @@ class ProgrammeSummariesCoroutineWorker(
             if (summariesToUpdate.count() > 0)
                 programmesDao.updateProgrammeSummaries(summariesToUpdate)
         }
+        return true
     }
 
     override suspend fun lastJob() {

@@ -9,6 +9,11 @@ import org.ionproject.android.common.model.*
 import org.ionproject.android.common.repositories.WorkerRepository
 import java.util.concurrent.TimeUnit
 
+
+/**
+ * These are random keys used to pass data to workers
+ * TODO Is their value important? Or can it be random as it is?
+ */
 const val WORKER_ID_KEY = "19x781x2b"
 const val PROGRAMME_ID_KEY = "c4094c20"
 const val PROGRAMME_OFFER_ID_KEY = "4crcnc34r"
@@ -26,62 +31,96 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
 
     private val workManager = WorkManager.getInstance(context)
 
-
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to all [ProgrammeSummary] and will check for any changes
+     * to them and update the local database in case there are.
+     */
     suspend fun enqueueWorkForAllProgrammeSummaries(
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ProgrammeSummariesCoroutineWorker::class.java
+        ProgrammeSummariesWorker::class.java
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to a [Programme] and will check for any changes
+     * to it and update the local database in case there are.
+     */
     suspend fun enqueueWorkForProgramme(
         programme: Programme,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ProgrammeCoroutineWorker::class.java,
+        ProgrammeWorker::class.java,
         PROGRAMME_ID_KEY to programme.id
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to a [ProgrammeOffer] and will check for any changes
+     * to it and update the local database in case there are.
+     */
     suspend fun enqueueWorkForProgrammeOffer(
         programmeOffer: ProgrammeOffer,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ProgrammeOfferCoroutineWorker::class.java,
+        ProgrammeOfferWorker::class.java,
         PROGRAMME_OFFER_ID_KEY to programmeOffer.id
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to a [Course] and will check for any changes
+     * to it and update the local database in case there are.
+     */
     suspend fun enqueueWorkForCourse(
         course: Course,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        CourseCoroutineWorker::class.java,
+        CourseWorker::class.java,
         COURSE_DETAILS_ID_KEY to course.id
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to a list of [ClassSummary] and will check for any changes
+     * to them and update the local database in case there are.
+     */
     suspend fun enqueueWorkForClassSummaries(
         classSummaries: List<ClassSummary>,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ClassSummariesCoroutineWorker::class.java,
+        ClassSummariesWorker::class.java,
         CLASS_SUMMARIES_COURSE_KEY to classSummaries[0].courseAcronym,
         CLASS_SECTION_CALENDAR_TERM_KEY to classSummaries[0].calendarTerm
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to a [ClassSection] and will check for any changes
+     * to it and update the local database in case there are.
+     */
     suspend fun enqueueWorkForClassSection(
         classSection: ClassSection,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ClassSectionCoroutineWorker::class.java,
+        ClassSectionWorker::class.java,
         CLASS_SECTION_ID_KEY to classSection.id,
         CLASS_SECTION_CALENDAR_TERM_KEY to classSection.calendarTerm,
         CLASS_SECTION_COURSE_KEY to classSection.courseAcronym
     )
 
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to all [CalendarTerm] and will check for any changes
+     * to them and update the local database in case there are.
+     */
     suspend fun enqueueWorkForAllCalendarTerms(
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
@@ -97,7 +136,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
      * @param workerClass is the class of the worker
      * @param inputData is the data to pass to the worker
      */
-    private suspend fun <T : NumberedCoroutineWorker> enqueueWorkWithInputData(
+    private suspend fun <T : NumberedWorker> enqueueWorkWithInputData(
         workImportance: WorkImportance,
         workerClass: Class<T>,
         vararg inputData: Pair<String, Any>
@@ -128,13 +167,16 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
                 )
             )
             //There is not need to start the work immediately because we have just obtained the most recent resource
-            .setInitialDelay(1, workImportance.repeatIntervalTimeUnit)
+            .setInitialDelay(workImportance.repeatInterval, workImportance.repeatIntervalTimeUnit)
             .build()
         workManager.enqueue(work)
         return workerId.toInt()
     }
 
-
+    /**
+     * Resets the number of jobs a Worker has associated
+     * with an [ICacheable]
+     */
     suspend fun resetWorkerJobsByCacheable(iCacheable: ICacheable) {
         workerRepository.resetWorkerJobsById(iCacheable.workerId)
     }

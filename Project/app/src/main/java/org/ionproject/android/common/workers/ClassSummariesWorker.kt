@@ -7,10 +7,10 @@ import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.course_details.toClassSummaryList
 
-class ClassSummariesCoroutineWorker(
+class ClassSummariesWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val classSummaryDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.classSummaryDao()
@@ -28,7 +28,7 @@ class ClassSummariesCoroutineWorker(
         inputData.getString(CLASS_SUMMARIES_CALENDAR_TERM_KEY) ?: ""
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         if (courseAcronym != "" && calendarTerm != "") {
             val classSummariesLocal =
                 classSummaryDao.getClassSummariesByCourseAndCalendarTerm(
@@ -51,7 +51,9 @@ class ClassSummariesCoroutineWorker(
                 if (summariesToUpdate.count() > 0)
                     classSummaryDao.updateClassSummaries(summariesToUpdate)
             }
+            return true
         }
+        return false
     }
 
     override suspend fun lastJob() {

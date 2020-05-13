@@ -6,10 +6,10 @@ import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.course_details.toCourse
 
-class CourseCoroutineWorker(
+class CourseWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val courseDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.courseDao()
@@ -23,7 +23,7 @@ class CourseCoroutineWorker(
         inputData.getInt(COURSE_DETAILS_ID_KEY, -1)
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         if (courseId != -1) {
             val courseLocal = courseDao.getCourseById(courseId)
             if (courseLocal != null) {
@@ -32,7 +32,9 @@ class CourseCoroutineWorker(
                 if (courseLocal != courseServer)
                     courseDao.updateCourse(courseServer)
             }
+            return true
         }
+        return false
     }
 
     override suspend fun lastJob() {

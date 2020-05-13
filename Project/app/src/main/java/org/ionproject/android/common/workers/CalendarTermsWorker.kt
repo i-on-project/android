@@ -14,7 +14,7 @@ private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
 class CalendarTermsWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val calendarTermDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.calendarTermDao()
@@ -24,7 +24,7 @@ class CalendarTermsWorker(
         IonApplication.ionWebAPI
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         val calendarTermsLocal = calendarTermDao.getAllCalendarTerms()
         val calendarTermsServer =
             ionWebAPI.getFromURI(URI(CALENDAR_TERMS_PATH_V0), SirenEntity::class.java)
@@ -42,6 +42,7 @@ class CalendarTermsWorker(
             if (calendarTermsToUpdate.count() > 0)
                 calendarTermDao.updateCalendarTerms(calendarTermsToUpdate)
         }
+        return true
     }
 
     override suspend fun lastJob() {

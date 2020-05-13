@@ -12,7 +12,7 @@ import org.ionproject.android.common.IonApplication
  * The details are described here:
  * https://github.com/i-on-project/android/blob/master/docs/api_request_approach.md
  */
-abstract class NumberedCoroutineWorker(
+abstract class NumberedWorker(
     context: Context,
     params: WorkerParameters
 ) :
@@ -27,9 +27,12 @@ abstract class NumberedCoroutineWorker(
 
     /**
      * Regular worker job, should request resource from WebAPi
-     * compare to the one in Db and updates if there are differences
+     * compare to the one in Db and updates if there are differences.
+     *
+     * If there was a problem while obtaining the input data
+     * it should return false so that the work stops.
      */
-    abstract suspend fun job()
+    abstract suspend fun job(): Boolean
 
     /**
      * The last job of the worker, should
@@ -41,9 +44,9 @@ abstract class NumberedCoroutineWorker(
     override suspend fun doWork(): Result {
         val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
 
-        // workerId is mandatory for work execution therefore throw exceptions if it doesn't come
+        // workerId is mandatory for work execution therefore stop it if it doesn't come
         if (workerId == -1)
-            throw IllegalArgumentException("${this::class.simpleName} did not receive a worker Id")
+            return Result.failure()
 
         val worker = workerRepository.getWorkerById(workerId)
         worker.decrementNumberOfJobs()
@@ -57,7 +60,8 @@ abstract class NumberedCoroutineWorker(
         }
 
         // Worker still has jobs to perform
-        job()
+        if (!job()) // There was a problem while passing the input data to the worker so we stop it
+            return Result.failure()
         return Result.success()
     }
 

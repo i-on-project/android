@@ -6,10 +6,10 @@ import org.ionproject.android.class_section.toClassSection
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
 
-class ClassSectionCoroutineWorker(
+class ClassSectionWorker(
     context: Context,
     params: WorkerParameters
-) : NumberedCoroutineWorker(context, params) {
+) : NumberedWorker(context, params) {
 
     private val classSectionDao by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.db.classSectionDao()
@@ -31,7 +31,7 @@ class ClassSectionCoroutineWorker(
         inputData.getString(CLASS_SECTION_CALENDAR_TERM_KEY) ?: ""
     }
 
-    override suspend fun job() {
+    override suspend fun job(): Boolean {
         if (classSectionId != "" && courseAcronym != "" && calendarTerm != "") {
             val classSectionLocal = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
                 classSectionId,
@@ -46,7 +46,9 @@ class ClassSectionCoroutineWorker(
                 if (classSectionLocal != classSectionServer)
                     classSectionDao.updateClassSection(classSectionServer)
             }
+            return true
         }
+        return false
     }
 
     override suspend fun lastJob() {
