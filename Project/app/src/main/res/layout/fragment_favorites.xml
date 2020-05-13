@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/fragments_padding_10"
-    tools:context=".favorites.FavoritesFragment">
+    tools:context=".favorites.FavoritesFragment"
+    >
 
     <!-- Top section -->
     <LinearLayout
@@ -13,11 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/recyclerview_favorites_classes_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerview_favorites_classes_list"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textview_favorites_term_label"
@@ -37,10 +37,23 @@
 
     <!-- Favorite classes list -->
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/list_item_classes"
         android:id="@+id/recyclerview_favorites_classes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_favorites_top_section" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_favorites_top_section"
+        tools:listitem="@layout/list_item_classes" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/efab_favorites_add_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primaryColor"
+        app:icon="@drawable/ic_add_white_24dp"
+        app:iconTint="@color/primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
