@@ -36,6 +36,13 @@ class CourseDetailsFragment : Fragment() {
             .of(this, CoursesDetailsViewModelProvider())[CourseDetailsViewModel::class.java]
     }
 
+    /**
+     * Classes List's Adapter
+     */
+    private val classesListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        ClassesListAdapter(viewModel, sharedViewModel)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

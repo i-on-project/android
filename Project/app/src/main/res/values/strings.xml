@@ -31,6 +31,10 @@
     <string name="label_id">ID:</string>
     <string name="label_events">Events:</string>
     <string name="label_teacher">Teacher:</string>
+    <string name="label_exams">Exams:</string>
+    <string name="label_favorites_placeholder">%1$s - %2$s</string>
+    <string name="label_calendar_term">Calendar term</string>
+    <string name="label_lectures">Lectures:</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
@@ -39,9 +43,8 @@
     <string name="label_semester">Semester</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="imageButton_clear_recent_search">Clear recent search</string>
-
-    <string name="label_favorites_placeholder">%1$s - %2$s</string>
-    <string name="label_calendar_term">Calendar term</string>
+    <string name="label_todo">Todo:</string>
+    <string name="label_journals">Journals:</string>
     <string name="label_calendar_termV2">Calendar term:</string>
 
     <string name="label_favorites_delete_message">Successfully deleted favorite!</string>

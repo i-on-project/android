@@ -51,7 +51,7 @@ class CoursesFragment : Fragment() {
 
         //Request courses from a specific term from the WebAPI
         viewModel.getAllCoursesFromCurricularTerm(
-            sharedViewModel.programme,
+            sharedViewModel.programmeOfferSummaries,
             sharedViewModel.curricularTerm
         )
 

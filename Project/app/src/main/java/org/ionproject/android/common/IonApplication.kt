@@ -3,9 +3,11 @@ package org.ionproject.android.common
 import android.app.Application
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
+import org.ionproject.android.common.workers.WorkerManagerFacade
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -14,13 +16,17 @@ import org.ionproject.android.common.repositories.*
 class IonApplication : Application() {
 
     companion object {
-        lateinit var programmesRepository: ProgrammesRepository
-        lateinit var coursesRepository: CourseRepository
-        lateinit var classesRepository: ClassesRepository
-        lateinit var suggestionsMockRepository: SuggestionsMockRepository
-        lateinit var db: AppDatabase
-        lateinit var favoritesRepository: FavoriteRepository
-        lateinit var calendarTermRepository: CalendarTermRepository
+        lateinit var programmesRepository: ProgrammesRepository private set
+        lateinit var coursesRepository: CourseRepository private set
+        lateinit var classesRepository: ClassesRepository private set
+        lateinit var suggestionsMockRepository: SuggestionsMockRepository private set
+        lateinit var db: AppDatabase private set
+        lateinit var ionWebAPI: IIonWebAPI private set
+        lateinit var favoritesRepository: FavoriteRepository private set
+        lateinit var calendarTermRepository: CalendarTermRepository private set
+        lateinit var workerRepository: WorkerRepository private set
+        lateinit var workerManagerFacade: WorkerManagerFacade private set
+        lateinit var eventsRepository: EventsRepository
     }
 
     override fun onCreate() {
@@ -45,19 +51,36 @@ class IonApplication : Application() {
         val webAPI = MockIonWebAPI(ionMapper)
 
         IonApplication.db = db
+        ionWebAPI = webAPI
+
+        workerRepository =
+            WorkerRepository(db.workerDao())
+        workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
         programmesRepository =
-            ProgrammesRepository(webAPI)
+            ProgrammesRepository(
+                webAPI,
+                db.programmeDao(),
+                db.programmeOfferDao(),
+                workerManagerFacade
+            )
         coursesRepository =
-            CourseRepository(webAPI)
+            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
-            ClassesRepository(webAPI, db.ClassSectionDao())
+            ClassesRepository(
+                webAPI,
+                db.classSectionDao(),
+                db.classSummaryDao(),
+                workerManagerFacade
+            )
         favoritesRepository =
-            FavoriteRepository(db.FavoriteDao())
+            FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
-            CalendarTermRepository(webAPI)
+            CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
         suggestionsMockRepository =
             SuggestionsMockRepository(db)
+        eventsRepository =
+            EventsRepository(webAPI)
     }
 
 }

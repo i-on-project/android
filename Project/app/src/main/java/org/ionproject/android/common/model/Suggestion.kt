@@ -1,4 +1,4 @@
-package org.ionproject.android.common.db
+package org.ionproject.android.common.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.common.model.Programme
 import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.ProgrammeSummary
 
 /**
@@ -48,7 +48,7 @@ class SharedViewModel : ViewModel() {
      * programme is used to pass data from [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]
     to [org.ionproject.android.courses.CoursesFragment]
      */
-    lateinit var programme: Programme
+    lateinit var programmeOfferSummaries: List<ProgrammeOfferSummary>
     var curricularTerm: Int = 0
 
 }

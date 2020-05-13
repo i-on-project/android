@@ -41,13 +41,13 @@ class ProgrammeDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         programmeViewModel.getCourseDetails(sharedViewModel.programmeSummary) {
-            textview_programme_details_name.text = it.name
-            textview_programme_details_acronym.text = it.acronym
+            textview_programme_details_name.text = it.programme.name
+            textview_programme_details_acronym.text = it.programme.acronym
             recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)
             recyclerview_programme_details_terms.adapter =
-                TermsListAdapter(it.termSize, sharedViewModel)
-            sharedViewModel.programme =
-                it //Sharing programme here otherwise it have to be passed to TermsListAdapter
+                TermsListAdapter(it.programme.termSize, sharedViewModel)
+            sharedViewModel.programmeOfferSummaries =
+                it.programmeOffers //Sharing programme here otherwise it have to be passed to TermsListAdapter
         }
     }
 

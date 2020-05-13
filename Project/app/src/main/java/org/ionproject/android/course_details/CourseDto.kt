@@ -1,32 +1,37 @@
 package org.ionproject.android.course_details
 
+import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.MappingFromSirenException
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.siren.EmbeddedEntity
-import org.ionproject.android.common.siren.MappingFromSirenException
-import org.ionproject.android.common.siren.SirenEntity
 import java.net.URI
 
 /**
  *  Converts from a [SirenEntity] to [Course]
  */
 fun SirenEntity.toCourse(): Course {
+
+
+    val id = properties?.get("id")
+    val acronym = properties?.get("acronym")
+    val name = properties?.get("name")
+    val selfUri = links?.first()?.href
     val classesLink: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
     val eventsLink: URI? = (entities.last() as EmbeddedEntity).links?.first()?.href
 
-    val acronym = properties?.get("acronym")
-    val name = properties?.get("name")
-
-    if (properties != null && acronym != null && name != null) {
+    if (id != null && properties != null && acronym != null && name != null && selfUri != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
+            id = id.toInt(),
             acronym = acronym,
             name = name,
             classesUri = classesLink,
-            eventsUri = eventsLink
+            eventsUri = eventsLink,
+            selfUri = selfUri
         )
     }
-    throw MappingFromSirenException("Cannot convert ${this} to Course")
+    throw MappingFromSirenException("Cannot convert $this to Course")
 }
 
 /**
@@ -35,34 +40,37 @@ fun SirenEntity.toCourse(): Course {
 fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
     val classesSummary = mutableListOf<ClassSummary>()
 
-    val course = properties?.get("course")
-    val calendarTerm = properties?.get("calendar term")
+    val courseAcronym = properties?.get("courseAcr")
+    val calendarTerm = properties?.get("calendarTerm")
+    val selfUri = links?.first()?.href
 
-    if (course != null && calendarTerm != null) {
+    if (courseAcronym != null && calendarTerm != null && selfUri != null) {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 
-            val clazz = embeddedEntity.clazz?.first()
-            val name = embeddedEntity.properties?.get("id")
-            val detailsUri = embeddedEntity.links?.first()?.href
-
             //There is an event sub-entity which is not from the class "class", which we must exclude
-            if (clazz == "class") {
-                if (name != null && detailsUri != null)
+            if (embeddedEntity.clazz?.first() == "class") {
+                val id = embeddedEntity.properties?.get("id")
+                val detailsUri: URI? = embeddedEntity.links?.first()?.href
+
+                if (id != null && detailsUri != null)
                     classesSummary.add(
                         ClassSummary(
-                            name = name,
-                            course = course,
-                            calendarTerm = calendarTerm,
-                            detailsUri = detailsUri
+                            id,
+                            courseAcronym,
+                            calendarTerm,
+                            detailsUri,
+                            selfUri
                         )
                     )
                 else
-                    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+                    throw MappingFromSirenException(
+                        "Cannot convert $this to List of ClassSummary"
+                    )
             }
         }
         return classesSummary
     }
-    throw MappingFromSirenException("Cannot convert ${this} to List of ClassSummary")
+    throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
 }
 

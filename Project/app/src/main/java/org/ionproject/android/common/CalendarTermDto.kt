@@ -1,9 +1,9 @@
 package org.ionproject.android.common
 
+import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.MappingFromSirenException
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.siren.EmbeddedEntity
-import org.ionproject.android.common.siren.MappingFromSirenException
-import org.ionproject.android.common.siren.SirenEntity
 
 fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
 

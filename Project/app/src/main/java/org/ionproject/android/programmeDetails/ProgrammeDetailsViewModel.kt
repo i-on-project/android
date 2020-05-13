@@ -3,8 +3,8 @@ package org.ionproject.android.programmeDetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.model.Programme
 import org.ionproject.android.common.model.ProgrammeSummary
+import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.repositories.ProgrammesRepository
 
 class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepository) :
@@ -17,11 +17,14 @@ class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepo
      *  @param programmeSummary summary representation of a programme
      *  @param callback to be executed once the programme details are available
      */
-    fun getCourseDetails(programmeSummary: ProgrammeSummary?, onResult: (Programme) -> Unit) {
+    fun getCourseDetails(
+        programmeSummary: ProgrammeSummary?,
+        onResult: (ProgrammeWithOffers) -> Unit
+    ) {
         if (programmeSummary != null)
             viewModelScope.launch {
-                val course = programmesRepository.getProgrammeDetails(programmeSummary)
-                onResult(course)
+                val programme = programmesRepository.getProgrammeDetails(programmeSummary)
+                programme?.let(onResult)
             }
     }
 

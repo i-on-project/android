@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.list_item_classes.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Favorite
 
 class FavoritesListAdapter(
     private val model: FavoritesViewModel,
@@ -48,14 +48,14 @@ class FavoritesListAdapter(
 
         private val classItem = view.button_classes_list_item_class
 
-        fun bindTo(favorite: ClassSummary) {
+        fun bindTo(favorite: Favorite) {
             classItem.text = view.resources.getString(
                 R.string.label_favorites_placeholder,
-                favorite.course,
-                favorite.name
+                favorite.courseAcronym,
+                favorite.id
             )
             classItem.setOnClickListener {
-                sharedViewModel.classSummary = favorite
+                sharedViewModel.classSummary = favorite.toClassSummary()
                 view.findNavController().navigate(R.id.action_favorites_to_class_section)
             }
         }
