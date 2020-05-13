@@ -9,7 +9,7 @@ fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
 
     val calendarTerms = mutableListOf<CalendarTerm>()
 
-    if (clazz != null && clazz.contains("term") && clazz.contains("collection")) {
+    if (clazz != null && clazz.contains("calendar-term") && clazz.contains("collection")) {
         entities?.forEach {
             val embeddedEntity = it as EmbeddedEntity
             val name = embeddedEntity.properties?.get("name")

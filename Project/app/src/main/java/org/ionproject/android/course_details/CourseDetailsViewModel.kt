@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
@@ -23,10 +23,10 @@ class CourseDetailsViewModel(
      *  @param courseSummary summary representation of a course
      *  @param callback to be executed once the course details are available
      */
-    fun getCourseDetails(courseSummary: CourseSummary?, onResult: (Course) -> Unit) {
-        if (courseSummary != null)
+    fun getCourseDetails(programmeOffer: ProgrammeOffer?, onResult: (Course) -> Unit) {
+        if (programmeOffer != null)
             viewModelScope.launch {
-                val course = courseRepository.getCourseDetails(courseSummary)
+                val course = courseRepository.getCourseDetails(programmeOffer)
                 onResult(course)
             }
     }

@@ -36,10 +36,9 @@ class HomeFragment : Fragment() {
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
 
-        // Courses button
-        button_home_courses.setOnClickListener {
-            //TODO: Swap navigation from courses to curricular terms
-            navController.navigate(R.id.navigation_courses)
+        // programmes
+        button_home_programmes.setOnClickListener {
+            navController.navigate(R.id.action_home_to_programmes)
         }
 
         // Calendar button

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
@@ -16,9 +17,6 @@ import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 
-/**
- * A simple [Fragment] subclass.
- */
 class CoursesFragment : Fragment() {
 
     /**
@@ -51,8 +49,11 @@ class CoursesFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-        //Request all courses from the WebAPI
-        viewModel.getAllCourses()
+        //Request courses from a specific term from the WebAPI
+        viewModel.getAllCoursesFromCurricularTerm(
+            sharedViewModel.programme,
+            sharedViewModel.curricularTerm
+        )
 
         viewModel.observeCoursesLiveData(this) {
             coursesListAdapter.notifyDataSetChanged()
@@ -61,6 +62,14 @@ class CoursesFragment : Fragment() {
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
+
+        button_courses_optional_courses.setOnClickListener {
+            if (viewModel.changeListType())
+                (it as Button).text = it.resources.getString(R.string.optional_courses)
+            else
+                (it as Button).text = it.resources.getString(R.string.mandatory_courses)
+        }
+
     }
 
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".programmeDetails.ProgrammeDetailsFragment">
+
+    <!-- Top Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_programme_details_top_section"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:padding="@dimen/fragments_padding_20">
+
+        <TextView
+            android:id="@+id/textview_programme_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/all_text_25"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="@color/primaryTextColor"
+            />
+        <TextView
+            android:id="@+id/textview_programme_details_acronym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/all_text_18"
+            app:layout_constraintTop_toBottomOf="@id/textview_programme_details_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="@color/primaryTextColor"
+             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_class_section_bottom_section"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_programme_details_top_section"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fragments_padding_10">
+
+        <TextView
+            android:id="@+id/textview_programme_details_title_terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Curricular Terms" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_programme_details_terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_programme_details_title_terms"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

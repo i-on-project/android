@@ -11,7 +11,7 @@
         android:id="@+id/recyclerview_curricular_terms_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_item_curricular_terms"
+        tools:listitem="@layout/list_item_calendar_terms"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

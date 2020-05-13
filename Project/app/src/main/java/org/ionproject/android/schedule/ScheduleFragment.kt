@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.ionproject.android.R
 
-/**
- * A simple [Fragment] subclass.
- */
 class ScheduleFragment : Fragment() {
 
     override fun onCreateView(

@@ -63,7 +63,7 @@ class CourseDetailsFragment : Fragment() {
         val courseYear = textview_course_details_year
         val courseSemester = textview_course_details_semester
 
-        viewModel.getCourseDetails(sharedViewModel.courseSummary) {
+        viewModel.getCourseDetails(sharedViewModel.programmeOffer) {
             courseFullName.text = it.name
             courseYear.text = "1ºAno" //TODO Get course year
             courseSemester.text = "1ºSemestre" //TODO Get course term

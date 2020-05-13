@@ -22,9 +22,6 @@ import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
-/**
- * A simple [Fragment] subclass.
- */
 class FavoritesFragment : Fragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
