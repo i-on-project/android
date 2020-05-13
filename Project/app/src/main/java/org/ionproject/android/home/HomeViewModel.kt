@@ -1,7 +1,6 @@
 package org.ionproject.android.home
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,7 @@ class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewMod
         repository.getSuggestions()
     }
 
-    val suggestions : List<Suggestion>
+    val suggestions: List<Suggestion>
         get() = suggestionsLiveData.value ?: emptyList()
 
     fun observeSuggestionsLiveData(
@@ -23,7 +22,7 @@ class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewMod
         onUpdate: (List<Suggestion>) -> Unit
     ) {
         suggestionsLiveData.observe(lifecycleOwner, Observer {
-            if(it != null)
+            if (it != null)
                 onUpdate(it)
         })
     }

@@ -2,18 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/curricular_terms_list_item"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
-        android:id="@+id/button_terms_list_item_term"
+        android:id="@+id/button_programmes_list_item_programme"
         style="?attr/materialButtonOutlinedStyle"
-        android:text="@string/label_curricular_term_placeholder"
+        android:text="Programme name"
         android:textSize="17sp"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

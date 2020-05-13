@@ -9,8 +9,13 @@
     <string name="title_class_section">Class Section</string>
     <string name="title_search">Search</string>
     <string name="title_search_results">Search Results</string>
+    <string name="title_curricular_terms">Curricular Terms</string>
+    <string name="title_course_details">Course Details</string>
+    <string name="title_programmes">Programmes</string>
+    <string name="title_programme_details">Programme Details</string>
 
     <string name="optional_courses">Optional Courses</string>
+    <string name="mandatory_courses">Mandatory Courses</string>
     <string name="coordinator">Coordinator</string>
 
     <string name="label_term">Curricular term:</string>>
@@ -32,12 +37,14 @@
     <string name="app_label">i-on</string>
     <string name="search_hint">Class name</string>
     <string name="label_semester">Semester</string>
-    <string name="title_curricular_terms">Curricular Terms</string>
-    <string name="title_course_details">Course Details</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="imageButton_clear_recent_search">Clear recent search</string>
 
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
     <string name="label_calendar_termV2">Calendar term:</string>
+    <string name="label_curricular_term_placeholder">%1$s Term</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

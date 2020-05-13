@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.model.Programme
+import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.model.ProgrammeSummary
 
 /**
  * This view model is used to shared information between fragments and the main activity,
@@ -25,15 +27,28 @@ class SharedViewModel : ViewModel() {
     }
 
     /**
-     * courseSummary is used to pass data from [org.ionproject.android.courses.CoursesFragment]
+     * programmeOffer is used to pass data from [org.ionproject.android.courses.CoursesFragment]
     to [org.ionproject.android.course_details.CourseDetailsFragment]
      */
-    lateinit var courseSummary: CourseSummary
+    lateinit var programmeOffer: ProgrammeOffer
 
     /**
      * classSummary is used to pass data from [org.ionproject.android.course_details.CourseDetailsFragment]
     and [org.ionproject.android.favorites.FavoritesFragment] to [org.ionproject.android.class_section.ClassSectionFragment]
      */
     lateinit var classSummary: ClassSummary
+
+    /**
+     * programmeSummary is used to pass data from [org.ionproject.android.programmes.ProgrammesFragment]
+    to [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]
+     */
+    lateinit var programmeSummary: ProgrammeSummary
+
+    /**
+     * programme is used to pass data from [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]
+    to [org.ionproject.android.courses.CoursesFragment]
+     */
+    lateinit var programme: Programme
+    var curricularTerm: Int = 0
 
 }

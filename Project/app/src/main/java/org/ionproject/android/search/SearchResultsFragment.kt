@@ -1,7 +1,6 @@
 package org.ionproject.android.search
 
 import android.os.Bundle
-import android.provider.SearchRecentSuggestions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,6 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-/**
- * A simple [Fragment] subclass.
- */
 class SearchResultsFragment : Fragment() {
 
     // This view model is shared between fragments and the MainActivity

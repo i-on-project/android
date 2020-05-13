@@ -14,6 +14,7 @@ import org.ionproject.android.common.repositories.*
 class IonApplication : Application() {
 
     companion object {
+        lateinit var programmesRepository: ProgrammesRepository
         lateinit var coursesRepository: CourseRepository
         lateinit var classesRepository: ClassesRepository
         lateinit var suggestionsMockRepository: SuggestionsMockRepository
@@ -30,9 +31,10 @@ class IonApplication : Application() {
          * the singleton design pattern when instantiating an
          * AppDatabase object. Each RoomDatabase instance is fairly expensive.
          */
-        db = Room
-            .databaseBuilder(applicationContext, AppDatabase::class.java, "database-name")
-            .build()
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "ion-database"
+        ).build()
 
         //TODO Inject dependencies with dagger instead of here
 
@@ -42,12 +44,20 @@ class IonApplication : Application() {
         //Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
 
-        //TODO: Pass the database to the repositories
-        coursesRepository = CourseRepository(webAPI)
-        classesRepository = ClassesRepository(webAPI, db.ClassSectionDao())
-        suggestionsMockRepository = SuggestionsMockRepository(db)
-        favoritesRepository = FavoriteRepository(db.FavoriteDao())
-        calendarTermRepository = CalendarTermRepository(webAPI)
+        IonApplication.db = db
+
+        programmesRepository =
+            ProgrammesRepository(webAPI)
+        coursesRepository =
+            CourseRepository(webAPI)
+        classesRepository =
+            ClassesRepository(webAPI, db.ClassSectionDao())
+        favoritesRepository =
+            FavoriteRepository(db.FavoriteDao())
+        calendarTermRepository =
+            CalendarTermRepository(webAPI)
+        suggestionsMockRepository =
+            SuggestionsMockRepository(db)
     }
 
 }

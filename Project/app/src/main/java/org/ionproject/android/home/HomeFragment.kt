@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -30,17 +29,16 @@ class HomeFragment : Fragment() {
 
         // Insert custom search suggestions mocks to the database
         viewModel.observeSuggestionsLiveData(viewLifecycleOwner) {
-            if(it.isEmpty())
+            if (it.isEmpty())
                 viewModel.insertMocks()
         }
 
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
 
-        // Courses button
-        button_home_courses.setOnClickListener {
-            //TODO: Swap navigation from courses to curricular terms
-            navController.navigate(R.id.navigation_courses)
+        // programmes
+        button_home_programmes.setOnClickListener {
+            navController.navigate(R.id.action_home_to_programmes)
         }
 
         // Calendar button
