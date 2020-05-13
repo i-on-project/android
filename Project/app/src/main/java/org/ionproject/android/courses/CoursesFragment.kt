@@ -8,11 +8,14 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_courses.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.addSwipeRightGesture
 
 class CoursesFragment : Fragment() {
 
@@ -39,10 +42,12 @@ class CoursesFragment : Fragment() {
             .of(this, CoursesViewModelProvider())[CoursesViewModel::class.java]
 
         //Courses List Setup
-        val coursesList = recyclerview_courses_list
         val coursesListAdapter = CoursesListAdapter(viewModel, sharedViewModel)
-        coursesList.layoutManager = LinearLayoutManager(context)
-        coursesList.adapter = coursesListAdapter
+        recyclerview_courses_list.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = coursesListAdapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
 
         //Request courses from a specific term from the WebAPI
         viewModel.getAllCoursesFromCurricularTerm(
@@ -54,6 +59,10 @@ class CoursesFragment : Fragment() {
             coursesListAdapter.notifyDataSetChanged()
         }
 
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
+        }
+
         button_courses_optional_courses.setOnClickListener {
             if (viewModel.changeListType())
                 (it as Button).text = it.resources.getString(R.string.optional_courses)
@@ -62,5 +71,6 @@ class CoursesFragment : Fragment() {
         }
 
     }
+
 
 }

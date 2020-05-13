@@ -29,8 +29,20 @@
         <action
             android:id="@+id/action_favorites_to_class_section"
             app:destination="@id/navigation_class_section"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popUpTo="@id/navigation_class_section"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_favorites_to_courses"
+            app:destination="@id/navigation_courses"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
     <fragment
         android:id="@+id/navigation_class_section"
@@ -45,7 +57,11 @@
         tools:layout="@layout/fragment_courses" >
         <action
             android:id="@+id/action_courses_to_course_details"
-            app:destination="@id/navigation_course_details" />
+            app:destination="@id/navigation_course_details"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -55,7 +71,11 @@
         tools:layout="@layout/fragment_course_details" >
         <action
             android:id="@+id/action_course_details_to_class_section"
-            app:destination="@id/navigation_class_section" />
+            app:destination="@id/navigation_class_section"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/navigation_search_results"

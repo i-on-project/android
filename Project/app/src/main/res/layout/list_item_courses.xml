@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/button_courses_list_item_course"
-        style="?attr/materialButtonOutlinedStyle"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="Course name"
         android:textSize="17sp"
 

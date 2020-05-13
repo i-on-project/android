@@ -66,4 +66,14 @@ class FavoritesViewModel(
             favoritesRepository.removeFavorite(favorite)
         }
     }
+
+    /**
+     * Adds favorite to local database
+     * @param favorite is the favorite to add
+     */
+    fun addFavorite(favorite: ClassSummary) {
+        viewModelScope.launch {
+            favoritesRepository.addFavorite(favorite)
+        }
+    }
 }
