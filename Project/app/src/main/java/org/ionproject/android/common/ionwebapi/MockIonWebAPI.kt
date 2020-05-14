@@ -13,7 +13,7 @@ private const val CLASSES_PATH = "/classes"
 private const val COURSES_PATH = "/courses"
 private const val OFFERS_PATH = "/offers"
 private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
-private const val ROOT_PATH =
+private const val ROOT_PATH_V0 =
     "/v0" //TODO We should consider using "/" instead to support the most recent version
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
@@ -37,6 +37,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         }
 
     private fun route(uri: URI): String = when (uri.path) {
+        ROOT_PATH_V0 -> root
         PROGRAMMES_PATH_V0 -> allProgrammesMock
         COURSES_PATH_V0 -> allCoursesMock
         "${PROGRAMMES_PATH_V0}/1" -> leicMock
@@ -92,6 +93,9 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 /**
  *  Computer generated mocks
  */
+// JSON Home root representation
+private const val root = "{ \"api\": { \"title\": \"i-on Core\", \"links\": { \"describedBy\": \"https://github.com/i-on-project/core/tree/master/docs/api\" } }, \"resources\": { \"courses\": { \"hrefTemplate\": \"/v0/courses{?page,limit}\", \"hrefVars\": { \"limit\": \"/api-docs/params/limit\", \"page\": \"/api-docs/params/page\" }, \"hints\": { \"allow\": [\"GET\"], \"formats\": { \"application/vnd.siren+json\":{} }, \"docs\": \"https://github.com/i-on-project/core/tree/master/docs/api/courses.md\" } }, \"programmes\": { \"hrefTemplate\": \"/v0/programmes{?page,limit}\", \"hrefVars\": { \"limit\": \"/api-docs/params/limit\", \"page\": \"/api-docs/params/page\" }, \"hints\": { \"allow\": [\"GET\"], \"formats\": { \"application/vnd.siren+json\":{} }, \"docs\": \"https://github.com/i-on-project/core/tree/master/docs/api/programme.md\" } }, \"calendar-terms\": { \"hrefTemplate\": \"/v0/calendar-terms{?page,limit}\", \"hrefVars\": { \"limit\": \"/api-docs/params/limit\", \"page\": \"/api-docs/params/page\" }, \"hints\": { \"allow\": [\"GET\"], \"formats\": { \"application/vnd.siren+json\":{} }, \"docs\": \"https://github.com/i-on-project/core/blob/master/docs/api/calendar-terms.md\" } } } }"
+
 // All programmes
 private const val allProgrammesMock =
     "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes\" } ] }"
