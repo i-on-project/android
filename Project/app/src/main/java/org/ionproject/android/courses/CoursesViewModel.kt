@@ -1,35 +1,89 @@
 package org.ionproject.android.courses
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.model.CourseSummary
-import org.ionproject.android.common.repositories.CourseRepository
+import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.model.ProgrammeOfferSummary
+import org.ionproject.android.common.repositories.ProgrammesRepository
 
-class CoursesViewModel(private val coursesRepository: CourseRepository) : ViewModel() {
+class CoursesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
 
-    private val coursesLiveData = MutableLiveData<List<CourseSummary>>()
+    private val programmeOffersLiveData = MutableLiveData<List<ProgrammeOffer>>()
 
     fun observeCoursesLiveData(
         lifecycleOwner: LifecycleOwner,
         onUpdate: () -> Unit
     ) {
-        coursesLiveData.observe(lifecycleOwner, Observer {
+        programmeOffersLiveData.observe(lifecycleOwner, Observer {
             onUpdate()
         })
     }
 
-    val courses: List<CourseSummary>
-        get() = coursesLiveData.value ?: emptyList()
+    private var mandatoryCourses = emptyList<ProgrammeOffer>()
+    private var optionalCourses = emptyList<ProgrammeOffer>()
+
+    //Indicates if the current list in liveData is the mandatoryCourses
+    private var areMandatory = true
+
+    val programmeOffers: List<ProgrammeOffer>
+        get() = programmeOffersLiveData.value ?: emptyList()
 
     /**
-     * Launches a coroutine which will be obtaining all courses and updating the live data.
-     * This coroutines is launched with [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
+     * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
+     * The coroutines are launched with [kotlinx.coroutines.MainCoroutineDispatcher.immediate].
      */
-    fun getAllCourses() {
+    fun getAllCoursesFromCurricularTerm(
+        programmeOfferSummaries: List<ProgrammeOfferSummary>,
+        curricularTerm: Int
+    ) {
         viewModelScope.launch {
-            val allCourses = coursesRepository.getAllCourses()
-            coursesLiveData.postValue(allCourses)
+            val deferredOffers = mutableListOf<Deferred<ProgrammeOffer?>>()
+            //Launching parallel coroutines to increase the speed of the method execution
+            for (programmeOfferSummary in programmeOfferSummaries) {
+                if (programmeOfferSummary.termNumber == curricularTerm)
+                    deferredOffers.add(async {
+                        programmesRepository.getProgrammeOfferDetails(
+                            programmeOfferSummary
+                        )
+                    })
+            }
+
+            val newMandatoryCourses = mutableListOf<ProgrammeOffer>()
+            val newOptionalCourses = mutableListOf<ProgrammeOffer>()
+
+            //Await for results and then separate courses in mandatory and optional
+            deferredOffers.awaitAll().forEach {
+                it?.let {
+                    if (it.optional)
+                        newOptionalCourses.add(it)
+                    else
+                        newMandatoryCourses.add(it)
+                }
+            }
+
+            mandatoryCourses = newMandatoryCourses
+            optionalCourses = newOptionalCourses
+
+            programmeOffersLiveData.postValue(mandatoryCourses)
         }
     }
 
+    /**
+     * Update [programmeOffers] content from mandatory courses to optional courses
+    or vice-versa.
+     * @returns true if the new list type is mandatory else false
+     */
+    fun changeListType(): Boolean {
+        areMandatory = !areMandatory
+        programmeOffersLiveData.postValue(
+            if (areMandatory)
+                mandatoryCourses
+            else
+                optionalCourses
+        )
+        return areMandatory
+    }
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import org.ionproject.android.common.model.Suggestion
 
 @Dao
 interface SuggestionDAO {

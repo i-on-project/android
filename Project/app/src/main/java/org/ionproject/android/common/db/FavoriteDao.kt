@@ -5,25 +5,25 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Favorite
 
 @Dao
 interface FavoriteDao {
 
     @Insert
-    suspend fun insertFavorite(classSummary: ClassSummary)
+    suspend fun insertFavorite(favorite: Favorite)
 
     /*
     This method needs to return a livedata so that when an element is removed from the favorites list,
     the UI is updated without having to perform a new database request explicitly.
      */
     @Query("SELECT * FROM Favorite WHERE calendar_term = :calendarTerm")
-    fun findFavoritesFromCalendarTerm(calendarTerm: String): LiveData<List<ClassSummary>>
+    fun findFavoritesFromCalendarTerm(calendarTerm: String): LiveData<List<Favorite>>
 
     @Delete
-    suspend fun deleteFavorite(classSummary: ClassSummary): Int
+    suspend fun deleteFavorite(favorite: Favorite): Int
 
-    @Query("SELECT COUNT(*) FROM Favorite WHERE course = :course AND calendar_term=:calendarTerm AND id=:classSection")
+    @Query("SELECT COUNT(*) FROM Favorite WHERE courseAcronym = :course AND calendar_term=:calendarTerm AND id=:classSection")
     suspend fun favoriteExists(course: String, calendarTerm: String, classSection: String): Int
 
 }

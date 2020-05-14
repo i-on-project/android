@@ -23,5 +23,6 @@ class JacksonIonMapper : IIonMapper {
                 .with(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
                 .readValue<T>(responseBody)
         }
+
 }
 

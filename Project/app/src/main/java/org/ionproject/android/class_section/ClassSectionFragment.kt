@@ -8,11 +8,13 @@ import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSummary
 import java.net.URI
 
@@ -85,6 +87,9 @@ class ClassSectionFragment : Fragment() {
         setupWorkAssignmentsList()
         setupJournalsList()
         setupClassSectionDetails()
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
+        }
     }
 
     /**
@@ -99,8 +104,8 @@ class ClassSectionFragment : Fragment() {
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(currClassSummary) {
-            courseTextView.text = it.course
-            classTermTextView.text = it.id
+            courseTextView.text = it.courseAcronym
+            classTermTextView.text = it.id.toString()
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained

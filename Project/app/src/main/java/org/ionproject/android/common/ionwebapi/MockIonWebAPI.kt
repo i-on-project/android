@@ -1,13 +1,20 @@
 package org.ionproject.android.common.ionwebapi
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.net.URI
 import java.net.URISyntaxException
+import kotlin.random.Random
 
+private const val PROGRAMMES_PATH_V0 = "/v0/programmes"
 private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
+private const val COURSES_PATH = "/courses"
+private const val OFFERS_PATH = "/offers"
 private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
+private const val ROOT_PATH =
+    "/v0" //TODO We should consider using "/" instead to support the most recent version
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 
@@ -23,11 +30,21 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
      */
     private suspend fun get(uri: URI): String =
         withContext(Dispatchers.IO) {
+            //Chaos filter which simulates request delay, from 50ms to 500ms
+            val randomdelay = Random.nextLong(50, 500)
+            delay(randomdelay)
             route(uri)
         }
 
     private fun route(uri: URI): String = when (uri.path) {
+        PROGRAMMES_PATH_V0 -> allProgrammesMock
         COURSES_PATH_V0 -> allCoursesMock
+        "${PROGRAMMES_PATH_V0}/1" -> leicMock
+        "${PROGRAMMES_PATH_V0}/1${OFFERS_PATH}/1" -> pgOfferMock
+        "${PROGRAMMES_PATH_V0}/1${OFFERS_PATH}/2" -> lsdOfferMock
+        "${PROGRAMMES_PATH_V0}/1${OFFERS_PATH}/3" -> m1OfferMock
+        "${PROGRAMMES_PATH_V0}/1${OFFERS_PATH}/4" -> algaOfferMock
+        "${PROGRAMMES_PATH_V0}/1${OFFERS_PATH}/5" -> eOfferMock
         "${COURSES_PATH_V0}/1" -> pgMock
         "${COURSES_PATH_V0}/2" -> lsdMock
         "${COURSES_PATH_V0}/3" -> m1Mock
@@ -73,6 +90,25 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 /**
  *  Computer generated mocks
  */
+// All programmes
+private const val allProgrammesMock =
+    "{ \"class\": [ \"collection\", \"programme\" ], \"entities\": [ { \"class\": [ \"programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 1, \"acronym\": \"LEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" } ] }, { \"class\": [ \"Programme\" ], \"rel\": [ \"item\" ], \"properties\": { \"id\": 2, \"acronym\": \"MEIC\" }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/2\" } ] } ], \"actions\": [ { \"name\": \"add-programme\", \"title\": \"Add Programme\", \"method\": \"POST\", \"href\": \"/v0/programmes/\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeAcr\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes\" } ] }"
+
+// Programme Details
+private const val leicMock =
+    "{ \"class\": [ \"programme\" ], \"properties\": { \"id\": 1, \"name\": \"Licenciatura em Engenharia Informática e de Computadores\", \"acronym\": \"LEIC\", \"termSize\": 6 }, \"entities\": [ { \"class\": [ \"offer\" ], \"title\": \"PG Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"id\": 1, \"courseId\": 1, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/1\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"LSD Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": { \"id\": 2, \"courseId\": 2, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/2\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"M1 Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": {\"id\": 3,  \"courseId\": 3, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/3\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"ALGA Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": {\"id\": 4, \"courseId\": 4, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/4\"} ] }, { \"class\": [ \"offer\" ], \"title\": \"E Offer\", \"rel\": [ \"/rel/programmeOffer\" ], \"properties\": {\"id\": 5, \"courseId\": 5, \"termNumber\": 1 }, \"links\" : [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1/offers/5\"} ] } ], \"actions\": [ { \"name\": \"edit-programme\", \"title\": \"Edit Programme\", \"method\": \"PUT\", \"href\": \"/v0/programmes/1\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"ProgrammeName\", \"type\": \"text\"}, { \"name\": \"Acronym\", \"type\": \"text\"}, { \"name\": \"TermSize\", \"type\": \"number\"} ] }, { \"name\": \"add-offer\", \"title\": \"Add Offer\", \"method\": \"POST\", \"href\": \"/v0/programmes/1/offers\", \"type\": \"application/json\", \"fields\": [ { \"name\": \"CourseId\", \"type\": \"number\"}, { \"name\": \"CurricularTerm\", \"type\": \"number\" }, { \"name\": \"Optional\", \"type\": \"boolean\"} ] } ], \"links\": [ { \"rel\": [ \"self\" ], \"href\": \"/v0/programmes/1\" }, { \"rel\": [ \"up\" ], \"href\": \"/v0/programmes\" } ] }"
+
+// Programme Offers
+private const val pgOfferMock =
+    "{\"class\":[\"offer\"],\"properties\":{\"id\":1,\"acronym\":\"PG\",\"termNumber\":1,\"optional\":false},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"/rel/course/\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/1\"}]}],\"actions\":[{\"name\":\"edit\",\"title\":\"EditOffer\",\"method\":\"PUT\",\"type\":\"application/json\",\"href\":\"/v0/programmes/1/offers/1\",\"fields\":[{\"name\":\"Acronym\",\"type\":\"text\"},{\"name\":\"TermNumber\",\"type\":\"number\"},{\"name\":\"Optional\",\"type\":\"boolean\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/programmes/1/offers/1\"},{\"rel\":[\"related\"],\"href\":\"/v0/programmes/1\"}]}"
+private const val lsdOfferMock =
+    "{\"class\":[\"offer\"],\"properties\":{\"id\":2,\"acronym\":\"LSD\",\"termNumber\":1,\"optional\":false},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"/rel/course/\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/2\"}]}],\"actions\":[{\"name\":\"edit\",\"title\":\"EditOffer\",\"method\":\"PUT\",\"type\":\"application/json\",\"href\":\"/v0/programmes/1/offers/2\",\"fields\":[{\"name\":\"Acronym\",\"type\":\"text\"},{\"name\":\"TermNumber\",\"type\":\"number\"},{\"name\":\"Optional\",\"type\":\"boolean\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/programmes/1/offers/2\"},{\"rel\":[\"related\"],\"href\":\"/v0/programmes/1\"}]}"
+private const val m1OfferMock =
+    "{\"class\":[\"offer\"],\"properties\":{\"id\":3,\"acronym\":\"M1\",\"termNumber\":1,\"optional\":false},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"/rel/course/\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/3\"}]}],\"actions\":[{\"name\":\"edit\",\"title\":\"EditOffer\",\"method\":\"PUT\",\"type\":\"application/json\",\"href\":\"/v0/programmes/1/offers/3\",\"fields\":[{\"name\":\"Acronym\",\"type\":\"text\"},{\"name\":\"TermNumber\",\"type\":\"number\"},{\"name\":\"Optional\",\"type\":\"boolean\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/programmes/1/offers/3\"},{\"rel\":[\"related\"],\"href\":\"/v0/programmes/1\"}]}"
+private const val algaOfferMock =
+    "{\"class\":[\"offer\"],\"properties\":{\"id\":4,\"acronym\":\"ALGA\",\"termNumber\":1,\"optional\":false},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"/rel/course/\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/4\"}]}],\"actions\":[{\"name\":\"edit\",\"title\":\"EditOffer\",\"method\":\"PUT\",\"type\":\"application/json\",\"href\":\"/v0/programmes/1/offers/4\",\"fields\":[{\"name\":\"Acronym\",\"type\":\"text\"},{\"name\":\"TermNumber\",\"type\":\"number\"},{\"name\":\"Optional\",\"type\":\"boolean\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/programmes/1/offers/4\"},{\"rel\":[\"related\"],\"href\":\"/v0/programmes/1\"}]}"
+private const val eOfferMock =
+    "{\"class\":[\"offer\"],\"properties\":{\"id\":5,\"acronym\":\"E\",\"termNumber\":1,\"optional\":false},\"entities\":[{\"class\":[\"course\"],\"rel\":[\"/rel/course/\"],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/5\"}]}],\"actions\":[{\"name\":\"edit\",\"title\":\"EditOffer\",\"method\":\"PUT\",\"type\":\"application/json\",\"href\":\"/v0/programmes/1/offers/5\",\"fields\":[{\"name\":\"Acronym\",\"type\":\"text\"},{\"name\":\"TermNumber\",\"type\":\"number\"},{\"name\":\"Optional\",\"type\":\"boolean\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/programmes/1/offers/5\"},{\"rel\":[\"related\"],\"href\":\"/v0/programmes/1\"}]}"
 
 // All courses
 private const val allCoursesMock =

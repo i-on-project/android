@@ -11,19 +11,24 @@ import java.net.URI
  *  Converts from a [SirenEntity] to [Course]
  */
 fun SirenEntity.toCourse(): Course {
+
+
+    val id = properties?.get("id")
+    val acronym = properties?.get("acronym")
+    val name = properties?.get("name")
+    val selfUri = links?.first()?.href
     val classesLink: URI? = (entities?.first() as EmbeddedEntity).links?.first()?.href
     val eventsLink: URI? = (entities.last() as EmbeddedEntity).links?.first()?.href
 
-    val acronym = properties?.get("acronym")
-    val name = properties?.get("name")
-
-    if (properties != null && acronym != null && name != null) {
+    if (id != null && properties != null && acronym != null && name != null && selfUri != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
+            id = id.toInt(),
             acronym = acronym,
             name = name,
             classesUri = classesLink,
-            eventsUri = eventsLink
+            eventsUri = eventsLink,
+            selfUri = selfUri
         )
     }
     throw MappingFromSirenException("Cannot convert $this to Course")
@@ -35,20 +40,29 @@ fun SirenEntity.toCourse(): Course {
 fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
     val classesSummary = mutableListOf<ClassSummary>()
 
-    val course = properties?.get("courseAcr")
+    val courseAcronym = properties?.get("courseAcr")
     val calendarTerm = properties?.get("calendarTerm")
+    val selfUri = links?.first()?.href
 
-    if (course != null && calendarTerm != null) {
+    if (courseAcronym != null && calendarTerm != null && selfUri != null) {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 
             //There is an event sub-entity which is not from the class "class", which we must exclude
             if (embeddedEntity.clazz?.first() == "class") {
-                val name = embeddedEntity.properties?.get("id")
+                val id = embeddedEntity.properties?.get("id")
                 val detailsUri: URI? = embeddedEntity.links?.first()?.href
 
-                if (name != null && detailsUri != null)
-                    classesSummary.add(ClassSummary(name, course, calendarTerm, detailsUri))
+                if (id != null && detailsUri != null)
+                    classesSummary.add(
+                        ClassSummary(
+                            id,
+                            courseAcronym,
+                            calendarTerm,
+                            detailsUri,
+                            selfUri
+                        )
+                    )
                 else
                     throw MappingFromSirenException(
                         "Cannot convert $this to List of ClassSummary"

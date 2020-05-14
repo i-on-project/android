@@ -9,8 +9,13 @@
     <string name="title_class_section">Class Section</string>
     <string name="title_search">Search</string>
     <string name="title_search_results">Search Results</string>
+    <string name="title_curricular_terms">Curricular Terms</string>
+    <string name="title_course_details">Course Details</string>
+    <string name="title_programmes">Programmes</string>
+    <string name="title_programme_details">Programme Details</string>
 
     <string name="optional_courses">Optional Courses</string>
+    <string name="mandatory_courses">Mandatory Courses</string>
     <string name="coordinator">Coordinator</string>
 
     <string name="label_term">Curricular term:</string>>
@@ -30,14 +35,17 @@
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
     <string name="label_lectures">Lectures:</string>
+    <string name="label_calendar_termV2">Calendar term:</string>
+    <string name="label_journals">Journals:</string>
+    <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
+    <string name="label_favorite_undo">Undo</string>
+    <string name="label_curricular_term_placeholder">%1$s Term</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
     <string name="app_label">i-on</string>
     <string name="search_hint">Class name</string>
     <string name="label_semester">Semester</string>
-    <string name="title_curricular_terms">Curricular Terms</string>
-    <string name="title_course_details">Course Details</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="imageButton_clear_recent_search">Clear recent search</string>
     <string name="label_todo">Todo:</string>
@@ -48,7 +56,6 @@
     <string name="friday_short">FRI</string>
     <string name="saturday_short">SAT</string>
     <string name="sunday_short">SUN</string>
-
 
     <string name="january">January</string>
     <string name="february">February</string>
@@ -62,6 +69,7 @@
     <string name="september">September</string>
     <string name="november">November</string>
     <string name="december">December</string>
-    <string name="label_calendar_termV2">Calendar term:</string>
-    <string name="label_journals">Journals:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

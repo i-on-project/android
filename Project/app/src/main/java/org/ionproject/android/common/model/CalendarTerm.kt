@@ -11,8 +11,9 @@ import org.ionproject.android.common.dto.SirenEntity
  */
 @Entity
 data class CalendarTerm(
-    @PrimaryKey val name: String
-) {
+    @PrimaryKey val name: String,
+    override var workerId: Int = 0
+) : ICacheable {
     override fun toString(): String {
         return name
     }

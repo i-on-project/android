@@ -11,7 +11,7 @@ class URIConverter {
     }
 
     @TypeConverter
-    fun uriToString(uri: URI): String {
+    fun toString(uri: URI): String {
         return uri.toString()
     }
 

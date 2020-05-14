@@ -9,7 +9,7 @@ class CoursesViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             CoursesViewModel::class.java -> CoursesViewModel(
-                IonApplication.coursesRepository
+                IonApplication.programmesRepository
             )
             else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T

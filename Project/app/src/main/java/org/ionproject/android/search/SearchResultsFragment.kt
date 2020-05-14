@@ -11,9 +11,6 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-/**
- * A simple [Fragment] subclass.
- */
 class SearchResultsFragment : Fragment() {
 
     // This view model is shared between fragments and the MainActivity
