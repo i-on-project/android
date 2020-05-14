@@ -53,7 +53,6 @@ class CalendarFragment : Fragment() {
             Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT)
                 .show()
         }
-
         jdCalendar.adapter = calendarAdapter
     }
 }

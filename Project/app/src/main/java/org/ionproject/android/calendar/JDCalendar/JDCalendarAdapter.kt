@@ -60,7 +60,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             dayTextView.setTextColor(textColor)
             dayTextView.text = "${day.value.day}"
 
-            findLecturesForThisDay(day.value.getWeekDay())
+            findLecturesForThisDay(day.value.weekDayShortName())
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {

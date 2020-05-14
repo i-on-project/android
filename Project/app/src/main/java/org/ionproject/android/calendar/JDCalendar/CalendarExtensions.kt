@@ -34,6 +34,10 @@ val Calendar.isToday: Boolean
         return day == today.day && month == today.month && year == today.year
     }
 
+/** Returns the week short name */
+val Calendar.weekDayShortName
+    get() = WeekDay.values()[dayOfWeek-1].toString()
+
 const val NUMBER_OF_WEEK_DAYS = 7
 
 /**
@@ -130,8 +134,6 @@ fun Calendar.getDaysOfMonth(): List<Day> {
 /** Return the name of the month at which this instance is at */
 fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
 
-fun Calendar.getWeekDay() = WeekDay.values()[dayOfWeek-1].toString()
-
 /**
  * Represents a Month and associated with each month is the resource from Strings.xml
  * this way, when the application language is altered, so is the month
@@ -154,5 +156,5 @@ private enum class Month(private val monthResId: Int) {
 }
 
 private enum class WeekDay {
-    MO, TU, WE, TH, FR, SA, SU
+    SU, MO, TU, WE, TH, FR, SA
 }
