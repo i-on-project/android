@@ -20,7 +20,7 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     /**
      * Adds a favorite to the local database
      *
-     * @param favorite is the favorite to add
+     * @param classSummary is the class to add to favorites
      */
     suspend fun addClassToFavorites(classSummary: ClassSummary) =
         withContext(Dispatchers.IO) {
@@ -86,5 +86,15 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
         return false
     }
 
+    /**
+     * Adds a favorite to the local database
+     *
+     * @param favorite is the class to add to favorites
+     */
+    suspend fun addFavorite(favorite: Favorite) {
+        withContext(Dispatchers.IO) {
+            favoriteDao.insertFavorite(favorite)
+        }
+    }
 
 }

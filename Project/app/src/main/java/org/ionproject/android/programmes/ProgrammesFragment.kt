@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_programmes.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.addSwipeRightGesture
 
 class ProgrammesFragment : Fragment() {
 
@@ -43,6 +45,10 @@ class ProgrammesFragment : Fragment() {
         recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)
         viewModel.observeProgrammesLiveData(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
+        }
+
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
         }
     }
 

@@ -8,14 +8,14 @@ import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
-import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import java.net.URI
 

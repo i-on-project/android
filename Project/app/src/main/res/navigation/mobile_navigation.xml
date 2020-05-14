@@ -12,7 +12,12 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_home_to_programmes"
-            app:destination="@id/navigation_programmes" />
+            app:destination="@id/navigation_programmes"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
 
     <fragment
@@ -36,14 +41,15 @@
             app:popUpTo="@id/navigation_class_section"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_favorites_to_courses"
-            app:destination="@id/navigation_courses"
+            android:id="@+id/action_favorites_to_programmes"
+            app:destination="@id/navigation_programmes"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_class_section"
         android:name="org.ionproject.android.class_section.ClassSectionFragment"
@@ -77,11 +83,13 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_search_results"
         android:name="org.ionproject.android.search.SearchResultsFragment"
         android:label="@string/title_search_results"
         tools:layout="@layout/fragment_search_results" />
+
     <fragment
         android:id="@+id/navigation_programmes"
         android:name="org.ionproject.android.programmes.ProgrammesFragment"
@@ -89,8 +97,14 @@
         tools:layout="@layout/fragment_programmes" >
         <action
             android:id="@+id/action_programmes_to_programme_details"
-            app:destination="@id/navigation_programme_details" />
+            app:destination="@id/navigation_programme_details"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_programme_details"
         android:name="org.ionproject.android.programmeDetails.ProgrammeDetailsFragment"
@@ -98,7 +112,12 @@
         tools:layout="@layout/fragment_programme_details" >
         <action
             android:id="@+id/action_programme_details_to_courses"
-            app:destination="@id/navigation_courses" />
+            app:destination="@id/navigation_courses"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
 
 </navigation>

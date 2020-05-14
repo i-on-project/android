@@ -53,7 +53,7 @@ class FavoritesFragment : Fragment() {
         setupCalendarTermSpinner(spinner_favorites_calendar_terms)
 
         view.efab_favorites_add_favorite.setOnClickListener {
-            findNavController().navigate(R.id.action_favorites_to_courses)
+            findNavController().navigate(R.id.action_favorites_to_programmes)
         }
     }
 

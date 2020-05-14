@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_programme_details.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.addSwipeRightGesture
 
 class ProgrammeDetailsFragment : Fragment() {
 
@@ -48,6 +50,10 @@ class ProgrammeDetailsFragment : Fragment() {
                 TermsListAdapter(it.programme.termSize, sharedViewModel)
             sharedViewModel.programmeOfferSummaries =
                 it.programmeOffers //Sharing programme here otherwise it have to be passed to TermsListAdapter
+        }
+
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
         }
     }
 
