@@ -1,10 +1,13 @@
 package org.ionproject.android.calendar
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.ionproject.android.TAG
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.CalendarTermRepository

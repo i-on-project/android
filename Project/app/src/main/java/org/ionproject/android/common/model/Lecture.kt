@@ -9,7 +9,7 @@ class Lecture(
     val description: String? = null,
     val start: String? = null,
     val duration: String? = null,
-    val day: String? = null
+    val weekDay: String? = null
 )
 
 fun ICalendarDto.toCalendarSummary(): List<Lecture> =
@@ -22,7 +22,7 @@ fun createLecture(properties: ComponentProperties) =
         description = properties.description?.value?.get(0),
         start = properties.dtstamp?.value?.get(0)?.getHours(),
         duration = properties.duration?.value?.get(0),
-        day = properties.rrule?.value?.byDay?.get(0)
+        weekDay = properties.rrule?.value?.byDay?.get(0)
     )
 
 fun String.getHours(): String {

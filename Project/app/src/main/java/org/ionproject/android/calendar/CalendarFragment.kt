@@ -11,18 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
 import org.ionproject.android.TAG
+import org.ionproject.android.calendar.JDCalendar.Day
+import org.ionproject.android.calendar.JDCalendar.JDCalendar
 import org.ionproject.android.calendar.JDCalendar.JDCalendarAdapter
+import org.ionproject.android.calendar.JDCalendar.getWeekDay
 import org.ionproject.android.common.model.Events
 
 class CalendarFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
-    }
 
     /**
      * Obtaining Calendar's View Model
@@ -34,26 +29,35 @@ class CalendarFragment : Fragment() {
         )[CalendarViewModel::class.java]
     }
 
+    private val jdCalendar: JDCalendar by lazy {
+        jdcalendar_calendar
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_calendar, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val jdCalendar = jdcalendar_calendar
-
-        viewModel.getFavoriteClassesFromCurrentTerm(this) { classesSummary ->
-            viewModel.getEvents(classesSummary) { events ->
-                createCalendar(events)
+        viewModel.apply {
+            getFavoriteClassesFromCurrentTerm(this@CalendarFragment) { classesSummary ->
+                getEvents(classesSummary) { events ->
+                    createCalendarWithEvents(events)
+                }
             }
         }
+    }
 
-        val calendarAdapter = JDCalendarAdapter { day, view, ImageView ->
-            Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT).show()
+    private fun createCalendarWithEvents(events: List<Events>) {
+        val calendarAdapter = JDCalendarAdapter(events) { day, view, ImageView ->
+            Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT)
+                .show()
         }
 
         jdCalendar.adapter = calendarAdapter
     }
-
-    private fun createCalendar(events: List<Events>) {
-        Log.v(TAG, "Events = $events")
-    }
-
 }

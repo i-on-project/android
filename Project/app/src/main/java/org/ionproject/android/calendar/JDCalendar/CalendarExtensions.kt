@@ -118,7 +118,7 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     return (0 until numbOfDays).map {
         val calendar = movedCalendar.daysFromNow(it)
         Day(
-            value = calendar.day,
+            value = calendar,
             isDayOfCurrMonth = calendar.month == currMonth,
             isToday = calendar.isToday
         )
@@ -129,6 +129,8 @@ fun Calendar.getDaysOfMonth(): List<Day> {
 
 /** Return the name of the month at which this instance is at */
 fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
+
+fun Calendar.getWeekDay() = WeekDay.values()[dayOfWeek-1].toString()
 
 /**
  * Represents a Month and associated with each month is the resource from Strings.xml
@@ -149,4 +151,8 @@ private enum class Month(private val monthResId: Int) {
     DECEMBER(R.string.december);
 
     fun getName(ctx: Context) = ctx.resources.getString(monthResId)
+}
+
+private enum class WeekDay {
+    MO, TU, WE, TH, FR, SA, SU
 }

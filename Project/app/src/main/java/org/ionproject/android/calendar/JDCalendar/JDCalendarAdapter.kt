@@ -1,12 +1,15 @@
 package org.ionproject.android.calendar.JDCalendar
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.grid_item_jdcalendar.view.*
 import org.ionproject.android.R
+import org.ionproject.android.TAG
+import org.ionproject.android.common.model.Events
 
 typealias MonthDayClickListener = ((Day, View, ImageView) -> Unit)?
 
@@ -17,26 +20,26 @@ typealias MonthDayClickListener = ((Day, View, ImageView) -> Unit)?
  */
 class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
 
+    private var events: List<Events> = emptyList()
     private var monthDayClickListener: MonthDayClickListener = null
 
     /**
      * Registers a listener for the OnClickEvent off all days of the month
      */
-    constructor(monthDayClickListener: MonthDayClickListener) : this() {
+    constructor(events: List<Events>, monthDayClickListener: MonthDayClickListener) : this() {
+        this.events = events
         this.monthDayClickListener = monthDayClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): JDViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.grid_item_jdcalendar, parent, false)
-        return JDViewHolder(
-            view,
-            monthDayClickListener
-        )
+        return JDViewHolder(view, events, monthDayClickListener)
     }
 
     class JDViewHolder(
         view: View,
+        val events: List<Events>,
         private val monthDayOnClick: MonthDayClickListener
     ) : CalendarAdapter.ViewHolder(view) {
 
@@ -55,11 +58,23 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
                 textColor = Color.LTGRAY
 
             dayTextView.setTextColor(textColor)
-            dayTextView.text = "${day.value}"
+            dayTextView.text = "${day.value.day}"
+
+            findLecturesForThisDay(day.value.getWeekDay())
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {
                     onClick(day, view, eventImageView)
+                }
+            }
+        }
+
+        private fun findLecturesForThisDay(weekDay: String) {
+            for (event in events) {
+                for(lecture in event.lectures) {
+                    Log.v(TAG,"Lecture.weekDay = ${lecture.weekDay} e WeekDay = $weekDay")
+                    if(lecture.weekDay == weekDay)
+                        Log.v(TAG, "Week Day = $weekDay")
                 }
             }
         }
