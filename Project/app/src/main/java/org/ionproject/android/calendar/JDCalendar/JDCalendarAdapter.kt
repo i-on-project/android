@@ -34,20 +34,22 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup): JDViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.grid_item_jdcalendar, parent, false)
-        return JDViewHolder(view, events, monthDayClickListener)
+        return JDViewHolder(view)
+    }
+
+    override fun onBindViewHoler(viewHolder: JDViewHolder, day: Day, position: Int) {
+        viewHolder.bind(day,events, monthDayClickListener)
     }
 
     class JDViewHolder(
-        view: View,
-        val events: List<Events>,
-        private val monthDayOnClick: MonthDayClickListener
+        view: View
     ) : CalendarAdapter.ViewHolder(view) {
 
         val dayTextView =
             view.textview_list_item_calendar_day //Contains the text of the day (e.g 1,2..)
         val eventImageView = view.imageview_list_item_calendar_event //The event circle small circle
 
-        override fun bind(day: Day) {
+        fun bind(day: Day, events: List<Events>, monthDayOnClick: MonthDayClickListener) {
             view.setBackgroundResource(0) //Cleans background resource
             var textColor = Color.BLACK //Default text color
 
@@ -60,7 +62,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             dayTextView.setTextColor(textColor)
             dayTextView.text = "${day.dayOfMonth}"
 
-            findLecturesForThisDay(WeekDay.values()[day.dayOfWeek-1])
+            findLecturesForThisDay(WeekDay.values()[day.dayOfWeek-1],events)
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {
@@ -69,7 +71,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             }
         }
 
-        private fun findLecturesForThisDay(weekDay: WeekDay) {
+        private fun findLecturesForThisDay(weekDay: WeekDay, events: List<Events>) {
             for (event in events) {
                 for(lecture in event.lectures) {
                     Log.v(TAG,"Lecture.weekDay = ${lecture.weekDay} e WeekDay = $weekDay")

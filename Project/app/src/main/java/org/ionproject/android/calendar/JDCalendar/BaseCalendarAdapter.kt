@@ -70,7 +70,7 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
             vh = calendarAdapter.onCreateViewHolder(parent)
             vh.view.tag = vh
         }
-        vh.bind(daysList[position])
+        calendarAdapter.onBindViewHoler(vh,daysList[position],position)
         return vh.view
     }
 
