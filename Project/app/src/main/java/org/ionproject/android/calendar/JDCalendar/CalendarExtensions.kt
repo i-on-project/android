@@ -115,20 +115,20 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     else
         movedCalendar.daysFromNow(-(weekDay - 2))
 
+    // Get today's Date, in order to check if each day is after today
+    val today = Calendar.getInstance()
+
     return (0 until numbOfDays).map {
         val calendar = movedCalendar.daysFromNow(it)
         Day(
-            dayOfMonth = calendar.day,
-            month = calendar.month,
-            year = calendar.year,
-            dayOfWeek = calendar.dayOfWeek,
+            value = calendar,
             isDayOfCurrMonth = calendar.month == currMonth,
-            isToday = calendar.isToday
+            isToday = calendar.isToday,
+            isAfterToday = calendar.after(today)
         )
 
     }
 }
-
 
 /** Return the name of the month at which this instance is at */
 fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)

@@ -4,12 +4,13 @@ import org.ionproject.android.common.dto.ComponentProperties
 import org.ionproject.android.common.dto.EventProperties
 import org.ionproject.android.common.dto.ICalendarDto
 import org.ionproject.android.common.dto.enums.EventType
+import java.util.*
 
 class Events(
-    val exams: List<Exam>,
-    val lectures: List<Lecture>,
-    val todos: List<Todo>,
-    val journals: List<Journal>
+    var exams: List<Exam>,
+    var lectures: List<Lecture>,
+    var todos: List<Todo>,
+    var journals: List<Journal>
 )
 
 fun ICalendarDto.toEventsSummary(): Events {

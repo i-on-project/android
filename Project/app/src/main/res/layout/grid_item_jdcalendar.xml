@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toTopOf="@id/textview_list_item_calendar_day"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/shape_circle_5dp"
+        android:src="@drawable/shape_circle_5dp"
         >
     </ImageView>
 

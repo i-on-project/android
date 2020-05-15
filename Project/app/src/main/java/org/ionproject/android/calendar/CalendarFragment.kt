@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.JDCalendar.JDCalendar
 import org.ionproject.android.calendar.JDCalendar.JDCalendarAdapter
+import org.ionproject.android.calendar.JDCalendar.day
 import org.ionproject.android.common.model.Events
 
 class CalendarFragment : Fragment() {
@@ -50,9 +51,10 @@ class CalendarFragment : Fragment() {
 
     private fun createCalendarWithEvents(events: List<Events>) {
         val calendarAdapter = JDCalendarAdapter(events) { day, view, ImageView ->
-            Toast.makeText(context, "Clicked day ${day.dayOfMonth}!", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Clicked day ${day.value.day}!", Toast.LENGTH_SHORT)
                 .show()
         }
         jdCalendar.adapter = calendarAdapter
     }
+
 }
