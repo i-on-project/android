@@ -5,11 +5,11 @@ import org.ionproject.android.common.dto.JournalDto
 import java.util.*
 
 class Journal(
-    val uid: String,
-    val summary: String?,
-    val description: String?,
+    uid: String,
+    summary: String?,
+    description: String?,
     val lastModification: Calendar?
-)
+) : Event("Journal", uid, summary, description)
 
 fun JournalDto.toJournal() = createJournal(properties)
 

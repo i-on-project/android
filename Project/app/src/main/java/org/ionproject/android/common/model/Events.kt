@@ -6,11 +6,15 @@ import org.ionproject.android.common.dto.ICalendarDto
 import org.ionproject.android.common.dto.enums.EventType
 import java.util.*
 
+/**
+ * This class contains all events that were received from a
+ * class section
+ */
 class Events(
-    var exams: List<Exam>,
-    var lectures: List<Lecture>,
-    var todos: List<Todo>,
-    var journals: List<Journal>
+    var exams: List<Exam> = listOf(),
+    var lectures: List<Lecture> = listOf(),
+    var todos: List<Todo> = listOf(),
+    var journals: List<Journal> = listOf()
 )
 
 fun ICalendarDto.toEventsSummary(): Events {

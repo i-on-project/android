@@ -1,18 +1,20 @@
 package org.ionproject.android.calendar.JDCalendar
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.grid_item_jdcalendar.view.*
 import org.ionproject.android.R
+import org.ionproject.android.TAG
+import org.ionproject.android.calendar.EventsListViewModel
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.model.Exam
 import org.ionproject.android.common.model.Lecture
 import org.ionproject.android.common.model.Todo
 
-typealias MonthDayClickListener = ((Day, View, ImageView) -> Unit)?
+typealias dayOfMonthClickListener = ((Events) -> Unit)?
 
 /**
  * Default [CalendarAdapter] for the JDCalendar
@@ -21,15 +23,21 @@ typealias MonthDayClickListener = ((Day, View, ImageView) -> Unit)?
  */
 class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
 
+    private var viewModel: EventsListViewModel? = null
     private var events: List<Events> = emptyList()
-    private var monthDayClickListener: MonthDayClickListener = null
+    private var listener: dayOfMonthClickListener = null
 
     /**
      * Registers a listener for the OnClickEvent off all days of the month
      */
-    constructor(events: List<Events>, monthDayClickListener: MonthDayClickListener) : this() {
+    constructor(
+        viewModel: EventsListViewModel,
+        events: List<Events>,
+        listener: dayOfMonthClickListener
+    ) : this() {
+        this.viewModel = viewModel
         this.events = events
-        this.monthDayClickListener = monthDayClickListener
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): JDViewHolder {
@@ -39,7 +47,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
     }
 
     override fun onBindViewHoler(viewHolder: JDViewHolder, day: Day, position: Int) {
-        viewHolder.bind(day, events, monthDayClickListener)
+        viewHolder.bind(day, events, listener)
     }
 
     class JDViewHolder(
@@ -52,7 +60,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
         private val eventImageView =
             view.imageview_list_item_calendar_event //The event small circle
 
-        fun bind(day: Day, events: List<Events>, monthDayOnClick: MonthDayClickListener) {
+        fun bind(day: Day, events: List<Events>, monthDayOnClick: dayOfMonthClickListener) {
             view.setBackgroundResource(0) //Cleans background resource
             eventImageView.clearColorFilter() //Cleans ImageView resource
             var textColor = Color.BLACK //Default text color
@@ -66,45 +74,58 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             dayTextView.setTextColor(textColor)
             dayTextView.text = "${day.value.day}"
 
+            val lectures = mutableListOf<Lecture>()
+            val exams = mutableListOf<Exam>()
+            val todos = mutableListOf<Todo>()
+
             if (day.isToday || day.isAfterToday) {
+                val today = day.value.day
                 events.forEach {
-                    findLecturesForThisDay(it.lectures, day)
-                    findExamsForThisDay(it.exams, day)
-                    findTodosForThisDay(it.todos, day)
+                    lectures.addAll(findLecturesForThisDay(it.lectures, day))
+                    exams.addAll(findExamsForThisDay(it.exams, day))
+                    todos.addAll(findTodosForThisDay(it.todos, day))
                 }
             }
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {
-                    onClick(day, view, eventImageView)
+                    onClick(Events(exams,lectures,todos))
                 }
             }
         }
 
-        private fun findLecturesForThisDay(lectures: List<Lecture>, day: Day) {
-            val weekDay = weekDays[day.value.dayOfWeek-1].toString()
+        private fun findLecturesForThisDay(lectures: List<Lecture>, day: Day): List<Lecture> {
+            val weekDay = weekDays[day.value.dayOfWeek - 1].toString()
 
-            lectures.forEach {
+            return lectures.filter {
+                var added = false
                 if (it.endDate != null && it.weekDay == weekDay && day.isBefore(it.endDate)) {
                     eventImageView.setColorFilter(Color.parseColor("blue"))
+                    added = true
                 }
+                added
             }
         }
 
-        private fun findExamsForThisDay(exams: List<Exam>, day: Day) {
-            exams.forEach {
+        private fun findExamsForThisDay(exams: List<Exam>, day: Day): List<Exam> =
+            exams.filter {
+                var added = false
                 if (day.equals(it.startDate)) {
                     eventImageView.setColorFilter(Color.parseColor("red"))
+                    added = true
                 }
+                added
             }
-        }
 
-        private fun findTodosForThisDay(todos: List<Todo>, day: Day) {
-            todos.forEach {
-                if(day.equals(it.due))
+        private fun findTodosForThisDay(todos: List<Todo>, day: Day): List<Todo> =
+            todos.filter {
+                var added = false
+                if (day.equals(it.due)) {
                     eventImageView.setColorFilter(Color.parseColor("#FF8C00"))
+                    added = true
+                }
+                added
             }
-        }
     }
 }
 

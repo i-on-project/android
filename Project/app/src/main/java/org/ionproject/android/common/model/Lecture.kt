@@ -5,14 +5,14 @@ import org.ionproject.android.common.dto.ICalendarDto
 import java.util.*
 
 class Lecture(
-    val uid: String,
-    val summary: String? = null,
-    val description: String? = null,
+    uid: String,
+    summary: String? = null,
+    description: String? = null,
     val start: String? = null,
     val endDate: Calendar? = null,
     val duration: String? = null,
     val weekDay: String? = null
-)
+): Event("Lecture", uid, summary, description)
 
 fun ICalendarDto.toCalendarSummary(): List<Lecture> =
     properties.subComponents.map { createLecture(it.properties) }

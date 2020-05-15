@@ -6,12 +6,12 @@ import java.net.URI
 import java.util.*
 
 class Todo(
-    val uid: String,
-    val summary: String?,
-    val description: String?,
+    uid: String,
+    summary: String?,
+    description: String?,
     val attachment: URI?,
     val due: Calendar?
-)
+) : Event("Todo", uid, summary, description)
 
 fun TodoDto.toTodoSummary() = createTodo(properties)
 

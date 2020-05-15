@@ -6,15 +6,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Exam(
-    val uid: String,
-    val summary: String?,
-    val description: String?,
+    uid: String,
+    summary: String?,
+    description: String?,
     val categories: String?,
     val created: Calendar?,
     val stamp: Calendar?,
     val startDate: Calendar?,
     val endDate: Calendar?
-)
+): Event("Exam", uid, summary, description)
 
 fun EventDto.toExam() = createExam(properties.properties)
 

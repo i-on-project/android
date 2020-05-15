@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.JDCalendar.JDCalendar
@@ -15,15 +17,25 @@ import org.ionproject.android.calendar.JDCalendar.day
 import org.ionproject.android.common.model.Events
 
 class CalendarFragment : Fragment() {
-
     /**
      * Obtaining Calendar's View Model
      */
-    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+    private val calendarViewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(
             this,
             CalendarViewModelProvider()
         )[CalendarViewModel::class.java]
+    }
+
+    private val eventsListViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(
+            this,
+            EventsListViewModelProvider()
+        )[EventsListViewModel::class.java]
+    }
+
+    private val eventsListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        EventsListAdapter(eventsListViewModel)
     }
 
     private val jdCalendar: JDCalendar by lazy {
@@ -40,7 +52,10 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.apply {
+
+        setupEventsListAdapter()
+
+        calendarViewModel.apply {
             getFavoriteClassesFromCurrentTerm(this@CalendarFragment) { favorites ->
                 getEvents(favorites) { events ->
                     createCalendarWithEvents(events)
@@ -49,10 +64,17 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    private fun setupEventsListAdapter() {
+        val eventsList= recyclerView_calendar_events_list
+        eventsList.layoutManager = LinearLayoutManager(context)
+        eventsList.adapter = eventsListAdapter
+    }
+
     private fun createCalendarWithEvents(events: List<Events>) {
-        val calendarAdapter = JDCalendarAdapter(events) { day, view, ImageView ->
-            Toast.makeText(context, "Clicked day ${day.value.day}!", Toast.LENGTH_SHORT)
-                .show()
+        val calendarAdapter = JDCalendarAdapter(eventsListViewModel, events) {
+            eventsListViewModel.reset()
+            eventsListViewModel.addEvents(it)
+            eventsListAdapter.notifyDataSetChanged()
         }
         jdCalendar.adapter = calendarAdapter
     }
