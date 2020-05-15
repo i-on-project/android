@@ -1,7 +1,5 @@
 package org.ionproject.android.calendar.JDCalendar
 
-import java.util.*
-
 /**
  * Represents a day of a month
  *
@@ -10,7 +8,10 @@ import java.util.*
  * @property isToday return true if the day is today
  */
 data class Day(
-    val value: Calendar,
+    val dayOfMonth: Int,
+    val month: Int,
+    val year: Int,
+    val dayOfWeek: Int,
     val isDayOfCurrMonth: Boolean,
     val isToday: Boolean
 )

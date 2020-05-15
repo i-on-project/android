@@ -50,7 +50,7 @@ class CalendarFragment : Fragment() {
 
     private fun createCalendarWithEvents(events: List<Events>) {
         val calendarAdapter = JDCalendarAdapter(events) { day, view, ImageView ->
-            Toast.makeText(context, "Clicked day ${day.value}!", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Clicked day ${day.dayOfMonth}!", Toast.LENGTH_SHORT)
                 .show()
         }
         jdCalendar.adapter = calendarAdapter

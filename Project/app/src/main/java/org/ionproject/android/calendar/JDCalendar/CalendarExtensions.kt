@@ -34,10 +34,6 @@ val Calendar.isToday: Boolean
         return day == today.day && month == today.month && year == today.year
     }
 
-/** Returns the week short name */
-val Calendar.weekDayShortName
-    get() = WeekDay.values()[dayOfWeek-1].toString()
-
 const val NUMBER_OF_WEEK_DAYS = 7
 
 /**
@@ -122,7 +118,10 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     return (0 until numbOfDays).map {
         val calendar = movedCalendar.daysFromNow(it)
         Day(
-            value = calendar,
+            dayOfMonth = calendar.day,
+            month = calendar.month,
+            year = calendar.year,
+            dayOfWeek = calendar.dayOfWeek,
             isDayOfCurrMonth = calendar.month == currMonth,
             isToday = calendar.isToday
         )
@@ -153,8 +152,4 @@ private enum class Month(private val monthResId: Int) {
     DECEMBER(R.string.december);
 
     fun getName(ctx: Context) = ctx.resources.getString(monthResId)
-}
-
-private enum class WeekDay {
-    SU, MO, TU, WE, TH, FR, SA
 }

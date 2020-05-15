@@ -58,9 +58,9 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
                 textColor = Color.LTGRAY
 
             dayTextView.setTextColor(textColor)
-            dayTextView.text = "${day.value.day}"
+            dayTextView.text = "${day.dayOfMonth}"
 
-            findLecturesForThisDay(day.value.weekDayShortName())
+            findLecturesForThisDay(WeekDay.values()[day.dayOfWeek-1])
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {
@@ -69,14 +69,18 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             }
         }
 
-        private fun findLecturesForThisDay(weekDay: String) {
+        private fun findLecturesForThisDay(weekDay: WeekDay) {
             for (event in events) {
                 for(lecture in event.lectures) {
                     Log.v(TAG,"Lecture.weekDay = ${lecture.weekDay} e WeekDay = $weekDay")
-                    if(lecture.weekDay == weekDay)
+                    if(lecture.weekDay == weekDay.toString())
                         Log.v(TAG, "Week Day = $weekDay")
                 }
             }
         }
     }
+}
+
+private enum class WeekDay {
+    SU, MO, TU, WE, TH, FR, SA
 }
