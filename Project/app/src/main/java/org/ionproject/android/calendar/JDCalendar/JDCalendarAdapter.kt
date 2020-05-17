@@ -1,13 +1,11 @@
 package org.ionproject.android.calendar.JDCalendar
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.grid_item_jdcalendar.view.*
 import org.ionproject.android.R
-import org.ionproject.android.TAG
 import org.ionproject.android.calendar.EventsListViewModel
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.model.Exam
@@ -89,7 +87,7 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
 
             monthDayOnClick?.let { onClick ->
                 view.setOnClickListener {
-                    onClick(Events(exams,lectures,todos))
+                    onClick(Events(exams, lectures, todos))
                 }
             }
         }
@@ -100,7 +98,8 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             return lectures.filter {
                 var added = false
                 if (it.endDate != null && it.weekDay == weekDay && day.isBefore(it.endDate)) {
-                    eventImageView.setColorFilter(Color.parseColor("blue"))
+                    val color = eventImageView.colorFilter
+                    eventImageView.setColorFilter(Color.parseColor(if (color != null) "purple" else Lecture.color))
                     added = true
                 }
                 added
@@ -111,7 +110,8 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             exams.filter {
                 var added = false
                 if (day.equals(it.startDate)) {
-                    eventImageView.setColorFilter(Color.parseColor("red"))
+                    val color = eventImageView.colorFilter
+                    eventImageView.setColorFilter(Color.parseColor(if (color != null) "purple" else Exam.color))
                     added = true
                 }
                 added
@@ -121,7 +121,8 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
             todos.filter {
                 var added = false
                 if (day.equals(it.due)) {
-                    eventImageView.setColorFilter(Color.parseColor("#FF8C00"))
+                    val color = eventImageView.colorFilter
+                    eventImageView.setColorFilter(Color.parseColor(if (color != null) "purple" else Todo.color))
                     added = true
                 }
                 added
@@ -129,6 +130,12 @@ class JDCalendarAdapter() : CalendarAdapter<JDCalendarAdapter.JDViewHolder>() {
     }
 }
 
-private enum class WeekDay {
-    SU, MO, TU, WE, TH, FR, SA
+enum class WeekDay(val extended: String) {
+    SU("Sunday"),
+    MO("Monday"),
+    TU("Thursday"),
+    WE("Wednesday"),
+    TH("Thursay"),
+    FR("Friday"),
+    SA("Saturday")
 }

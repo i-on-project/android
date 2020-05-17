@@ -14,7 +14,12 @@ class Exam(
     val stamp: Calendar?,
     val startDate: Calendar?,
     val endDate: Calendar?
-): Event("Exam", uid, summary, description)
+) : Event(type, uid, summary, description) {
+    companion object {
+        val type = "Exam"
+        val color = "red"
+    }
+}
 
 fun EventDto.toExam() = createExam(properties.properties)
 

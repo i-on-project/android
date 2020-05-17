@@ -8,7 +8,7 @@ class EventsListViewModel : ViewModel() {
 
     private val eventsList = mutableListOf<Event>()
 
-    val events : List<Event>
+    val events: List<Event>
         get() = eventsList
 
     fun reset() = eventsList.clear()

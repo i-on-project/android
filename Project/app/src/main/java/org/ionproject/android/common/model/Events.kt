@@ -4,7 +4,6 @@ import org.ionproject.android.common.dto.ComponentProperties
 import org.ionproject.android.common.dto.EventProperties
 import org.ionproject.android.common.dto.ICalendarDto
 import org.ionproject.android.common.dto.enums.EventType
-import java.util.*
 
 /**
  * This class contains all events that were received from a

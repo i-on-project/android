@@ -27,6 +27,15 @@ val Calendar.day get() = get(Calendar.DAY_OF_MONTH)
 /** Returns the current day of week at which this instance is at */
 val Calendar.dayOfWeek get() = get(Calendar.DAY_OF_WEEK)
 
+/** Returns the current hour at which this instance is at */
+val Calendar.hour get() = get(Calendar.HOUR)
+
+/** Returns the current minute at which this instance is at */
+val Calendar.minute get() = get(Calendar.MINUTE)
+
+/** Returns the current second at which this instance is at */
+val Calendar.second get() = get(Calendar.SECOND)
+
 /** Returns true if the current day at which this instance is at is today*/
 val Calendar.isToday: Boolean
     get() {

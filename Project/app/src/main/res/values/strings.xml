@@ -40,6 +40,11 @@
     <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
     <string name="label_favorite_undo">Undo</string>
     <string name="label_curricular_term_placeholder">%1$s Term</string>
+    <string name="label_list_event_week_Day">Week day:</string>
+    <string name="label_list_event_duration">Duration:</string>
+    <string name="label_list_event_starts">Starts:</string>
+    <string name="label_list_event_ends">Ends:</string>
+    <string name="label_list_event_delivery">Delivery:</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>

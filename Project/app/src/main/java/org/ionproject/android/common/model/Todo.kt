@@ -11,10 +11,15 @@ class Todo(
     description: String?,
     val attachment: URI?,
     val due: Calendar?
-) : Event("Todo", uid, summary, description)
+) : Event(type, uid, summary, description) {
+
+    companion object {
+        val type = "Todo"
+        val color = "#FF8C00"
+    }
+}
 
 fun TodoDto.toTodoSummary() = createTodo(properties)
-
 
 fun createTodo(properties: ComponentProperties) =
     Todo(

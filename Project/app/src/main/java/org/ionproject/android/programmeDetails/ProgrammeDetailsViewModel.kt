@@ -24,7 +24,7 @@ class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepo
         if (programmeSummary != null)
             viewModelScope.launch {
                 val programme = programmesRepository.getProgrammeDetails(programmeSummary)
-                programme?.let(onResult)
+                programme.let(onResult)
             }
     }
 

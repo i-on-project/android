@@ -2,7 +2,6 @@ package org.ionproject.android.calendar.JDCalendar
 
 import android.view.View
 import android.view.ViewGroup
-import java.text.FieldPosition
 
 /**
  * Public CalendarAdapter which can be extended from to create a custom adapter for the calendar.

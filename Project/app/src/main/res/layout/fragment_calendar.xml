@@ -24,9 +24,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_calendar_events_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        custom:layout_constraintTop_toBottomOf="@id/jdcalendar_calendar"
+        android:layout_height="0dp"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintEnd_toEndOf="parent"/>
+        custom:layout_constraintTop_toBottomOf="@id/jdcalendar_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
