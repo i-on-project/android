@@ -23,12 +23,6 @@ class Lecture(
     }
 }
 
-/**
- * Retrieves all [Lecture] events available to a class
- */
-fun ICalendarDto.getAllLectures(): List<Lecture> =
-    properties.subComponents.map { createLecture(it.properties) }
-
 fun createLecture(properties: ComponentProperties) =
     Lecture(
         uid = properties.uid.value[0],

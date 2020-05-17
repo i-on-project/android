@@ -1,7 +1,6 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
-import org.ionproject.android.common.dto.TodoDto
 import java.net.URI
 import java.util.*
 
@@ -18,8 +17,6 @@ class Todo(
         val color = "#FF8C00"
     }
 }
-
-fun TodoDto.toTodoSummary() = createTodo(properties)
 
 fun createTodo(properties: ComponentProperties) =
     Todo(

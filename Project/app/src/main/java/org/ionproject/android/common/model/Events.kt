@@ -3,7 +3,6 @@ package org.ionproject.android.common.model
 import org.ionproject.android.common.dto.ComponentProperties
 import org.ionproject.android.common.dto.EventProperties
 import org.ionproject.android.common.dto.ICalendarDto
-import org.ionproject.android.common.dto.enums.EventType
 
 /**
  * This class contains all events that were received from a
@@ -31,7 +30,7 @@ fun ICalendarDto.toEventsSummary(): Events {
 
         if (type != null && categories != null) {
             if (type == "event") {
-                if (categories.contains(EventType.Lecture))
+                if (categories.contains(Lecture.type))
                     lectures.add(createLecture(properties))
                 else
                     exams.add(createExam(properties))
@@ -44,6 +43,3 @@ fun ICalendarDto.toEventsSummary(): Events {
 
     return Events(exams, lectures, todos, journals)
 }
-
-fun List<String>.contains(type: EventType) =
-    this.contains(type.toString())

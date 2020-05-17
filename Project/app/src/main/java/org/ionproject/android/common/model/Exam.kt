@@ -1,7 +1,6 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
-import org.ionproject.android.common.dto.EventDto
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,8 +23,6 @@ class Exam(
         const val color = "red" //Color to be printed on calendar display as a small dot
     }
 }
-
-fun EventDto.toExam() = createExam(properties.properties)
 
 fun createExam(properties: ComponentProperties) =
     Exam(

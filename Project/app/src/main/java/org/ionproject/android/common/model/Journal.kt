@@ -1,7 +1,6 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
-import org.ionproject.android.common.dto.JournalDto
 import java.util.*
 
 class Journal(
@@ -10,8 +9,6 @@ class Journal(
     description: String?,
     val lastModification: Calendar?
 ) : Event("Journal", uid, summary, description)
-
-fun JournalDto.toJournal() = createJournal(properties)
 
 fun createJournal(properties: ComponentProperties) =
     Journal(

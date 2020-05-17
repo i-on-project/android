@@ -73,58 +73,6 @@ class ClassSectionViewModel(
     }
 
     /**
-     * Gets all exams available for the [currClassSection] class section
-     *
-     * @param uris The uris to get information about the exams
-     */
-    fun getExams(uris: List<URI>) {
-        viewModelScope.launch {
-            val exams: List<Exam> = uris.map { eventsRepository.getExamFromCourse(it) }
-            examsLiveData.postValue(exams)
-        }
-    }
-
-    /**
-     * Gets all lectures available for the [currClassSection] class section
-     *
-     * @param uri The uri to get information about the lectures
-     */
-    fun getLectures(uri: URI?) {
-        viewModelScope.launch {
-            val lectures: List<Lecture> = eventsRepository.getLectures(uri)
-            lecturesLiveData.postValue(lectures)
-        }
-    }
-
-    /**
-     * Gets all work assignments available for the [currClassSection] class section to be done
-     *
-     * @param uris The uri to get information about all work assignments to be done
-     */
-    fun getWorkAssignments(uris: List<URI>) {
-        viewModelScope.launch {
-            val workAssignments = uris.map {
-                eventsRepository.getWorkAssignment(it)
-            }
-            workAssignmentsLiveData.postValue(workAssignments)
-        }
-    }
-
-    /**
-     * Request all journals associated to a class section
-     *
-     * @param uris The uris to get information about the journals
-     */
-    fun getJournals(uris: List<URI>) {
-        viewModelScope.launch {
-            val journals = uris.map {
-                eventsRepository.getJournals(it)
-            }
-            journalsLiveData.postValue(journals)
-        }
-    }
-
-    /**
      * Observes if [examsLiveData]'s information has changed.
      *
      * @param lifeCycle The activity's lifecycle
