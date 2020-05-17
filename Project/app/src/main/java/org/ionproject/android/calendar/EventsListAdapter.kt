@@ -60,12 +60,20 @@ class EventsListAdapter(
                 val hour = lecture.start.hour
                 val minute = lecture.start.minute
 
-                //TODO: Sum of hours and minutes must be fixed
                 val duration = lecture.duration
-                val endHour = (hour + duration.hours).fillWithZero()
-                val endMinute = (minute + duration.minutes).fillWithZero()
+                var endHour = hour + duration.hours
+                var endMinute = minute + duration.minutes
 
-                eventExtraResult2.text = "$hour:${minute}h - $endHour:${endMinute}h"
+                if(endMinute >= 60) {
+                    endHour++
+                    endMinute -= 60
+                }
+
+                if(endHour >= 24) {
+                    endHour -= 24
+                }
+
+                eventExtraResult2.text = "$hour:${minute}h - ${endHour.fillWithZero()}:${endMinute.fillWithZero()}h"
             }
         }
 

@@ -5,6 +5,9 @@ import org.ionproject.android.common.dto.EventDto
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Event to be called as [Exam]
+ */
 class Exam(
     uid: String,
     summary: String?,
@@ -15,9 +18,10 @@ class Exam(
     val startDate: Calendar?,
     val endDate: Calendar?
 ) : Event(type, uid, summary, description) {
+
     companion object {
-        val type = "Exam"
-        val color = "red"
+        const val type = "Exam" //Type of the event
+        const val color = "red" //Color to be printed on calendar display as a small dot
     }
 }
 

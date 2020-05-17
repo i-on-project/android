@@ -1,5 +1,10 @@
 package org.ionproject.android.common.model
 
+/**
+ * Class in order to parse String information about the duration on an [Lecture] class event.
+ * Every [Lecture] should have how many hours, minutes and seconds the lecture will take.
+ * e.g: PT03H00M:00S
+ */
 class Duration(
     val hours: Int,
     val minutes: Int,

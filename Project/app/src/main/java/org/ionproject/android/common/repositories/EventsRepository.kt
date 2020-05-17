@@ -40,7 +40,7 @@ class EventsRepository(
             return emptyList()
         return ionWebAPI
             .getFromURI(calendarURI, ICalendarDto::class.java)
-            .toCalendarSummary()
+            .getAllLectures()
     }
 
     /**
@@ -67,6 +67,13 @@ class EventsRepository(
             .getFromURI(uri, JournalDto::class.java)
             .toJournal()
 
+    /**
+     * This should return all events available for a class
+     *
+     * @param uri URI to make a request to the Web API
+     *
+     * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
+     */
     suspend fun getEvents(uri: URI): Events =
         ionWebAPI
             .getFromURI(uri, ICalendarDto::class.java)

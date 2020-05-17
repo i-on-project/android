@@ -4,6 +4,9 @@ import org.ionproject.android.common.dto.ComponentProperties
 import org.ionproject.android.common.dto.ICalendarDto
 import java.util.*
 
+/**
+ * Event to be called as [Lecture]
+ */
 class Lecture(
     uid: String,
     summary: String? = null,
@@ -15,12 +18,15 @@ class Lecture(
 ) : Event(type, uid, summary, description) {
 
     companion object {
-        val type = "Lecture"
-        val color = "blue"
+        const val type = "Lecture" //Type of the event
+        const val color = "blue" //Color to be printed on calendar display as a small dot
     }
 }
 
-fun ICalendarDto.toCalendarSummary(): List<Lecture> =
+/**
+ * Retrieves all [Lecture] events available to a class
+ */
+fun ICalendarDto.getAllLectures(): List<Lecture> =
     properties.subComponents.map { createLecture(it.properties) }
 
 fun createLecture(properties: ComponentProperties) =
@@ -28,12 +34,17 @@ fun createLecture(properties: ComponentProperties) =
         uid = properties.uid.value[0],
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),
-        start = properties.dtstamp?.value?.get(0)?.toCalendar(),
+        start = properties.dtstart?.value?.get(0)?.toCalendar(),
         endDate = properties.rrule?.value?.until?.toCalendar(),
         duration = properties.duration?.value?.get(0)?.toDuration(),
         weekDay = properties.rrule?.value?.byDay?.get(0)
     )
 
+/**
+ * Extended method in order to map information about a [Lecture]'s duration
+ * to an [Duration] class.
+ * Every duration information should be with this format: PT03H:00M:00S
+ */
 fun String.toDuration(): Duration? {
     val duration = this.split("PT", "H", "M", "S")
     return Duration(

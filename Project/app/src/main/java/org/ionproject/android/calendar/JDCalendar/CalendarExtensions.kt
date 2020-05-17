@@ -16,7 +16,7 @@ import java.util.*
 val Calendar.year get() = get(Calendar.YEAR)
 
 /** Returns the current month at which this instance is at */
-val Calendar.month get() = get(Calendar.MONTH)
+val Calendar.month get() = get(Calendar.MONTH) + 1
 
 /** Returns the current week at which this instance is at */
 val Calendar.week get() = get(Calendar.WEEK_OF_MONTH)
@@ -28,7 +28,7 @@ val Calendar.day get() = get(Calendar.DAY_OF_MONTH)
 val Calendar.dayOfWeek get() = get(Calendar.DAY_OF_WEEK)
 
 /** Returns the current hour at which this instance is at */
-val Calendar.hour get() = get(Calendar.HOUR)
+val Calendar.hour get() = get(Calendar.HOUR_OF_DAY)
 
 /** Returns the current minute at which this instance is at */
 val Calendar.minute get() = get(Calendar.MINUTE)
