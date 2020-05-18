@@ -6,6 +6,10 @@ import org.ionproject.android.common.model.Events
 
 class EventsListViewModel : ViewModel() {
 
+    /**
+     * List of events that are being shown to the user
+     * This events can be of type [Exam],[Lecture] or [Todo]
+     */
     private val eventsList = mutableListOf<Event>()
 
     val events: List<Event>

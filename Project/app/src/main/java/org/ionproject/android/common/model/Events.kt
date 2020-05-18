@@ -5,21 +5,20 @@ import org.ionproject.android.common.dto.EventProperties
 import org.ionproject.android.common.dto.ICalendarDto
 
 /**
- * This class contains all events that were received from a
- * class section
+ * This class contains all events that were received from a class section
  */
 class Events(
-    var exams: List<Exam> = listOf(),
-    var lectures: List<Lecture> = listOf(),
-    var todos: List<Todo> = listOf(),
-    var journals: List<Journal> = listOf()
+    val exams: List<Exam>,
+    val lectures: List<Lecture>,
+    val todos: List<Todo>,
+    val journals: List<Journal>
 )
 
 fun ICalendarDto.toEventsSummary(): Events {
-    val exams: MutableList<Exam> = mutableListOf()
-    val lectures: MutableList<Lecture> = mutableListOf()
-    val todos: MutableList<Todo> = mutableListOf()
-    val journals: MutableList<Journal> = mutableListOf()
+    val exams = mutableListOf<Exam>()
+    val lectures = mutableListOf<Lecture>()
+    val todos = mutableListOf<Todo>()
+    val journals = mutableListOf<Journal>()
 
     val components: List<EventProperties> = this.properties.subComponents
 

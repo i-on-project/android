@@ -20,6 +20,9 @@ class CalendarViewModel(
     private val classesRepository: ClassesRepository
 ) : ViewModel() {
 
+    /**
+     * Gets all favorites found on local database that have been chosen by the user
+     */
     fun getFavoriteClassesFromCurrentTerm(
         lifecycleOwner: LifecycleOwner,
         onResult: (List<Favorite>) -> Unit
@@ -31,6 +34,9 @@ class CalendarViewModel(
         }
     }
 
+    /**
+     * Gets all events available for all favorites chosen by the user
+     */
     fun getEvents(
         classes: List<Favorite>,
         onResult: (List<Events>) -> Unit

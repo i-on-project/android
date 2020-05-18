@@ -24,6 +24,9 @@ class CalendarFragment : Fragment() {
         )[CalendarViewModel::class.java]
     }
 
+    /**
+     * Obtaining Events List's View Model
+     */
     private val eventsListViewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(
             this,
@@ -31,12 +34,11 @@ class CalendarFragment : Fragment() {
         )[EventsListViewModel::class.java]
     }
 
+    /**
+     * Creates the events list's adapter
+     */
     private val eventsListAdapter by lazy(LazyThreadSafetyMode.NONE) {
         EventsListAdapter(eventsListViewModel)
-    }
-
-    private val jdCalendar: JDCalendar by lazy {
-        jdcalendar_calendar
     }
 
     override fun onCreateView(
@@ -67,13 +69,17 @@ class CalendarFragment : Fragment() {
         eventsList.adapter = eventsListAdapter
     }
 
+    /**
+     * This should initialize the Calendar Adapter with all the events found for all
+     * favorites classes
+     */
     private fun createCalendarWithEvents(events: List<Events>) {
         val calendarAdapter = JDCalendarAdapter(eventsListViewModel, events) {
-            eventsListViewModel.reset()
-            eventsListViewModel.addEvents(it)
-            eventsListAdapter.notifyDataSetChanged()
+            eventsListViewModel.reset() // clear the events that are being shown
+            eventsListViewModel.addEvents(it) // add the new events to be shown
+            eventsListAdapter.notifyDataSetChanged() // notify the eventList's adapter to show the new events
         }
-        jdCalendar.adapter = calendarAdapter
+        jdcalendar_calendar.adapter = calendarAdapter
     }
 
 }

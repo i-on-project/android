@@ -48,6 +48,10 @@ class EventsListAdapter(
             }
         }
 
+        /**
+         * This method should show which week day the [Lecture] starts and his duration
+         * e.g: Week day: Monday  Duration: 11:30h - 13:00h
+         */
         private fun showInfoAboutAnLecture(lecture: Lecture) {
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_week_Day)
             eventExtraResult1.text =
@@ -61,22 +65,17 @@ class EventsListAdapter(
                 val minute = lecture.start.minute
 
                 val duration = lecture.duration
-                var endHour = hour + duration.hours
-                var endMinute = minute + duration.minutes
+                duration.addHours(hour)
+                duration.addMinutes(minute)
 
-                if(endMinute >= 60) {
-                    endHour++
-                    endMinute -= 60
-                }
-
-                if(endHour >= 24) {
-                    endHour -= 24
-                }
-
-                eventExtraResult2.text = "$hour:${minute}h - ${endHour.fillWithZero()}:${endMinute.fillWithZero()}h"
+                eventExtraResult2.text = "$hour:${minute}h - ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
             }
         }
 
+        /**
+         * This method should show which week day the [Exam] start and his end time
+         * e.g: Starts: 22/06/2020 - 14:00h  Ends: 22/06/2020 - 17:00h
+         */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
@@ -104,6 +103,10 @@ class EventsListAdapter(
                 else "??/??:???? - ??:??h"
         }
 
+        /**
+         * This method should show which week day the [Todo]'s delivery date
+         * e.g: Delivery: 15/06/2020 - 23:59h
+         */
         private fun showInfoAboutAnTodo(todo: Todo) {
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
@@ -113,9 +116,10 @@ class EventsListAdapter(
 
             val hour = todo.due?.hour?.fillWithZero()
             val minute = todo.due?.minute?.fillWithZero()
+            val second = todo.due?.second?.fillWithZero()
 
             eventExtraResult1.text =
-                if (todo.due != null) "$day/$month/$year - $hour:${minute}h"
+                if (todo.due != null) "$day/$month/$year - $hour:$minute:${second}h"
                 else "??/??:???? - ??:??h"
         }
     }

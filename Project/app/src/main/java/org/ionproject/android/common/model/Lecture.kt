@@ -1,7 +1,6 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
-import org.ionproject.android.common.dto.ICalendarDto
 import java.util.*
 
 /**
@@ -23,6 +22,9 @@ class Lecture(
     }
 }
 
+/**
+ * Creates an [Lecture] event
+ */
 fun createLecture(properties: ComponentProperties) =
     Lecture(
         uid = properties.uid.value[0],

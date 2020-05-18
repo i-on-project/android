@@ -1,6 +1,7 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,6 +25,9 @@ class Exam(
     }
 }
 
+/**
+ * Creates an [Exam] event
+ */
 fun createExam(properties: ComponentProperties) =
     Exam(
         uid = properties.uid.value[0],
@@ -36,14 +40,26 @@ fun createExam(properties: ComponentProperties) =
         endDate = properties.dtend?.value?.get(0)?.toCalendar()
     )
 
+
 private val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
 
+/**
+ * Extension method in order to parse information about an event's date to a Calendar instance.
+ * Event's date information should be in the following format: "yyyy-MM-ddTHH:mm:ssZ",
+ * so we need a SimpleDateFormat in order to parse this information.
+ * This method should a null if there is an error trying to parse this or any other error.
+ */
 fun String?.toCalendar(): Calendar? {
     if (this.isNullOrEmpty())
         return null
 
     val calendar = Calendar.getInstance()
-    val date = formatter.parse(this)
+    val date: Date?
+    try {
+        date = formatter.parse(this)
+    } catch(ex: ParseException) {
+        return null
+    }
 
     if (date != null) {
         calendar.time = date

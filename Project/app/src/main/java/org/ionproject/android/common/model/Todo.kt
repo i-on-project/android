@@ -4,6 +4,9 @@ import org.ionproject.android.common.dto.ComponentProperties
 import java.net.URI
 import java.util.*
 
+/**
+ * Event to be called as [Todo]
+ */
 class Todo(
     uid: String,
     summary: String?,
@@ -13,11 +16,14 @@ class Todo(
 ) : Event(type, uid, summary, description) {
 
     companion object {
-        val type = "Todo"
-        val color = "#FF8C00"
+        const val type = "Todo"
+        const val color = "#FF8C00"
     }
 }
 
+/**
+ * Creates a [Todo] event
+ */
 fun createTodo(properties: ComponentProperties) =
     Todo(
         uid = properties.uid.value[0],
