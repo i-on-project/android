@@ -6,78 +6,186 @@
     android:layout_height="match_parent"
     tools:context=".class_section.ClassSectionFragment">
 
-    <CheckBox
-        android:id="@+id/checkbox_class_section_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- Top Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_class_section_top_section"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/imageView_favorite"
-        android:button="@drawable/selector_favorite_24dp"
-        app:buttonTint="@android:color/black"
-        />
-
-    <LinearLayout
-        android:id="@+id/linearLayout_class_section_labels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_class_section_favorite">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:padding="@dimen/fragments_padding_20">
 
-        <TextView
-            android:id="@+id/textview_course_details_label_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_course"
-            android:textSize="@dimen/all_text_18" />
-
+        <CheckBox
+            android:id="@+id/checkbox_class_section_favorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:button="@drawable/selector_favorite_24dp"
+            android:contentDescription="@string/imageView_favorite"
+            app:buttonTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <!-- Class Name -->
         <TextView
             android:id="@+id/textview_class_section_class_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_course"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textView_class_section_class"
             android:text="@string/label_class"
-            android:textSize="@dimen/all_text_18" />
-
-        <TextView
-            android:id="@+id/textview_class_section_id_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_id"
-            android:textSize="@dimen/all_text_18" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_class_section_values"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout_class_section_labels"
-        app:layout_constraintStart_toEndOf="@id/linearLayout_class_section_labels"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout_class_section_labels">
-
-        <TextView
-            android:id="@+id/textView_class_section_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_25" />
         <TextView
             android:id="@+id/textView_class_section_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
+            app:layout_constraintStart_toEndOf="@id/textview_class_section_class_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView_class_section_course"
+            android:layout_marginStart="5dp"
+            android:text="LI52D"
+            android:textSize="@dimen/all_text_25"
+            android:textColor="@color/primaryTextColor"
+            />
 
+        <!-- Course Name -->
         <TextView
-            android:id="@+id/textView_class_section_id"
+            android:id="@+id/textview_class_section_label_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/all_text_18"/>
-    </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/textview_class_section_class_label"
+            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_calendar_term"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textView_class_section_course"
+            android:text="@string/label_course"
+            android:textSize="@dimen/all_text_18"
+            android:textColor="@color/primaryTextColor"
+            />
+        <TextView
+            android:id="@+id/textView_class_section_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textview_class_section_label_course"
+            app:layout_constraintTop_toBottomOf="@id/textView_class_section_class"
+            app:layout_constraintBottom_toTopOf="@id/textView_class_section_calendar_term"
+            android:layout_marginStart="5dp"
+            android:text="PG"
+            android:textSize="@dimen/all_text_18"
+            android:textColor="@color/primaryTextColor"
+            />
+
+        <!-- Calendar Term -->
+        <TextView
+            android:id="@+id/textview_class_section_label_calendar_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/label_calendar_termV2"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_class_section_calendar_term"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_class_section_label_course" />
+        <TextView
+            android:id="@+id/textView_class_section_calendar_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="s1819v"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18"
+            app:layout_constraintTop_toBottomOf="@id/textView_class_section_course"
+            app:layout_constraintStart_toEndOf="@id/textView_class_section_calendar_term"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_class_section_bottom_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_class_section_top_section">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_class_section_labels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView_class_section_lectures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_lectures"
+                android:textSize="@dimen/all_text_18" />
+
+            <TextView
+                android:id="@+id/textView_class_section_exams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_exams"
+                android:textSize="@dimen/all_text_18" />
+
+            <TextView
+                android:id="@+id/textView_class_section_Todos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_todo"
+                android:textSize="@dimen/all_text_18" />
+
+            <TextView
+                android:id="@+id/textView_class_section_Journals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_journals"
+                android:textSize="@dimen/all_text_18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_class_section_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@id/linearLayout_class_section_labels"
+            app:layout_constraintStart_toEndOf="@id/linearLayout_class_section_labels">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_class_section_lectures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_item_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_class_section_exams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_item_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_class_section_todos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_item_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_class_section_journals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_item_label" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,32 +1,24 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.ionproject.android.common.db.CourseDao
+import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.model.CourseSummary
+import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.workers.WorkImportance
+import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.course_details.toCourse
-import org.ionproject.android.courses.toCourseSummaryList
-import java.net.URI
 
 /**
  * This type represents a course repository, it should request
  * from the API, and map the result to the app model.
  */
-class CourseRepository(private val ionWebAPI: IIonWebAPI) {
-
-    /**
-     * Performs a get request to the i-on API to obtain all the courses,
-     * and maps from [SirenEntity] to [Course].
-     */
-    /*
-    TODO: Should receive the curricular term and get the courses from that term
-     instead of using a hardcoded URI. This should also go to the DB instead of
-     the WebAPI all the time, so that the app works in offline mode.
-     */
-    suspend fun getAllCourses(): List<CourseSummary> {
-        //TODO This variable is temporary, its here until the read API has curricular terms
-        val uri = URI("/v0/courses")
-        return ionWebAPI.getFromURI(uri).toCourseSummaryList()
-    }
+class CourseRepository(
+    private val ionWebAPI: IIonWebAPI,
+    private val courseDao: CourseDao,
+    private val workerManagerFacade: WorkerManagerFacade
+) {
 
     /**
      * For now this is the received parameter, because for a user to get to
@@ -34,10 +26,23 @@ class CourseRepository(private val ionWebAPI: IIonWebAPI) {
      *
      * @param courseSummary is the summary representation of a course
      */
-    suspend fun getCourseDetails(courseSummary: CourseSummary): Course {
-        return ionWebAPI.getFromURI(
-            courseSummary.detailsUri
-        ).toCourse()
-    }
+    suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
+        withContext(Dispatchers.IO) {
+            var course = courseDao.getCourseById(programmeOffer.id)
 
+            if (course == null) {
+                course =
+                    ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
+                        .toCourse()
+                val workerId = workerManagerFacade.enqueueWorkForCourse(
+                    course,
+                    WorkImportance.IMPORTANT
+                )
+                course.workerId = workerId
+                courseDao.insertCourse(course)
+            } else {
+                workerManagerFacade.resetWorkerJobsByCacheable(course)
+            }
+            course
+        }
 }

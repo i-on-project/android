@@ -1,5 +1,22 @@
 package org.ionproject.android.schedule
 
+
+/**
+ * Helper class used to avoid having intervals hardcoded into the layout.
+ * Represents a moment in time within a day. Only contains hours and minutes.
+ * Example: 23:00.
+ *
+ * Performs time overflowing: 23:00 + 1:30 = 0:30.
+ *
+ * Accepts the following operators:
+ * +, - , >, <, >=, <=, ==
+ *
+ * It can also be iterated like so:
+ * (Moment(8:30) until Moment(23:00) step Moment(0,30)).foreach {
+ *     // Will iterate from 8:30 to 23:00 incrementing 0:30 each iteration
+ * }
+ *
+ */
 class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
 
     override fun toString(): String {
@@ -8,6 +25,11 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
         val stringMinutes = if (minutes > 9) "$minutes" else "0$minutes"
 
         return "$stringHours.$stringMinutes"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        val other = other as Moment
+        return other.hours == hours && other.minutes == minutes
     }
 
     override fun compareTo(other: Moment): Int {

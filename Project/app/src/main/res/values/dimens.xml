@@ -4,5 +4,6 @@
     <dimen name="fragments_padding_20">20dp</dimen>
     <dimen name="all_list_item_padding_20">20dp</dimen>
     <dimen name="all_text_18">18sp</dimen>
+    <dimen name="all_text_25">25sp</dimen>
     <dimen name="fragments_padding_10">10dp</dimen>
 </resources>

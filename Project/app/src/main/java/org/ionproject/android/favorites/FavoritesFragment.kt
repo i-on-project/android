@@ -10,18 +10,18 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import kotlinx.android.synthetic.main.fragment_favorites.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
-/**
- * A simple [Fragment] subclass.
- */
 class FavoritesFragment : Fragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
@@ -51,6 +51,10 @@ class FavoritesFragment : Fragment() {
 
         setupFavoritesListBehaviour(recyclerview_favorites_classes_list)
         setupCalendarTermSpinner(spinner_favorites_calendar_terms)
+
+        view.efab_favorites_add_favorite.setOnClickListener {
+            findNavController().navigate(R.id.action_favorites_to_programmes)
+        }
     }
 
     /**
@@ -64,11 +68,19 @@ class FavoritesFragment : Fragment() {
 
         val favoritesListAdapter = FavoritesListAdapter(viewModel, sharedViewModel)
         favoritesList.adapter = favoritesListAdapter
-
-        val itemTouchHelper = ItemTouchHelper(
-            FavoritesListAdapter.SwipeToDelete(viewModel)
+        favoritesList.addItemDecoration(
+            DividerItemDecoration(
+                this.context,
+                DividerItemDecoration.VERTICAL
+            )
         )
-        itemTouchHelper.attachToRecyclerView(favoritesList)
+
+        context?.apply {
+            val itemTouchHelper = ItemTouchHelper(
+                FavoritesListAdapter.SwipeToDelete(viewModel, this)
+            )
+            itemTouchHelper.attachToRecyclerView(favoritesList)
+        }
 
         viewModel.observeFavorites(viewLifecycleOwner) {
             favoritesListAdapter.notifyDataSetChanged()

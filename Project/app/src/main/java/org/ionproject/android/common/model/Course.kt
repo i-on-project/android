@@ -1,5 +1,7 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.net.URI
 
 /**
@@ -9,19 +11,14 @@ import java.net.URI
  * siren representation which means we don't need to have hard-coded
  * uris.
  */
+@Entity
 data class Course(
+    @PrimaryKey val id: Int,
     val acronym: String,
     val name: String,
     val classesUri: URI?, //This is the URI used to navigate to this course classes
-    val eventsUri: URI? //This is the URI used to navigate to this course events
-)
+    val eventsUri: URI?, //This is the URI used to navigate to this course events
+    val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
-/**
- *
- * This type represents the summary of a [Course] ,
- * which means it does not include all of its details
- */
-data class CourseSummary(
-    val acronym: String,
-    val detailsUri: URI
-)

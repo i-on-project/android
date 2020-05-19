@@ -3,7 +3,7 @@ package org.ionproject.android.favorites
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Favorite
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
 
@@ -15,8 +15,8 @@ class FavoritesViewModel(
     /**
      * Favorites Section
      */
-    private val favoritesLiveData = MediatorLiveData<List<ClassSummary>>()
-    private var favoriteLiveDataSrc: LiveData<List<ClassSummary>>? = null
+    private val favoritesLiveData = MediatorLiveData<List<Favorite>>()
+    private var favoriteLiveDataSrc: LiveData<List<Favorite>>? = null
 
     /**
      * Updates the MediatorLiveData source according to the
@@ -37,8 +37,8 @@ class FavoritesViewModel(
         }
     }
 
-    val favorites: List<ClassSummary> get() = favoritesLiveData.value ?: emptyList()
-    fun observeFavorites(lifecycleOwner: LifecycleOwner, onUpdate: (List<ClassSummary>) -> Unit) {
+    val favorites: List<Favorite> get() = favoritesLiveData.value ?: emptyList()
+    fun observeFavorites(lifecycleOwner: LifecycleOwner, onUpdate: (List<Favorite>) -> Unit) {
         favoritesLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
@@ -61,9 +61,19 @@ class FavoritesViewModel(
      * Removes favorite from local database
      * @param favorite is the favorite to remove
      */
-    fun deleteFavorite(favorite: ClassSummary) {
+    fun deleteFavorite(favorite: Favorite) {
         viewModelScope.launch {
             favoritesRepository.removeFavorite(favorite)
+        }
+    }
+
+    /**
+     * Adds favorite to local database
+     * @param favorite is the favorite to add
+     */
+    fun addFavorite(favorite: Favorite) {
+        viewModelScope.launch {
+            favoritesRepository.addFavorite(favorite)
         }
     }
 }

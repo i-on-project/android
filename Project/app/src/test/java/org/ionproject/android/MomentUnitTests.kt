@@ -35,4 +35,25 @@ class MomentUnitTests {
         val momentsList = start until end step Moment.ThirtyMinutes
         assertEquals(31, momentsList.count())
     }
+    
+    @Test
+    fun equal_isCorrect() {
+        val one = Moment(8,30)
+        val two = Moment(8,30)
+        assert(one == two)
+    }
+
+    @Test
+    fun greaterThan_isCorrect() {
+        val one = Moment(8,0)
+        val two = Moment(7,0)
+        assert(one > two)
+    }
+
+    @Test
+    fun lowerThan_isCorrect() {
+        val one = Moment(7,0)
+        val two = Moment(8,0)
+        assert(one < two)
+    }
 }

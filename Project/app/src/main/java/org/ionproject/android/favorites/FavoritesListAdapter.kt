@@ -1,15 +1,20 @@
 package org.ionproject.android.favorites
 
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.list_item_classes.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Favorite
 
 class FavoritesListAdapter(
     private val model: FavoritesViewModel,
@@ -43,34 +48,92 @@ class FavoritesListAdapter(
 
         private val classItem = view.button_classes_list_item_class
 
-        fun bindTo(favorite: ClassSummary) {
+        fun bindTo(favorite: Favorite) {
             classItem.text = view.resources.getString(
                 R.string.label_favorites_placeholder,
-                favorite.course,
-                favorite.name
+                favorite.courseAcronym,
+                favorite.id
             )
             classItem.setOnClickListener {
-                sharedViewModel.classSummary = favorite
+                sharedViewModel.classSummary = favorite.toClassSummary()
                 view.findNavController().navigate(R.id.action_favorites_to_class_section)
             }
         }
     }
 
     /** Helper class to add swipe action for each item in the recycler view */
-    class SwipeToDelete(private val model: FavoritesViewModel) :
-        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    class SwipeToDelete(private val model: FavoritesViewModel, context: Context) :
+        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+        private val colorDrawableBackground =
+            ContextCompat.getDrawable(context, R.drawable.shape_square_left_round_corners)?.apply {
+                setTint(Color.parseColor("#eb303d")) // TODO Not hardcoded
+            }
+        private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_white_24dp)
 
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val itemView = viewHolder.itemView
             val position = viewHolder.adapterPosition
-            model.deleteFavorite(model.favorites[position])
+            val favorite = model.favorites[position]
+            model.deleteFavorite(favorite)
+            Snackbar.make(
+                itemView,
+                itemView.resources.getText(R.string.label_favorites_delete_message),
+                Snackbar.LENGTH_SHORT
+            ).setAction(
+                itemView.resources.getText(R.string.label_favorite_undo)
+            ) {
+                model.addFavorite(favorite)
+            }.show()
+        }
+
+        /**
+         * Overriding this method to add background and icon, while sliding
+         * the view to the side as recommended here:
+         * https://material.io/design/interaction/gestures.html#types-of-gestures
+         */
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            val itemView = viewHolder.itemView
+
+            if (deleteIcon != null && colorDrawableBackground != null) {
+
+                val iconMarginVertical =
+                    (viewHolder.itemView.height - deleteIcon.intrinsicHeight) / 2
+
+                colorDrawableBackground.setBounds(
+                    itemView.left,
+                    itemView.top,
+                    dX.toInt(),
+                    itemView.bottom
+                )
+                deleteIcon.setBounds(
+                    itemView.left + iconMarginVertical,
+                    itemView.top + iconMarginVertical,
+                    itemView.left + iconMarginVertical + deleteIcon.intrinsicWidth,
+                    itemView.bottom - iconMarginVertical
+                )
+
+                colorDrawableBackground.draw(c)
+                deleteIcon.draw(c)
+            }
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
     }
 }
