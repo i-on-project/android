@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
-import org.ionproject.android.calendar.JDCalendar.JDCalendar
 import org.ionproject.android.calendar.JDCalendar.JDCalendarAdapter
 import org.ionproject.android.common.model.Events
 

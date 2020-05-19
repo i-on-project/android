@@ -15,7 +15,7 @@ class WorkerRepository(private val workerDao: WorkerDao) {
 
     suspend fun resetWorkerJobsById(id: Int) {
         val worker = workerDao.getWorkerById(id)
-        if(worker != null) {
+        if (worker != null) {
             worker.resetNumberOfJobs()
             updateWorker(worker)
         }

@@ -17,7 +17,7 @@ class Duration(
      */
     fun addHours(hours: Int) {
         this.hours += hours
-        if(this.hours >= 24)
+        if (this.hours >= 24)
             this.hours -= 24
     }
 
@@ -29,7 +29,7 @@ class Duration(
      */
     fun addMinutes(minutes: Int) {
         this.minutes += minutes
-        if(this.minutes >= 60) {
+        if (this.minutes >= 60) {
             hours++
             this.minutes -= 60
         }

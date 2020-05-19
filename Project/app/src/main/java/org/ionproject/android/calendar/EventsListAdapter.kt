@@ -68,7 +68,8 @@ class EventsListAdapter(
                 duration.addHours(hour)
                 duration.addMinutes(minute)
 
-                eventExtraResult2.text = "$hour:${minute}h - ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
+                eventExtraResult2.text =
+                    "$hour:${minute}h - ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
             }
         }
 

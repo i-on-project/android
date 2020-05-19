@@ -57,7 +57,7 @@ fun String?.toCalendar(): Calendar? {
     val date: Date?
     try {
         date = formatter.parse(this)
-    } catch(ex: ParseException) {
+    } catch (ex: ParseException) {
         return null
     }
 

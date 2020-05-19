@@ -35,7 +35,7 @@ class CourseDetailsViewModel(
     fun getCourseDetails(programmeOffer: ProgrammeOffer?, onResult: (Course) -> Unit) {
         if (programmeOffer != null)
             viewModelScope.launch {
-                courseRepository.getCourseDetails(programmeOffer)?.let(onResult)
+                courseRepository.getCourseDetails(programmeOffer).let(onResult)
             }
     }
 
