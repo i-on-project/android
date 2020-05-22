@@ -23,7 +23,7 @@ class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepo
     ) {
         if (programmeSummary != null)
             viewModelScope.launch {
-                programmesRepository.getProgrammeDetails(programmeSummary).let(onResult)
+                programmesRepository.getProgrammeDetails(programmeSummary)?.let(onResult)
             }
     }
 
