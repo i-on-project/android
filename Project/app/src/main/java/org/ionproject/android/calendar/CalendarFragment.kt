@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
-import org.ionproject.android.calendar.JDCalendar.JDCalendarAdapter
 import org.ionproject.android.common.model.Events
 
 class CalendarFragment : Fragment() {
@@ -73,7 +72,10 @@ class CalendarFragment : Fragment() {
      * favorites classes
      */
     private fun createCalendarWithEvents(events: List<Events>) {
-        val calendarAdapter = JDCalendarAdapter(eventsListViewModel, events) {
+        val calendarAdapter = IonCalendarAdapter(
+            eventsListViewModel,
+            events
+        ) {
             eventsListViewModel.reset() // clear the events that are being shown
             eventsListViewModel.addEvents(it) // add the new events to be shown
             eventsListAdapter.notifyDataSetChanged() // notify the eventList's adapter to show the new events

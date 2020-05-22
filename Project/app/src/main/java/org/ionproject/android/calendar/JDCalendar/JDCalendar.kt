@@ -1,13 +1,10 @@
-package org.ionproject.android.calendar.JDCalendar
+package org.ionproject.android.calendar.jdcalendar
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GestureDetectorCompat
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
 import org.ionproject.android.R
 
@@ -24,11 +21,13 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
 
     //----------------------------------Public methods-----------------------------------
-
-    var adapter = JDCalendarAdapter()
+    var adapter: CalendarAdapter<*> = JDCalendarAdapter()
         set(value) {
             field = value
-            baseAdapter.setAdapter(value)
+            BaseCalendarAdapter(value).let {
+                baseAdapter = it
+                gridView.adapter = it
+            }
         }
 
 
@@ -46,6 +45,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         ).apply {
 
             try {
+                // Colors
                 topSectionBackgroundColor = getColor(
                     R.styleable.JDCalendar_topSectionBackgroundColor,
                     Color.WHITE
@@ -78,6 +78,8 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
                     R.styleable.JDCalendar_prevButtonColor,
                     Color.BLACK
                 )
+
+                // Dimensions
                 monthTextSize = getDimension(
                     R.styleable.JDCalendar_monthTextSize,
                     30F
@@ -90,6 +92,13 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
                     R.styleable.JDCalendar_weekDaysTextSize,
                     14F
                 )
+
+                // Positions
+                topSectionElevation = getDimension(
+                    R.styleable.JDCalendar_topSectionElevation,
+                    3F
+                )
+
                 /*monthTextStyle = getResourceId(
                     R.styleable.JDCalendar_monthTextStyle,
                     TODO("Default Style")
@@ -128,6 +137,9 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private var yearTextSize: Float? = null
     private var weekDaysTextSize: Float? = null
 
+    // Position
+    private var topSectionElevation: Float? = null
+
     // Styles
     private var monthTextStyle: Int? = null
     private var yearTextStyle: Int? = null
@@ -136,9 +148,8 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     // Constraint layout view components
     private val gridView = gridview_calendar
-    private val topSection = layout_date_display
-    private val calendarHeader = layout_calendar_header
-    private val exportButton = imageview_calendar_export
+    private val topSection = materialcardview_date_display
+    private val calendarHeader = linearlayout_calendar_header
 
     // Public properties
     val nextButton = imageview_calendar_next
@@ -157,10 +168,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
      * Based adapter which is used by the gridview to instantiate the child views.
      * Also holds the calendar instance.
      */
-    private val baseAdapter =
-        BaseCalendarAdapter(
-            adapter
-        )
+    private var baseAdapter: BaseCalendarAdapter<*> = BaseCalendarAdapter(adapter)
 
     /**
      * Applies all custom attributes to its respective view elements
@@ -170,6 +178,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         applyCustomAttributes()
         gridView.adapter = baseAdapter
         updateTopSection() //Setting current month
+
         nextButton.setOnClickListener {
             baseAdapter.advanceMonths(1)
             updateTopSection()
@@ -178,25 +187,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             baseAdapter.advanceMonths(-1)
             updateTopSection()
         }
-
-        val gestor = GestureDetectorCompat(context, object : GestureListener() {
-            override fun onSwipeRight() {
-                baseAdapter.advanceMonths(-1)
-                updateTopSection()
-            }
-
-            override fun onSwipeLeft() {
-                baseAdapter.advanceMonths(1)
-                updateTopSection()
-            }
-        })
-
-        gridView.setOnTouchListener(object : OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                gestor.onTouchEvent(event)
-                return true
-            }
-        })
     }
 
 
@@ -209,6 +199,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private fun applyCustomAttributes() {
         applyColors()
         applySizes()
+        applyPositions()
         //applyStyle()
     }
 
@@ -252,6 +243,11 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
+    private fun applyPositions() {
+        topSectionElevation?.let { topSection.elevation = it }
+    }
+
+
     /**
      * Applies all style custom attributes to its respective views
      * (e.g TextSize)
@@ -267,6 +263,5 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         monthTextView.text = baseAdapter.calendar.getMonthName(context)
         yearTextView.text = "${baseAdapter.calendar.year}"
     }
-
 
 }

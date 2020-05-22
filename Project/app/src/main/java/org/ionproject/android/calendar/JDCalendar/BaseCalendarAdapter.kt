@@ -1,16 +1,18 @@
-package org.ionproject.android.calendar.JDCalendar
+package org.ionproject.android.calendar.jdcalendar
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
  * Adapter used by the [GridView] which should contain the days of a month,
  * uses a [CalendarAdapter] to instantiate the views and bind them to its [Day]
  */
-class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
-    private var calendarAdapter: CalendarAdapter<T>
+class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
+    var calendarAdapter: CalendarAdapter<VH>
 ) : BaseAdapter() {
 
     /**
@@ -32,16 +34,8 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
      * which has been advanced N months
      */
     fun advanceMonths(months: Int) {
-        calendar = calendar.monthsFromNow(months)
-    }
-
-    /**
-     * Updates the adapter an notifies that there has been a
-     * data set change.
-     */
-    fun setAdapter(calendarAdapter: CalendarAdapter<T>) {
-        this.calendarAdapter = calendarAdapter
-        super.notifyDataSetChanged()
+        daysList = calendar.monthsFromNow(months).getDaysOfMonth()
+        this.notifyDataSetChanged()
     }
 
     /**
@@ -51,6 +45,15 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
     init {
         daysList = calendar.getDaysOfMonth()
     }
+
+    /**
+     * Used to update the calendar adapter
+     */
+    fun setAdapter(calendarAdapter: CalendarAdapter<VH>) {
+        this.calendarAdapter = calendarAdapter
+        this.notifyDataSetChanged()
+    }
+
 
     /**
      * Responsible for instantiating the items within the gridview, its
@@ -63,14 +66,14 @@ class BaseCalendarAdapter<T : CalendarAdapter.ViewHolder>(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         if (parent == null)
             throw IllegalArgumentException("Parent is null")
-        var vh: T
+        var vh: VH
         if (convertView != null)
-            vh = convertView.tag as T
+            vh = convertView.tag as VH
         else {
             vh = calendarAdapter.onCreateViewHolder(parent)
             vh.view.tag = vh
         }
-        calendarAdapter.onBindViewHoler(vh, daysList[position], position)
+        calendarAdapter.onBindViewHolder(vh, daysList[position], position)
         return vh.view
     }
 

@@ -1,6 +1,7 @@
-package org.ionproject.android.calendar.JDCalendar
+package org.ionproject.android.calendar.jdcalendar
 
 import android.content.Context
+import android.util.Log
 import org.ionproject.android.R
 import java.util.*
 
@@ -104,6 +105,8 @@ val Calendar.lastDayOfMonth: Int
  * Obtain next month days (e.g 1,2)
  */
 fun Calendar.getDaysOfMonth(): List<Day> {
+
+    Log.println(Log.DEBUG, "Calendar", "getDaysOfMonth() called!")
 
     var movedCalendar = this.firstDayOfMonth()
 

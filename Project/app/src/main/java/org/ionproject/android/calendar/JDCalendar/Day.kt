@@ -1,4 +1,4 @@
-package org.ionproject.android.calendar.JDCalendar
+package org.ionproject.android.calendar.jdcalendar
 
 import java.util.*
 
@@ -6,8 +6,9 @@ import java.util.*
  * Represents a day of a month
  *
  * @property value is the calendar information about that day
- * @property isDayOfCurrMonth returns true if the day is from the current month represented in the calendar
- * @property isToday return true if the day is today
+ * @property isDayOfCurrMonth is true if the day is from the current month represented in the calendar
+ * @property isToday is true if the day is today
+ * @property isAfterToday is true if the day if after today
  */
 data class Day(
     val value: Calendar,
