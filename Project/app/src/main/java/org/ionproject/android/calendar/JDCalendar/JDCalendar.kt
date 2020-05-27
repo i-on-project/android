@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
 import org.ionproject.android.R
+import java.util.*
 
 /**
  * This type represents a calendar and exposes some properties and methods for customization
@@ -25,6 +26,8 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         set(value) {
             field = value
             BaseCalendarAdapter(value).let {
+                // Calendar has to be updated in case user advanced months before adapter is set
+                it.calendar = baseAdapter.calendar
                 baseAdapter = it
                 gridView.adapter = it
             }
@@ -177,15 +180,15 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     init {
         applyCustomAttributes()
         gridView.adapter = baseAdapter
-        updateTopSection() //Setting current month
+        updateTopSection(baseAdapter.calendar) //Setting current month
 
         nextButton.setOnClickListener {
-            baseAdapter.advanceMonths(1)
-            updateTopSection()
+            val calendar = baseAdapter.advanceMonths(1)
+            updateTopSection(calendar)
         }
         prevButton.setOnClickListener {
-            baseAdapter.advanceMonths(-1)
-            updateTopSection()
+            val calendar = baseAdapter.advanceMonths(-1)
+            updateTopSection(calendar)
         }
     }
 
@@ -259,9 +262,9 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     /**
      * Updates the text of month and year of the calendar.
      */
-    private fun updateTopSection() {
-        monthTextView.text = baseAdapter.calendar.getMonthName(context)
-        yearTextView.text = "${baseAdapter.calendar.year}"
+    private fun updateTopSection(calendar: Calendar) {
+        monthTextView.text = calendar.getMonthName(context)
+        yearTextView.text = "${calendar.year}"
     }
 
 }

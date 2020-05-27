@@ -3,8 +3,6 @@ package org.ionproject.android.calendar.jdcalendar
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
@@ -22,7 +20,8 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
     var calendar: Calendar = Calendar.getInstance()
         set(value) {
             field = value
-            notifyDataSetChanged()
+            daysList = calendar.getDaysOfMonth()
+            this.notifyDataSetChanged()
         }
 
     /** Contains all the instances of [Day], one for each day of the current month represented in the [calendar] */
@@ -33,9 +32,10 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
      * updates [calendar] with a new one
      * which has been advanced N months
      */
-    fun advanceMonths(months: Int) {
-        daysList = calendar.monthsFromNow(months).getDaysOfMonth()
-        this.notifyDataSetChanged()
+    fun advanceMonths(months: Int): Calendar {
+        calendar = calendar.monthsFromNow(months)
+        this@BaseCalendarAdapter.notifyDataSetChanged()
+        return calendar
     }
 
     /**
@@ -45,15 +45,6 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
     init {
         daysList = calendar.getDaysOfMonth()
     }
-
-    /**
-     * Used to update the calendar adapter
-     */
-    fun setAdapter(calendarAdapter: CalendarAdapter<VH>) {
-        this.calendarAdapter = calendarAdapter
-        this.notifyDataSetChanged()
-    }
-
 
     /**
      * Responsible for instantiating the items within the gridview, its
@@ -75,16 +66,6 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
         }
         calendarAdapter.onBindViewHolder(vh, daysList[position], position)
         return vh.view
-    }
-
-    /**
-     * Should be called when the calendar instance is updated, so that
-     * the gridview updates its child views with the new days from the
-     * new calendar instance.
-     */
-    override fun notifyDataSetChanged() {
-        daysList = calendar.getDaysOfMonth()
-        super.notifyDataSetChanged()
     }
 
     /** Returns a [Day] from the [daysList] at the position */
