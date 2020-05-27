@@ -34,6 +34,14 @@ class Duration(
             this.minutes -= 60
         }
     }
+
+    fun copy(): Duration {
+        val hours = this.hours
+        val minutes = this.minutes
+        val seconds = this.seconds
+
+        return Duration(hours, minutes, seconds)
+    }
 }
 
 /**

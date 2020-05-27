@@ -64,12 +64,13 @@ class EventsListAdapter(
                 val hour = lecture.start.hour
                 val minute = lecture.start.minute
 
-                val duration = lecture.duration
+                val duration = lecture.duration.copy()
                 duration.addHours(hour)
                 duration.addMinutes(minute)
 
                 eventExtraResult2.text =
-                    "$hour:${minute}h - ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
+                    "${hour.fillWithZero()}:${minute.fillWithZero()}h -" +
+                            " ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
             }
         }
 
