@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_favorites.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.dto.HrefTemplateResource
+import org.ionproject.android.common.dto.ResourceType
 import org.ionproject.android.common.model.CalendarTerm
 
 class FavoritesFragment : Fragment() {
@@ -93,6 +95,13 @@ class FavoritesFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner) {
+        sharedViewModel.observeJsonHomeLiveData(viewLifecycleOwner) {
+            val iresource = it.getResourceByType(ResourceType.CALENDAR_TERM)
+            if (iresource != null) {
+                val calendarTermsResource = iresource as HrefTemplateResource
+
+            }
+        }
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item
         )

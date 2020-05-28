@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.common.repositories.ProgrammesRepository
+import java.net.URI
 
 class ProgrammesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
 
@@ -11,9 +12,9 @@ class ProgrammesViewModel(private val programmesRepository: ProgrammesRepository
 
     private val programmesLiveData = MutableLiveData<List<ProgrammeSummary>>()
 
-    init {
+    fun getAllProgrammes(programmesUri: URI) {
         viewModelScope.launch {
-            val programmes = programmesRepository.getAllProgrammes()
+            val programmes = programmesRepository.getAllProgrammes(programmesUri)
             programmesLiveData.postValue(programmes)
         }
     }

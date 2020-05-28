@@ -16,8 +16,6 @@ import org.ionproject.android.programmes.toProgrammeOffer
 import org.ionproject.android.programmes.toProgrammeSummaryList
 import java.net.URI
 
-private const val PROGRAMMES_ROOT_URI = "/v0/programmes"
-
 class ProgrammesRepository(
     private val ionWebAPI: IIonWebAPI,
     private val programmeDao: ProgrammeDao,
@@ -29,14 +27,13 @@ class ProgrammesRepository(
      * Performs a get request to the i-on API to obtain all the programmes,
      * and maps from [SirenEntity] to [List<ProgrammeSummary>].
      */
-    suspend fun getAllProgrammes() =
+    suspend fun getAllProgrammes(programmesUri: URI) =
         withContext(Dispatchers.IO) {
             var programmes = programmeDao.getAllProgrammeSummaries()
 
             if (programmes.count() == 0) {
-                val uri = URI(PROGRAMMES_ROOT_URI)
-                programmes =
-                    ionWebAPI.getFromURI(uri, SirenEntity::class.java).toProgrammeSummaryList()
+                programmes = ionWebAPI.getFromURI(programmesUri, SirenEntity::class.java)
+                    .toProgrammeSummaryList()
                 val workerId = workerManagerFacade.enqueueWorkForAllProgrammeSummaries(
                     WorkImportance.NOT_IMPORTANT
                 )

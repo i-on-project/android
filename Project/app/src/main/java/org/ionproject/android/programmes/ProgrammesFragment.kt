@@ -14,6 +14,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.dto.HrefTemplateResource
+import org.ionproject.android.common.dto.ResourceType
 
 class ProgrammesFragment : Fragment() {
 
@@ -39,6 +41,16 @@ class ProgrammesFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, ProgrammesViewModelProvider())[ProgrammesViewModel::class.java]
 
+        // Get programmes resource, if it exists get all programmes
+        sharedViewModel.observeJsonHomeLiveData(viewLifecycleOwner) {
+            val iresource = it.getResourceByType(ResourceType.PROGRAMMES)
+            if (iresource != null) {
+                val programmesResource = iresource as HrefTemplateResource
+                val uri = programmesResource.hrefTemplate.uri
+                viewModel.getAllProgrammes(uri)
+            }
+        }
+
         //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
         recyclerview_programmes_list.adapter = adapter
@@ -50,6 +62,7 @@ class ProgrammesFragment : Fragment() {
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
+
     }
 
 }

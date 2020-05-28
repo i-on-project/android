@@ -18,7 +18,8 @@ data class JsonHome(
     val resources: HashMap<String, IResource>
 ) {
 
-    fun getResourceByType(resourceType: ResourceType): IResource? = resources[resourceType.correctName]
+    fun getResourceByType(resourceType: ResourceType): IResource? =
+        resources[resourceType.correctName]
 }
 
 /**
@@ -35,6 +36,7 @@ enum class ResourceType {
     CALENDAR_TERM {
         override val correctName: String = "calendar-term"
     };
+
     abstract val correctName: String
 }
 

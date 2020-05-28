@@ -49,6 +49,8 @@ class FavoritesViewModel(
         val calendarTerms = calendarTermRepository.getAllCalendarTerm()
         emit(calendarTerms)
     }
+
+
     val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
     fun observeCalendarTerms(
         lifecycleOwner: LifecycleOwner,
