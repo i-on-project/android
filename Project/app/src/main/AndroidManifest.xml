@@ -4,7 +4,7 @@
     package="org.ionproject.android">
 
     <application
-        android:name="org.ionproject.android.common.IonApplication"
+        android:name=".common.IonApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,27 +12,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.ionproject.android.MainActivity"
-            android:label="@string/app_name"
+            android:name=".loading.LoadingActivity"
             android:screenOrientation="userPortrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- This enables the search widget -->
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
         </activity>
-
-        <!-- Content Provider for custom search suggestions -->
+        <activity
+            android:name=".error.ErrorActivity"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <!-- This enables the search widget -->
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity> <!-- Content Provider for custom search suggestions -->
         <provider
-            android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
             android:name=".search.SearchCustomSuggestionsProvider"
-            android:readPermission="true">
-        </provider>
-
+            android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
+            android:readPermission="true" />
     </application>
 
 </manifest>

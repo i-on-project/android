@@ -1,14 +1,14 @@
-package org.ionproject.android
+package org.ionproject.android.loading
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ionproject.android.common.IonApplication
 
-class SharedViewModelProvider : ViewModelProvider.Factory {
+class LoadingViewModelProvider : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            SharedViewModel::class.java -> SharedViewModel()
+            LoadingViewModel::class.java -> LoadingViewModel(IonApplication.rootRepository)
             else -> throw IllegalArgumentException("Class $modelClass is not valid for this provider")
         } as T
     }

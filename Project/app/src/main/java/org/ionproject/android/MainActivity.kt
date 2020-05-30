@@ -17,6 +17,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.ROOT_KEY
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,9 +46,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupTopBarBehaviour()
-        setupBottomBarBehaviour()
-        setupBackButton()
+        val root = intent.getParcelableExtra<Root>(ROOT_KEY)
+        if (root != null) {
+            sharedViewModel.root = root
+            setupTopBarBehaviour()
+            setupBottomBarBehaviour()
+            setupBackButton()
+        } else {
+            throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
+        }
     }
 
     /**

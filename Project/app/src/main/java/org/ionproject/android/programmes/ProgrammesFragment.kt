@@ -14,8 +14,6 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
-import org.ionproject.android.common.dto.HrefTemplateResource
-import org.ionproject.android.common.dto.ResourceType
 
 class ProgrammesFragment : Fragment() {
 
@@ -41,15 +39,8 @@ class ProgrammesFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, ProgrammesViewModelProvider())[ProgrammesViewModel::class.java]
 
-        // Get programmes resource, if it exists get all programmes
-        sharedViewModel.observeJsonHomeLiveData(viewLifecycleOwner) {
-            val iresource = it.getResourceByType(ResourceType.PROGRAMMES)
-            if (iresource != null) {
-                val programmesResource = iresource as HrefTemplateResource
-                val uri = programmesResource.hrefTemplate.uri
-                viewModel.getAllProgrammes(uri)
-            }
-        }
+        // Get all programmes
+        viewModel.getAllProgrammes(sharedViewModel.root.programmesUri)
 
         //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)

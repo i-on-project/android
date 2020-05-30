@@ -36,13 +36,6 @@ class CourseDetailsFragment : Fragment() {
             .of(this, CoursesDetailsViewModelProvider())[CourseDetailsViewModel::class.java]
     }
 
-    /**
-     * Classes List's Adapter
-     */
-    private val classesListAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        ClassesListAdapter(viewModel, sharedViewModel)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -103,6 +96,9 @@ class CourseDetailsFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
+
+        viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
+
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item
         )

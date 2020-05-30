@@ -1,12 +1,10 @@
 package org.ionproject.android
 
-import androidx.lifecycle.*
-import kotlinx.coroutines.launch
-import org.ionproject.android.common.dto.JsonHome
-import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.common.model.ProgrammeOffer
-import org.ionproject.android.common.model.ProgrammeOfferSummary
-import org.ionproject.android.common.model.ProgrammeSummary
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import org.ionproject.android.common.model.*
 import org.ionproject.android.common.repositories.RootRepository
 
 /**
@@ -14,7 +12,7 @@ import org.ionproject.android.common.repositories.RootRepository
  * the other approach is to use arguments, but that approach is not recommended by the android
  * docs if you are sharing objects.
  */
-class SharedViewModel(rootRepository: RootRepository) : ViewModel() {
+class SharedViewModel : ViewModel() {
 
     // Search text used to pass data from search bar to searchResultFragment
     private val searchText = MutableLiveData<String>()
@@ -26,25 +24,10 @@ class SharedViewModel(rootRepository: RootRepository) : ViewModel() {
         searchText.postValue(searchQuery)
     }
 
-
-    // --------------- JSON HOME -----------------------
-    private val jsonHomeLiveData = MutableLiveData<JsonHome>()
-
-    init {
-        viewModelScope.launch {
-            val jsonHome = rootRepository.getJsonHome()
-            jsonHomeLiveData.postValue(jsonHome)
-        }
-    }
-
-    fun observeJsonHomeLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (JsonHome) -> Unit) {
-        jsonHomeLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
-    }
-
     /**
-     * [JsonHome] used check for the existence of resources
+     * [Root] used check for the existence of resources
      */
-    val jsonHome: JsonHome? get() = jsonHomeLiveData.value
+    lateinit var root: Root
 
 
     /**

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import org.ionproject.android.common.model.Root
 import java.net.URI
 
 
@@ -17,9 +18,22 @@ data class JsonHome(
     val api: Api,
     val resources: HashMap<String, IResource>
 ) {
-
     fun getResourceByType(resourceType: ResourceType): IResource? =
         resources[resourceType.correctName]
+
+    fun toRoot(): Root? {
+        val iresourceProgrammes = getResourceByType(ResourceType.PROGRAMMES)
+        val iresourceCalendarTerm = getResourceByType(ResourceType.CALENDAR_TERM)
+        if (iresourceProgrammes != null && iresourceCalendarTerm != null) {
+            val programmesResource = iresourceProgrammes as HrefTemplateResource
+            val calendarTermsResource = iresourceCalendarTerm as HrefTemplateResource
+            return Root(
+                programmesResource.hrefTemplate.uri,
+                calendarTermsResource.hrefTemplate.uri
+            )
+        }
+        return null
+    }
 }
 
 /**
@@ -34,7 +48,7 @@ enum class ResourceType {
         override val correctName: String = "courses"
     },
     CALENDAR_TERM {
-        override val correctName: String = "calendar-term"
+        override val correctName: String = "calendar-terms"
     };
 
     abstract val correctName: String

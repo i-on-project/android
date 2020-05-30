@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
-import org.ionproject.android.common.dto.ResourceType
 
 class HomeFragment : Fragment() {
 
@@ -47,21 +46,9 @@ class HomeFragment : Fragment() {
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
 
-        // Hide programmes button until we are sure json home has the programmes resource
-        button_home_programmes.visibility = View.GONE
-        sharedViewModel.observeJsonHomeLiveData(this) { jsonHome ->
-
-            // Only add programmes button if Json Home contains that resource
-            if (jsonHome.getResourceByType(ResourceType.PROGRAMMES) != null) {
-                button_home_programmes.visibility = View.VISIBLE
-                // programmes
-                button_home_programmes.setOnClickListener {
-                    navController.navigate(R.id.action_home_to_programmes)
-                }
-            } else {
-                button_home_programmes.visibility = View.GONE
-            }
-
+        // Programmes button
+        button_home_programmes.setOnClickListener {
+            navController.navigate(R.id.action_home_to_programmes)
         }
 
         // Calendar button

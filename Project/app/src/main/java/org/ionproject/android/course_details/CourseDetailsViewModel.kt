@@ -9,6 +9,7 @@ import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
+import java.net.URI
 
 class CourseDetailsViewModel(
     private val courseRepository: CourseRepository,
@@ -56,10 +57,15 @@ class CourseDetailsViewModel(
     /**
      * Calendar terms Section
      */
-    private val calendarTermsLiveData = liveData {
-        val calendarTerms = calendarTermRepository.getAllCalendarTerm()
-        emit(calendarTerms)
+    private val calendarTermsLiveData = MutableLiveData<List<CalendarTerm>>()
+
+    fun getAllCalendarTerms(calendarTermsUri: URI) {
+        viewModelScope.launch {
+            val calendarTerms = calendarTermRepository.getAllCalendarTerm(calendarTermsUri)
+            calendarTermsLiveData.postValue(calendarTerms)
+        }
     }
+
     val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
 
     fun observeCalendarTerms(

@@ -52,4 +52,6 @@
     <string name="label_curricular_term_placeholder">%1$s Term</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_outdated_app">Application seems to be outdated :(</string>
+    <string name="loading_i_on">Loading i-on</string>
 </resources>
