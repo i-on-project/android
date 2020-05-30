@@ -125,3 +125,5 @@ fun View.addSwipeUpGesture(
         }
     })
 }
+
+

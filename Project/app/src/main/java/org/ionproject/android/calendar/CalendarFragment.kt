@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,18 +51,25 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupEventsListAdapter()
+        setupEventsList()
+
+        // Hide calendar, show progress bar
+        val viewGroup = jdcalendar_calendar.parent as ViewGroup
+        val progressBar = ProgressBar(context).apply { isIndeterminate = true }
+        viewGroup.replaceView(jdcalendar_calendar, progressBar)
 
         calendarViewModel.apply {
             getFavoriteClassesFromCurrentTerm(this@CalendarFragment) { favorites ->
                 getEvents(favorites) { events ->
+                    // replace progress bar with calendar
+                    viewGroup.replaceView(progressBar, jdcalendar_calendar)
                     createCalendarWithEvents(events)
                 }
             }
         }
     }
 
-    private fun setupEventsListAdapter() {
+    private fun setupEventsList() {
         val eventsList = recyclerView_calendar_events_list
         eventsList.layoutManager = LinearLayoutManager(context)
         eventsList.adapter = eventsListAdapter
