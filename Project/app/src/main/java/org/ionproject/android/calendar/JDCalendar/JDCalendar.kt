@@ -4,10 +4,15 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.ionproject.android.R
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * This type represents a calendar and exposes some properties and methods for customization
@@ -18,8 +23,8 @@ import java.util.*
  * 3ª - second init block applies custom attributes and behaviour to the views
  * that have now been instantiated
  */
-class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
-
+class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),
+    CoroutineScope {
 
     //----------------------------------Public methods-----------------------------------
     var adapter: CalendarAdapter<*> = JDCalendarAdapter()
@@ -96,12 +101,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
                     14F
                 )
 
-                // Positions
-                topSectionElevation = getDimension(
-                    R.styleable.JDCalendar_topSectionElevation,
-                    3F
-                )
-
                 /*monthTextStyle = getResourceId(
                     R.styleable.JDCalendar_monthTextStyle,
                     TODO("Default Style")
@@ -151,7 +150,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     // Constraint layout view components
     private val gridView = gridview_calendar
-    private val topSection = materialcardview_date_display
+    private val topSection = constraintlayout_calendar_top_section
     private val calendarHeader = linearlayout_calendar_header
 
     // Public properties
@@ -183,12 +182,16 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         updateTopSection(baseAdapter.calendar) //Setting current month
 
         nextButton.setOnClickListener {
-            val calendar = baseAdapter.advanceMonths(1)
-            updateTopSection(calendar)
+            launchedCoroutines.add(launch {
+                val calendar = baseAdapter.advanceMonths(1)
+                updateTopSection(calendar)
+            })
         }
         prevButton.setOnClickListener {
-            val calendar = baseAdapter.advanceMonths(-1)
-            updateTopSection(calendar)
+            launchedCoroutines.add(launch {
+                val calendar = baseAdapter.advanceMonths(-1)
+                updateTopSection(calendar)
+            })
         }
     }
 
@@ -202,7 +205,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private fun applyCustomAttributes() {
         applyColors()
         applySizes()
-        applyPositions()
         //applyStyle()
     }
 
@@ -246,10 +248,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
-    private fun applyPositions() {
-        topSectionElevation?.let { topSection.elevation = it }
-    }
-
 
     /**
      * Applies all style custom attributes to its respective views
@@ -267,4 +265,21 @@ class JDCalendar(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         yearTextView.text = "${calendar.year}"
     }
 
+    private val launchedCoroutines = mutableListOf<Job>()
+
+    /**
+     * Goes through all created coroutines and cancels the ones which
+    are active.
+
+    MUST be called
+     */
+    fun destroy() {
+        launchedCoroutines.forEach {
+            if (it.isActive)
+                it.cancel()
+        }
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
 }

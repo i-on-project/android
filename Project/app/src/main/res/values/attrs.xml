@@ -27,8 +27,5 @@
         <!-- Button Colors -->
         <attr name="nextButtonColor" format="color"/>
         <attr name="prevButtonColor" format="color"/>
-
-        <!-- Elevation -->
-        <attr name="topSectionElevation" format="dimension"/>
     </declare-styleable>
 </resources>

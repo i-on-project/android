@@ -3,6 +3,8 @@ package org.ionproject.android.calendar.jdcalendar
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
@@ -20,7 +22,6 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
     var calendar: Calendar = Calendar.getInstance()
         set(value) {
             field = value
-            daysList = calendar.getDaysOfMonth()
             this.notifyDataSetChanged()
         }
 
@@ -32,10 +33,25 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
      * updates [calendar] with a new one
      * which has been advanced N months
      */
-    fun advanceMonths(months: Int): Calendar {
-        calendar = calendar.monthsFromNow(months)
-        this@BaseCalendarAdapter.notifyDataSetChanged()
-        return calendar
+    suspend fun advanceMonths(months: Int): Calendar {
+        val newCalendar = withContext(Dispatchers.Default) {
+            val newCalendar = calendar.monthsFromNow(months)
+            val newDaysList = newCalendar.getDaysOfMonth()
+            withContext(Dispatchers.Main) {
+                daysList = newDaysList
+                calendar = newCalendar
+            }
+            newCalendar
+        }
+        return newCalendar
+    }
+
+    fun advanceMonthsNotOptimized(months: Int): Calendar {
+        val newCalendar = calendar.monthsFromNow(months)
+        val newDaysList = newCalendar.getDaysOfMonth()
+        daysList = newDaysList
+        calendar = newCalendar
+        return newCalendar
     }
 
     /**

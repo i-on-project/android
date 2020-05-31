@@ -8,77 +8,70 @@
     android:orientation="vertical">
 
     <!-- Top Section Month Year and Buttons-->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialcardview_date_display"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_calendar_top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="3dp">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageview_calendar_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_left_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Date display month and year-->
+        <LinearLayout
+            android:id="@+id/linearlayout_date_display"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="8dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageview_calendar_next"
+            app:layout_constraintStart_toEndOf="@id/imageview_calendar_prev"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageview_calendar_prev"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_left_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Date display month and year-->
-            <LinearLayout
-                android:id="@+id/linearlayout_date_display"
+            <TextView
+                android:id="@+id/textview_date_display_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/imageview_calendar_next"
-                app:layout_constraintStart_toEndOf="@id/imageview_calendar_prev"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginEnd="10dp"
+                android:text="April"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:textColor="#222222"
+                android:textSize="30sp"
+                android:textStyle="normal" />
 
-                <TextView
-                    android:id="@+id/textview_date_display_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:text="April"
-                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                    android:textColor="#222222"
-                    android:textSize="30sp"
-                    android:textStyle="normal"/>
+            <TextView
+                android:id="@+id/textview_date_display_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:textColor="#222222"
+                android:textSize="30sp"
+                android:textStyle="normal" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textview_date_display_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020"
-                    android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                    android:textColor="#222222"
-                    android:textSize="30sp"
-                    android:textStyle="normal"/>
-            </LinearLayout>
+        <ImageView
+            android:id="@+id/imageview_calendar_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_right_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageview_calendar_next"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_right_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Days of the week -->
     <LinearLayout

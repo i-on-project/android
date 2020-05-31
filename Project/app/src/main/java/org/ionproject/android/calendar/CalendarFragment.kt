@@ -91,4 +91,9 @@ class CalendarFragment : Fragment() {
         jdcalendar_calendar.adapter = calendarAdapter
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        jdcalendar_calendar.destroy()
+    }
+
 }
