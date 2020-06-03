@@ -1,5 +1,6 @@
 package org.ionproject.android.common.ionwebapi
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -16,7 +17,10 @@ private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
 private const val ROOT_PATH =
     "/v0" //TODO We should consider using "/" instead to support the most recent version
 
-class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
+class MockIonWebAPI(
+    private val ionMapper: IIonMapper,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : IIonWebAPI {
 
     override suspend fun <T> getFromURI(uri: URI, klass: Class<T>): T {
         val responseBody: String = get(uri)
@@ -29,7 +33,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
      *  reading from or writing to files, and running any network operations.
      */
     private suspend fun get(uri: URI): String =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             //Chaos filter which simulates request delay, from 50ms to 500ms
             val randomdelay = Random.nextLong(50, 500)
             delay(randomdelay)

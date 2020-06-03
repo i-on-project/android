@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.class_section.toClassSection
@@ -19,11 +20,12 @@ class ClassesRepository(
     private val ionWebAPI: IIonWebAPI,
     private val classSectionDao: ClassSectionDao,
     private val classSummaryDao: ClassSummaryDao,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun getClassSection(classSummary: ClassSummary) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             var classSection = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
                 classSummary.id,
                 classSummary.courseAcronym,
@@ -54,7 +56,7 @@ class ClassesRepository(
     suspend fun getClassesFromCourse(
         course: Course,
         calendarTerm: CalendarTerm
-    ) = withContext(Dispatchers.IO) {
+    ) = withContext(dispatcher) {
         var classes = classSummaryDao.getClassSummariesByCourseAndCalendarTerm(
             course.acronym,
             calendarTerm.name

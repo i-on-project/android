@@ -3,10 +3,11 @@ package org.ionproject.android.common.ionwebapi
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class JacksonIonMapper : IIonMapper {
+class JacksonIonMapper(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : IIonMapper {
 
     private val mapper = ObjectMapper().registerKotlinModule()
 
@@ -17,7 +18,7 @@ class JacksonIonMapper : IIonMapper {
      * @param responseBody is the i-on Web API response body
      */
     override suspend fun <T> parse(responseBody: String, klass: Class<T>): T =
-        withContext(Dispatchers.Default) {
+        withContext(dispatcher) {
             val reader = mapper.readerFor(klass)
             reader
                 .with(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)

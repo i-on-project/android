@@ -1,6 +1,7 @@
 package org.ionproject.android.common.repositories
 
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
@@ -15,7 +16,7 @@ import org.ionproject.android.common.model.Favorite
  * All methods run the coroutines with the [Dispatchers.IO]
  * which is optimized to perform disk or network I/O outside of the main thread.
  */
-class FavoriteRepository(private val favoriteDao: FavoriteDao) {
+class FavoriteRepository(private val favoriteDao: FavoriteDao, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
     /**
      * Adds a favorite to the local database
@@ -23,7 +24,7 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      * @param classSummary is the class to add to favorites
      */
     suspend fun addClassToFavorites(classSummary: ClassSummary) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             favoriteDao.insertFavorite(
                 Favorite(
                     classSummary.id,
@@ -42,12 +43,12 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      * @param favorite is the favorite to remove
      */
     suspend fun removeFavorite(favorite: Favorite) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             favoriteDao.deleteFavorite(favorite)
         }
 
     suspend fun removeClassFromFavorites(classSummary: ClassSummary) {
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             favoriteDao.deleteFavorite(
                 Favorite(
                     classSummary.id,
@@ -92,7 +93,7 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
      * @param favorite is the class to add to favorites
      */
     suspend fun addFavorite(favorite: Favorite) {
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             favoriteDao.insertFavorite(favorite)
         }
     }

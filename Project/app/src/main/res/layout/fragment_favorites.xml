@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/fragments_padding_10"
     tools:context=".favorites.FavoritesFragment"
+    android:id="@+id/fragment_favorites"
     >
 
     <!-- Top section -->
