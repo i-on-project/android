@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".programmes.ProgrammesFragment"
     android:padding="@dimen/fragments_padding_10"
+    android:id="@+id/fragment_programmes"
     >
 
     <androidx.recyclerview.widget.RecyclerView
