@@ -16,7 +16,10 @@ import org.ionproject.android.common.model.Favorite
  * All methods run the coroutines with the [Dispatchers.IO]
  * which is optimized to perform disk or network I/O outside of the main thread.
  */
-class FavoriteRepository(private val favoriteDao: FavoriteDao, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+class FavoriteRepository(
+    private val favoriteDao: FavoriteDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     /**
      * Adds a favorite to the local database

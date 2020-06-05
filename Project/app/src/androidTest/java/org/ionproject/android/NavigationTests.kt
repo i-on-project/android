@@ -1,20 +1,14 @@
 package org.ionproject.android
 
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.Matcher
 import org.ionproject.android.course_details.ClassesListAdapter
 import org.ionproject.android.courses.CoursesListAdapter
 import org.ionproject.android.programmeDetails.TermsListAdapter
@@ -22,7 +16,6 @@ import org.ionproject.android.programmes.ProgrammesListAdapter
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.CompletableFuture
 
 
 /**
@@ -105,49 +98,4 @@ class NavigationTests {
     }
 }
 
-class AdapterObserver(val onUpdate: () -> Unit) : RecyclerView.AdapterDataObserver() {
 
-    override fun onChanged() {
-        super.onChanged()
-        this.onUpdate()
-    }
-
-}
-
-fun ViewInteraction.waitForData(): ViewInteraction {
-    val completableFuture = CompletableFuture<Boolean>()
-    this.perform(waitForData {
-        completableFuture.complete(true)
-    })
-    completableFuture.join()
-    return this
-}
-
-
-class waitForData(private val onUpdate: () -> Unit) : ViewAction {
-
-    override fun getDescription(): String? {
-        return null
-    }
-
-    override fun getConstraints(): Matcher<View> =
-        allOf(isAssignableFrom(RecyclerView::class.java))
-
-
-    override fun perform(uiController: UiController, view: View) {
-
-        val adapter = (view as RecyclerView).adapter
-        if (adapter != null) {
-            if (adapter.itemCount > 0) {
-                onUpdate()
-            } else {
-                adapter.registerAdapterDataObserver(
-                    AdapterObserver {
-                        onUpdate()
-                    })
-            }
-        }
-
-    }
-
-}

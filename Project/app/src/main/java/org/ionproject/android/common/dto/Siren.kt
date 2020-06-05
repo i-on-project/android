@@ -50,7 +50,7 @@ data class SirenLink(
 data class SirenAction(
     val name: String,
     val summary: String? = null,
-    val href: URI,
+    val href: String,
     val title: String? = null,
     val clazz: List<String>? = null,
     val method: HttpMethod? = null,
