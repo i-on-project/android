@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.R
@@ -71,6 +72,7 @@ class CalendarFragment : Fragment() {
 
     private fun setupEventsList() {
         val eventsList = recyclerView_calendar_events_list
+        eventsList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         eventsList.layoutManager = LinearLayoutManager(context)
         eventsList.adapter = eventsListAdapter
     }

@@ -30,18 +30,19 @@ class EventsListAdapter(
     class EventsListViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         private val eventType = view.textView_list_event_type
         private val eventSummary = view.textView_list_event_summary
-        private val eventDescription = view.textView_list_event_description
         private val eventExtraLabel1 = view.textView_list_event_extra_label1
         private val eventExtraLabel2 = view.textView_list_event_extra_label2
         private val eventExtraResult1 = view.textView_list_event_extra_result1
         private val eventExtraResult2 = view.textView_list_event_extra_result2
         private val eventColor = view.imageview_list_item_event_color
+        private val eventExportButton = view.button_list_item_event_export
 
 
         fun bindTo(event: Event) {
             eventType.text = event.eventType
             eventSummary.text = event.summary
-            eventDescription.text = event.description
+
+            clearTextFromExtras()
 
             when (event) {
                 is Lecture -> showInfoAboutAnLecture(event)
@@ -56,13 +57,9 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnLecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_week_Day)
-            eventExtraResult1.text =
-                if (lecture.weekDay != null) WeekDay.valueOf(lecture.weekDay).extended
-                else "Unknown"
 
             if (lecture.start != null && lecture.duration != null) {
-                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_duration)
+                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
 
                 val hour = lecture.start.hour
                 val minute = lecture.start.minute
@@ -71,9 +68,13 @@ class EventsListAdapter(
                 duration.addHours(hour)
                 duration.addMinutes(minute)
 
-                eventExtraResult2.text =
+                eventExtraResult1.text =
                     "${hour.fillWithZero()}:${minute.fillWithZero()}h -" +
                             " ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
+            }
+
+            eventExportButton.setOnClickListener {
+                lecture.export(it.context)
             }
         }
 
@@ -107,6 +108,9 @@ class EventsListAdapter(
             eventExtraResult2.text =
                 if (exam.endDate != null) "$day/$month/$year - $hour:${minute}h"
                 else "??/??:???? - ??:??h"
+            eventExportButton.setOnClickListener {
+                exam.export(it.context)
+            }
         }
 
         /**
@@ -128,6 +132,16 @@ class EventsListAdapter(
             eventExtraResult1.text =
                 if (todo.due != null) "$day/$month/$year - $hour:$minute:${second}h"
                 else "??/??:???? - ??:??h"
+            eventExportButton.setOnClickListener {
+                todo.export(it.context)
+            }
+        }
+
+        private fun clearTextFromExtras() {
+            eventExtraLabel1.text = ""
+            eventExtraResult1.text = ""
+            eventExtraLabel2.text = ""
+            eventExtraResult2.text = ""
         }
     }
 }

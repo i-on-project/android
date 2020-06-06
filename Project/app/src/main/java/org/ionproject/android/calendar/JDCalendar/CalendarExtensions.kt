@@ -138,6 +138,21 @@ fun Calendar.getDaysOfMonth(): List<Day> {
     }
 }
 
+/** Returns the number of time the current week day occurs until endDate */
+fun Calendar.weekDaysUntil(endDate: Calendar): Int {
+    var count = 0
+    val curr = Calendar.getInstance()
+    if (curr.dayOfWeek != this.dayOfWeek) {
+        curr.add(Calendar.WEEK_OF_MONTH, 1)
+        curr.set(Calendar.DAY_OF_WEEK, this.dayOfWeek)
+    }
+    while (curr.before(endDate)) {
+        ++count
+        curr.add(Calendar.WEEK_OF_MONTH, 1)
+    }
+    return count
+}
+
 /** Return the name of the month at which this instance is at */
 fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
 

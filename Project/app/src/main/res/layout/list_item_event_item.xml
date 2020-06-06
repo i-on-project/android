@@ -1,70 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="@dimen/all_list_item_padding_20">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="@dimen/all_list_item_padding_20">
 
-        <TextView
-            android:id="@+id/textView_list_event_type"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Type" />
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView_list_event_summary"
+            <TextView
+                android:id="@+id/textView_list_event_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Type"
+                android:textSize="@dimen/all_text_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_list_event_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Summary" />
+
+            <TextView
+                android:id="@+id/textView_list_event_extra_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_list_event_extra_result1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+
+            <TextView
+                android:id="@+id/textView_list_event_extra_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_list_event_extra_result2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageview_list_item_event_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Summary" />
+            android:layout_gravity="center_vertical"
+            android:baselineAlignBottom="true"
+            android:contentDescription="event colored square"
+            android:src="@drawable/shape_square_white_w30dp_h40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_list_event_description"
+        <Button
+            android:id="@+id/button_list_item_event_export"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Description" />
+            android:text="@string/label_export"
+            app:icon="@drawable/ic_arrow_upward_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_list_event_extra_label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView_list_event_extra_result1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"/>
-        <TextView
-            android:id="@+id/textView_list_event_extra_label2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView_list_event_extra_result2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageview_list_item_event_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:baselineAlignBottom="true"
-        android:src="@drawable/shape_square_white_w30dp_h40dp"
-        android:contentDescription="event colored square" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
