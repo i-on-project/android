@@ -139,7 +139,8 @@ fun Calendar.getDaysOfMonth(): List<Day> {
 }
 
 /** Return the name of the month at which this instance is at */
-fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
+fun Calendar.getMonthName(ctx: Context): String =
+    Month.values()[month].getName(ctx)
 
 /**
  * Represents a Month and associated with each month is the resource from Strings.xml
