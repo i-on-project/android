@@ -1,5 +1,6 @@
 package org.ionproject.android.calendar
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class EventsListAdapter(
         private val eventExtraLabel2 = view.textView_list_event_extra_label2
         private val eventExtraResult1 = view.textView_list_event_extra_result1
         private val eventExtraResult2 = view.textView_list_event_extra_result2
+        private val eventColor = view.imageview_list_item_event_color
 
 
         fun bindTo(event: Event) {
@@ -53,6 +55,7 @@ class EventsListAdapter(
          * e.g: Week day: Monday  Duration: 11:30h - 13:00h
          */
         private fun showInfoAboutAnLecture(lecture: Lecture) {
+            eventColor.setColorFilter(Color.parseColor(Lecture.color))
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_week_Day)
             eventExtraResult1.text =
                 if (lecture.weekDay != null) WeekDay.valueOf(lecture.weekDay).extended
@@ -79,6 +82,7 @@ class EventsListAdapter(
          * e.g: Starts: 22/06/2020 - 14:00h  Ends: 22/06/2020 - 17:00h
          */
         private fun showInfoAboutAnExam(exam: Exam) {
+            eventColor.setColorFilter(Color.parseColor(Exam.color))
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
             var day = exam.startDate?.day?.fillWithZero()
@@ -110,6 +114,7 @@ class EventsListAdapter(
          * e.g: Delivery: 15/06/2020 - 23:59h
          */
         private fun showInfoAboutAnTodo(todo: Todo) {
+            eventColor.setColorFilter(Color.parseColor(Todo.color))
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
             val day = todo.due?.day?.fillWithZero()
