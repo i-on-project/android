@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 
@@ -63,6 +64,10 @@ dependencies {
 
     // For Kotlin use kapt instead of annotationProcessor
     kapt "androidx.room:room-compiler:$room_version"
+<<<<<<< HEAD
+    implementation "androidx.room:room-ktx:$room_version"
+    // Kotlin Extensions and Coroutines support for Room
+=======
 
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
@@ -71,6 +76,7 @@ dependencies {
     def work_version = "2.3.4"
     implementation "androidx.work:work-runtime:$work_version"
     implementation "androidx.work:work-runtime-ktx:$work_version"
+>>>>>>> b9ff05b452d9a096dc33b8930ebeda783195a558
 
     //-----------------Jackson(Json parser)-------------------
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3"

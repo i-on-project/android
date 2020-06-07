@@ -13,10 +13,14 @@ fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
         entities?.forEach {
             val embeddedEntity = it as EmbeddedEntity
             val name = embeddedEntity.properties?.get("name")
+
             if (name != null) {
+                val years = name.substring(0, 4).toInt()
+                val season = name.substring(4)
                 calendarTerms.add(
                     CalendarTerm(
-                        name
+                        years,
+                        season
                     )
                 )
             }

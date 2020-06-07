@@ -1,9 +1,12 @@
 package org.ionproject.android
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -55,9 +58,22 @@ class MainActivity : AppCompatActivity() {
      * when the back button is pressed the navigation controller navigates
      * to the previous destination.
      */
+    @SuppressLint("SourceLockedOrientationActivity")
     private fun setupBackButton() {
         onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()
+
+            /*
+             This ensures that if the user clicks the back button from android instead of
+             the back button inside the schedule fragment, the top bar and bottom bar
+             are added again.
+             */
+            val actionBar = supportActionBar
+            if (actionBar != null && !actionBar.isShowing) {
+                actionBar.show()
+                bottomnavview_main?.visibility = View.VISIBLE
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
         }
     }
 
@@ -197,7 +213,6 @@ class MainActivity : AppCompatActivity() {
          * Passing each menu ID as a set of Ids because each
          * menu should be considered as top level destinations.
          */
-
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_favorites,

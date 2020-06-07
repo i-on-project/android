@@ -6,7 +6,7 @@ import org.ionproject.android.common.db.CalendarTermDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.toCalendarTermList
+import org.ionproject.android.common.toCalendarTermList
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI
@@ -40,5 +40,16 @@ class CalendarTermRepository(
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
             calendarTerms
+        }
+
+    suspend fun getMostRecentCalendarTerm(): CalendarTerm =
+        withContext(Dispatchers.IO) {
+            val calendarTerms = getAllCalendarTerm()
+            var mostRecentCalendarTerm = calendarTerms[0]
+            calendarTerms.forEach {
+                if (it.years > mostRecentCalendarTerm.years)
+                    mostRecentCalendarTerm = it
+            }
+            mostRecentCalendarTerm
         }
 }

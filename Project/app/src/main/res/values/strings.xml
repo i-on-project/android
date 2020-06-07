@@ -34,7 +34,15 @@
     <string name="label_exams">Exams</string>
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
-    <string name="label_lectures">Lectures</string>
+    <string name="label_lectures">Lectures</string>	
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
@@ -53,5 +61,7 @@
     <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
     <string name="label_favorite_undo">Undo</string>
     <string name="label_curricular_term_placeholder">%1$s Term</string>
+    <string name="label_schedule_hours_placeholder">%1$s - %2$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

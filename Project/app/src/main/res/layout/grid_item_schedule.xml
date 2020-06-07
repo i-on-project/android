@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_grid_item_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="0dp"
+        >
+
+        <TextView
+            android:id="@+id/textview_schedule_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_schedule_hours_placeholder"
+            android:textSize="10sp"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="5dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>

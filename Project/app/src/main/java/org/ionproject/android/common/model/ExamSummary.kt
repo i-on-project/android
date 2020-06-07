@@ -1,6 +1,7 @@
 package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.Event
+import org.ionproject.android.schedule.Moment
 import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +42,22 @@ fun String?.toCalendar(): Calendar? {
     if (date != null) {
         calendar.time = date
         return calendar
+    }
+
+    return null
+}
+
+
+fun String?.toMoment(): Moment? {
+    if (this.isNullOrEmpty())
+        return null
+
+    val calendar = Calendar.getInstance()
+    val date = formatter.parse(this)
+
+    if (date != null) {
+        calendar.time = date
+        return Moment(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
     }
 
     return null

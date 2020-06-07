@@ -20,6 +20,9 @@ interface FavoriteDao {
     @Query("SELECT * FROM Favorite WHERE calendar_term = :calendarTerm")
     fun findFavoritesFromCalendarTerm(calendarTerm: String): LiveData<List<Favorite>>
 
+    @Query("SELECT * FROM Favorite WHERE calendar_term = :calendarTerm")
+    suspend fun suspendFindFavoritesFromCalendarTerm(calendarTerm: String): List<Favorite>
+
     @Delete
     suspend fun deleteFavorite(favorite: Favorite): Int
 
