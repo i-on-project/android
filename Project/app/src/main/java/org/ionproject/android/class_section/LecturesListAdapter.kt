@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
+import kotlinx.android.synthetic.main.list_item_lectures.view.*
 import org.ionproject.android.R
 import org.ionproject.android.common.model.Lecture
 
@@ -14,7 +15,7 @@ class LecturesListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LecturesViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_label, parent, false)
+            .inflate(R.layout.list_item_lectures, parent, false)
         return LecturesViewHolder(view)
     }
 
@@ -24,12 +25,11 @@ class LecturesListAdapter(
         holder.bindTo(model.lectures[position])
     }
 
-    class LecturesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class LecturesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        private val lectureSummary = view.textView_label_example
+        private val lecturePlaceHolder = view.textview_list_item_lectures
 
         fun bindTo(lecture: Lecture) {
-            lectureSummary.text = lecture.summary
         }
     }
 }

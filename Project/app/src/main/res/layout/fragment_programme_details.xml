@@ -24,7 +24,8 @@
             android:textSize="@dimen/all_text_25"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/hello_blank_fragment"
+            android:text="Programme full name"
+            android:textStyle="bold"
             android:textColor="@color/primaryTextColor"
             />
         <TextView
@@ -34,7 +35,7 @@
             android:textSize="@dimen/all_text_18"
             app:layout_constraintTop_toBottomOf="@id/textview_programme_details_name"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/hello_blank_fragment"
+            android:text="Programme Acronym"
             android:textColor="@color/primaryTextColor"
              />
 
