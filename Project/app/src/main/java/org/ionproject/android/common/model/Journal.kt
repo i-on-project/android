@@ -1,17 +1,23 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.common.dto.Journal
+import org.ionproject.android.common.dto.ComponentProperties
 import java.util.*
 
-class JournalSummary(
-    val uid: String,
-    val summary: String?,
-    val description: String?,
+/**
+ * Event to be called as [Journal]
+ */
+class Journal(
+    uid: String,
+    summary: String?,
+    description: String?,
     val lastModification: Calendar?
-)
+) : Event("Journal", uid, summary, description)
 
-fun Journal.toJournalSummary() =
-    JournalSummary(
+/**
+ * Creates an [Journal] event
+ */
+fun createJournal(properties: ComponentProperties) =
+    Journal(
         uid = properties.uid.value[0],
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),

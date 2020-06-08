@@ -26,24 +26,24 @@ class ClassSectionViewModel(
      * to return information holden by these livedatas.
      */
     private val lecturesLiveData = MutableLiveData<List<Lecture>>()
-    private val examsLiveData = MutableLiveData<List<ExamSummary>>()
-    private val workAssignmentsLiveData = MutableLiveData<List<TodoSummary>>()
-    private val journalsLiveData = MutableLiveData<List<JournalSummary>>()
+    private val examsLiveData = MutableLiveData<List<Exam>>()
+    private val workAssignmentsLiveData = MutableLiveData<List<Todo>>()
+    private val journalsLiveData = MutableLiveData<List<Journal>>()
 
     // Public getter to return lecturesLiveData information
     val lectures: List<Lecture>
         get() = lecturesLiveData.value ?: emptyList()
 
     // Public getter to return examsLiveData information
-    val exams: List<ExamSummary>
+    val exams: List<Exam>
         get() = examsLiveData.value ?: emptyList()
 
     // Public getter to return workAssignments information
-    val workAssignments: List<TodoSummary>
+    val workAssignments: List<Todo>
         get() = workAssignmentsLiveData.value ?: emptyList()
 
     // Public getter to return journals information
-    val journals: List<JournalSummary>
+    val journals: List<Journal>
         get() = journalsLiveData.value ?: emptyList()
 
     /**
@@ -62,57 +62,13 @@ class ClassSectionViewModel(
         }
     }
 
-    /**
-     * Gets all exams available for the [currClassSection] class section
-     *
-     * @param uris The uris to get information about the exams
-     */
-    fun getExams(uris: List<URI>) {
+    fun getEvents(uri: URI) {
         viewModelScope.launch {
-            val exams: List<ExamSummary> = uris.map { eventsRepository.getExamFromCourse(it) }
-            examsLiveData.postValue(exams)
-        }
-    }
-
-    /**
-     * Gets all lectures available for the [currClassSection] class section
-     *
-     * @param uri The uri to get information about the lectures
-     */
-    fun getLectures(uri: URI?) {
-        viewModelScope.launch {
-            val lectures: List<Lecture> = eventsRepository.getLectures(uri)
-            lecturesLiveData.postValue(lectures)
-        }
-    }
-
-    /**
-     * Gets all work assignments available for the [currClassSection] class section to be done
-     *
-     * @param uris The uri to get information about all work assignments to be done
-     */
-    fun getWorkAssignments(uris: List<URI>) {
-        viewModelScope.launch {
-            // TODO: workAssignments requests can be parallel
-            val workAssignments = uris.map {
-                eventsRepository.getWorkAssignment(it)
-            }
-            workAssignmentsLiveData.postValue(workAssignments)
-        }
-    }
-
-    /**
-     * Request all journals associated to a class section
-     *
-     * @param uris The uris to get information about the journals
-     */
-    fun getJournals(uris: List<URI>) {
-        viewModelScope.launch {
-            // TODO: journals request can be parallel
-            val journals = uris.map {
-                eventsRepository.getJournals(it)
-            }
-            journalsLiveData.postValue(journals)
+            val events = eventsRepository.getEvents(uri)
+            examsLiveData.postValue(events.exams)
+            lecturesLiveData.postValue(events.lectures)
+            workAssignmentsLiveData.postValue(events.todos)
+            journalsLiveData.postValue(events.journals)
         }
     }
 
@@ -160,7 +116,7 @@ class ClassSectionViewModel(
      */
     fun observerJournalsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
         journalsLiveData.observe(lifeCycle, Observer {
-            onResult
+            onResult()
         })
     }
 

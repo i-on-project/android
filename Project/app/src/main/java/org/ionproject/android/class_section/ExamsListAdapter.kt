@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
-import org.ionproject.android.common.model.ExamSummary
+import org.ionproject.android.common.model.Exam
 
 class ExamsListAdapter(
     private val model: ClassSectionViewModel
@@ -28,8 +28,8 @@ class ExamsListAdapter(
 
         private val examName = view.textView_label_example
 
-        fun bindTo(examSummary: ExamSummary) {
-            examName.text = examSummary.summary
+        fun bindTo(exam: Exam) {
+            examName.text = exam.summary
         }
     }
 }

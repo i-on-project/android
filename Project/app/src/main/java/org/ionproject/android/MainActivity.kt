@@ -21,6 +21,8 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
 
+const val TAG = "Ion-Android"
+
 class MainActivity : AppCompatActivity() {
 
     /**

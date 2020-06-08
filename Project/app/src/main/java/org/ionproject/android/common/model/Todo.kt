@@ -1,19 +1,31 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.common.dto.Todo
+import org.ionproject.android.common.dto.ComponentProperties
 import java.net.URI
 import java.util.*
 
-class TodoSummary(
-    val uid: String,
-    val summary: String?,
-    val description: String?,
+/**
+ * Event to be called as [Todo]
+ */
+class Todo(
+    uid: String,
+    summary: String?,
+    description: String?,
     val attachment: URI?,
     val due: Calendar?
-)
+) : Event(type, uid, summary, description) {
 
-fun Todo.toTodoSummary() =
-    TodoSummary(
+    companion object {
+        const val type = "Todo"
+        const val color = "#FF8C00"
+    }
+}
+
+/**
+ * Creates a [Todo] event
+ */
+fun createTodo(properties: ComponentProperties) =
+    Todo(
         uid = properties.uid.value[0],
         summary = properties.summary?.value?.get(0),
         description = properties.description?.value?.get(0),

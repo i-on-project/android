@@ -1,4 +1,6 @@
-package org.ionproject.android.schedule
+package org.ionproject.android.common.model
+
+import java.util.*
 
 
 /**
@@ -17,7 +19,7 @@ package org.ionproject.android.schedule
  * }
  *
  */
-class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
+data class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
 
     override fun toString(): String {
 
@@ -48,6 +50,10 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
     }
 
     companion object {
+        fun fromCalendar(calendar: Calendar): Moment {
+            return Moment(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
+        }
+
         val OneHour = Moment(1, 0)
         val ThirtyMinutes = Moment(0, 30)
         val OneMinute = Moment(0, 1)
@@ -73,7 +79,11 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
         return Moment(newHours, newMinutes)
     }
 
-    infix fun until(moment: Moment) = MomentProgression(this, moment)
+    infix fun until(moment: Moment) =
+        MomentProgression(
+            this,
+            moment
+        )
 
     class MomentIterator(
         val startMoment: Moment,
@@ -97,15 +107,23 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
     class MomentProgression(
         override val start: Moment,
         override val endInclusive: Moment,
-        val stepMoment: Moment = Moment.OneMinute
+        val stepMoment: Moment = OneMinute
     ) :
         Iterable<Moment>, ClosedRange<Moment> {
 
         override fun iterator(): Iterator<Moment> =
-            MomentIterator(start, endInclusive, stepMoment)
+            MomentIterator(
+                start,
+                endInclusive,
+                stepMoment
+            )
 
         infix fun step(moment: Moment): List<Moment> {
-            val it = MomentIterator(start, endInclusive, moment)
+            val it = MomentIterator(
+                start,
+                endInclusive,
+                moment
+            )
             val momentList = mutableListOf<Moment>()
             it.forEach {
                 momentList.add(it)
@@ -114,3 +132,12 @@ class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
         }
     }
 }
+
+/**
+ * This method should fill with the character '0' if an int value is below or equal then 9.
+ * This is useful to present a date value.
+ * Date representation example: 08:00h - 09:00h
+ */
+fun Int.fillWithZero(): String =
+    if (this <= 9) "0$this"
+    else this.toString()

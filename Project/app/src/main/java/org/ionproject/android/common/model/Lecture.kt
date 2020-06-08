@@ -1,33 +1,42 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.common.dto.ICalendar
-import org.ionproject.android.schedule.Moment
-
-class Lecture(
-    val uid: String,
-    val summary: String? = null,
-    val description: String? = null,
-    val start: Moment? = null,
-    val duration: Moment? = null,
-    val day: String? = null
-)
-
-fun ICalendar.toCalendarSummary(): List<Lecture> =
-    properties.subComponents.map {
-        Lecture(
-            uid = it.properties.uid.value[0],
-            summary = it.properties.summary?.value?.get(0),
-            description = it.properties.description?.value?.get(0),
-            start = it.properties.dtstart?.value?.get(0)?.toMoment(),
-            duration = it.properties.duration?.value?.get(0)?.toDurationMoment(),
-            day = it.properties.rrule?.value?.byDay?.get(0)
-        )
-    }
+import org.ionproject.android.common.dto.ComponentProperties
+import java.util.*
 
 /**
- * Maps from duration to moment
+ * Event to be called as [Lecture]
  */
-private fun String?.toDurationMoment(): Moment? {
+class Lecture(
+    uid: String,
+    summary: String? = null,
+    description: String? = null,
+    val start: Calendar? = null,
+    val duration: Moment? = null,
+    val endDate: Calendar? = null,
+    val weekDay: String? = null
+) : Event(type, uid, summary, description) {
+
+    companion object {
+        const val type = "Lecture" //Type of the event
+        const val color = "blue" //Color to be printed on calendar display as a small dot
+    }
+}
+
+/**
+ * Creates an [Lecture] event
+ */
+fun createLecture(properties: ComponentProperties) =
+    Lecture(
+        uid = properties.uid.value[0],
+        summary = properties.summary?.value?.get(0),
+        description = properties.description?.value?.get(0),
+        start = properties.dtstart?.value?.get(0)?.toCalendar(),
+        endDate = properties.rrule?.value?.until?.toCalendar(),
+        duration = properties.duration?.value?.get(0)?.toMoment(),
+        weekDay = properties.rrule?.value?.byDay?.get(0)
+    )
+
+private fun String?.toMoment(): Moment? {
     val hoursEndIdx = this?.indexOf("H")
     val minutesIdx = this?.indexOf("M")
 
@@ -39,4 +48,5 @@ private fun String?.toDurationMoment(): Moment? {
     }
     return null
 }
+
 

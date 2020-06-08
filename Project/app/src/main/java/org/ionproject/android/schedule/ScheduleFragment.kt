@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import org.ionproject.android.MainActivity
 import org.ionproject.android.R
+import org.ionproject.android.common.model.Moment
 
 const val NUMBER_OF_COLUMNS = 8
 

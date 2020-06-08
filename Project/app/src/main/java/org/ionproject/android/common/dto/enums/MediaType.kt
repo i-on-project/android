@@ -1,6 +1,7 @@
-package org.ionproject.android.common.dto
+package org.ionproject.android.common.dto.enums
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.ionproject.android.common.dto.*
 
 /**
  * Represents the media type of an http request

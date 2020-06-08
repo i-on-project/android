@@ -32,7 +32,11 @@ class ScheduleViewModel(
             classesRepository.getClassSection(it.toClassSummary())
         }
         val lectures = classSections.flatMap {
-            eventsRepository.getLectures(it?.calendarURI)
+            if (it?.calendarURI != null) {
+                eventsRepository.getEvents(it.calendarURI).lectures
+            } else {
+                emptyList<Lecture>()
+            }
         }
         emit(sortLecturesByDay(lectures))
     }
@@ -58,7 +62,7 @@ class ScheduleViewModel(
         )
 
         lectures.forEach {
-            when (it.day) {
+            when (it.weekDay) {
                 "MO" -> lecturesByDayOfWeek2[0].add(it)
                 "TU" -> lecturesByDayOfWeek2[1].add(it)
                 "WE" -> lecturesByDayOfWeek2[2].add(it)

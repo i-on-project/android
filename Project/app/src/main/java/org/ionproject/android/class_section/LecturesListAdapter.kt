@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.list_item_label.view.*
 import kotlinx.android.synthetic.main.list_item_lectures.view.*
 import org.ionproject.android.R
 import org.ionproject.android.common.model.Lecture
+import org.ionproject.android.common.model.Moment
 
 class LecturesListAdapter(
     private val model: ClassSectionViewModel
@@ -30,6 +31,11 @@ class LecturesListAdapter(
         private val lecturePlaceHolder = view.textview_list_item_lectures
 
         fun bindTo(lecture: Lecture) {
+            if(lecture.start != null && lecture.duration!= null && lecture.weekDay != null) {
+                val startMoment = Moment.fromCalendar(lecture.start)
+                val endMoment = startMoment + lecture.duration
+            }
+
         }
     }
 }

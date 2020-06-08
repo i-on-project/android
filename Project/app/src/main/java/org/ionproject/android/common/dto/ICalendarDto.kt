@@ -3,16 +3,27 @@ package org.ionproject.android.common.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
- * This is a representation for a Event type, which is a iCalendar type.
+ * This is a representation for a Calendar type, which is a iCalendar type.
  */
-data class Event(
+data class ICalendarDto(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: Properties,
-    val entities: List<SubEntity>,
+    val properties: CalendarProperties,
+    val actions: List<SirenAction>,
     val links: List<SirenLink>
 )
 
-data class Properties(
+data class CalendarProperties(
+    val type: String,
+    val properties: CalendarCreator,
+    val subComponents: List<EventProperties>
+)
+
+data class CalendarCreator(
+    val prodid: Value,
+    val version: Value
+)
+
+data class EventProperties(
     val type: String? = null,
     val properties: ComponentProperties
 )
@@ -55,3 +66,4 @@ data class Related(
 data class RelType(
     val reltype: String
 )
+

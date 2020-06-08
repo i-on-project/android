@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.grid_item_schedule.view.*
 import kotlinx.android.synthetic.main.grid_item_schedule_hours_minutes.view.*
 import org.ionproject.android.R
 import org.ionproject.android.common.model.Lecture
+import org.ionproject.android.common.model.Moment
 
 typealias Interval = Pair<Moment, Moment>
 
@@ -63,7 +64,8 @@ class ScheduleGridAdapter(
      */
     private fun List<Lecture>.inInterval(interval: Interval) = this.filter {
         if (it.start != null && it.duration != null) {
-            val classInterval = Interval(it.start, it.start + it.duration)
+            val startMoment = Moment.fromCalendar(it.start)
+            val classInterval = Interval(startMoment, startMoment + it.duration)
             interval.first >= classInterval.first && interval.second <= classInterval.second
         } else {
             false

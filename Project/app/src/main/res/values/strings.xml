@@ -34,15 +34,16 @@
     <string name="label_exams">Exams</string>
     <string name="label_favorites_placeholder">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
-    <string name="label_lectures">Lectures</string>	
-
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="label_lectures">Lectures</string>
+    <string name="label_calendar_termV2">Calendar term:</string>
+    <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
+    <string name="label_favorite_undo">Undo</string>
+    <string name="label_curricular_term_placeholder">%1$s Term</string>
+    <string name="label_list_event_week_Day">Week day:</string>
+    <string name="label_list_event_duration">Duration:</string>
+    <string name="label_list_event_starts">Starts:</string>
+    <string name="label_list_event_ends">Ends:</string>
+    <string name="label_list_event_delivery">Delivery:</string>
 
     <string name="enroll_btn">Enroll</string>
     <string name="teacher_name_start">Prof.</string>
@@ -51,17 +52,46 @@
     <string name="label_semester">Semester</string>
     <string name="imageView_favorite">favorite_icon</string>
     <string name="imageButton_clear_recent_search">Clear recent search</string>
+    <string name="monday_short">MON</string>
+    <string name="tuesday_short">TUE</string>
+    <string name="wednesday_short">WED</string>
+    <string name="thursday_short">THU</string>
+    <string name="friday_short">FRI</string>
+    <string name="saturday_short">SAT</string>
+    <string name="sunday_short">SUN</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
+    <string name="label_schedule_hours_placeholder">%1$s - %2$s</string>>
+
     <string name="label_todo">Todos</string>
     <string name="label_journals">Journals</string>
-    <string name="label_calendar_termV2">Calendar term:</string>
     <string name="placeholder_lecture">%1$s: %2$s %3$s:%4$s: - %5$s:%6$s</string>
     <string name="placeholder_exam">%1$s: %2$d/%3$d/%4$d</string>
     <string name="placeholder_todo">%1$s: %2$d/%3$d/%4$d %5$s:%6$s</string>
 
-    <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
-    <string name="label_favorite_undo">Undo</string>
-    <string name="label_curricular_term_placeholder">%1$s Term</string>
-    <string name="label_schedule_hours_placeholder">%1$s - %2$s</string>
+    <string name="placeholder_interval">%1$s:%2$sh - %3$s:%4$sh</string>
+    <string name="placeholder_time">%1$s/%2$s/%3$s %4$s:%5$sh</string>
+
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="october">October</string>
+    <string name="september">September</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_export">export</string>
 </resources>
