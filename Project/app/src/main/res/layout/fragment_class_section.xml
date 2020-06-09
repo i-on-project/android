@@ -115,7 +115,10 @@
         android:background="@color/primaryLightColor"
         android:drawableEnd="@drawable/ic_menu_book_white_24dp"
         android:gravity="center_vertical"
-        android:padding="@dimen/sections_8"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
         android:text="@string/label_lectures"
         android:textColor="@android:color/white"
         android:textSize="@dimen/all_text_18"
@@ -127,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_label" />
+        tools:listitem="@layout/list_item_lectures" />
 
     <TextView
         android:id="@+id/textView_class_section_exams"
@@ -136,7 +139,10 @@
         android:background="@color/primaryLightColor"
         android:drawableEnd="@drawable/ic_assignment_white_24dp"
         android:gravity="center_vertical"
-        android:padding="@dimen/sections_8"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
         android:text="@string/label_exams"
         android:textColor="@android:color/white"
         android:textSize="@dimen/all_text_18"
@@ -148,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_label" />
+        tools:listitem="@layout/list_item_exams" />
 
     <TextView
         android:id="@+id/textView_class_section_Todos"
@@ -157,7 +163,10 @@
         android:background="@color/primaryLightColor"
         android:drawableEnd="@drawable/ic_assignment_turned_in_white_24dp"
         android:gravity="center_vertical"
-        android:padding="@dimen/sections_8"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
         android:text="@string/label_todo"
         android:textColor="@android:color/white"
         android:textSize="@dimen/all_text_18"
@@ -169,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_label" />
+        tools:listitem="@layout/list_item_todos" />
 
 
     <TextView
@@ -179,7 +188,10 @@
         android:background="@color/primaryLightColor"
         android:drawableEnd="@drawable/ic_message_white_24dp"
         android:gravity="center_vertical"
-        android:padding="@dimen/sections_8"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
         android:text="@string/label_journals"
         android:textColor="@android:color/white"
         android:textSize="@dimen/all_text_18"
@@ -191,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_label" />
+        tools:listitem="@layout/list_item_journals" />
 
 
 </LinearLayout>

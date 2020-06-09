@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/sections_padding_8"
+    android:paddingStart="@dimen/all_list_item_padding_20"
+    android:paddingEnd="@dimen/all_list_item_padding_20"
+    android:paddingBottom="@dimen/sections_padding_8"
+    >
 
     <TextView
         android:id="@+id/textview_list_item_lectures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder_lecture"
+        android:textColor="@android:color/black"
         />
+
+    <Button
+        android:id="@+id/button_list_item_lectures_export"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_export"
+        android:textSize="12sp"
+        android:layout_marginStart="10dp"
+        app:icon="@drawable/ic_arrow_upward_black_24dp"
+        />
+
 </LinearLayout>

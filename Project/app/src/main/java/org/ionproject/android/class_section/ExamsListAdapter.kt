@@ -4,32 +4,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.list_item_exams.view.*
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
+import org.ionproject.android.calendar.jdcalendar.day
+import org.ionproject.android.calendar.jdcalendar.month
+import org.ionproject.android.calendar.jdcalendar.year
 import org.ionproject.android.common.model.Exam
 
 class ExamsListAdapter(
     private val model: ClassSectionViewModel
-) : RecyclerView.Adapter<ExamsListAdapter.ExamsViewHolder>() {
+) : RecyclerView.Adapter<ExamsListAdapter.ExamViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_label, parent, false)
-        return ExamsViewHolder(view)
+            .inflate(R.layout.list_item_exams, parent, false)
+        return ExamViewHolder(view)
     }
 
     override fun getItemCount(): Int = model.exams.size
 
-    override fun onBindViewHolder(holder: ExamsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ExamViewHolder, position: Int) {
         holder.bindTo(model.exams[position])
     }
 
-    class ExamsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ExamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        private val examName = view.textView_label_example
+        private val examTextView = view.textview_list_item_exams
 
         fun bindTo(exam: Exam) {
-            examName.text = exam.summary
+            examTextView.text = view.resources.getString(
+                R.string.placeholder_exam,
+                exam.summary,
+                exam.endDate.day,
+                exam.endDate.month,
+                exam.endDate.year
+            )
         }
     }
 }

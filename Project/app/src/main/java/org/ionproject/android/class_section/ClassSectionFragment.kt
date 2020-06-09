@@ -62,7 +62,7 @@ class ClassSectionFragment : Fragment() {
      * Work assignments's adapter
      */
     private val workAssignmentsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        WorkAssignmentsAdapter(viewModel)
+        TodoAdapter(viewModel)
     }
 
     /**

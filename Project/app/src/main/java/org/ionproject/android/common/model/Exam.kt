@@ -10,13 +10,13 @@ import java.util.*
  */
 class Exam(
     uid: String,
-    summary: String?,
-    description: String?,
-    val categories: String?,
-    val created: Calendar?,
-    val stamp: Calendar?,
-    val startDate: Calendar?,
-    val endDate: Calendar?
+    summary: String,
+    description: String,
+    val categories: String,
+    val created: Calendar,
+    val stamp: Calendar,
+    val startDate: Calendar,
+    val endDate: Calendar
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -28,17 +28,30 @@ class Exam(
 /**
  * Creates an [Exam] event
  */
-fun createExam(properties: ComponentProperties) =
-    Exam(
-        uid = properties.uid.value[0],
-        summary = properties.summary?.value?.get(0),
-        description = properties.description?.value?.get(0),
-        categories = properties.categories?.value?.get(0),
-        created = properties.created?.value?.get(0)?.toCalendar(),
-        stamp = properties.dtstamp?.value?.get(0)?.toCalendar(),
-        startDate = properties.dtstart?.value?.get(0)?.toCalendar(),
-        endDate = properties.dtend?.value?.get(0)?.toCalendar()
-    )
+fun createExam(properties: ComponentProperties): Exam {
+    val uid = properties.uid.value[0]
+    val summary = properties.summary?.value?.get(0)
+    val description = properties.description?.value?.get(0)
+    val categories = properties.categories?.value?.get(0)
+    val created = properties.created?.value?.get(0)?.toCalendar()
+    val stamp = properties.dtstamp?.value?.get(0)?.toCalendar()
+    val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
+    val endDate = properties.dtend?.value?.get(0)?.toCalendar()
+
+    if (summary != null && description != null && categories != null && created != null && stamp != null && startDate != null && endDate != null) {
+        return Exam(
+            uid,
+            summary,
+            description,
+            categories,
+            created,
+            stamp,
+            startDate,
+            endDate
+        )
+    }
+    throw IllegalArgumentException("Found a null field while creating an exam")
+}
 
 
 private val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)

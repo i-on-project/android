@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import org.ionproject.android.common.model.Lecture
+import org.ionproject.android.common.model.WeekDay
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
@@ -63,13 +64,13 @@ class ScheduleViewModel(
 
         lectures.forEach {
             when (it.weekDay) {
-                "MO" -> lecturesByDayOfWeek2[0].add(it)
-                "TU" -> lecturesByDayOfWeek2[1].add(it)
-                "WE" -> lecturesByDayOfWeek2[2].add(it)
-                "TH" -> lecturesByDayOfWeek2[3].add(it)
-                "FR" -> lecturesByDayOfWeek2[4].add(it)
-                "SA" -> lecturesByDayOfWeek2[5].add(it)
-                "SU" -> lecturesByDayOfWeek2[6].add(it)
+                WeekDay.MONDAY -> lecturesByDayOfWeek2[0].add(it)
+                WeekDay.TUESDAY -> lecturesByDayOfWeek2[1].add(it)
+                WeekDay.WEDNESDAY -> lecturesByDayOfWeek2[2].add(it)
+                WeekDay.THURSDAY-> lecturesByDayOfWeek2[3].add(it)
+                WeekDay.FRIDAY -> lecturesByDayOfWeek2[4].add(it)
+                WeekDay.SATURDAY -> lecturesByDayOfWeek2[5].add(it)
+                WeekDay.SUNDAY -> lecturesByDayOfWeek2[6].add(it)
             }
         }
         return lecturesByDayOfWeek2

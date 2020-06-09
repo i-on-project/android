@@ -6,6 +6,6 @@
     <dimen name="all_text_18">18sp</dimen>
     <dimen name="all_text_25">25sp</dimen>
     <dimen name="fragments_padding_10">10dp</dimen>
-    <dimen name="sections_8">8dp</dimen>
+    <dimen name="sections_padding_8">8dp</dimen>
     <dimen name="all_sections_3">3dp</dimen>
 </resources>

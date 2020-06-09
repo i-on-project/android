@@ -71,9 +71,9 @@
 
     <string name="label_todo">Todos</string>
     <string name="label_journals">Journals</string>
-    <string name="placeholder_lecture">%1$s: %2$s %3$s:%4$s: - %5$s:%6$s</string>
+    <string name="placeholder_lecture">%1$s: %2$s %3$s:%4$sh - %5$s:%6$sh</string>
     <string name="placeholder_exam">%1$s: %2$d/%3$d/%4$d</string>
-    <string name="placeholder_todo">%1$s: %2$d/%3$d/%4$d %5$s:%6$s</string>
+    <string name="placeholder_todo">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
 
     <string name="placeholder_interval">%1$s:%2$sh - %3$s:%4$sh</string>
     <string name="placeholder_time">%1$s/%2$s/%3$s %4$s:%5$sh</string>

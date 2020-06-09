@@ -95,20 +95,18 @@ class IonCalendarAdapter() : CalendarAdapter<IonCalendarAdapter.JDViewHolder>() 
         }
 
         private fun findLecturesForThisDay(lectures: List<Lecture>, day: Day): List<Lecture> {
-            /*val weekDay = WeekDay.getByShortName()
-                //[day.value.dayOfWeek - 1].toString()
+            val weekDay = WeekDay.byNumber(day.value.dayOfWeek)
 
             return lectures.filter {
-                var added = false
-                if (it.endDate != null && it.weekDay == weekDay && day.isBefore(it.endDate)) {
+                if (it.weekDay == weekDay && day.isBefore(it.endDate)) {
                     val currColor = eventImageView.colorFilter
                     val color = Color.parseColor(if (currColor != null) "purple" else Lecture.color)
                     eventImageView.setColorFilter(color)
-                    added = true
+                    return@filter true
                 }
-                added
-            }*/
-            return emptyList()
+                return@filter false
+            }
+
         }
 
         private fun findExamsForThisDay(exams: List<Exam>, day: Day): List<Exam> =

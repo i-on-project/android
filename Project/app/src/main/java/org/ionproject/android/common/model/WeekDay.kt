@@ -19,7 +19,7 @@ enum class WeekDay(private val weekDayResId: Int) {
     fun getName(ctx: Context) = ctx.resources.getString(weekDayResId)
 
     companion object {
-        fun getByShortName(shortName: String): WeekDay {
+        fun byShortName(shortName: String): WeekDay {
             return when (shortName) {
                 "MO" -> MONDAY
                 "TU" -> TUESDAY
@@ -28,7 +28,19 @@ enum class WeekDay(private val weekDayResId: Int) {
                 "FR" -> FRIDAY
                 "SA" -> SATURDAY
                 "SU" -> SUNDAY
-                else -> throw IllegalArgumentException("$shortName is not a valid shot name")
+                else -> throw IllegalArgumentException("$shortName is not a valid short name for WeekDay")
+            }
+        }
+        fun byNumber(number: Int): WeekDay {
+            return when (number) {
+                1 -> SUNDAY
+                2 -> MONDAY
+                3 -> TUESDAY
+                4 -> WEDNESDAY
+                5 -> THURSDAY
+                6 -> FRIDAY
+                7 -> SATURDAY
+                else -> throw IllegalArgumentException("$number is not a valid number for WeekDay")
             }
         }
     }
