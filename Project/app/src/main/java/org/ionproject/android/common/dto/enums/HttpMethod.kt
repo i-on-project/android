@@ -1,4 +1,4 @@
-package org.ionproject.android.common.dto
+package org.ionproject.android.common.dto.enums
 
 /**
  * Represents an HTTP Method

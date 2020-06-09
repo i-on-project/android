@@ -16,8 +16,7 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -46,8 +45,7 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -90,6 +88,12 @@
         android:label="@string/title_search_results"
         tools:layout="@layout/fragment_search_results" />
 
+     <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="org.ionproject.android.calendar.CalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_calendar" />
+        
     <fragment
         android:id="@+id/navigation_programmes"
         android:name="org.ionproject.android.programmes.ProgrammesFragment"
@@ -101,8 +105,7 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -116,8 +119,7 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
 </navigation>

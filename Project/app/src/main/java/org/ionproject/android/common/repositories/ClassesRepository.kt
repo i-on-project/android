@@ -8,6 +8,7 @@ import org.ionproject.android.common.db.ClassSummaryDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
+import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.workers.WorkImportance
@@ -22,7 +23,7 @@ class ClassesRepository(
     private val workerManagerFacade: WorkerManagerFacade
 ) {
 
-    suspend fun getClassSection(classSummary: ClassSummary) =
+    suspend fun getClassSection(classSummary: ClassSummary): ClassSection? =
         withContext(Dispatchers.IO) {
             var classSection = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
                 classSummary.id,

@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
 
         // Calendar button
         button_home_calendar.setOnClickListener {
-            TODO("Calendar fragment and navigation element")
+            navController.navigate(R.id.navigation_calendar)
         }
     }
 }
