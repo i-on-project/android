@@ -4,11 +4,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.Lecture
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+
+const val NUMBER_OF_WEEK_DAYS = 7
 
 class ScheduleViewModel(
     private val favoriteRepository: FavoriteRepository,
@@ -39,56 +42,31 @@ class ScheduleViewModel(
 
     fun observerLecturesLiveData(
         lifecycleOwner: LifecycleOwner,
-        onUpdate: (Array<MutableList<Lecture>>) -> Unit
+        onUpdate: (List<MutableList<Lecture>>) -> Unit
     ) {
         lecturesLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
-    private fun sortLecturesByDay(lectures: List<Lecture>): Array<MutableList<Lecture>> {
-        val lecturesByDayOfWeek2 = arrayOf<MutableList<Lecture>>(
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf(),
-            mutableListOf()
-        )
+    private fun sortLecturesByDay(lectures: List<Lecture>): List<MutableList<Lecture>> {
+        val listOfLectureList = listOf(NUMBER_OF_WEEK_DAYS) { mutableListOf<Lecture>() }
 
         lectures.forEach {
             when (it.day) {
-                "MO" -> lecturesByDayOfWeek2[0].add(it)
-                "TU" -> lecturesByDayOfWeek2[1].add(it)
-                "WE" -> lecturesByDayOfWeek2[2].add(it)
-                "TH" -> lecturesByDayOfWeek2[3].add(it)
-                "FR" -> lecturesByDayOfWeek2[4].add(it)
-                "SA" -> lecturesByDayOfWeek2[5].add(it)
-                "SU" -> lecturesByDayOfWeek2[6].add(it)
+                "MO" -> listOfLectureList[0].add(it)
+                "TU" -> listOfLectureList[1].add(it)
+                "WE" -> listOfLectureList[2].add(it)
+                "TH" -> listOfLectureList[3].add(it)
+                "FR" -> listOfLectureList[4].add(it)
+                "SA" -> listOfLectureList[5].add(it)
+                "SU" -> listOfLectureList[6].add(it)
             }
         }
-        return lecturesByDayOfWeek2
+        return listOfLectureList
     }
 
     // Each index represents a different day of week, 0 - monday, 1 - tuesday, ...
-    val lecturesByDayOfWeek: Array<MutableList<Lecture>>
-        get() {
-            val value = lecturesLiveData.value
-            if (value == null)
-                return arrayOf(
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf(),
-                    mutableListOf()
-                )
-            else {
-                return value
-            }
-        }
+    val lecturesByDayOfWeek: List<MutableList<Lecture>>
+        get() = lecturesLiveData.value ?: listOf(NUMBER_OF_WEEK_DAYS) { mutableListOf<Lecture>() }
+
+
 }

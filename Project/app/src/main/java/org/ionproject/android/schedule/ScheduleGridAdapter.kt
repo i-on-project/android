@@ -30,7 +30,7 @@ class ScheduleGridAdapter(
     /**
      * Both functions lists are used to distinguish the different ways to perform
      * viewholder creation and binding. This way we avoid having to check if the item
-     * is of a certain type. The type correspondes to the list index.
+     * is of a certain type. The type corresponds to the list index.
      */
     private val createViewHolderFunctions = listOf(
         { parent: ViewGroup ->
@@ -76,15 +76,11 @@ class ScheduleGridAdapter(
      * This is used to distinguish the viewholders that contain an interval
      * from the viewholders that contain a class
      */
-    override fun getItemViewType(position: Int): Int {
-        if ((position + NUMBER_OF_COLUMNS) % NUMBER_OF_COLUMNS == 0)
-            return 0
-        return 1
-    }
+    override fun getItemViewType(position: Int): Int =
+        if ((position + NUMBER_OF_COLUMNS) % NUMBER_OF_COLUMNS == 0) 0 else 1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return createViewHolderFunctions[viewType](parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        createViewHolderFunctions[viewType](parent)
 
     override fun getItemCount(): Int = intervals.count() * NUMBER_OF_COLUMNS
 
