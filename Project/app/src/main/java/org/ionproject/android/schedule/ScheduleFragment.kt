@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import org.ionproject.android.MainActivity
 import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Moment
 
 const val NUMBER_OF_COLUMNS = 8
@@ -23,10 +26,17 @@ const val NUMBER_OF_COLUMNS = 8
 class ScheduleFragment : Fragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             ScheduleViewModelProvider()
         )[ScheduleViewModel::class.java]
+    }
+
+    /**
+     * This view model is shared between fragments and the MainActivity
+     */
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelProvider()
     }
 
     override fun onCreateView(
@@ -49,6 +59,8 @@ class ScheduleFragment : Fragment() {
         activity?.bottomnavview_main?.visibility = View.GONE
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        viewModel.getLectures(sharedViewModel.root.calendarTermsUri)
 
         // Back button behaviour
         view.cardview_schedule_back.setOnClickListener {

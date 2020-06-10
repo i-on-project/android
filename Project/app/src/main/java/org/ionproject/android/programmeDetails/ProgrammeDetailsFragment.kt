@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_programme_details.*
@@ -25,7 +25,7 @@ class ProgrammeDetailsFragment : Fragment() {
     }
 
     private val programmeViewModel: ProgrammeDetailsViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             ProgrammeDetailsViewModelProvider()
         )[ProgrammeDetailsViewModel::class.java]

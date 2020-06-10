@@ -14,14 +14,14 @@ class SwipeRightLinearLayout(ctx: Context, attrs: AttributeSet) : LinearLayout(c
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         val touchedX = event.rawX.toInt()
-        return when(event.action) {
+        return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 startX = touchedX
                 return super.onInterceptTouchEvent(event)
             }
             MotionEvent.ACTION_MOVE -> {
                 val deltaX = touchedX - startX
-                if(deltaX > 0) {
+                if (deltaX > 0) {
                     return true
                 }
                 return super.onInterceptTouchEvent(event)

@@ -131,7 +131,7 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnTodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            if(todo.due != null) {
+            if (todo.due != null) {
                 eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
                 val day = todo.due.day.fillWithZero()

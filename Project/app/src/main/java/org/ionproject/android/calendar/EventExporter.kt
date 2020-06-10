@@ -48,13 +48,17 @@ fun Lecture.export(context: Context) {
             )
         startActivity(context, intent, null)
     } else {
-        Toast.makeText(context,context.resources.getString(R.string.warning_no_more_classes),Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            context.resources.getString(R.string.warning_no_more_classes),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
 
 
 fun Todo.export(context: Context) {
-    val startEndMillis = this.due?.timeInMillis
+    val startEndMillis = this.due.timeInMillis
     val intent = Intent(Intent.ACTION_INSERT)
         .setData(CalendarContract.Events.CONTENT_URI)
         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startEndMillis)
@@ -69,8 +73,8 @@ fun Todo.export(context: Context) {
 }
 
 fun Exam.export(context: Context) {
-    val startMillis = this.startDate?.timeInMillis
-    val endMillis = this.endDate?.timeInMillis
+    val startMillis = this.startDate.timeInMillis
+    val endMillis = this.endDate.timeInMillis
     val intent = Intent(Intent.ACTION_INSERT)
         .setData(CalendarContract.Events.CONTENT_URI)
         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)

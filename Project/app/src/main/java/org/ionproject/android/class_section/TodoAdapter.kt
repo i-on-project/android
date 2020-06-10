@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_label.view.*
 import kotlinx.android.synthetic.main.list_item_todos.view.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.export

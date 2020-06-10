@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
@@ -38,7 +38,7 @@ class ClassSectionFragment : Fragment() {
      * Obtaining Class Section's View Model
      */
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             ClassSectionViewModelProvider()
         )[ClassSectionViewModel::class.java]

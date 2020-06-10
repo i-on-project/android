@@ -1,9 +1,7 @@
 package org.ionproject.android.schedule
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.Lecture
 import org.ionproject.android.common.model.WeekDay
@@ -11,6 +9,7 @@ import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import java.net.URI
 
 const val NUMBER_OF_WEEK_DAYS = 7
 
@@ -21,6 +20,9 @@ class ScheduleViewModel(
     private val eventsRepository: EventsRepository
 ) : ViewModel() {
 
+
+    private val lecturesLiveData = MutableLiveData<List<MutableList<Lecture>>>()
+
     /**
      * Get most recent calendar term
      * Get all favorites from that calendar term
@@ -29,19 +31,20 @@ class ScheduleViewModel(
      * Sort all lectures according to the days of week
      * post to live data to notify observers
      */
-    private val lecturesLiveData = liveData {
-        val calendarTerm = calendarTermRepository.getMostRecentCalendarTerm()
+    fun getLectures(calendarTermsUri: URI) = viewModelScope.launch {
+        val calendarTerm = calendarTermRepository.getMostRecentCalendarTerm(calendarTermsUri)
         val favorites = favoriteRepository.suspendGetFavoritesFromTerm(calendarTerm)
         val classSections = favorites.map {
             classesRepository.getClassSection(it.toClassSummary())
         }
         val lectures = classSections.flatMap {
-            if(it?.calendarURI != null)
+            if (it?.calendarURI != null)
                 eventsRepository.getEvents(it.calendarURI).lectures
             else
                 emptyList()
         }
-        emit(sortLecturesByDay(lectures))
+
+        lecturesLiveData.postValue(sortLecturesByDay(lectures))
     }
 
     fun observerLecturesLiveData(
@@ -59,7 +62,7 @@ class ScheduleViewModel(
                 WeekDay.MONDAY -> listOfLectureList[0].add(it)
                 WeekDay.TUESDAY -> listOfLectureList[1].add(it)
                 WeekDay.WEDNESDAY -> listOfLectureList[2].add(it)
-                WeekDay.THURSDAY-> listOfLectureList[3].add(it)
+                WeekDay.THURSDAY -> listOfLectureList[3].add(it)
                 WeekDay.FRIDAY -> listOfLectureList[4].add(it)
                 WeekDay.SATURDAY -> listOfLectureList[5].add(it)
                 WeekDay.SUNDAY -> listOfLectureList[6].add(it)

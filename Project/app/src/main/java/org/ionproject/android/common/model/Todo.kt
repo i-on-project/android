@@ -31,7 +31,7 @@ fun createTodo(properties: ComponentProperties): Todo {
     val attachment = URI(properties.attachment?.value?.get(0) ?: "")
     val due = properties.due?.value?.get(0)?.toCalendar()
 
-    if(summary != null && description != null && attachment != null && due != null) {
+    if (summary != null && description != null && attachment != null && due != null) {
         return Todo(
             uid,
             summary,

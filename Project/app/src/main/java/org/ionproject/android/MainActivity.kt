@@ -11,7 +11,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -20,6 +20,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.ROOT_KEY
 
 const val TAG = "Ion-Android"
 
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val sharedViewModel: SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             SharedViewModelProvider()
         )[SharedViewModel::class.java]
@@ -49,9 +51,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupTopBarBehaviour()
-        setupBottomBarBehaviour()
-        setupBackButton()
+        val root = intent.getParcelableExtra<Root>(ROOT_KEY)
+        if (root != null) {
+            sharedViewModel.root = root
+            setupTopBarBehaviour()
+            setupBottomBarBehaviour()
+            setupBackButton()
+        } else {
+            throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
+        }
     }
 
     /**

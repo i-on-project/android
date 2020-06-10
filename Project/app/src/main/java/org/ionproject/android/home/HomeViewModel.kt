@@ -10,6 +10,8 @@ import org.ionproject.android.common.repositories.SuggestionsMockRepository
 
 class HomeViewModel(private val repository: SuggestionsMockRepository) : ViewModel() {
 
+    // ----------------------- SUGGESTIONS ------------------------------------------
+
     private val suggestionsLiveData by lazy(LazyThreadSafetyMode.NONE) {
         repository.getSuggestions()
     }

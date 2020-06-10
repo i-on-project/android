@@ -22,7 +22,7 @@ fun createJournal(properties: ComponentProperties): Journal {
     val description = properties.description?.value?.get(0)
     val lastModification = properties.dtstamp?.value?.get(0)?.toCalendar()
 
-    if(summary != null && description != null && lastModification != null) {
+    if (summary != null && description != null && lastModification != null) {
         return Journal(
             uid,
             summary,

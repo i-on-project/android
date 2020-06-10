@@ -31,6 +31,7 @@ enum class WeekDay(private val weekDayResId: Int) {
                 else -> throw IllegalArgumentException("$shortName is not a valid short name for WeekDay")
             }
         }
+
         fun byNumber(number: Int): WeekDay {
             return when (number) {
                 1 -> SUNDAY

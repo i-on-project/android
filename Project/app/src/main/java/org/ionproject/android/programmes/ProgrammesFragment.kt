@@ -39,6 +39,9 @@ class ProgrammesFragment : Fragment() {
         val viewModel = ViewModelProviders
             .of(this, ProgrammesViewModelProvider())[ProgrammesViewModel::class.java]
 
+        // Get all programmes
+        viewModel.getAllProgrammes(sharedViewModel.root.programmesUri)
+
         //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
         recyclerview_programmes_list.adapter = adapter
@@ -50,6 +53,7 @@ class ProgrammesFragment : Fragment() {
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
+
     }
 
 }
