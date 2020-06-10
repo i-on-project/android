@@ -101,6 +101,7 @@ class ClassSectionFragment : Fragment() {
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
         val calendarTermTextView = textView_class_section_calendar_term
+        val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(currClassSummary) {
@@ -109,7 +110,7 @@ class ClassSectionFragment : Fragment() {
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained
-            setupCheckboxBehaviour(checkbox_class_section_favorite)
+            setupCheckboxBehaviour(checkBox)
 
             requestEvents(it.calendarURI)
         }

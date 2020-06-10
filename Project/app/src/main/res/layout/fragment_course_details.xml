@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".course_details.CourseDetailsFragment"
     >
@@ -10,9 +11,6 @@
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_course_details_top_section"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"
@@ -62,9 +60,6 @@
     <!-- Bottom Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_course_details_bottom_section"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_course_details_top_section"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -114,4 +109,4 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</org.ionproject.android.common.SwipeRightLinearLayout>

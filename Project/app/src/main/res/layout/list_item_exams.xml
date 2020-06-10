@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/sections_padding_8"
+    android:orientation="vertical"
     android:paddingStart="@dimen/all_list_item_padding_20"
+    android:paddingTop="@dimen/sections_padding_8"
     android:paddingEnd="@dimen/all_list_item_padding_20"
     android:paddingBottom="@dimen/sections_padding_8">
+
     <TextView
         android:id="@+id/textview_list_item_exams"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:text="@string/placeholder_exam" />
+        android:text="@string/placeholder_exam"
+        android:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/button_list_item_exams_export"
@@ -22,7 +23,5 @@
         android:layout_height="wrap_content"
         android:text="@string/label_export"
         android:textSize="12sp"
-        android:layout_marginStart="10dp"
-        app:icon="@drawable/ic_arrow_upward_black_24dp"
-        />
+        app:icon="@drawable/ic_arrow_upward_black_24dp" />
 </LinearLayout>

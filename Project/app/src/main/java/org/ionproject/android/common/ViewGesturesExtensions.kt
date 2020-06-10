@@ -17,7 +17,7 @@ fun View.addSwipeRightGesture(
 ) {
     setOnTouchListener(object : View.OnTouchListener {
 
-        var startX = 0
+        var startX = -1
         var velocityTracker = VelocityTracker.obtain()
         val ALPHA_THRESHOLD = 0.1F // When this alpha is reached parameter functions are called
         val SWIPE_THRESHOLD =
@@ -29,11 +29,16 @@ fun View.addSwipeRightGesture(
             when (event.action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_DOWN -> { // USER TOUCHES SCREEN
                     startX = touchedX
+                    view.performClick()
                 }
                 MotionEvent.ACTION_MOVE -> { // USER MOVES FINGER WHILE TOUCHING SCREEN
                     velocityTracker.addMovement(event) // Obtain speed of movement
                     velocityTracker.computeCurrentVelocity(1)
 
+                    if (startX == -1) {
+                        if (view is SwipeRightLinearLayout)
+                            startX = view.startX
+                    }
                     val deltaX = touchedX - startX
 
                     if (deltaX > 0) { // Has user moved finger to right?
@@ -61,6 +66,7 @@ fun View.addSwipeRightGesture(
                         view.layoutParams = layoutParams
                         view.alpha = 1F
                     }
+                    startX = -1
                 }
             }
             view.invalidate()
@@ -86,6 +92,7 @@ fun View.addSwipeUpGesture(
             when (event.action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_DOWN -> { // USER TOUCHES SCREEN
                     startY = touchedY
+                    view.performClick()
                 }
                 MotionEvent.ACTION_MOVE -> { // USER MOVES FINGER WHILE TOUCHING SCREEN
                     velocityTracker.addMovement(event) // Obtain speed of movement

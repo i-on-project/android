@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_exams.view.*
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import org.ionproject.android.R
+import org.ionproject.android.calendar.export
 import org.ionproject.android.calendar.jdcalendar.day
 import org.ionproject.android.calendar.jdcalendar.month
 import org.ionproject.android.calendar.jdcalendar.year
@@ -31,6 +32,7 @@ class ExamsListAdapter(
     class ExamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val examTextView = view.textview_list_item_exams
+        private val exportButton = view.button_list_item_exams_export
 
         fun bindTo(exam: Exam) {
             examTextView.text = view.resources.getString(
@@ -40,6 +42,9 @@ class ExamsListAdapter(
                 exam.endDate.month,
                 exam.endDate.year
             )
+            exportButton.setOnClickListener {
+                exam.export(it.context)
+            }
         }
     }
 }

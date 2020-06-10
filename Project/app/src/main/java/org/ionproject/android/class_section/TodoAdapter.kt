@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_label.view.*
 import kotlinx.android.synthetic.main.list_item_todos.view.*
 import org.ionproject.android.R
+import org.ionproject.android.calendar.export
 import org.ionproject.android.calendar.jdcalendar.*
 import org.ionproject.android.common.model.Todo
 import org.ionproject.android.common.model.fillWithZero
@@ -31,6 +32,7 @@ class TodoAdapter(
 
         private val todoTextView = view.textview_list_item_todos
         private val attachmentTextView = view.textview_list_item_todos_attachment
+        private val exportButton = view.button_list_item_todos_export
 
         fun bindTo(todo: Todo) {
             todoTextView.text = view.resources.getString(
@@ -43,6 +45,9 @@ class TodoAdapter(
                 todo.due.minute.fillWithZero()
             )
             attachmentTextView.text = todo.attachment.toString()
+            exportButton.setOnClickListener {
+                todo.export(it.context)
+            }
         }
     }
 }

@@ -3,7 +3,9 @@ package org.ionproject.android.calendar
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import org.ionproject.android.R
 import org.ionproject.android.calendar.jdcalendar.weekDaysUntil
 import org.ionproject.android.common.model.Exam
 import org.ionproject.android.common.model.Lecture
@@ -21,9 +23,9 @@ fun Lecture.export(context: Context) {
     val start = this.start
     val weekDay = this.weekDay
 
-    if (duration != null && endDate != null && start != null && weekDay != null) {
-        val startMillis = start.timeInMillis
-        val numberOfLectures = start.weekDaysUntil(endDate)
+    val startMillis = start.timeInMillis
+    val numberOfLectures = start.weekDaysUntil(endDate)
+    if (numberOfLectures > 0) {
         val endMillis = Calendar.getInstance().run {
             this.time = start.time
             this.add(Calendar.HOUR, duration.hours)
@@ -45,41 +47,40 @@ fun Lecture.export(context: Context) {
                 CalendarContract.Events.AVAILABILITY_BUSY
             )
         startActivity(context, intent, null)
+    } else {
+        Toast.makeText(context,context.resources.getString(R.string.warning_no_more_classes),Toast.LENGTH_SHORT).show()
     }
 }
 
+
 fun Todo.export(context: Context) {
     val startEndMillis = this.due?.timeInMillis
-    if (startEndMillis != null) {
-        val intent = Intent(Intent.ACTION_INSERT)
-            .setData(CalendarContract.Events.CONTENT_URI)
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startEndMillis)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startEndMillis)
-            .putExtra(CalendarContract.Events.TITLE, this.summary)
-            .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
-            .putExtra(
-                CalendarContract.Events.AVAILABILITY,
-                CalendarContract.Events.AVAILABILITY_BUSY
-            )
-        startActivity(context, intent, null)
-    }
+    val intent = Intent(Intent.ACTION_INSERT)
+        .setData(CalendarContract.Events.CONTENT_URI)
+        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startEndMillis)
+        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startEndMillis)
+        .putExtra(CalendarContract.Events.TITLE, this.summary)
+        .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
+        .putExtra(
+            CalendarContract.Events.AVAILABILITY,
+            CalendarContract.Events.AVAILABILITY_BUSY
+        )
+    startActivity(context, intent, null)
 }
 
 fun Exam.export(context: Context) {
     val startMillis = this.startDate?.timeInMillis
     val endMillis = this.endDate?.timeInMillis
-    if (startMillis != null && endMillis != null) {
-        val intent = Intent(Intent.ACTION_INSERT)
-            .setData(CalendarContract.Events.CONTENT_URI)
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
-            .putExtra(CalendarContract.Events.TITLE, this.summary)
-            .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
-            .putExtra(
-                CalendarContract.Events.AVAILABILITY,
-                CalendarContract.Events.AVAILABILITY_BUSY
-            )
-        startActivity(context, intent, null)
-    }
+    val intent = Intent(Intent.ACTION_INSERT)
+        .setData(CalendarContract.Events.CONTENT_URI)
+        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
+        .putExtra(CalendarContract.Events.TITLE, this.summary)
+        .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
+        .putExtra(
+            CalendarContract.Events.AVAILABILITY,
+            CalendarContract.Events.AVAILABILITY_BUSY
+        )
+    startActivity(context, intent, null)
 }
 
