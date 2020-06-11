@@ -56,35 +56,50 @@ fun Lecture.export(context: Context) {
     }
 }
 
-
 fun Todo.export(context: Context) {
-    val startEndMillis = this.due.timeInMillis
-    val intent = Intent(Intent.ACTION_INSERT)
-        .setData(CalendarContract.Events.CONTENT_URI)
-        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startEndMillis)
-        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startEndMillis)
-        .putExtra(CalendarContract.Events.TITLE, this.summary)
-        .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
-        .putExtra(
-            CalendarContract.Events.AVAILABILITY,
-            CalendarContract.Events.AVAILABILITY_BUSY
-        )
-    startActivity(context, intent, null)
+    if (this.due.before(Calendar.getInstance())) {
+        val startEndMillis = this.due.timeInMillis
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startEndMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, startEndMillis)
+            .putExtra(CalendarContract.Events.TITLE, this.summary)
+            .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
+            .putExtra(
+                CalendarContract.Events.AVAILABILITY,
+                CalendarContract.Events.AVAILABILITY_BUSY
+            )
+        startActivity(context, intent, null)
+    } else {
+        Toast.makeText(
+            context,
+            context.resources.getString(R.string.warning_due_date_has_passed),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
 
 fun Exam.export(context: Context) {
-    val startMillis = this.startDate.timeInMillis
-    val endMillis = this.endDate.timeInMillis
-    val intent = Intent(Intent.ACTION_INSERT)
-        .setData(CalendarContract.Events.CONTENT_URI)
-        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
-        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
-        .putExtra(CalendarContract.Events.TITLE, this.summary)
-        .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
-        .putExtra(
-            CalendarContract.Events.AVAILABILITY,
-            CalendarContract.Events.AVAILABILITY_BUSY
-        )
-    startActivity(context, intent, null)
+    if (this.startDate.before(Calendar.getInstance())) {
+        val startMillis = this.startDate.timeInMillis
+        val endMillis = this.endDate.timeInMillis
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
+            .putExtra(CalendarContract.Events.TITLE, this.summary)
+            .putExtra(CalendarContract.Events.DESCRIPTION, this.description)
+            .putExtra(
+                CalendarContract.Events.AVAILABILITY,
+                CalendarContract.Events.AVAILABILITY_BUSY
+            )
+        startActivity(context, intent, null)
+    } else {
+        Toast.makeText(
+            context,
+            context.resources.getString(R.string.warning_start_date_has_passed),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
 

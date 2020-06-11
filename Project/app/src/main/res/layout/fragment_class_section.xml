@@ -157,7 +157,7 @@
         tools:listitem="@layout/list_item_exams" />
 
     <TextView
-        android:id="@+id/textView_class_section_Todos"
+        android:id="@+id/textView_class_section_todos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"
@@ -182,7 +182,7 @@
 
 
     <TextView
-        android:id="@+id/textView_class_section_Journals"
+        android:id="@+id/textView_class_section_journals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"

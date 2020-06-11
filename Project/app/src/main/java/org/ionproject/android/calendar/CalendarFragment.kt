@@ -15,6 +15,7 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Events
+import org.ionproject.android.common.replaceView
 
 class CalendarFragment : Fragment() {
     /**

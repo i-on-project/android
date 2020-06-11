@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.MainActivity
 import org.ionproject.android.R
+import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity
 
 const val ROOT_KEY = "m0192exe1gxe12x1"
@@ -19,6 +21,7 @@ class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
+        linearlayout_activity_loading.addGradientBackground()
 
         // If JsonHome contains all required resources then open main activity else app must be outdated
         loadingViewModel.observeRootLiveData(this) {

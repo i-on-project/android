@@ -1,4 +1,4 @@
-package org.ionproject.android.calendar
+package org.ionproject.android.common
 
 import android.view.View
 import android.view.ViewGroup

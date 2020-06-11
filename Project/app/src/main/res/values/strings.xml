@@ -97,4 +97,6 @@
     <string name="warning_no_more_classes">There are no more classes left this semester</string>
     <string name="label_outdated_app">Application seems to be outdated :(</string>
     <string name="loading_i_on">Loading i-on</string>
+    <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
+    <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
 </resources>

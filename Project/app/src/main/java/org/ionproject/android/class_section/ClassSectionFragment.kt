@@ -90,6 +90,7 @@ class ClassSectionFragment : Fragment() {
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
+        setupSectionsBehaviour()
     }
 
     /**
@@ -183,4 +184,36 @@ class ClassSectionFragment : Fragment() {
             }
         }
     }
+
+    private fun setupSectionsBehaviour() {
+        textView_class_section_lectures.setOnClickListener {
+            if (recyclerview_class_section_lectures.visibility == View.VISIBLE)
+                recyclerview_class_section_lectures.visibility = View.GONE
+            else
+                recyclerview_class_section_lectures.visibility = View.VISIBLE
+        }
+
+        textView_class_section_exams.setOnClickListener {
+            if (recyclerview_class_section_exams.visibility == View.VISIBLE)
+                recyclerview_class_section_exams.visibility = View.GONE
+            else
+                recyclerview_class_section_exams.visibility = View.VISIBLE
+        }
+
+        textView_class_section_todos.setOnClickListener {
+            if (recyclerview_class_section_todos.visibility == View.VISIBLE)
+                recyclerview_class_section_todos.visibility = View.GONE
+            else
+                recyclerview_class_section_todos.visibility = View.VISIBLE
+        }
+
+        textView_class_section_journals.setOnClickListener {
+            if (recyclerview_class_section_journals.visibility == View.VISIBLE)
+                recyclerview_class_section_journals.visibility = View.GONE
+            else
+                recyclerview_class_section_journals.visibility = View.VISIBLE
+        }
+    }
+
+
 }
