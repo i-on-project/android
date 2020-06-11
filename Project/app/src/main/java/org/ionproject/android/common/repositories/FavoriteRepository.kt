@@ -73,6 +73,17 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
         favoriteDao.findFavoritesFromCalendarTerm(calendarTerm.name)
 
     /**
+     * Obtains all favorite from a calendar term
+     *
+     * @param curricularTerm the string representation of a calendar term
+     * @return a LiveData list of favorites from a specific term
+     */
+    suspend fun suspendGetFavoritesFromTerm(calendarTerm: CalendarTerm) =
+        withContext(Dispatchers.IO) {
+            favoriteDao.suspendFindFavoritesFromCalendarTerm(calendarTerm.name)
+        }
+
+    /**
      * Checks if a favorite exist
      */
     suspend fun isClassFavorite(classSummary: ClassSummary): Boolean {

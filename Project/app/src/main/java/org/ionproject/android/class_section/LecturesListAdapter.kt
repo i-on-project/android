@@ -4,32 +4,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_label.view.*
+import kotlinx.android.synthetic.main.list_item_lectures.view.*
 import org.ionproject.android.R
+import org.ionproject.android.calendar.export
 import org.ionproject.android.common.model.Lecture
+import org.ionproject.android.common.model.Moment
+import org.ionproject.android.common.model.fillWithZero
 
 class LecturesListAdapter(
     private val model: ClassSectionViewModel
-) : RecyclerView.Adapter<LecturesListAdapter.LecturesViewHolder>() {
+) : RecyclerView.Adapter<LecturesListAdapter.LectureViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LecturesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LectureViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_label, parent, false)
-        return LecturesViewHolder(view)
+            .inflate(R.layout.list_item_lectures, parent, false)
+        return LectureViewHolder(view)
     }
 
     override fun getItemCount(): Int = model.lectures.size
 
-    override fun onBindViewHolder(holder: LecturesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LectureViewHolder, position: Int) {
         holder.bindTo(model.lectures[position])
     }
 
-    class LecturesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class LectureViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        private val lectureSummary = view.textView_label_example
+        private val lectureTextView = view.textview_list_item_lectures
+        private val exportButton = view.button_list_item_lectures_export
 
         fun bindTo(lecture: Lecture) {
-            lectureSummary.text = lecture.summary
+            val startMoment = Moment.fromCalendar(lecture.start)
+            val endMoment = startMoment + lecture.duration
+
+            lectureTextView.text = view.resources.getString(
+                R.string.placeholder_lecture,
+                lecture.summary,
+                lecture.weekDay.getName(view.context),
+                startMoment.hours.fillWithZero(),
+                startMoment.minutes.fillWithZero(),
+                endMoment.hours.fillWithZero(),
+                endMoment.minutes.fillWithZero()
+            )
+
+            exportButton.setOnClickListener {
+                lecture.export(it.context)
+            }
         }
     }
 }

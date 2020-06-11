@@ -8,18 +8,27 @@ import java.util.*
  */
 class Journal(
     uid: String,
-    summary: String?,
+    summary: String,
     description: String?,
-    val lastModification: Calendar?
+    val lastModification: Calendar
 ) : Event("Journal", uid, summary, description)
 
 /**
  * Creates an [Journal] event
  */
-fun createJournal(properties: ComponentProperties) =
-    Journal(
-        uid = properties.uid.value[0],
-        summary = properties.summary?.value?.get(0),
-        description = properties.description?.value?.get(0),
-        lastModification = properties.dtstamp?.value?.get(0)?.toCalendar()
-    )
+fun createJournal(properties: ComponentProperties): Journal {
+    val uid = properties.uid.value[0]
+    val summary = properties.summary?.value?.get(0)
+    val description = properties.description?.value?.get(0)
+    val lastModification = properties.dtstamp?.value?.get(0)?.toCalendar()
+
+    if (summary != null && description != null && lastModification != null) {
+        return Journal(
+            uid,
+            summary,
+            description,
+            lastModification
+        )
+    }
+    throw IllegalArgumentException("Found a null field while creating a journal")
+}

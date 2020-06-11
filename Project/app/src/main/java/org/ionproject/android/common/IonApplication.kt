@@ -31,6 +31,7 @@ class IonApplication : Application() {
         lateinit var workerRepository: WorkerRepository private set
         lateinit var workerManagerFacade: WorkerManagerFacade private set
         lateinit var eventsRepository: EventsRepository
+        lateinit var rootRepository: RootRepository private set
     }
 
     override fun onCreate() {
@@ -93,6 +94,9 @@ class IonApplication : Application() {
             SuggestionsMockRepository(db)
         eventsRepository =
             EventsRepository(webAPI)
+        rootRepository = RootRepository(ionWebAPI)
+
+
     }
 
 }

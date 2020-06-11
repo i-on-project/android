@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
@@ -38,7 +38,7 @@ class ClassSectionFragment : Fragment() {
      * Obtaining Class Section's View Model
      */
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             ClassSectionViewModelProvider()
         )[ClassSectionViewModel::class.java]
@@ -62,7 +62,7 @@ class ClassSectionFragment : Fragment() {
      * Work assignments's adapter
      */
     private val workAssignmentsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        WorkAssignmentsAdapter(viewModel)
+        TodoAdapter(viewModel)
     }
 
     /**
@@ -90,6 +90,7 @@ class ClassSectionFragment : Fragment() {
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
+        setupSectionsBehaviour()
     }
 
     /**
@@ -101,6 +102,7 @@ class ClassSectionFragment : Fragment() {
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
         val calendarTermTextView = textView_class_section_calendar_term
+        val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
         viewModel.getClassSectionDetails(currClassSummary) {
@@ -109,7 +111,7 @@ class ClassSectionFragment : Fragment() {
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained
-            setupCheckboxBehaviour(checkbox_class_section_favorite)
+            setupCheckboxBehaviour(checkBox)
 
             requestEvents(it.calendarURI)
         }
@@ -182,4 +184,36 @@ class ClassSectionFragment : Fragment() {
             }
         }
     }
+
+    private fun setupSectionsBehaviour() {
+        textView_class_section_lectures.setOnClickListener {
+            if (recyclerview_class_section_lectures.visibility == View.VISIBLE)
+                recyclerview_class_section_lectures.visibility = View.GONE
+            else
+                recyclerview_class_section_lectures.visibility = View.VISIBLE
+        }
+
+        textView_class_section_exams.setOnClickListener {
+            if (recyclerview_class_section_exams.visibility == View.VISIBLE)
+                recyclerview_class_section_exams.visibility = View.GONE
+            else
+                recyclerview_class_section_exams.visibility = View.VISIBLE
+        }
+
+        textView_class_section_todos.setOnClickListener {
+            if (recyclerview_class_section_todos.visibility == View.VISIBLE)
+                recyclerview_class_section_todos.visibility = View.GONE
+            else
+                recyclerview_class_section_todos.visibility = View.VISIBLE
+        }
+
+        textView_class_section_journals.setOnClickListener {
+            if (recyclerview_class_section_journals.visibility == View.VISIBLE)
+                recyclerview_class_section_journals.visibility = View.GONE
+            else
+                recyclerview_class_section_journals.visibility = View.VISIBLE
+        }
+    }
+
+
 }

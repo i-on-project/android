@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,7 +25,7 @@ import org.ionproject.android.common.model.CalendarTerm
 class FavoritesFragment : Fragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             FavoritesViewModelProvider()
         )[FavoritesViewModel::class.java]
@@ -93,6 +93,8 @@ class FavoritesFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner) {
+        viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
+
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item
         )

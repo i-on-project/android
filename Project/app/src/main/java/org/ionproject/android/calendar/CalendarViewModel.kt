@@ -12,6 +12,7 @@ import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import java.net.URI
 
 class CalendarViewModel(
     private val favoriteRepository: FavoriteRepository,
@@ -24,11 +25,12 @@ class CalendarViewModel(
      * Gets all favorites found on local database that have been chosen by the user
      */
     fun getFavoriteClassesFromCurrentTerm(
+        calendarTermsUri: URI,
         lifecycleOwner: LifecycleOwner,
         onResult: (List<Favorite>) -> Unit
     ) {
         viewModelScope.launch {
-            val currentTerm = calendarTermRepository.getAllCalendarTerm().first()
+            val currentTerm = calendarTermRepository.getAllCalendarTerm(calendarTermsUri).first()
             val favorites = favoriteRepository.getFavoritesFromTerm(currentTerm)
             favorites.observe(lifecycleOwner, Observer { onResult(it) })
         }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +38,8 @@ class CoursesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Obtaining view model
-        val viewModel = ViewModelProviders
-            .of(this, CoursesViewModelProvider())[CoursesViewModel::class.java]
+        val viewModel =
+            ViewModelProvider(this, CoursesViewModelProvider())[CoursesViewModel::class.java]
 
         //Courses List Setup
         val coursesListAdapter = CoursesListAdapter(viewModel, sharedViewModel)

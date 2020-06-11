@@ -1,14 +1,17 @@
 package org.ionproject.android
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -17,8 +20,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-
-const val TAG = "Ion-Android"
+import org.ionproject.android.common.addGradientBackground
+import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.ROOT_KEY
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val sharedViewModel: SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProviders.of(
+        ViewModelProvider(
             this,
             SharedViewModelProvider()
         )[SharedViewModel::class.java]
@@ -45,10 +49,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setupTopBarBehaviour()
-        setupBottomBarBehaviour()
-        setupBackButton()
+        constraintlayout_mainactivity.addGradientBackground()
+        val root = intent.getParcelableExtra<Root>(ROOT_KEY)
+        if (root != null) {
+            sharedViewModel.root = root
+            setupTopBarBehaviour()
+            setupBottomBarBehaviour()
+            setupBackButton()
+        } else {
+            throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
+        }
     }
 
     /**
@@ -57,9 +67,22 @@ class MainActivity : AppCompatActivity() {
      * when the back button is pressed the navigation controller navigates
      * to the previous destination.
      */
+    @SuppressLint("SourceLockedOrientationActivity")
     private fun setupBackButton() {
         onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()
+
+            /*
+             This ensures that if the user clicks the back button from android instead of
+             the back button inside the schedule fragment, the top bar and bottom bar
+             are added again.
+             */
+            val actionBar = supportActionBar
+            if (actionBar != null && !actionBar.isShowing) {
+                actionBar.show()
+                bottomnavview_main?.visibility = View.VISIBLE
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
         }
     }
 
@@ -199,7 +222,6 @@ class MainActivity : AppCompatActivity() {
          * Passing each menu ID as a set of Ids because each
          * menu should be considered as top level destinations.
          */
-
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_favorites,

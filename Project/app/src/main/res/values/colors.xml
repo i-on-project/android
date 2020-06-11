@@ -5,9 +5,11 @@
     <color name="primaryDarkColor">#6e0000</color>
     <color name="secondaryColor">#333333</color>
     <color name="secondaryLightColor">#5c5c5c</color>
+    <color name="secondaryColorV2">#939598</color>
     <color name="secondaryDarkColor">#0c0c0c</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="bottomBackgroundGradientColor">#f8f2f1</color>
 </resources>
 
 <!--

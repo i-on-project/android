@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".class_section.ClassSectionFragment">
 
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_class_section_top_section"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"
-        android:padding="@dimen/fragments_padding_20">
+        android:padding="@dimen/fragments_padding_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="3dp"
+        >
 
         <CheckBox
             android:id="@+id/checkbox_class_section_favorite"
@@ -24,60 +27,61 @@
             android:button="@drawable/selector_favorite_24dp"
             android:contentDescription="@string/imageView_favorite"
             app:buttonTint="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!-- Class Name -->
         <TextView
             android:id="@+id/textview_class_section_class_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_course"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/textView_class_section_class"
             android:text="@string/label_class"
             android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/all_text_25" />
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_course"
+            app:layout_constraintEnd_toStartOf="@id/textView_class_section_class"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView_class_section_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/textview_class_section_class_label"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textView_class_section_course"
             android:layout_marginStart="5dp"
             android:text="LI52D"
-            android:textSize="@dimen/all_text_25"
             android:textColor="@color/primaryTextColor"
-            />
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/textView_class_section_course"
+            app:layout_constraintStart_toEndOf="@id/textview_class_section_class_label"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Course Name -->
         <TextView
             android:id="@+id/textview_class_section_label_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textview_class_section_class_label"
-            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_calendar_term"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/textView_class_section_course"
             android:text="@string/label_course"
-            android:textSize="@dimen/all_text_18"
             android:textColor="@color/primaryTextColor"
-            />
+            android:textSize="@dimen/all_text_18"
+            app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_calendar_term"
+            app:layout_constraintEnd_toStartOf="@id/textView_class_section_course"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_class_section_class_label" />
+
         <TextView
             android:id="@+id/textView_class_section_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/textview_class_section_label_course"
-            app:layout_constraintTop_toBottomOf="@id/textView_class_section_class"
-            app:layout_constraintBottom_toTopOf="@id/textView_class_section_calendar_term"
             android:layout_marginStart="5dp"
             android:text="PG"
-            android:textSize="@dimen/all_text_18"
             android:textColor="@color/primaryTextColor"
-            />
+            android:textSize="@dimen/all_text_18"
+            app:layout_constraintBottom_toTopOf="@id/textView_class_section_calendar_term"
+            app:layout_constraintStart_toEndOf="@id/textview_class_section_label_course"
+            app:layout_constraintTop_toBottomOf="@id/textView_class_section_class" />
 
         <!-- Calendar Term -->
         <TextView
@@ -92,6 +96,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textView_class_section_calendar_term"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_class_section_label_course" />
+
         <TextView
             android:id="@+id/textView_class_section_calendar_term"
             android:layout_width="wrap_content"
@@ -99,93 +104,106 @@
             android:text="s1819v"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_18"
-            app:layout_constraintTop_toBottomOf="@id/textView_class_section_course"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/textView_class_section_calendar_term"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/textView_class_section_course" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Bottom Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_class_section_bottom_section"
+    <TextView
+        android:id="@+id/textView_class_section_lectures"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_class_section_top_section">
+        android:background="@color/primaryLightColor"
+        android:drawableEnd="@drawable/ic_menu_book_white_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
+        android:text="@string/label_lectures"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/all_text_18"
+        android:elevation="@dimen/all_sections_3"
+        />
 
-        <LinearLayout
-            android:id="@+id/linearLayout_class_section_labels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_class_section_lectures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_lectures" />
 
-            <TextView
-                android:id="@+id/textView_class_section_lectures"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_lectures"
-                android:textSize="@dimen/all_text_18" />
+    <TextView
+        android:id="@+id/textView_class_section_exams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:drawableEnd="@drawable/ic_assignment_white_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
+        android:text="@string/label_exams"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/all_text_18"
+        android:elevation="3dp"
+        />
 
-            <TextView
-                android:id="@+id/textView_class_section_exams"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_exams"
-                android:textSize="@dimen/all_text_18" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_class_section_exams"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_exams" />
 
-            <TextView
-                android:id="@+id/textView_class_section_Todos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_todo"
-                android:textSize="@dimen/all_text_18" />
+    <TextView
+        android:id="@+id/textView_class_section_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:drawableEnd="@drawable/ic_assignment_turned_in_white_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
+        android:text="@string/label_todo"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/all_text_18"
+        android:elevation="3dp"
+        />
 
-            <TextView
-                android:id="@+id/textView_class_section_Journals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_journals"
-                android:textSize="@dimen/all_text_18" />
-        </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_class_section_todos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_todos" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout_class_section_values"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="@id/linearLayout_class_section_labels"
-            app:layout_constraintStart_toEndOf="@id/linearLayout_class_section_labels">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_class_section_lectures"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/list_item_label" />
+    <TextView
+        android:id="@+id/textView_class_section_journals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:drawableEnd="@drawable/ic_message_white_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingBottom="@dimen/sections_padding_8"
+        android:text="@string/label_journals"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/all_text_18"
+        android:elevation="3dp"
+        />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_class_section_exams"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/list_item_label" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_class_section_journals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_journals" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_class_section_todos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/list_item_label" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_class_section_journals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/list_item_label" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</org.ionproject.android.common.SwipeRightLinearLayout>

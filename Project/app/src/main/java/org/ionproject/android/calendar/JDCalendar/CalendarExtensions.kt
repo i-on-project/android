@@ -45,6 +45,7 @@ val Calendar.isToday: Boolean
 
 const val NUMBER_OF_WEEK_DAYS = 7
 
+
 /**
  * Returns a new calendar instance which
  * has been advanced N days from the day

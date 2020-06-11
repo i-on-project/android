@@ -1,5 +1,6 @@
 package org.ionproject.android
 
+import org.ionproject.android.common.model.Moment
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,6 +14,10 @@ class ExampleUnitTest {
 
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val moment = Moment.ThirtyMinutes
+
+        val newMoment = moment + Moment.ThirtyMinutes
+
+        assertEquals(1, newMoment.hours)
     }
 }

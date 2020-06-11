@@ -8,12 +8,12 @@ import java.util.*
  */
 class Lecture(
     uid: String,
-    summary: String? = null,
-    description: String? = null,
-    val start: Calendar? = null,
-    val endDate: Calendar? = null,
-    val duration: Duration? = null,
-    val weekDay: String? = null
+    summary: String,
+    description: String,
+    val start: Calendar,
+    val duration: Moment,
+    val endDate: Calendar,
+    val weekDay: WeekDay
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -25,27 +25,41 @@ class Lecture(
 /**
  * Creates an [Lecture] event
  */
-fun createLecture(properties: ComponentProperties) =
-    Lecture(
-        uid = properties.uid.value[0],
-        summary = properties.summary?.value?.get(0),
-        description = properties.description?.value?.get(0),
-        start = properties.dtstart?.value?.get(0)?.toCalendar(),
-        endDate = properties.rrule?.value?.until?.toCalendar(),
-        duration = properties.duration?.value?.get(0)?.toDuration(),
-        weekDay = properties.rrule?.value?.byDay?.get(0)
-    )
+fun createLecture(properties: ComponentProperties): Lecture {
+    val uid = properties.uid.value[0]
+    val summary = properties.summary?.value?.get(0)
+    val description = properties.description?.value?.get(0)
+    val start = properties.dtstart?.value?.get(0)?.toCalendar()
+    val duration = properties.duration?.value?.get(0)?.toMoment()
+    val endDate = properties.rrule?.value?.until?.toCalendar()
+    val weekDay = properties.rrule?.value?.byDay?.get(0)
 
-/**
- * Extended method in order to map information about a [Lecture]'s duration
- * to an [Duration] class.
- * Every duration information should be with this format: PT03H:00M:00S
- */
-fun String.toDuration(): Duration? {
-    val duration = this.split("PT", "H", "M", "S")
-    return Duration(
-        Integer.valueOf(duration[1]),
-        Integer.valueOf(duration[2]),
-        Integer.valueOf(duration[3])
-    )
+    if (summary != null && description != null && start != null && endDate != null && duration != null && weekDay != null) {
+        return Lecture(
+            uid,
+            summary,
+            description,
+            start,
+            duration,
+            endDate,
+            WeekDay.byShortName(weekDay)
+        )
+    }
+    throw IllegalArgumentException("Found a null field while creating a lecture")
+
 }
+
+private fun String?.toMoment(): Moment? {
+    val hoursEndIdx = this?.indexOf("H")
+    val minutesIdx = this?.indexOf("M")
+
+    if (hoursEndIdx != null && minutesIdx != null) {
+        val hours = this?.substring(hoursEndIdx - 2, hoursEndIdx)?.toInt()
+        val minutes = this?.substring(minutesIdx - 2, minutesIdx)?.toInt()
+        if (hours != null && minutes != null)
+            return Moment(hours, minutes)
+    }
+    return null
+}
+
+

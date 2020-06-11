@@ -4,10 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.common.model.ProgrammeOffer
-import org.ionproject.android.common.model.ProgrammeOfferSummary
-import org.ionproject.android.common.model.ProgrammeSummary
+import org.ionproject.android.common.model.*
 
 /**
  * This view model is used to shared information between fragments and the main activity,
@@ -25,6 +22,12 @@ class SharedViewModel : ViewModel() {
     fun setQueryText(searchQuery: String) {
         searchText.postValue(searchQuery)
     }
+
+    /**
+     * [Root] used check for the existence of resources
+     */
+    lateinit var root: Root
+
 
     /**
      * programmeOffer is used to pass data from [org.ionproject.android.courses.CoursesFragment]

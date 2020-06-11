@@ -6,13 +6,10 @@ import org.ionproject.android.common.db.CalendarTermDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.toCalendarTermList
+import org.ionproject.android.common.toCalendarTermList
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI
-
-//TODO This should not be hardcoded, otherwise if its altered we have to refactor the code
-private val CALENDAR_TERMS_URI = URI("/v0/calendar-terms")
 
 class CalendarTermRepository(
     private val ionWebAPI: IIonWebAPI,
@@ -23,13 +20,13 @@ class CalendarTermRepository(
     /**
      * Obtains all calendar terms from the IonWebAPI
      */
-    suspend fun getAllCalendarTerm(): List<CalendarTerm> =
+    suspend fun getAllCalendarTerm(calendarTermsUri: URI): List<CalendarTerm> =
         withContext(Dispatchers.IO) {
             var calendarTerms = calendarTermDao.getAllCalendarTerms()
 
             if (calendarTerms.count() == 0) {
                 calendarTerms = ionWebAPI
-                    .getFromURI(CALENDAR_TERMS_URI, SirenEntity::class.java)
+                    .getFromURI(calendarTermsUri, SirenEntity::class.java)
                     .toCalendarTermList()
                 val workerId =
                     workerManagerFacade.enqueueWorkForAllCalendarTerms(WorkImportance.NOT_IMPORTANT)
@@ -40,5 +37,16 @@ class CalendarTermRepository(
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
             calendarTerms
+        }
+
+    suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =
+        withContext(Dispatchers.IO) {
+            val calendarTerms = getAllCalendarTerm(calendarTermsUri)
+            var mostRecentCalendarTerm = calendarTerms[0]
+            calendarTerms.forEach {
+                if (it.years > mostRecentCalendarTerm.years)
+                    mostRecentCalendarTerm = it
+            }
+            mostRecentCalendarTerm
         }
 }

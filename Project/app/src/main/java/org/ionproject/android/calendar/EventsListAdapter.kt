@@ -61,20 +61,19 @@ class EventsListAdapter(
             if (lecture.start != null && lecture.duration != null) {
                 eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
 
-                val hour = lecture.start.hour
-                val minute = lecture.start.minute
+                val startMoment = Moment.fromCalendar(lecture.start)
+                val endMoment = startMoment + lecture.duration
 
-                val duration = lecture.duration.copy()
-                duration.addHours(hour)
-                duration.addMinutes(minute)
-
-                eventExtraResult1.text =
-                    "${hour.fillWithZero()}:${minute.fillWithZero()}h -" +
-                            " ${duration.hours.fillWithZero()}:${duration.minutes.fillWithZero()}h"
-            }
-
-            eventExportButton.setOnClickListener {
-                lecture.export(it.context)
+                eventExtraResult1.text = view.resources.getString(
+                    R.string.placeholder_interval,
+                    startMoment.hours.fillWithZero(),
+                    startMoment.minutes.fillWithZero(),
+                    endMoment.hours.fillWithZero(),
+                    endMoment.minutes.fillWithZero()
+                )
+                eventExportButton.setOnClickListener {
+                    lecture.export(it.context)
+                }
             }
         }
 
@@ -84,32 +83,45 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
+            if (exam.startDate != null && exam.endDate != null) {
+                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
-            var day = exam.startDate?.day?.fillWithZero()
-            var month = (exam.startDate?.month?.plus(1))?.fillWithZero()
-            var year = exam.startDate?.year
+                var day = exam.startDate.day.fillWithZero()
+                var month = (exam.startDate.month.plus(1)).fillWithZero()
+                var year = exam.startDate.year.toString()
 
-            var hour = exam.startDate?.hour?.fillWithZero()
-            var minute = exam.startDate?.minute?.fillWithZero()
+                var hour = exam.startDate.hour.fillWithZero()
+                var minute = exam.startDate.minute.fillWithZero()
 
-            eventExtraResult1.text =
-                if (exam.startDate != null) "$day/$month/$year - $hour:${minute}h"
-                else "??/??:???? - ??:??h"
+                eventExtraResult1.text = view.resources.getString(
+                    R.string.placeholder_time,
+                    day,
+                    month,
+                    year,
+                    hour,
+                    minute
+                )
 
-            eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
-            day = exam.endDate?.day?.fillWithZero()
-            month = (exam.endDate?.month?.plus(1))?.fillWithZero()
-            year = exam.endDate?.year
+                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
 
-            hour = exam.endDate?.hour?.fillWithZero()
-            minute = exam.endDate?.minute?.fillWithZero()
+                day = exam.endDate.day.fillWithZero()
+                month = (exam.endDate.month.plus(1)).fillWithZero()
+                year = exam.endDate.year.toString()
 
-            eventExtraResult2.text =
-                if (exam.endDate != null) "$day/$month/$year - $hour:${minute}h"
-                else "??/??:???? - ??:??h"
-            eventExportButton.setOnClickListener {
-                exam.export(it.context)
+                hour = exam.endDate.hour.fillWithZero()
+                minute = exam.endDate.minute.fillWithZero()
+
+                eventExtraResult2.text = view.resources.getString(
+                    R.string.placeholder_time,
+                    day,
+                    month,
+                    year,
+                    hour,
+                    minute
+                )
+                eventExportButton.setOnClickListener {
+                    exam.export(it.context)
+                }
             }
         }
 
@@ -119,21 +131,28 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnTodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
+            if (todo.due != null) {
+                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
-            val day = todo.due?.day?.fillWithZero()
-            val month = todo.due?.month?.fillWithZero()
-            val year = todo.due?.year
+                val day = todo.due.day.fillWithZero()
+                val month = todo.due.month.fillWithZero()
+                val year = todo.due.year.toString()
 
-            val hour = todo.due?.hour?.fillWithZero()
-            val minute = todo.due?.minute?.fillWithZero()
-            val second = todo.due?.second?.fillWithZero()
+                val hour = todo.due.hour.fillWithZero()
+                val minute = todo.due.minute.fillWithZero()
+                val second = todo.due.second.fillWithZero()
 
-            eventExtraResult1.text =
-                if (todo.due != null) "$day/$month/$year - $hour:$minute:${second}h"
-                else "??/??:???? - ??:??h"
-            eventExportButton.setOnClickListener {
-                todo.export(it.context)
+                eventExtraResult1.text = view.resources.getString(
+                    R.string.placeholder_time,
+                    day,
+                    month,
+                    year,
+                    hour,
+                    minute
+                )
+                eventExportButton.setOnClickListener {
+                    todo.export(it.context)
+                }
             }
         }
 
