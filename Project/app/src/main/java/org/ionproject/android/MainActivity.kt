@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        constraintlayout_mainactivity.addGradientBackground()
+        main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
             sharedViewModel.root = root

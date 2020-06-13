@@ -17,6 +17,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 class IonApplication : Application() {
 
     companion object {
+        lateinit var ionMapper: JacksonIonMapper private set
         lateinit var programmesRepository: ProgrammesRepository private set
         lateinit var coursesRepository: CourseRepository private set
         lateinit var classesRepository: ClassesRepository private set
@@ -39,7 +40,7 @@ class IonApplication : Application() {
          * the singleton design pattern when instantiating an
          * AppDatabase object. Each RoomDatabase instance is fairly expensive.
          */
-        val db = Room.databaseBuilder(
+        db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "ion-database"
         ).build()
@@ -47,7 +48,7 @@ class IonApplication : Application() {
         // TODO Inject dependencies with dagger instead of here
 
         // Used to map string http responses to SirenEntities
-        val ionMapper = JacksonIonMapper()
+        ionMapper = JacksonIonMapper()
 
         // Using mocks
         val webAPI = MockIonWebAPI(ionMapper)
@@ -60,11 +61,9 @@ class IonApplication : Application() {
         val service: IonService = retrofit.create(IonService::class.java)
         val webAPI = IonWebAPI(service, ionMapper)*/
 
-        IonApplication.db = db
         ionWebAPI = webAPI
 
-        workerRepository =
-            WorkerRepository(db.workerDao())
+        workerRepository = WorkerRepository(db.workerDao())
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
         programmesRepository =
@@ -74,8 +73,7 @@ class IonApplication : Application() {
                 db.programmeOfferDao(),
                 workerManagerFacade
             )
-        coursesRepository =
-            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
+        coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
             ClassesRepository(
                 webAPI,
@@ -83,17 +81,12 @@ class IonApplication : Application() {
                 db.classSummaryDao(),
                 workerManagerFacade
             )
-        favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+        favoritesRepository = FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository =
-            SuggestionsMockRepository(db)
-        eventsRepository =
-            EventsRepository(webAPI)
+        suggestionsMockRepository = SuggestionsMockRepository(db)
+        eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
-
-
     }
 
 }

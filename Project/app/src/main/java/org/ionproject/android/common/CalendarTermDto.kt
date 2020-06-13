@@ -15,14 +15,9 @@ fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
             val name = embeddedEntity.properties?.get("name")
 
             if (name != null) {
-                val years = name.substring(0, 4).toInt()
+                val year = name.substring(0, 4).toInt()
                 val season = name.substring(4)
-                calendarTerms.add(
-                    CalendarTerm(
-                        years,
-                        season
-                    )
-                )
+                calendarTerms.add(CalendarTerm(year, season))
             }
         }
         return calendarTerms
