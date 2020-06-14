@@ -69,8 +69,5 @@ class CoursesFragment : Fragment() {
             else
                 (it as Button).text = it.resources.getString(R.string.mandatory_courses)
         }
-
     }
-
-
 }

@@ -12,7 +12,6 @@ import java.net.URI
  */
 fun SirenEntity.toCourse(): Course {
 
-
     val id = properties?.get("id")
     val acronym = properties?.get("acronym")
     val name = properties?.get("name")

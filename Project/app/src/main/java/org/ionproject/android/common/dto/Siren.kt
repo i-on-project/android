@@ -115,10 +115,7 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
          */
         return p.codec.treeToValue(
             node,
-            if (node.get("properties") != null ||
-                node.get("links") != null ||
-                node.get("actions") != null
-            ) EmbeddedEntity::class.java
+            if (node.get("properties") != null || node.get("links") != null) EmbeddedEntity::class.java
             else EmbeddedLink::class.java
         )
     }

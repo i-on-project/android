@@ -38,8 +38,7 @@ class CoursesListAdapter(
     class CourseViewHolder(
         private val view: View,
         private val sharedViewModel: SharedViewModel
-    ) :
-        RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
         private val courseButton = view.button_courses_list_item_course
 

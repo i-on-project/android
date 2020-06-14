@@ -28,17 +28,15 @@ class CourseRepository(
      */
     suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
         withContext(Dispatchers.IO) {
+            //TODO: ProgrammeOffer.id != course.id
             var course = courseDao.getCourseById(programmeOffer.id)
 
             if (course == null) {
-                course =
-                    ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
-                        .toCourse()
-                val workerId = workerManagerFacade.enqueueWorkForCourse(
-                    course,
-                    WorkImportance.IMPORTANT
-                )
+                course = ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java).toCourse()
+
+                val workerId = workerManagerFacade.enqueueWorkForCourse(course, WorkImportance.IMPORTANT)
                 course.workerId = workerId
+
                 courseDao.insertCourse(course)
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(course)
