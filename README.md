@@ -16,7 +16,7 @@ To test the application one must:
     
   ```kotlin
   val retrofit = Retrofit.Builder()
-              .baseUrl("http://10.0.2.2:8080/")
+              .baseUrl("https://host1.dev.ionproject.org")
               .addConverterFactory(ScalarsConverterFactory.create())
               .build()
 
