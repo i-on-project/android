@@ -51,6 +51,7 @@ data class ProgrammeWithOffers(
 @Entity
 data class ProgrammeOffer(
     @PrimaryKey val id: Int,
+    val courseID: Int,
     val acronym: String,
     val termNumber: Int,
     val optional: Boolean,

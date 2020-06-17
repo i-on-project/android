@@ -100,6 +100,7 @@ class FavoritesFragment : Fragment() {
         )
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
+            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(it)
         }
 
@@ -114,7 +115,7 @@ class FavoritesFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = viewModel.calendarTerms[position]
+                val selectedItem = spinner.getItemAtPosition(position) as CalendarTerm
                 //Searching for the favorites of the selected calendar term
                 viewModel.getFavoritesFromCalendarTerm(selectedItem)
             }

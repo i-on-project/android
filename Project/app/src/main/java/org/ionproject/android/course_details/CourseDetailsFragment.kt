@@ -98,7 +98,6 @@ class CourseDetailsFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
-
         viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
@@ -106,6 +105,7 @@ class CourseDetailsFragment : Fragment() {
         )
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
+            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(it)
         }
 

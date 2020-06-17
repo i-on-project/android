@@ -1,26 +1,18 @@
 package org.ionproject.android
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.runBlocking
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.JsonHome
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IonService
 import org.ionproject.android.common.ionwebapi.IonWebAPI
+import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.toCalendarTermList
-import org.ionproject.android.programmes.toProgrammeSummaryList
 import org.junit.Test
-import org.junit.runner.RunWith
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
 class WebAPITests {
 
     private val retrofit = Retrofit.Builder()
@@ -29,7 +21,7 @@ class WebAPITests {
         .build()
 
     private val service: IonService = retrofit.create(IonService::class.java)
-    val webAPI = IonWebAPI(service, IonApplication.ionMapper)
+    private val webAPI = IonWebAPI(service, JacksonIonMapper())
 
     @Test
     fun shouldGetRootResource() {
@@ -43,7 +35,8 @@ class WebAPITests {
     @Test
     fun shouldGetAllCalendarTerms() {
         val calendarTerms = runBlocking {
-            webAPI.getFromURI(URI("/v0/calendar-terms"), SirenEntity::class.java).toCalendarTermList()
+            webAPI.getFromURI(URI("/v0/calendar-terms"), SirenEntity::class.java)
+                .toCalendarTermList()
         }
 
         assert(calendarTerms.isNotEmpty())

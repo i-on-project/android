@@ -62,7 +62,7 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
                     )
                 )
             else
-                throw MappingFromSirenException("Cannot convert ${it} to ProgrammeOfferSummary")
+                throw MappingFromSirenException("Cannot convert $it to ProgrammeOfferSummary")
         }
         return ProgrammeWithOffers(
             programme = Programme(
@@ -78,7 +78,7 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
     throw MappingFromSirenException("Cannot convert $this to Programme")
 }
 
-fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
+fun SirenEntity.toProgrammeOffer(courseID: Int): ProgrammeOffer {
     val id = properties?.get("id")
     val acr = properties?.get("acronym")
     val termNumber = properties?.get("termNumber")
@@ -90,6 +90,7 @@ fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
     if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null && selfUri != null) {
         return ProgrammeOffer(
             id = id.toInt(),
+            courseID = courseID,
             acronym = acr,
             termNumber = termNumber.toInt(),
             optional = optional.toBoolean(),

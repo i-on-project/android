@@ -29,7 +29,7 @@ class ProgrammeOfferWorker(
             if (programmeOfferLocal != null) {
                 val programmeOfferServer =
                     ionWebAPI.getFromURI(programmeOfferLocal.selfUri, SirenEntity::class.java)
-                        .toProgrammeOffer()
+                        .toProgrammeOffer(programmeOfferLocal.courseID)
                 if (programmeOfferLocal != programmeOfferServer) {
                     programmeOfferDao.updateProgrammeOffer(programmeOfferServer)
                 }

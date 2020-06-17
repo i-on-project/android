@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.loading.ROOT_KEY
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setGlobalExceptionHandler()
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
@@ -244,6 +247,19 @@ class MainActivity : AppCompatActivity() {
          * destination changes.
          */
         bottomnavview_main.setupWithNavController(navController)
+    }
+
+    private fun setGlobalExceptionHandler() {
+        val oldHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { t: Thread?, e: Throwable ->
+            try {
+                navController.popBackStack() // PopBackStack has to be called, in order for the fragment to be destroyed
+                Toast.makeText(this, "${t?.name} threw ${e.message}", Toast.LENGTH_LONG).show()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+
     }
 
 }

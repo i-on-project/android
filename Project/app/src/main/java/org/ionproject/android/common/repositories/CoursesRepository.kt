@@ -28,8 +28,7 @@ class CourseRepository(
      */
     suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
         withContext(Dispatchers.IO) {
-            //TODO: ProgrammeOffer.id != course.id
-            var course = courseDao.getCourseById(programmeOffer.id)
+            var course = courseDao.getCourseById(programmeOffer.courseID)
 
             if (course == null) {
                 course = ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java).toCourse()
