@@ -1,6 +1,7 @@
 package org.ionproject.android.schedule
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.Lecture
@@ -9,6 +10,7 @@ import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import java.lang.IllegalArgumentException
 import java.net.URI
 
 const val NUMBER_OF_WEEK_DAYS = 7
@@ -20,6 +22,11 @@ class ScheduleViewModel(
     private val eventsRepository: EventsRepository
 ) : ViewModel() {
 
+    init {
+        viewModelScope.launch(Dispatchers.IO){
+            throw IllegalArgumentException("Schedule kaboom!!")
+        }
+    }
 
     private val lecturesLiveData = MutableLiveData<List<MutableList<Lecture>>>()
 

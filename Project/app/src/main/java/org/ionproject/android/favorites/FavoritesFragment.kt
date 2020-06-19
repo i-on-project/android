@@ -17,12 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_favorites.view.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : ExceptionHandlingFragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(

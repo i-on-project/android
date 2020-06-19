@@ -10,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_programmes.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import java.lang.IllegalArgumentException
 
-class ProgrammesFragment : Fragment() {
+class ProgrammesFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity

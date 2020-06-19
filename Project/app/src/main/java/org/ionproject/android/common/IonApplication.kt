@@ -1,11 +1,13 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import android.content.Intent
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import org.ionproject.android.error.ErrorActivity
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -30,10 +32,16 @@ class IonApplication : Application() {
         lateinit var workerManagerFacade: WorkerManagerFacade private set
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
+        lateinit var globalExceptionHandler: GlobalExceptionHandler private set
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        globalExceptionHandler = GlobalExceptionHandler { thread, throwable ->
+            val intent = Intent(applicationContext, ErrorActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
 
         /**
          * Our app runs in a single process therefore we follow

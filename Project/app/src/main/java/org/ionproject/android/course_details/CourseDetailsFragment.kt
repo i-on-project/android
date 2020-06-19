@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_course_details.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
@@ -22,7 +23,7 @@ import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
 
-class CourseDetailsFragment : Fragment() {
+class CourseDetailsFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
