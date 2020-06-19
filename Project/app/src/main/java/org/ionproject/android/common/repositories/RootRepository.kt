@@ -8,7 +8,7 @@ import java.net.URI
 
 
 // This uri has to be hardcoded there is no other way
-private val ROOT_URI_V0 = URI("/v0")
+private val ROOT_URI_V0 = URI("/")
 
 /**
  * Used to check the existence of i-on core Web API root endpoints. It does so by

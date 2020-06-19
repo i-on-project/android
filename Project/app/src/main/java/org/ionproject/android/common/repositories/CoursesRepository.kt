@@ -28,7 +28,7 @@ class CourseRepository(
      */
     suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
         withContext(Dispatchers.IO) {
-            var course = courseDao.getCourseById(programmeOffer.id)
+            var course = courseDao.getCourseById(programmeOffer.courseID)
 
             if (course == null) {
                 course =

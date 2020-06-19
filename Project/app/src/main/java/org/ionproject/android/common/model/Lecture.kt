@@ -1,5 +1,8 @@
 package org.ionproject.android.common.model
 
+import org.ionproject.android.calendar.jdcalendar.hour
+import org.ionproject.android.calendar.jdcalendar.minus
+import org.ionproject.android.calendar.jdcalendar.minute
 import org.ionproject.android.common.dto.ComponentProperties
 import java.util.*
 
@@ -26,22 +29,25 @@ class Lecture(
  * Creates an [Lecture] event
  */
 fun createLecture(properties: ComponentProperties): Lecture {
+    val values = properties.rrule?.value?.split(";")
+
     val uid = properties.uid.value[0]
     val summary = properties.summary?.value?.get(0)
     val description = properties.description?.value?.get(0)
-    val start = properties.dtstart?.value?.get(0)?.toCalendar()
-    val duration = properties.duration?.value?.get(0)?.toMoment()
-    val endDate = properties.rrule?.value?.until?.toCalendar()
-    val weekDay = properties.rrule?.value?.byDay?.get(0)
+    val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
+    val endDate = properties.dtend?.value?.get(0)?.toCalendar()
+    val untilDate = values?.get(1)?.split("=")?.get(1)?.toCalendar()
+    val weekDay = values?.get(2)?.split("=")?.get(1)
+    val duration = if (endDate != null && startDate != null) endDate - startDate else null
 
-    if (summary != null && description != null && start != null && endDate != null && duration != null && weekDay != null) {
+    if (summary != null && description != null && startDate != null && untilDate != null && duration != null && weekDay != null) {
         return Lecture(
             uid,
             summary,
             description,
-            start,
-            duration,
-            endDate,
+            startDate,
+            Moment(duration.hour, duration.minute),
+            untilDate,
             WeekDay.byShortName(weekDay)
         )
     }

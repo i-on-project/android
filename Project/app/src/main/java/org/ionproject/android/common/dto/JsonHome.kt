@@ -27,10 +27,10 @@ data class JsonHome(
         val iresourceProgrammes = getResourceByType(ResourceType.PROGRAMMES)
         val iresourceCalendarTerm = getResourceByType(ResourceType.CALENDAR_TERM)
         if (iresourceProgrammes != null && iresourceCalendarTerm != null) {
-            val programmesResource = iresourceProgrammes as HrefTemplateResource
+            val programmesResource = iresourceProgrammes as HrefResource
             val calendarTermsResource = iresourceCalendarTerm as HrefTemplateResource
             return Root(
-                programmesResource.hrefTemplate.uri,
+                programmesResource.href,
                 calendarTermsResource.hrefTemplate.uri
             )
         }

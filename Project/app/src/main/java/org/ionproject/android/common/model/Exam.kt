@@ -82,20 +82,3 @@ fun String?.toCalendar(): Calendar? {
     return null
 }
 
-/*fun String?.toMoment(): Moment? {
-    if (this.isNullOrEmpty())
-        return null
-
-    val calendar = Calendar.getInstance()
-    val date = formatter.parse(this)
-
-    if (date != null) {
-        calendar.time = date
-        return Moment(
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE)
-        )
-    }
-
-    return null
-}*/
