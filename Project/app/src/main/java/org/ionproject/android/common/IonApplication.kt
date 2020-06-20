@@ -4,13 +4,10 @@ import android.app.Application
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.IonService
-import org.ionproject.android.common.ionwebapi.IonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
 /**
@@ -53,15 +50,15 @@ class IonApplication : Application() {
         val ionMapper = JacksonIonMapper()
 
         // Using mocks
-        // val webAPI = MockIonWebAPI(ionMapper)
+        val webAPI = MockIonWebAPI(ionMapper)
 
-        val retrofit = Retrofit.Builder()
+        /*val retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val service: IonService = retrofit.create(IonService::class.java)
-        val webAPI = IonWebAPI(service, ionMapper)
+        val webAPI = IonWebAPI(service, ionMapper)*/
 
         IonApplication.db = db
         ionWebAPI = webAPI

@@ -87,7 +87,7 @@ class EventsListAdapter(
                 eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
                 var day = exam.startDate.day.fillWithZero()
-                var month = (exam.startDate.month.plus(1)).fillWithZero()
+                var month = (exam.startDate.month).fillWithZero()
                 var year = exam.startDate.year.toString()
 
                 var hour = exam.startDate.hour.fillWithZero()
@@ -105,7 +105,7 @@ class EventsListAdapter(
                 eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
 
                 day = exam.endDate.day.fillWithZero()
-                month = (exam.endDate.month.plus(1)).fillWithZero()
+                month = (exam.endDate.month).fillWithZero()
                 year = exam.endDate.year.toString()
 
                 hour = exam.endDate.hour.fillWithZero()

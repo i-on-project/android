@@ -15,8 +15,11 @@ import java.util.*
 /** Returns the current year at which this instance is at */
 val Calendar.year get() = get(Calendar.YEAR)
 
-/** Returns the current month at which this instance is at */
-val Calendar.month get() = get(Calendar.MONTH)
+/** Returns the current month at which this instance is at
+ * Since get(Calendar.MONTH) returns the month starting at 0, we have to add 1
+ * so that the month number is correctly represented
+ * */
+val Calendar.month get() = get(Calendar.MONTH).plus(1)
 
 /** Returns the current week at which this instance is at */
 val Calendar.week get() = get(Calendar.WEEK_OF_MONTH)
@@ -155,7 +158,7 @@ fun Calendar.weekDaysUntil(endDate: Calendar): Int {
 }
 
 /** Return the name of the month at which this instance is at */
-fun Calendar.getMonthName(ctx: Context) = Month.values()[month].getName(ctx)
+fun Calendar.getMonthName(ctx: Context) = Month.values()[month.minus(1)].getName(ctx)
 
 /**
  * Represents a Month and associated with each month is the resource from Strings.xml
