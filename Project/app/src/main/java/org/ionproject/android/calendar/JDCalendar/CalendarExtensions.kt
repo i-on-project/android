@@ -162,6 +162,7 @@ operator fun Calendar.minus(other: Calendar): Calendar {
     val end = timeInMillis
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = abs(end - start)
+    calendar.timeZone = TimeZone.getTimeZone("GMT")
     return calendar
 }
 
