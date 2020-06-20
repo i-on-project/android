@@ -3,11 +3,11 @@ package org.ionproject.android.common
 import android.app.Application
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.JacksonIonMapper
-import org.ionproject.android.common.ionwebapi.MockIonWebAPI
+import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
 /**
