@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import org.ionproject.android.common.model.*
 import org.ionproject.android.common.repositories.WorkerRepository
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 
@@ -23,6 +24,7 @@ const val CLASS_SUMMARIES_CALENDAR_TERM_KEY = "x20m3hxm2h8"
 const val CLASS_SECTION_ID_KEY = "x2r0hmh20"
 const val CLASS_SECTION_COURSE_KEY = "af2929ff2h9"
 const val CLASS_SECTION_CALENDAR_TERM_KEY = "m2hmx23x23m"
+const val RESOURCE_URI_KEY = "xgx0n2gdngx208"
 
 /**
  * Hides the complexity of launching workers with [WorkManager]
@@ -37,10 +39,12 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
      * to them and update the local database in case there are.
      */
     suspend fun enqueueWorkForAllProgrammeSummaries(
-        workImportance: WorkImportance
+        workImportance: WorkImportance,
+        programmeSummariesUri: URI
     ) = enqueueWorkWithInputData(
         workImportance,
-        ProgrammeSummariesWorker::class.java
+        ProgrammeSummariesWorker::class.java,
+        programmeSummariesUri
     )
 
     /**
@@ -54,6 +58,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     ) = enqueueWorkWithInputData(
         workImportance,
         ProgrammeWorker::class.java,
+        programme.selfUri,
         PROGRAMME_ID_KEY to programme.id
     )
 
@@ -68,6 +73,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     ) = enqueueWorkWithInputData(
         workImportance,
         ProgrammeOfferWorker::class.java,
+        programmeOffer.selfUri,
         PROGRAMME_OFFER_ID_KEY to programmeOffer.id
     )
 
@@ -82,6 +88,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     ) = enqueueWorkWithInputData(
         workImportance,
         CourseWorker::class.java,
+        course.selfUri,
         COURSE_DETAILS_ID_KEY to course.id
     )
 
@@ -96,6 +103,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     ) = enqueueWorkWithInputData(
         workImportance,
         ClassSummariesWorker::class.java,
+        classSummaries[0].selfUri,
         CLASS_SUMMARIES_COURSE_KEY to classSummaries[0].courseAcronym,
         CLASS_SECTION_CALENDAR_TERM_KEY to classSummaries[0].calendarTerm
     )
@@ -111,6 +119,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     ) = enqueueWorkWithInputData(
         workImportance,
         ClassSectionWorker::class.java,
+        classSection.selfUri,
         CLASS_SECTION_ID_KEY to classSection.id,
         CLASS_SECTION_CALENDAR_TERM_KEY to classSection.calendarTerm,
         CLASS_SECTION_COURSE_KEY to classSection.courseAcronym
@@ -122,10 +131,12 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
      * to them and update the local database in case there are.
      */
     suspend fun enqueueWorkForAllCalendarTerms(
-        workImportance: WorkImportance
+        workImportance: WorkImportance,
+        calendarTermsUri: URI
     ) = enqueueWorkWithInputData(
         workImportance,
-        CalendarTermsWorker::class.java
+        CalendarTermsWorker::class.java,
+        calendarTermsUri
     )
 
     /**
@@ -134,11 +145,13 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
      * @param repeatInterval is the frequency of the [PeriodicWorkRequest]
      * @param repeatIntervalTimeUnit is the time unit of the [repeatInterval] (e.g Minutes)
      * @param workerClass is the class of the worker
+     * @param resourceUri is the URI to obtain the resource from the Web API
      * @param inputData is the data to pass to the worker
      */
     private suspend fun <T : NumberedWorker> enqueueWorkWithInputData(
         workImportance: WorkImportance,
         workerClass: Class<T>,
+        resourceUri: URI,
         vararg inputData: Pair<String, Any>
     ): Int {
         val workerId = workerRepository.insertWorker(
@@ -163,6 +176,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
             .setInputData(
                 workDataOf(
                     WORKER_ID_KEY to workerId,
+                    RESOURCE_URI_KEY to resourceUri.toString(),
                     *inputData
                 )
             )
@@ -185,9 +199,9 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
 
 enum class WorkImportance {
     VERY_IMPORTANT {
-        override val repeatInterval: Long = 1
+        override val repeatInterval: Long = 8
         override val repeatIntervalTimeUnit: TimeUnit = TimeUnit.HOURS
-        override val numberOfJobs: Int = 168 // Number of hours in a week
+        override val numberOfJobs: Int = 21 // Number of 8 hour periods in a week
     },
     IMPORTANT {
         override val repeatInterval: Long = 1
