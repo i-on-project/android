@@ -32,18 +32,6 @@
             />
 
         <TextView
-            android:id="@+id/textview_course_details_year"
-
-            android:text="@string/label_year"
-            android:textColor="@color/primaryTextColor"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <TextView
             android:id="@+id/textview_course_details_semester"
 
             android:text="@string/label_semester"
@@ -52,8 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
-            app:layout_constraintStart_toEndOf="@id/textview_course_details_year"
-            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

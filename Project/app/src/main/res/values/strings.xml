@@ -78,6 +78,8 @@
     <string name="placeholder_interval">%1$s:%2$sh - %3$s:%4$sh</string>
     <string name="placeholder_time">%1$s/%2$s/%3$s %4$s:%5$sh</string>
 
+    <string name="placeholder_term">Term %1$d</string>
+
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>
@@ -99,4 +101,5 @@
     <string name="loading_i_on">Loading i-on</string>
     <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
     <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
+
 </resources>
