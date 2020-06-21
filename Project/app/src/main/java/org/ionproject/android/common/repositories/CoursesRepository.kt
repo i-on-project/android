@@ -31,9 +31,8 @@ class CourseRepository(
             var course = courseDao.getCourseById(programmeOffer.courseID)
 
             if (course == null) {
-                course =
-                    ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
-                        .toCourse()
+                course = ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
+                    .toCourse(programmeOffer.termNumber)
                 val workerId = workerManagerFacade.enqueueWorkForCourse(
                     course,
                     WorkImportance.IMPORTANT

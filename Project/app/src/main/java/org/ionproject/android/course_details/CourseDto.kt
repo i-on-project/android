@@ -10,9 +10,7 @@ import java.net.URI
 /**
  *  Converts from a [SirenEntity] to [Course]
  */
-fun SirenEntity.toCourse(): Course {
-
-
+fun SirenEntity.toCourse(term: Int): Course {
     val id = properties?.get("id")
     val acronym = properties?.get("acronym")
     val name = properties?.get("name")
@@ -26,6 +24,8 @@ fun SirenEntity.toCourse(): Course {
             id = id.toInt(),
             acronym = acronym,
             name = name,
+            year = getYear(term),
+            term = term,
             classesUri = classesLink,
             eventsUri = eventsLink,
             selfUri = selfUri
@@ -73,4 +73,16 @@ fun SirenEntity.toClassSummaryList(): List<ClassSummary> {
     }
     throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
 }
+
+/**
+ * Returns the year in which the course is taught
+ *
+ * @param term - the semester term in which the course is taught
+ */
+private fun getYear(term: Int): Int =
+    when(term) {
+        1, 2 -> 1
+        3, 4 -> 2
+        else -> 3
+    }
 

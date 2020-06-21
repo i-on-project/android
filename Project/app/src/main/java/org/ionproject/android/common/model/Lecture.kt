@@ -32,15 +32,15 @@ fun createLecture(properties: ComponentProperties): Lecture {
     val values = properties.rrule?.value?.split(";")
 
     val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
+    val summary = properties.summary.value[0]
+    val description = properties.description.value[0]
     val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
     val endDate = properties.dtend?.value?.get(0)?.toCalendar()
     val untilDate = values?.get(1)?.split("=")?.get(1)?.toCalendar()
     val weekDay = values?.get(2)?.split("=")?.get(1)
     val duration = if (endDate != null && startDate != null) endDate - startDate else null
 
-    if (summary != null && description != null && startDate != null && untilDate != null && duration != null && weekDay != null) {
+    if (startDate != null && untilDate != null && duration != null && weekDay != null) {
         return Lecture(
             uid,
             summary,

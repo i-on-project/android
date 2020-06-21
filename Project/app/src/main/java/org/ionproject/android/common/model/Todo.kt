@@ -26,12 +26,12 @@ class Todo(
  */
 fun createTodo(properties: ComponentProperties): Todo {
     val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
+    val summary = properties.summary.value[0]
+    val description = properties.description.value[0]
     val attachment = URI(properties.attachment?.value?.get(0) ?: "")
     val due = properties.due?.value?.get(0)?.toCalendar()
 
-    if (summary != null && description != null && attachment != null && due != null) {
+    if (due != null) {
         return Todo(
             uid,
             summary,

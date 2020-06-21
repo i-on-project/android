@@ -30,15 +30,15 @@ class Exam(
  */
 fun createExam(properties: ComponentProperties): Exam {
     val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
-    val categories = properties.categories?.value?.get(0)
+    val summary = properties.summary.value[0]
+    val description = properties.description.value[0]
+    val categories = properties.categories.value[0]
     val created = properties.created?.value?.get(0)?.toCalendar()
-    val stamp = properties.dtstamp?.value?.get(0)?.toCalendar()
+    val stamp = properties.dtstamp.value[0].toCalendar()
     val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
     val endDate = properties.dtend?.value?.get(0)?.toCalendar()
 
-    if (summary != null && description != null && categories != null && created != null && stamp != null && startDate != null && endDate != null) {
+    if (created != null && stamp != null && startDate != null && endDate != null) {
         return Exam(
             uid,
             summary,

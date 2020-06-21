@@ -9,7 +9,7 @@ import java.util.*
 class Journal(
     uid: String,
     summary: String,
-    description: String?,
+    description: String,
     val lastModification: Calendar
 ) : Event("Journal", uid, summary, description)
 
@@ -18,11 +18,11 @@ class Journal(
  */
 fun createJournal(properties: ComponentProperties): Journal {
     val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
-    val lastModification = properties.dtstamp?.value?.get(0)?.toCalendar()
+    val summary = properties.summary.value[0]
+    val description = properties.description.value.get(0)
+    val lastModification = properties.dtstamp.value[0].toCalendar()
 
-    if (summary != null && description != null && lastModification != null) {
+    if (lastModification != null) {
         return Journal(
             uid,
             summary,

@@ -107,7 +107,7 @@ class ClassSectionFragment : Fragment() {
         // Search for Class Section Details
         viewModel.getClassSectionDetails(currClassSummary) {
             courseTextView.text = it.courseAcronym
-            classTermTextView.text = it.id.toString()
+            classTermTextView.text = it.id
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained

@@ -23,21 +23,20 @@ fun ICalendarDto.toEventsSummary(): Events {
     val components: List<EventProperties> = this.properties.subComponents
 
     components.forEach { component ->
-        val type: String? = component.type
+        val type: String = component.type
         val properties: ComponentProperties = component.properties
-        val categories: List<String>? = properties.categories?.value
+        val categories: List<String> = properties.categories.value
 
-        if (type != null && categories != null) {
-            if (type == "event") {
-                if (categories.contains(Lecture.type))
-                    lectures.add(createLecture(properties))
-                else
-                    exams.add(createExam(properties))
-            } else if (type == "todo")
-                todos.add(createTodo(properties))
-            else if (type == "journal")
-                journals.add(createJournal(properties))
-        }
+        if (type == "event") {
+            if (categories.contains(Lecture.type))
+                lectures.add(createLecture(properties))
+            else
+                exams.add(createExam(properties))
+        } else if (type == "todo")
+            todos.add(createTodo(properties))
+        else if (type == "journal")
+            journals.add(createJournal(properties))
+
     }
 
     return Events(exams, lectures, todos, journals)

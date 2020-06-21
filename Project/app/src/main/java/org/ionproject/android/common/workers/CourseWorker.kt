@@ -28,7 +28,7 @@ class CourseWorker(
             val courseLocal = courseDao.getCourseById(courseId)
             if (courseLocal != null) {
                 val courseServer =
-                    ionWebAPI.getFromURI(courseLocal.selfUri, SirenEntity::class.java).toCourse()
+                    ionWebAPI.getFromURI(courseLocal.selfUri, SirenEntity::class.java).toCourse(courseLocal.term)
                 if (courseLocal != courseServer)
                     courseDao.updateCourse(courseServer)
             }

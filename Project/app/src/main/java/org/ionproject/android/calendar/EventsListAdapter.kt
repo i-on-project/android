@@ -45,9 +45,9 @@ class EventsListAdapter(
             clearTextFromExtras()
 
             when (event) {
-                is Lecture -> showInfoAboutAnLecture(event)
+                is Lecture -> showInfoAboutALecture(event)
                 is Exam -> showInfoAboutAnExam(event)
-                is Todo -> showInfoAboutAnTodo(event)
+                is Todo -> showInfoAboutATodo(event)
             }
         }
 
@@ -55,25 +55,22 @@ class EventsListAdapter(
          * This method should show which week day the [Lecture] starts and his duration
          * e.g: Week day: Monday  Duration: 11:30h - 13:00h
          */
-        private fun showInfoAboutAnLecture(lecture: Lecture) {
+        private fun showInfoAboutALecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
 
-            if (lecture.start != null && lecture.duration != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
+            val startMoment = Moment.fromCalendar(lecture.start)
+            val endMoment = startMoment + lecture.duration
 
-                val startMoment = Moment.fromCalendar(lecture.start)
-                val endMoment = startMoment + lecture.duration
-
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_interval,
-                    startMoment.hours.fillWithZero(),
-                    startMoment.minutes.fillWithZero(),
-                    endMoment.hours.fillWithZero(),
-                    endMoment.minutes.fillWithZero()
-                )
-                eventExportButton.setOnClickListener {
-                    lecture.export(it.context)
-                }
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_interval,
+                startMoment.hours.fillWithZero(),
+                startMoment.minutes.fillWithZero(),
+                endMoment.hours.fillWithZero(),
+                endMoment.minutes.fillWithZero()
+            )
+            eventExportButton.setOnClickListener {
+                lecture.export(it.context)
             }
         }
 
@@ -83,45 +80,42 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-            if (exam.startDate != null && exam.endDate != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
-                var day = exam.startDate.day.fillWithZero()
-                var month = (exam.startDate.month.plus(1)).fillWithZero()
-                var year = exam.startDate.year.toString()
+            var day = exam.startDate.day.fillWithZero()
+            var month = (exam.startDate.month.plus(1)).fillWithZero()
+            var year = exam.startDate.year.toString()
 
-                var hour = exam.startDate.hour.fillWithZero()
-                var minute = exam.startDate.minute.fillWithZero()
+            var hour = exam.startDate.hour.fillWithZero()
+            var minute = exam.startDate.minute.fillWithZero()
 
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
+            eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
 
-                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
+            day = exam.endDate.day.fillWithZero()
+            month = (exam.endDate.month.plus(1)).fillWithZero()
+            year = exam.endDate.year.toString()
 
-                day = exam.endDate.day.fillWithZero()
-                month = (exam.endDate.month.plus(1)).fillWithZero()
-                year = exam.endDate.year.toString()
+            hour = exam.endDate.hour.fillWithZero()
+            minute = exam.endDate.minute.fillWithZero()
 
-                hour = exam.endDate.hour.fillWithZero()
-                minute = exam.endDate.minute.fillWithZero()
-
-                eventExtraResult2.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
-                eventExportButton.setOnClickListener {
-                    exam.export(it.context)
-                }
+            eventExtraResult2.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
+            eventExportButton.setOnClickListener {
+                exam.export(it.context)
             }
         }
 
@@ -129,30 +123,28 @@ class EventsListAdapter(
          * This method should show which week day the [Todo]'s delivery date
          * e.g: Delivery: 15/06/2020 - 23:59h
          */
-        private fun showInfoAboutAnTodo(todo: Todo) {
+        private fun showInfoAboutATodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            if (todo.due != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
-                val day = todo.due.day.fillWithZero()
-                val month = todo.due.month.fillWithZero()
-                val year = todo.due.year.toString()
+            val day = todo.due.day.fillWithZero()
+            val month = todo.due.month.fillWithZero()
+            val year = todo.due.year.toString()
 
-                val hour = todo.due.hour.fillWithZero()
-                val minute = todo.due.minute.fillWithZero()
-                val second = todo.due.second.fillWithZero()
+            val hour = todo.due.hour.fillWithZero()
+            val minute = todo.due.minute.fillWithZero()
+            val second = todo.due.second.fillWithZero()
 
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
-                eventExportButton.setOnClickListener {
-                    todo.export(it.context)
-                }
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
+            eventExportButton.setOnClickListener {
+                todo.export(it.context)
             }
         }
 

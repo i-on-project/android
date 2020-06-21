@@ -67,15 +67,14 @@ class CourseDetailsFragment : Fragment() {
 
         viewModel.getCourseDetails(sharedViewModel.programmeOffer) {
             courseFullName.text = it.name
-            courseYear.text = "1ºAno" //TODO Get course year
-            courseSemester.text = "1ºSemestre" //TODO Get course term
+            courseYear.text = resources.getString(R.string.year_course, it.year)
+            courseSemester.text = resources.getString(R.string.term_course, it.term)
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
         }
     }
 
     private fun setupCourseClassesList(classesList: RecyclerView) {
-        //TODO: Confirm if this is the right context
         classesList.layoutManager = LinearLayoutManager(context)
         classesList.addItemDecoration(
             DividerItemDecoration(

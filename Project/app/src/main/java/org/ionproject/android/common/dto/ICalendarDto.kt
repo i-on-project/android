@@ -24,20 +24,19 @@ data class CalendarCreator(
 )
 
 data class EventProperties(
-    val type: String? = null,
+    val type: String,
     val properties: ComponentProperties
 )
 
 data class ComponentProperties(
     val uid: Value,
-    val summary: Value? = null,
-    val description: Value? = null,
-    val categories: Value? = null,
+    val summary: Value,
+    val description: Value,
+    val categories: Value,
     val created: Value? = null,
-    val dtstamp: Value? = null,
+    val dtstamp: Value,
     val dtstart: Value? = null,
     val dtend: Value? = null,
-    val duration: Value? = null,
     val rrule: Rules? = null,
     val attachment: Value? = null,
     val due: Value? = null,
