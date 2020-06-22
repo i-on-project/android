@@ -5,6 +5,7 @@ import androidx.work.WorkerParameters
 import org.ionproject.android.class_section.toClassSection
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
+import java.net.URI
 
 class ClassSectionWorker(
     context: Context,
@@ -31,21 +32,16 @@ class ClassSectionWorker(
         inputData.getString(CLASS_SECTION_CALENDAR_TERM_KEY) ?: ""
     }
 
-    override suspend fun job(): Boolean {
-        if (classSectionId != "" && courseAcronym != "" && calendarTerm != "") {
-            val classSectionLocal = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
-                classSectionId,
-                courseAcronym,
-                calendarTerm
-            )
-            if (classSectionLocal != null) {
-                val classSectionServer =
-                    ionWebAPI.getFromURI(classSectionLocal.selfUri, SirenEntity::class.java)
-                        .toClassSection()
+    private val classSectionUri by lazy(LazyThreadSafetyMode.NONE) {
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
+    }
 
-                if (classSectionLocal != classSectionServer)
-                    classSectionDao.updateClassSection(classSectionServer)
-            }
+    override suspend fun job(): Boolean {
+        if (classSectionId != "" && courseAcronym != "" && calendarTerm != "" && classSectionUri != "") {
+            val classSectionServer =
+                ionWebAPI.getFromURI(URI(classSectionUri), SirenEntity::class.java)
+                    .toClassSection()
+            classSectionDao.updateClassSection(classSectionServer)
             return true
         }
         return false

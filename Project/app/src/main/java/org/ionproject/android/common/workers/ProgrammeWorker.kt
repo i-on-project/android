@@ -5,6 +5,7 @@ import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.programmes.toProgramme
+import java.net.URI
 
 class ProgrammeWorker(
     context: Context,
@@ -23,18 +24,18 @@ class ProgrammeWorker(
         inputData.getInt(PROGRAMME_ID_KEY, -1)
     }
 
+    private val programmeUri by lazy(LazyThreadSafetyMode.NONE) {
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
+    }
+
     override suspend fun job(): Boolean {
-        if (programmeId != -1) {
-            val programmeWithOffersLocal = programmesDao.getProgrammeWithOffersById(programmeId)
-            if (programmeWithOffersLocal != null) {
-                val programmeWithOffersServer =
-                    ionWebAPI.getFromURI(
-                        programmeWithOffersLocal.programme.selfUri,
-                        SirenEntity::class.java
-                    ).toProgramme()
-                if (programmeWithOffersLocal != programmeWithOffersServer)
-                    programmesDao.updateProgrammeWithOffers(programmeWithOffersServer)
-            }
+        if (programmeId != -1 && programmeUri != "") {
+            val programmeWithOffersServer =
+                ionWebAPI.getFromURI(
+                    URI(programmeUri),
+                    SirenEntity::class.java
+                ).toProgramme()
+            programmesDao.updateProgrammeWithOffers(programmeWithOffersServer)
             return true
         }
         return false
