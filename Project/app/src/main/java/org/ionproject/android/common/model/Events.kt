@@ -12,7 +12,12 @@ class Events(
     val lectures: List<Lecture>,
     val todos: List<Todo>,
     val journals: List<Journal>
-)
+) {
+
+    companion object {
+        val NO_EVENTS = Events(emptyList(), emptyList(), emptyList(), emptyList())
+    }
+}
 
 fun ICalendarDto.toEventsSummary(): Events {
     val exams = mutableListOf<Exam>()

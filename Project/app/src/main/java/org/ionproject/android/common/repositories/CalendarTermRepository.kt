@@ -29,14 +29,17 @@ class CalendarTermRepository(
                     .getFromURI(calendarTermsUri, SirenEntity::class.java)
                     .toCalendarTermList()
                 val workerId =
-                    workerManagerFacade.enqueueWorkForAllCalendarTerms(WorkImportance.NOT_IMPORTANT)
+                    workerManagerFacade.enqueueWorkForAllCalendarTerms(
+                        WorkImportance.NOT_IMPORTANT,
+                        calendarTermsUri
+                    )
                 for (calendarTerm in calendarTerms)
                     calendarTerm.workerId = workerId
                 calendarTermDao.insertCalendarTerms(calendarTerms)
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
-            calendarTerms
+            calendarTerms.sortedByDescending { it.years }
         }
 
     suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =

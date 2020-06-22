@@ -35,7 +35,8 @@ class ProgrammesRepository(
                 programmes = ionWebAPI.getFromURI(programmesUri, SirenEntity::class.java)
                     .toProgrammeSummaryList()
                 val workerId = workerManagerFacade.enqueueWorkForAllProgrammeSummaries(
-                    WorkImportance.NOT_IMPORTANT
+                    WorkImportance.NOT_IMPORTANT,
+                    programmesUri
                 )
                 programmes.forEach {
                     it.workerId = workerId
