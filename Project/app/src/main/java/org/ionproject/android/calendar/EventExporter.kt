@@ -57,7 +57,7 @@ fun Lecture.export(context: Context) {
 }
 
 fun Todo.export(context: Context) {
-    if (this.due.before(Calendar.getInstance())) {
+    if (this.due.after(Calendar.getInstance())) {
         val startEndMillis = this.due.timeInMillis
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
@@ -80,7 +80,7 @@ fun Todo.export(context: Context) {
 }
 
 fun Exam.export(context: Context) {
-    if (this.startDate.before(Calendar.getInstance())) {
+    if (this.startDate.after(Calendar.getInstance())) {
         val startMillis = this.startDate.timeInMillis
         val endMillis = this.endDate.timeInMillis
         val intent = Intent(Intent.ACTION_INSERT)

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
-import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.course_details.toClassSummaryList
+import java.net.URI
 
 class ClassSummariesWorker(
     context: Context,
@@ -28,29 +28,17 @@ class ClassSummariesWorker(
         inputData.getString(CLASS_SUMMARIES_CALENDAR_TERM_KEY) ?: ""
     }
 
-    override suspend fun job(): Boolean {
-        if (courseAcronym != "" && calendarTerm != "") {
-            val classSummariesLocal =
-                classSummaryDao.getClassSummariesByCourseAndCalendarTerm(
-                    courseAcronym,
-                    calendarTerm
-                )
-            val classSummariesServer =
-                ionWebAPI.getFromURI(classSummariesLocal[0].selfUri, SirenEntity::class.java)
-                    .toClassSummaryList()
-            if (classSummariesServer.count() != classSummariesLocal.count()) {
-                classSummaryDao.deleteClassSummaries(classSummariesLocal)
-                classSummaryDao.insertClassSummaries(classSummariesServer)
-            } else {
-                val summariesToUpdate = mutableListOf<ClassSummary>()
+    private val classSummariesUri by lazy(LazyThreadSafetyMode.NONE) {
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
+    }
 
-                for (i in 0..classSummariesLocal.count() - 1) {
-                    if (classSummariesLocal[i] != classSummariesServer[i])
-                        summariesToUpdate.add(classSummariesServer[i])
-                }
-                if (summariesToUpdate.count() > 0)
-                    classSummaryDao.updateClassSummaries(summariesToUpdate)
-            }
+    override suspend fun job(): Boolean {
+        if (courseAcronym != "" && calendarTerm != "" && classSummariesUri != "") {
+            val classSummariesServer =
+                ionWebAPI.getFromURI(URI(classSummariesUri), SirenEntity::class.java)
+                    .toClassSummaryList()
+            classSummaryDao.deleteClassSummariesByCourseAndCalendarTerm(courseAcronym, calendarTerm)
+            classSummaryDao.insertClassSummaries(classSummariesServer)
             return true
         }
         return false
