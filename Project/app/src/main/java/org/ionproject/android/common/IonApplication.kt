@@ -92,8 +92,6 @@ class IonApplication : Application() {
         eventsRepository =
             EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
-
-
     }
 
 }
