@@ -36,7 +36,7 @@ class CalendarTermRepository(
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
-            calendarTerms
+            calendarTerms.sortedByDescending { it.years }
         }
 
     suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =
