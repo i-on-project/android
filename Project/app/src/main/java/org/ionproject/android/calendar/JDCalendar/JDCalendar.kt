@@ -38,6 +38,7 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             }
         }
 
+    var onMonthChangeListener: (() -> Unit) = {}
 
     // Inflating calendar layout, this has to be done before obtaining
     // the items from the UI. Since it is above the properties, it is executed first.
@@ -185,12 +186,14 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             launchedCoroutines.add(launch {
                 val calendar = baseAdapter.advanceMonths(1)
                 updateTopSection(calendar)
+                onMonthChangeListener()
             })
         }
         prevButton.setOnClickListener {
             launchedCoroutines.add(launch {
                 val calendar = baseAdapter.advanceMonths(-1)
                 updateTopSection(calendar)
+                onMonthChangeListener()
             })
         }
     }
