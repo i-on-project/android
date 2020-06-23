@@ -126,7 +126,6 @@
                 android:background="@color/primaryLightColor"
                 android:drawableEnd="@drawable/ic_menu_book_white_24dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/sections_marginTop_4"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"
