@@ -6,6 +6,6 @@ import retrofit2.http.Url
 interface IonService {
 
     @GET
-    suspend fun getFromUri(@Url uri: String) : String
+    suspend fun getFromUri(@Url uri: String): String
 
 }

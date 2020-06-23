@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
-import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.toCalendarTermList
 import java.net.URI
 

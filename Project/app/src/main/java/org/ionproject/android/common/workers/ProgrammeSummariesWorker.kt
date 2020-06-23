@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
-import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.programmes.toProgrammeSummaryList
 import java.net.URI
 
@@ -26,7 +25,7 @@ class ProgrammeSummariesWorker(
     }
 
     override suspend fun job(): Boolean {
-        if(programmeSummariesUri != "") {
+        if (programmeSummariesUri != "") {
             val programmeSummariesServer =
                 ionWebAPI.getFromURI(URI(programmeSummariesUri), SirenEntity::class.java)
                     .toProgrammeSummaryList()
