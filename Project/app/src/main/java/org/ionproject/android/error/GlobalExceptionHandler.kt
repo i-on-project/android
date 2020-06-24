@@ -8,8 +8,7 @@ typealias ExceptionHandler = (Thread, Throwable) -> Unit
 class GlobalExceptionHandler(
     val defaultExceptionHandler: ExceptionHandler
 ) {
-    private val crashlytics: FirebaseCrashlytics =
-        IonApplication.crashlytics
+    private val crashlytics: FirebaseCrashlytics = FirebaseCrashlytics.getInstance()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { t: Thread, e: Throwable ->

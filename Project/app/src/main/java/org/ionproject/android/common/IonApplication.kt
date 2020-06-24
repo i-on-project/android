@@ -38,13 +38,10 @@ class IonApplication : Application() {
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
-        lateinit var crashlytics: FirebaseCrashlytics private set
     }
 
     override fun onCreate() {
         super.onCreate()
-
-        crashlytics = FirebaseCrashlytics.getInstance()
 
         globalExceptionHandler =
             GlobalExceptionHandler { thread, throwable ->
