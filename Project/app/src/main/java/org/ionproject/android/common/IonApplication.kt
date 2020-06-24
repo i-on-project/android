@@ -9,6 +9,7 @@ import org.ionproject.android.common.workers.WorkerManagerFacade
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
+private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -44,16 +45,14 @@ class IonApplication : Application() {
             AppDatabase::class.java, "ion-database"
         ).build()
 
-        // TODO Inject dependencies with dagger instead of here
-
         // Used to map string http responses to SirenEntities
         val ionMapper = JacksonIonMapper()
 
         // Using mocks
-         val webAPI = MockIonWebAPI(ionMapper)
+        val webAPI = MockIonWebAPI(ionMapper)
 
         /*val retrofit = Retrofit.Builder()
-            .baseUrl("https://host1.dev.ionproject.org")
+            .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
