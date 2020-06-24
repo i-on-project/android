@@ -1,6 +1,7 @@
 package org.ionproject.android.programmes
 
 import org.ionproject.android.common.dto.EmbeddedEntity
+import org.ionproject.android.common.dto.EmbeddedLink
 import org.ionproject.android.common.dto.MappingFromSirenException
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.model.*
@@ -11,7 +12,7 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
     entities?.forEach {
         val embeddedEntity = (it as EmbeddedEntity)
 
-        val id = embeddedEntity.properties?.get("id")
+        val id = embeddedEntity.properties?.get("programmeId")
         val acr = embeddedEntity.properties?.get("acronym")
         val detailsUri = embeddedEntity.links?.first()?.href
         val selfUri = this.links?.first()?.href
@@ -26,7 +27,7 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
                 )
             )
         else
-            throw MappingFromSirenException("Cannot convert ${this} to List of ProgrammeSummary")
+            throw MappingFromSirenException("Cannot convert $this to List of ProgrammeSummary")
     }
 
     return programmesList
@@ -61,7 +62,7 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
                     )
                 )
             else
-                throw MappingFromSirenException("Cannot convert ${it} to ProgrammeOfferSummary")
+                throw MappingFromSirenException("Cannot convert $it to ProgrammeOfferSummary")
         }
         return ProgrammeWithOffers(
             programme = Programme(
@@ -74,10 +75,10 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
             programmeOffers = programmeOfferSummaryList
         )
     }
-    throw MappingFromSirenException("Cannot convert ${this} to Programme")
+    throw MappingFromSirenException("Cannot convert $this to Programme")
 }
 
-fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
+fun SirenEntity.toProgrammeOffer(courseID: Int): ProgrammeOffer {
     val id = properties?.get("id")
     val acr = properties?.get("acronym")
     val termNumber = properties?.get("termNumber")
@@ -86,11 +87,10 @@ fun SirenEntity.toProgrammeOffer(): ProgrammeOffer {
 
     val detailsUri = (entities?.first() as EmbeddedEntity).links?.first()?.href
 
-    if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null && selfUri
-        != null
-    ) {
+    if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null && selfUri != null) {
         return ProgrammeOffer(
             id = id.toInt(),
+            courseID = courseID,
             acronym = acr,
             termNumber = termNumber.toInt(),
             optional = optional.toBoolean(),

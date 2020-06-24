@@ -85,9 +85,9 @@ class ProgrammesRepository(
             var programmeOffer = programmeOfferDao.getProgrammeOfferById(programmeOfferSummary.id)
 
             if (programmeOffer == null) {
-                programmeOffer =
-                    ionWebAPI.getFromURI(programmeOfferSummary.detailsUri, SirenEntity::class.java)
-                        .toProgrammeOffer()
+                programmeOffer = ionWebAPI
+                    .getFromURI(programmeOfferSummary.detailsUri, SirenEntity::class.java)
+                    .toProgrammeOffer(programmeOfferSummary.courseId)
                 val workerId = workerManagerFacade.enqueueWorkForProgrammeOffer(
                     programmeOffer,
                     WorkImportance.NOT_IMPORTANT

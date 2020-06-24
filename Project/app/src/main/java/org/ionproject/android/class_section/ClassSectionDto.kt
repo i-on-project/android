@@ -17,7 +17,13 @@ fun SirenEntity.toClassSection(): ClassSection {
     val selfUri = links?.first()?.href
 
     if (courseAcronym != null && calendarTerm != null && id != null && selfUri != null) {
-        return ClassSection(courseAcronym, calendarTerm, id, calendarURI, selfUri)
+        return ClassSection(
+            id = id,
+            courseAcronym = courseAcronym,
+            calendarTerm = calendarTerm,
+            calendarURI = calendarURI,
+            selfUri = selfUri
+        )
     }
 
     throw MappingFromSirenException("Cannot convert $this to ClassSection")

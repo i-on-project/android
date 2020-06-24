@@ -45,17 +45,16 @@ data class ComponentProperties(
 )
 
 data class Value(
+    val parameters: EventParameter? = null,
     val value: List<String>
 )
 
-data class Rules(
-    val value: RuleValues
+data class EventParameter(
+    val language: String
 )
 
-data class RuleValues(
-    val freq: String,
-    val until: String,
-    val byDay: List<String>
+data class Rules(
+    val value: String
 )
 
 data class Related(

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_course_details.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
@@ -22,7 +23,7 @@ import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
 
-class CourseDetailsFragment : Fragment() {
+class CourseDetailsFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -98,7 +99,6 @@ class CourseDetailsFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
-
         viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
@@ -106,6 +106,7 @@ class CourseDetailsFragment : Fragment() {
         )
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
+            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(it)
         }
 

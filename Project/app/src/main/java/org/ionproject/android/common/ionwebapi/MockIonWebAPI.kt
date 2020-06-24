@@ -12,8 +12,7 @@ private const val COURSES_PATH_V0 = "/v0/courses"
 private const val CLASSES_PATH = "/classes"
 private const val OFFERS_PATH = "/offers"
 private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
-private const val ROOT_PATH_V0 =
-    "/v0" //TODO We should consider using "/" instead to support the most recent version
+private const val ROOT_PATH_V0 = "/" //TODO We should consider using "/" instead to support the most recent version
 
 class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
 

@@ -11,13 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.replaceView
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : ExceptionHandlingFragment() {
     /**
      * Obtaining Calendar's View Model
      */

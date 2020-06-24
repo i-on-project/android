@@ -1,6 +1,7 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import android.content.Intent
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
@@ -8,7 +9,10 @@ import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
-
+import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.error.GlobalExceptionHandler
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -17,6 +21,7 @@ import org.ionproject.android.common.workers.WorkerManagerFacade
 class IonApplication : Application() {
 
     companion object {
+        lateinit var ionMapper: JacksonIonMapper private set
         lateinit var programmesRepository: ProgrammesRepository private set
         lateinit var coursesRepository: CourseRepository private set
         lateinit var classesRepository: ClassesRepository private set
@@ -29,17 +34,24 @@ class IonApplication : Application() {
         lateinit var workerManagerFacade: WorkerManagerFacade private set
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
+        lateinit var globalExceptionHandler: GlobalExceptionHandler private set
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        globalExceptionHandler =
+            GlobalExceptionHandler { thread, throwable ->
+                val intent = Intent(applicationContext, ErrorActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
 
         /**
          * Our app runs in a single process therefore we follow
          * the singleton design pattern when instantiating an
          * AppDatabase object. Each RoomDatabase instance is fairly expensive.
          */
-        val db = Room.databaseBuilder(
+        db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "ion-database"
         ).build()
@@ -47,24 +59,22 @@ class IonApplication : Application() {
         // TODO Inject dependencies with dagger instead of here
 
         // Used to map string http responses to SirenEntities
-        val ionMapper = JacksonIonMapper()
+        ionMapper = JacksonIonMapper()
 
         // Using mocks
-        val webAPI = MockIonWebAPI(ionMapper)
+        //val webAPI = MockIonWebAPI(ionMapper)
 
-        /*val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://host1.dev.ionproject.org")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val service: IonService = retrofit.create(IonService::class.java)
-        val webAPI = IonWebAPI(service, ionMapper)*/
+        val webAPI = IonWebAPI(service, ionMapper)
 
-        IonApplication.db = db
         ionWebAPI = webAPI
 
-        workerRepository =
-            WorkerRepository(db.workerDao())
+        workerRepository = WorkerRepository(db.workerDao())
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
         programmesRepository =
@@ -74,8 +84,7 @@ class IonApplication : Application() {
                 db.programmeOfferDao(),
                 workerManagerFacade
             )
-        coursesRepository =
-            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
+        coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
             ClassesRepository(
                 webAPI,
@@ -83,17 +92,12 @@ class IonApplication : Application() {
                 db.classSummaryDao(),
                 workerManagerFacade
             )
-        favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+        favoritesRepository = FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository =
-            SuggestionsMockRepository(db)
-        eventsRepository =
-            EventsRepository(webAPI)
+        suggestionsMockRepository = SuggestionsMockRepository(db)
+        eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
-
-
     }
 
 }
