@@ -1,13 +1,15 @@
-package org.ionproject.android.common
+package org.ionproject.android.error
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.ionproject.android.common.IonApplication
 
 typealias ExceptionHandler = (Thread, Throwable) -> Unit
 
 class GlobalExceptionHandler(
     val defaultExceptionHandler: ExceptionHandler
 ) {
-    private val crashlytics: FirebaseCrashlytics = IonApplication.crashlytics
+    private val crashlytics: FirebaseCrashlytics =
+        IonApplication.crashlytics
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { t: Thread, e: Throwable ->
@@ -16,7 +18,7 @@ class GlobalExceptionHandler(
                 // Sends information about an "non-fatal" exception to crashlytics, e.g. caught exceptions like this
                 crashlytics.recordException(e)
             } catch (ex: Exception) {
-                ex.printStackTrace()
+                crashlytics.recordException(ex)
             }
         }
     }
