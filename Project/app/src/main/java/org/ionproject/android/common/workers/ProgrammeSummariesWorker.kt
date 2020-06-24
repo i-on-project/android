@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
-import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.programmes.toProgrammeSummaryList
+import java.net.URI
 
 class ProgrammeSummariesWorker(
     context: Context,
@@ -20,24 +20,20 @@ class ProgrammeSummariesWorker(
         IonApplication.ionWebAPI
     }
 
+    private val programmeSummariesUri by lazy(LazyThreadSafetyMode.NONE) {
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
+    }
+
     override suspend fun job(): Boolean {
-        val programmeSummariesLocal = programmesDao.getAllProgrammeSummaries()
-        val programmeSummariesServer =
-            ionWebAPI.getFromURI(programmeSummariesLocal.first().selfUri, SirenEntity::class.java)
-                .toProgrammeSummaryList()
-        if (programmeSummariesServer.count() != programmeSummariesLocal.count()) {
+        if (programmeSummariesUri != "") {
+            val programmeSummariesServer =
+                ionWebAPI.getFromURI(URI(programmeSummariesUri), SirenEntity::class.java)
+                    .toProgrammeSummaryList()
             programmesDao.deleteAllProgrammeSummaries()
             programmesDao.insertProgrammeSummaries(programmeSummariesServer)
-        } else {
-            val summariesToUpdate = mutableListOf<ProgrammeSummary>()
-            for (i in 0..programmeSummariesLocal.count() - 1) {
-                if (programmeSummariesLocal[i] != programmeSummariesServer[i])
-                    summariesToUpdate.add(programmeSummariesServer[i])
-            }
-            if (summariesToUpdate.count() > 0)
-                programmesDao.updateProgrammeSummaries(summariesToUpdate)
+            return true
         }
-        return true
+        return false
     }
 
     override suspend fun lastJob() {

@@ -174,6 +174,9 @@ class MainActivity : AppCompatActivity() {
     private fun queryTextSubmitBehaviour(query: String) {
         val currDestination = navController.currentDestination?.id
         if (currDestination != null) {
+            // Passing query text to [SearchResultsFragment]
+            sharedViewModel.searchText = query
+
             if (currDestination != R.id.navigation_search_results) {
                 /**
                  *  Navigating to the SearchResultsFragment and ensuring
@@ -189,8 +192,6 @@ class MainActivity : AppCompatActivity() {
                     ).build()
                 )
             }
-            // Passing query text to [SearchResultsFragment]
-            sharedViewModel.setQueryText(query)
 
             return
         }

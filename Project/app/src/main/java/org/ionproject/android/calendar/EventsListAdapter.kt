@@ -57,24 +57,22 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnLecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
 
-            if (lecture.start != null && lecture.duration != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
+            val startMoment = Moment.fromCalendar(lecture.start)
+            val endMoment = startMoment + lecture.duration
 
-                val startMoment = Moment.fromCalendar(lecture.start)
-                val endMoment = startMoment + lecture.duration
-
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_interval,
-                    startMoment.hours.fillWithZero(),
-                    startMoment.minutes.fillWithZero(),
-                    endMoment.hours.fillWithZero(),
-                    endMoment.minutes.fillWithZero()
-                )
-                eventExportButton.setOnClickListener {
-                    lecture.export(it.context)
-                }
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_interval,
+                startMoment.hours.fillWithZero(),
+                startMoment.minutes.fillWithZero(),
+                endMoment.hours.fillWithZero(),
+                endMoment.minutes.fillWithZero()
+            )
+            eventExportButton.setOnClickListener {
+                lecture.export(it.context)
             }
+
         }
 
         /**
@@ -83,46 +81,46 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-            if (exam.startDate != null && exam.endDate != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
-                var day = exam.startDate.day.fillWithZero()
-                var month = (exam.startDate.month.plus(1)).fillWithZero()
-                var year = exam.startDate.year.toString()
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
-                var hour = exam.startDate.hour.fillWithZero()
-                var minute = exam.startDate.minute.fillWithZero()
+            var day = exam.startDate.day.fillWithZero()
+            var month = (exam.startDate.month).fillWithZero()
+            var year = exam.startDate.year.toString()
 
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
+            var hour = exam.startDate.hour.fillWithZero()
+            var minute = exam.startDate.minute.fillWithZero()
 
-                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
 
-                day = exam.endDate.day.fillWithZero()
-                month = (exam.endDate.month.plus(1)).fillWithZero()
-                year = exam.endDate.year.toString()
+            eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
 
-                hour = exam.endDate.hour.fillWithZero()
-                minute = exam.endDate.minute.fillWithZero()
+            day = exam.endDate.day.fillWithZero()
+            month = (exam.endDate.month).fillWithZero()
+            year = exam.endDate.year.toString()
 
-                eventExtraResult2.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
-                eventExportButton.setOnClickListener {
-                    exam.export(it.context)
-                }
+            hour = exam.endDate.hour.fillWithZero()
+            minute = exam.endDate.minute.fillWithZero()
+
+            eventExtraResult2.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
+            eventExportButton.setOnClickListener {
+                exam.export(it.context)
             }
+
         }
 
         /**
@@ -131,29 +129,29 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnTodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            if (todo.due != null) {
-                eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
-                val day = todo.due.day.fillWithZero()
-                val month = todo.due.month.fillWithZero()
-                val year = todo.due.year.toString()
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
-                val hour = todo.due.hour.fillWithZero()
-                val minute = todo.due.minute.fillWithZero()
-                val second = todo.due.second.fillWithZero()
+            val day = todo.due.day.fillWithZero()
+            val month = todo.due.month.fillWithZero()
+            val year = todo.due.year.toString()
 
-                eventExtraResult1.text = view.resources.getString(
-                    R.string.placeholder_time,
-                    day,
-                    month,
-                    year,
-                    hour,
-                    minute
-                )
-                eventExportButton.setOnClickListener {
-                    todo.export(it.context)
-                }
+            val hour = todo.due.hour.fillWithZero()
+            val minute = todo.due.minute.fillWithZero()
+            val second = todo.due.second.fillWithZero()
+
+            eventExtraResult1.text = view.resources.getString(
+                R.string.placeholder_time,
+                day,
+                month,
+                year,
+                hour,
+                minute
+            )
+            eventExportButton.setOnClickListener {
+                todo.export(it.context)
             }
+
         }
 
         private fun clearTextFromExtras() {

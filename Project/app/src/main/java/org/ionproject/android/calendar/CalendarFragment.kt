@@ -74,6 +74,8 @@ class CalendarFragment : ExceptionHandlingFragment() {
             }
         viewGroup.replaceView(jdcalendar_calendar, progressBar)
 
+        view.setOnClickListener { }
+
         calendarViewModel.apply {
             getFavoriteClassesFromCurrentTerm(
                 sharedViewModel.root.calendarTermsUri,
@@ -109,6 +111,10 @@ class CalendarFragment : ExceptionHandlingFragment() {
             eventsListAdapter.notifyDataSetChanged() // notify the eventList's adapter to show the new events
         }
         jdcalendar_calendar.adapter = calendarAdapter
+        jdcalendar_calendar.onMonthChangeListener = {
+            eventsListViewModel.reset()
+            eventsListAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroyView() {

@@ -4,7 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
 
-class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonMapper) : IIonWebAPI {
+class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonMapper) :
+    IIonWebAPI {
 
     /**
      *  This is using the IO Dispacher, which is optimized to perform disk or network I/O
@@ -15,6 +16,6 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         val response = withContext(Dispatchers.IO) {
             ionService.getFromUri(uri.toString())
         }
-        return ionMapper.parse(response,klass)
+        return ionMapper.parse(response, klass)
     }
 }

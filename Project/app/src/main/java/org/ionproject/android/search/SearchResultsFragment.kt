@@ -30,9 +30,8 @@ class SearchResultsFragment : ExceptionHandlingFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // We just want to make a Toast of the search query text, for now...
-        sharedViewModel.observeQueryText(this) { query ->
-            Toast.makeText(context, "Query = $query", Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(context, "Query = ${sharedViewModel.searchText}", Toast.LENGTH_SHORT).show()
+
     }
 
 }

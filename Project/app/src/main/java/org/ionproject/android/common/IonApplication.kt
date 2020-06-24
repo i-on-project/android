@@ -3,19 +3,16 @@ package org.ionproject.android.common
 import android.app.Application
 import android.content.Intent
 import androidx.room.Room
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.IonService
-import org.ionproject.android.common.ionwebapi.IonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.error.GlobalExceptionHandler
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-
 
 /**
  * This class is used to hold instances that need the singleton pattern,

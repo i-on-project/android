@@ -4,12 +4,8 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
-import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.toCalendarTermList
 import java.net.URI
-
-// TODO Obtain from root element
-private const val CALENDAR_TERMS_PATH_V0 = "/v0/calendar-terms"
 
 class CalendarTermsWorker(
     context: Context,
@@ -24,25 +20,20 @@ class CalendarTermsWorker(
         IonApplication.ionWebAPI
     }
 
+    private val calendarTermsUri by lazy(LazyThreadSafetyMode.NONE) {
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
+    }
+
     override suspend fun job(): Boolean {
-        val calendarTermsLocal = calendarTermDao.getAllCalendarTerms()
-        val calendarTermsServer =
-            ionWebAPI.getFromURI(URI(CALENDAR_TERMS_PATH_V0), SirenEntity::class.java)
-                .toCalendarTermList()
-        if (calendarTermsLocal != calendarTermsServer) {
+        if (calendarTermsUri != "") {
+            val calendarTermsServer =
+                ionWebAPI.getFromURI(URI(calendarTermsUri), SirenEntity::class.java)
+                    .toCalendarTermList()
             calendarTermDao.deleteAllCalendarTerms()
             calendarTermDao.insertCalendarTerms(calendarTermsServer)
-        } else {
-            val calendarTermsToUpdate = mutableListOf<CalendarTerm>()
-            for (i in 0..calendarTermsLocal.count()) {
-                if (calendarTermsLocal[i] != calendarTermsServer[i]) {
-                    calendarTermsToUpdate.add(calendarTermsServer[i])
-                }
-            }
-            if (calendarTermsToUpdate.count() > 0)
-                calendarTermDao.updateCalendarTerms(calendarTermsToUpdate)
+            return true
         }
-        return true
+        return false
     }
 
     override suspend fun lastJob() {
