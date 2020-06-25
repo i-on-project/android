@@ -28,7 +28,6 @@ class SharedViewModel : ViewModel() {
      */
     lateinit var root: Root
 
-
     /**
      * programmeOffer is used to pass data from [org.ionproject.android.courses.CoursesFragment]
     to [org.ionproject.android.course_details.CourseDetailsFragment]

@@ -1,32 +1,54 @@
 package org.ionproject.android.common.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Relation
 import java.net.URI
 
 /**
  *  This type represents a Class Section in the context of this application.
  */
-@Entity(primaryKeys = ["id", "courseAcronym", "calendar_term"])
+@Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
 data class ClassSection(
     val id: String,
     val courseAcronym: String,
-    @ColumnInfo(name = "calendar_term") val calendarTerm: String, //Should be a foreign key in the future
-    @ColumnInfo(name = "calendar_uri") val calendarURI: URI?,
+    val calendarTerm: String,
+    val calendarURI: URI?,
     val selfUri: URI,
+    val upURI: URI,
     override var workerId: Int = 0
 ) : ICacheable
 
-@Entity(primaryKeys = ["id", "courseAcronym", "calendar_term"])
-open class ClassSummary(
-    open val id: String,
-    open val courseAcronym: String,
-    @ColumnInfo(name = "calendar_term") open val calendarTerm: String, //Should be a foreign key in the future
-    @ColumnInfo(name = "details_uri") open val detailsUri: URI,
-    open val selfUri: URI,
-    override var workerId: Int = 0
-) : ICacheable {
+/**
+ * This type represents a collection of ClassSummaries
+ */
+data class ClassCollection(
+    val courseId: Int,
+    val courseAcronym: String,
+    val calendarTerm: String,
+    @Relation(
+        entityColumn = "courseCalendarTerm",
+        parentColumn = "courseCalendarTerm",
+        entity = ClassSummary::class
+    )
+    val classes: List<ClassSummary>,
+    val calendarURI: URI?,
+    val selfUri: URI,
+    override val workerId: Int = 0,
+    // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
+    val courseCalendarTerm: String = "$courseAcronym$calendarTerm"
+) : ICacheable
 
+@Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
+data class ClassSummary(
+    val id: String,
+    val courseAcronym: String,
+    val calendarTerm: String,
+    val detailsUri: URI,
+    val selfUri: URI,
+    override var workerId: Int = 0,
+    // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
+    val courseCalendarTerm: String = "$courseAcronym$calendarTerm"
+) : ICacheable {
     override fun equals(other: Any?): Boolean {
         val other = other as ClassSummary
         if (id == other.id && courseAcronym == other.courseAcronym && calendarTerm == other.calendarTerm

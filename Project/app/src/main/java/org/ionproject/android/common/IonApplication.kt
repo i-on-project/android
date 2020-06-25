@@ -49,15 +49,15 @@ class IonApplication : Application() {
         val ionMapper = JacksonIonMapper()
 
         // Using mocks
-        val webAPI = MockIonWebAPI(ionMapper)
+        //val webAPI = MockIonWebAPI(ionMapper)
 
-        /*val retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val service: IonService = retrofit.create(IonService::class.java)
-        val webAPI = IonWebAPI(service, ionMapper)*/
+        val webAPI = IonWebAPI(service, ionMapper)
 
         IonApplication.db = db
         ionWebAPI = webAPI

@@ -9,7 +9,7 @@ interface ClassSectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertClassSection(classSection: ClassSection)
 
-    @Query("SELECT * FROM ClassSection WHERE id = :id AND courseAcronym = :courseAcronym AND calendar_term = :calendarTerm")
+    @Query("SELECT * FROM ClassSection WHERE id = :id AND courseAcronym = :courseAcronym AND calendarTerm = :calendarTerm")
     suspend fun getClassSectionByIdAndCourseAndCalendarTerm(
         id: String,
         courseAcronym: String,
@@ -22,7 +22,7 @@ interface ClassSectionDao {
     @Update
     suspend fun updateClassSection(classSection: ClassSection)
 
-    @Query("DELETE FROM ClassSection WHERE id = :id AND courseAcronym = :courseAcronym AND calendar_term = :calendarTerm")
+    @Query("DELETE FROM ClassSection WHERE id = :id AND courseAcronym = :courseAcronym AND calendarTerm = :calendarTerm")
     fun deleteClassSectionByIdAndCourseAndCalendarTerm(
         id: String,
         courseAcronym: String,
