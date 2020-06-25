@@ -45,7 +45,7 @@ class ClassesListAdapter(
         fun bindTo(classSummary: ClassSummary) {
             classItem.text = classSummary.id
             classItem.setOnClickListener {
-                sharedViewModel.classSummary = classSummary
+                sharedViewModel.classSectionUri = classSummary.detailsUri
                 view.findNavController().navigate(R.id.action_course_details_to_class_section)
             }
         }

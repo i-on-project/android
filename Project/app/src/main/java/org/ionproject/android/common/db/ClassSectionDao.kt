@@ -2,6 +2,7 @@ package org.ionproject.android.common.db
 
 import androidx.room.*
 import org.ionproject.android.common.model.ClassSection
+import java.net.URI
 
 @Dao
 interface ClassSectionDao {
@@ -16,6 +17,9 @@ interface ClassSectionDao {
         calendarTerm: String
     ): ClassSection?
 
+    @Query("SELECT * FROM ClassSection WHERE selfUri = :uri")
+    fun getClassSectionByUri(uri: URI): ClassSection?
+
     @Delete
     suspend fun deleteClassSection(classSection: ClassSection)
 
@@ -28,4 +32,6 @@ interface ClassSectionDao {
         courseAcronym: String,
         calendarTerm: String
     )
+
+
 }

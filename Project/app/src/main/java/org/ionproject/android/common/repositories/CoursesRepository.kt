@@ -5,10 +5,10 @@ import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CourseDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.course_details.toCourse
+import java.net.URI
 
 /**
  * This type represents a course repository, it should request
@@ -26,13 +26,13 @@ class CourseRepository(
      *
      * @param courseSummary is the summary representation of a course
      */
-    suspend fun getCourseDetails(programmeOffer: ProgrammeOffer) =
+    suspend fun getCourseDetails(courseDetailsUri: URI) =
         withContext(Dispatchers.IO) {
-            var course = courseDao.getCourseById(programmeOffer.courseID)
+            var course = courseDao.getCourseByUri(courseDetailsUri)
 
             if (course == null) {
-                course = ionWebAPI.getFromURI(programmeOffer.detailsUri, SirenEntity::class.java)
-                    .toCourse(programmeOffer.termNumber)
+                course = ionWebAPI.getFromURI(courseDetailsUri, SirenEntity::class.java)
+                    .toCourse()
                 val workerId = workerManagerFacade.enqueueWorkForCourse(
                     course,
                     WorkImportance.IMPORTANT

@@ -78,7 +78,7 @@ class CalendarFragment : Fragment() {
                 sharedViewModel.root.calendarTermsUri,
                 this@CalendarFragment
             ) { favorites ->
-                getEvents(favorites) { events ->
+                getEventsByFavorites(favorites) { events ->
                     // replace progress bar with calendar
                     viewGroup.replaceView(progressBar, jdcalendar_calendar)
                     createCalendarWithEvents(events)

@@ -35,7 +35,7 @@ class ScheduleViewModel(
         val calendarTerm = calendarTermRepository.getMostRecentCalendarTerm(calendarTermsUri)
         val favorites = favoriteRepository.suspendGetFavoritesFromTerm(calendarTerm)
         val classSections = favorites.map {
-            classesRepository.getClassSection(it.toClassSummary())
+            classesRepository.getClassSection(it.selfURI)
         }
         val lectures = classSections.flatMap {
             if (it?.calendarURI != null)

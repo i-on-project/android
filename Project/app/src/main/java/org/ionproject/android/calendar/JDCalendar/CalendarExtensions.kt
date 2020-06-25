@@ -3,7 +3,6 @@ package org.ionproject.android.calendar.jdcalendar
 import android.content.Context
 import org.ionproject.android.R
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 /**
@@ -170,7 +169,7 @@ operator fun Calendar.minus(other: Calendar): Calendar {
 }
 
 /** Return the name of the month at which this instance is at */
-fun Calendar.getMonthName(ctx: Context) = Month.values()[month-1].getName(ctx)
+fun Calendar.getMonthName(ctx: Context) = Month.values()[month - 1].getName(ctx)
 
 /**
  * Represents a Month and associated with each month is the resource from Strings.xml

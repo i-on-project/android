@@ -42,7 +42,7 @@ class ProgrammeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        programmeViewModel.getCourseDetails(sharedViewModel.programmeSummary) {
+        programmeViewModel.getProgrammeDetails(sharedViewModel.programmeDetailsUri) {
             textview_programme_details_name.text = it.programme.name
             textview_programme_details_acronym.text = it.programme.acronym
             recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)

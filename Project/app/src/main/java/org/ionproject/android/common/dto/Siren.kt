@@ -128,4 +128,4 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
  */
 class MappingFromSirenException(message: String) : Exception(message)
 
-fun List<SirenLink>.findByRel(rel: String) : URI? = this.find { it.rel.contains(rel) }?.href
+fun List<SirenLink>.findByRel(rel: String): URI? = this.find { it.rel.contains(rel) }?.href

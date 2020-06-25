@@ -54,13 +54,13 @@ class ProgrammesRepository(
      * and maps from [SirenEntity] to [ProgrammeSummary].
      */
     suspend fun getProgrammeDetails(
-        programmeSummary: ProgrammeSummary
+        programmeDetailsUri: URI
     ) = withContext(Dispatchers.IO) {
-        var programmeWithOffers = programmeDao.getProgrammeWithOffersById(programmeSummary.id)
+        var programmeWithOffers = programmeDao.getProgrammeWithOffersByUri(programmeDetailsUri)
 
         if (programmeWithOffers == null) {
-            programmeWithOffers = ionWebAPI.getFromURI<SirenEntity>(
-                programmeSummary.detailsUri,
+            programmeWithOffers = ionWebAPI.getFromURI(
+                programmeDetailsUri,
                 SirenEntity::class.java
             ).toProgramme()
             val workerId = workerManagerFacade.enqueueWorkForProgramme(

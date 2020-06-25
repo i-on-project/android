@@ -9,10 +9,11 @@
     >
 
     <!-- Top Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintlayout_course_details_top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/primaryLightColor"
         android:padding="@dimen/fragments_padding_20"
         >
@@ -22,40 +23,25 @@
 
             android:text="Course Full Name"
             android:textColor="@color/primaryTextColor"
-            android:textSize="25sp"
+            android:textSize="@dimen/all_text_25"
             android:textStyle="bold"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             />
 
         <TextView
-            android:id="@+id/textview_course_details_year"
+            android:id="@+id/textview_course_details_acronym"
 
-            android:text="@string/label_year"
+            android:text="Course Acronym"
             android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
-            app:layout_constraintStart_toStartOf="parent"
             />
 
-        <TextView
-            android:id="@+id/textview_course_details_semester"
-
-            android:text="@string/label_semester"
-            android:textColor="@color/primaryTextColor"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textview_course_details_full_name"
-            app:layout_constraintStart_toEndOf="@id/textview_course_details_year"
-            android:layout_marginStart="10dp"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <!-- Bottom Section -->
     <androidx.constraintlayout.widget.ConstraintLayout

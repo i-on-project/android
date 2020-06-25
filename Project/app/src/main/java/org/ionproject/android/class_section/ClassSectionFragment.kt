@@ -15,7 +15,7 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.ClassSection
 import java.net.URI
 
 class ClassSectionFragment : Fragment() {
@@ -25,13 +25,6 @@ class ClassSectionFragment : Fragment() {
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
-    }
-
-    /**
-     * Class passed via SharedViewmodel
-     */
-    private val currClassSummary: ClassSummary by lazy {
-        sharedViewModel.classSummary
     }
 
     /**
@@ -105,13 +98,13 @@ class ClassSectionFragment : Fragment() {
         val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(currClassSummary) {
+        viewModel.getClassSectionDetails(sharedViewModel.classSectionUri) {
             courseTextView.text = it.courseAcronym
             classTermTextView.text = it.id
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained
-            setupCheckboxBehaviour(checkBox)
+            setupCheckboxBehaviour(checkBox, it)
 
             requestEvents(it.calendarURI)
         }
@@ -170,17 +163,20 @@ class ClassSectionFragment : Fragment() {
     /**
      * Defines what happens when the checkbox is clicked
      */
-    private fun setupCheckboxBehaviour(checkBox: CheckBox) {
+    private fun setupCheckboxBehaviour(
+        checkBox: CheckBox,
+        classSection: ClassSection
+    ) {
         //If the checks box was checked before, then it must be updated
-        viewModel.isThisClassFavorite(currClassSummary) {
+        viewModel.isThisClassFavorite(classSection) {
             checkBox.isChecked = it
         }
         checkBox.setOnClickListener {
             val isChecked = checkBox.isChecked
             if (isChecked) {
-                viewModel.addClassToFavorites(currClassSummary)
+                viewModel.addClassToFavorites(classSection)
             } else {
-                viewModel.removeClassFromFavorites(currClassSummary)
+                viewModel.removeClassFromFavorites(classSection)
             }
         }
     }

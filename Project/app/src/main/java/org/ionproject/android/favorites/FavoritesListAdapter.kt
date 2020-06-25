@@ -55,7 +55,7 @@ class FavoritesListAdapter(
                 favorite.id
             )
             classItem.setOnClickListener {
-                sharedViewModel.classSummary = favorite.toClassSummary()
+                sharedViewModel.classSectionUri = favorite.selfURI
                 view.findNavController().navigate(R.id.action_favorites_to_class_section)
             }
         }

@@ -10,6 +10,6 @@ interface IonService {
 
     @Headers("Authorization: Bearer $AUTHORIZATION_TOKEN")
     @GET
-    suspend fun getFromUri(@Url uri: String) : String
+    suspend fun getFromUri(@Url uri: String): String
 
 }

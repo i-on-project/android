@@ -9,7 +9,6 @@ import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
-import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
@@ -23,16 +22,12 @@ class ClassesRepository(
     private val workerManagerFacade: WorkerManagerFacade
 ) {
 
-    suspend fun getClassSection(classSummary: ClassSummary): ClassSection? =
+    suspend fun getClassSection(classSectionUri: URI): ClassSection? =
         withContext(Dispatchers.IO) {
-            var classSection = classSectionDao.getClassSectionByIdAndCourseAndCalendarTerm(
-                classSummary.id,
-                classSummary.courseAcronym,
-                classSummary.calendarTerm
-            )
+            var classSection = classSectionDao.getClassSectionByUri(classSectionUri)
             if (classSection == null) {
                 classSection =
-                    ionWebAPI.getFromURI(classSummary.detailsUri, SirenEntity::class.java)
+                    ionWebAPI.getFromURI(classSectionUri, SirenEntity::class.java)
                         .toClassSection()
                 val workerId = workerManagerFacade.enqueueWorkForClassSection(
                     classSection,

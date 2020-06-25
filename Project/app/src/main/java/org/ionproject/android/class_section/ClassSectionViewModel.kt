@@ -53,9 +53,9 @@ class ClassSectionViewModel(
      * @param classSummary The class summary's details to be collected
      * @param onResult callback to be called when the classSection details has been collected
      */
-    fun getClassSectionDetails(classSummary: ClassSummary, onResult: (ClassSection) -> Unit) {
+    fun getClassSectionDetails(classSectionUri: URI, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
-            classSectionRepository.getClassSection(classSummary)?.let {
+            classSectionRepository.getClassSection(classSectionUri)?.let {
                 currClassSection = it
                 onResult(it)
             }
@@ -126,9 +126,9 @@ class ClassSectionViewModel(
      * otherwise true. This is required because the user might click the checkbox before the API
      * returns the result.
      */
-    fun addClassToFavorites(classSummary: ClassSummary) {
+    fun addClassToFavorites(classSection: ClassSection) {
         viewModelScope.launch {
-            favoriteRepository.addClassToFavorites(classSummary)
+            favoriteRepository.addClassToFavorites(classSection)
         }
     }
 
@@ -138,19 +138,19 @@ class ClassSectionViewModel(
      * otherwise true. This is required because the user might click the checkbox before the API
      * returns the result.
      */
-    fun removeClassFromFavorites(classSummary: ClassSummary) {
+    fun removeClassFromFavorites(classSection: ClassSection) {
         viewModelScope.launch {
-            favoriteRepository.removeClassFromFavorites(classSummary)
+            favoriteRepository.removeClassFromFavorites(classSection)
         }
     }
 
     /**
      * Checks if this class section is a favorite
      */
-    fun isThisClassFavorite(classSummary: ClassSummary, onUpdate: (Boolean) -> Unit) {
+    fun isThisClassFavorite(classSection: ClassSection, onUpdate: (Boolean) -> Unit) {
         viewModelScope.launch {
             onUpdate(
-                favoriteRepository.isClassFavorite(classSummary)
+                favoriteRepository.isClassFavorite(classSection)
             )
         }
     }

@@ -5,6 +5,7 @@ import androidx.work.WorkerParameters
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.course_details.toCourse
+import java.net.URI
 
 class CourseWorker(
     context: Context,
@@ -29,15 +30,10 @@ class CourseWorker(
 
     override suspend fun job(): Boolean {
         if (courseId != -1 && courseUri != "") {
-            val courseLocal = courseDao.getCourseById(courseId)
-            if (courseLocal != null) {
-                val courseServer =
-                    ionWebAPI.getFromURI(courseLocal.selfUri, SirenEntity::class.java)
-                        .toCourse(courseLocal.term)
-                courseDao.updateCourse(courseServer)
-                if (courseLocal != courseServer)
-                    courseDao.updateCourse(courseServer)
-            }
+            val courseServer =
+                ionWebAPI.getFromURI(URI(courseUri), SirenEntity::class.java)
+                    .toCourse()
+            courseDao.updateCourse(courseServer)
             return true
         }
         return false

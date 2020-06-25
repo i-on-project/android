@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.model.CalendarTerm
-import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Favorite
 
 /**
@@ -20,17 +20,16 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     /**
      * Adds a favorite to the local database
      *
-     * @param classSummary is the class to add to favorites
+     * @param classSection is the class to add to favorites
      */
-    suspend fun addClassToFavorites(classSummary: ClassSummary) =
+    suspend fun addClassToFavorites(classSection: ClassSection) =
         withContext(Dispatchers.IO) {
             favoriteDao.insertFavorite(
                 Favorite(
-                    classSummary.id,
-                    classSummary.courseAcronym,
-                    classSummary.calendarTerm,
-                    classSummary.detailsUri,
-                    classSummary.selfUri
+                    classSection.id,
+                    classSection.courseAcronym,
+                    classSection.calendarTerm,
+                    classSection.selfUri
                 )
             )
         }
@@ -46,15 +45,14 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
             favoriteDao.deleteFavorite(favorite)
         }
 
-    suspend fun removeClassFromFavorites(classSummary: ClassSummary) {
+    suspend fun removeClassFromFavorites(classSection: ClassSection) {
         withContext(Dispatchers.IO) {
             favoriteDao.deleteFavorite(
                 Favorite(
-                    classSummary.id,
-                    classSummary.courseAcronym,
-                    classSummary.calendarTerm,
-                    classSummary.detailsUri,
-                    classSummary.selfUri
+                    classSection.id,
+                    classSection.courseAcronym,
+                    classSection.calendarTerm,
+                    classSection.selfUri
                 )
             )
         }
@@ -86,11 +84,11 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     /**
      * Checks if a favorite exist
      */
-    suspend fun isClassFavorite(classSummary: ClassSummary): Boolean {
+    suspend fun isClassFavorite(classSection: ClassSection): Boolean {
         if (favoriteDao.favoriteExists(
-                classSummary.courseAcronym,
-                classSummary.calendarTerm,
-                classSummary.id
+                classSection.courseAcronym,
+                classSection.calendarTerm,
+                classSection.id
             ) > 0
         )
             return true

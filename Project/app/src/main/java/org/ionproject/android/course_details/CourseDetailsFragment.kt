@@ -62,13 +62,11 @@ class CourseDetailsFragment : Fragment() {
     private fun setupCourseDetails() {
         // Setting up all course details
         val courseFullName = textview_course_details_full_name
-        val courseYear = textview_course_details_year
-        val courseSemester = textview_course_details_semester
+        val courseAcronym = textview_course_details_acronym
 
-        viewModel.getCourseDetails(sharedViewModel.programmeOffer) {
+        viewModel.getCourseDetails(sharedViewModel.courseDetailsUri) {
             courseFullName.text = it.name
-            courseYear.text = resources.getString(R.string.year_course, it.year)
-            courseSemester.text = resources.getString(R.string.term_course, it.term)
+            courseAcronym.text = it.acronym
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
         }
