@@ -31,9 +31,10 @@ fun SirenICalendar.toEventsSummary(): Events {
     components.forEach { component ->
         val type: String = component.type
         val properties: ComponentProperties = component.properties
-        val categories: List<String>? = properties.categories.find { it.parameters?.language == Language.EN_GB }?.value
+        val categories: List<String>? =
+            properties.categories.find { it.parameters?.language == Language.EN_GB }?.value
 
-        when(type) {
+        when (type) {
             Event.type -> {
                 if (categories?.find { it.contains(Lecture.type) } != null)
                     lectures.add(createLecture(properties))

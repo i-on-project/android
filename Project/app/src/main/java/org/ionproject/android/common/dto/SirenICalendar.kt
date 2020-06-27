@@ -42,7 +42,7 @@ data class ComponentProperties(
     val dtstart: Value? = null,
     val dtend: Value? = null,
     val rrule: Rules? = null,
-    val attachment: Value? = null,
+    //val attach: Value? = null,
     val due: Value? = null,
     val relatedTo: List<Related>? = null,
     val location: Value? = null
@@ -58,8 +58,30 @@ data class EventParameter(
 )
 
 data class Rules(
-    val value: String
-)
+    private val value: String
+) {
+    private val ruleMap = mutableMapOf<String, String>()
+
+    /**
+     * Processes the rules.
+     * Logic:
+     * 1ª Separates each rule in between the ;
+     * 2ª Separates each rule from NAME=VALUE in pairs Name, Value
+     * 3ª Adds the pair to the map
+     */
+    init {
+        value.split(";").forEach {
+            val rulePair = it.split("=")
+            ruleMap.put(rulePair[0], rulePair[0])
+        }
+    }
+
+    /**
+     * @param rname is the name of the rule
+     * @return the value of the rule or null if rule does not exist
+     */
+    fun getRuleByName(rname: String): String? = ruleMap.get(rname)
+}
 
 data class Related(
     val parameters: RelType? = null,
@@ -73,8 +95,10 @@ data class RelType(
 enum class Language {
     @JsonProperty("en-GB")
     EN_GB,
+
     @JsonProperty("en-US")
     EN_US,
+
     @JsonProperty("pt-PT")
     PT_PT
 }

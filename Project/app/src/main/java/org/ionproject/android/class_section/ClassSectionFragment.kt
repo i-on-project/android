@@ -16,7 +16,6 @@ import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
-import java.net.URI
 
 class ClassSectionFragment : Fragment() {
 

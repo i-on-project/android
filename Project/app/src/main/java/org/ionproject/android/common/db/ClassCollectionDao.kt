@@ -17,11 +17,13 @@ abstract class ClassCollectionDao {
         insertClassCollectionFields(classCollection.fields)
         insertClassSummaries(classCollection.classes)
     }
+
     suspend fun deleteClassCollection(classCollection: ClassCollection) {
         deleteClassCollectionFields(classCollection.fields)
         deleteClassSummaries(classCollection.classes)
 
     }
+
     suspend fun updateClassCollection(classCollection: ClassCollection) {
         updateClassCollectionFields(classCollection.fields)
         updateClassSummaries(classCollection.classes)

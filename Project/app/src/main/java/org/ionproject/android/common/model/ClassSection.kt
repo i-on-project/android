@@ -35,7 +35,7 @@ data class ClassCollectionFields(
     // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
     @PrimaryKey val courseCalendarTerm: String = "$courseAcronym$calendarTerm",
     override var workerId: Int = 0
-): ICacheable
+) : ICacheable
 
 /**
  * This type represents a collection of ClassSummaries

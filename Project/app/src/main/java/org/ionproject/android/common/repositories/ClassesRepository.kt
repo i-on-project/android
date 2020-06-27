@@ -40,7 +40,6 @@ class ClassesRepository(
         }
 
 
-
     suspend fun getClassCollectionByUri(classesUri: URI) = withContext(Dispatchers.IO) {
         var classCollection = classCollectionDao.getClassCollectionByUri(classesUri)
         if (classCollection == null) {

@@ -54,7 +54,7 @@ class CourseDetailsViewModel(
     fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
         viewModelScope.launch {
             var classes = emptyList<ClassSummary>()
-            if(course.classesUri != null) {
+            if (course.classesUri != null) {
                 classesRepository.getClassCollectionByUri(
                     course.classesUri.fromCalendarTerm(calendarTerm)
                 )?.let {

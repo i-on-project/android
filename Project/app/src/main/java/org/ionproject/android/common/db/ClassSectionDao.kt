@@ -1,9 +1,7 @@
 package org.ionproject.android.common.db
 
 import androidx.room.*
-import org.ionproject.android.common.model.ClassCollectionFields
 import org.ionproject.android.common.model.ClassSection
-import org.ionproject.android.common.model.ClassSummary
 import java.net.URI
 
 @Dao

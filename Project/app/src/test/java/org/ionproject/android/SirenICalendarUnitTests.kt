@@ -1,0 +1,27 @@
+package org.ionproject.android
+
+import kotlinx.coroutines.runBlocking
+import org.ionproject.android.common.dto.SirenICalendar
+import org.ionproject.android.common.ionwebapi.IonService
+import org.ionproject.android.common.ionwebapi.IonWebAPI
+import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.junit.Test
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
+
+
+class SirenICalendarUnitTests {
+
+    val ionMapper = JacksonIonMapper()
+
+    @Test
+    fun parseSirenICalendar() = runBlocking {
+
+        val sirenICalendar = ionMapper.parse(pgClassCalendar1920v,SirenICalendar::class.java)
+
+        assert(sirenICalendar.properties.subComponents.count() > 0)
+    }
+}
+
+private const val pgClassCalendar1920v =
+    "{\"class\":[\"calendar\"],\"properties\":{\"type\":\"calendar\",\"properties\":{\"version\":{\"value\":\"2.0\"},\"prodid\":{\"value\":\"/v0/courses/6/classes/1920v\"}},\"subComponents\":[{\"type\":\"event\",\"properties\":{\"uid\":{\"value\":\"e123\"},\"dtstamp\":{\"value\":\"2020-01-01T16:35:30Z\"},\"summary\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"PG Exam\"},\"description\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"First exam of the PG course during the 1920v semester\"},\"created\":{\"value\":\"2020-01-01T16:35:30Z\"},\"categories\":[{\"parameters\":{\"language\":\"pt-PT\"},\"value\":[\"Exame\"]},{\"parameters\":{\"language\":\"en-US\"},\"value\":[\"Exam\"]},{\"parameters\":{\"language\":\"en-GB\"},\"value\":[\"Exam\"]}],\"dtstart\":{\"value\":\"2020-07-15T14:00:00Z\"},\"dtend\":{\"value\":\"2020-07-15T17:00:00Z\"},\"location\":{\"value\":\"Room A.2.3\"}}},{\"type\":\"event\",\"properties\":{\"uid\":{\"value\":\"e1234\"},\"dtstamp\":{\"value\":\"2020-01-01T16:35:30Z\"},\"summary\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"PG Exam\"},\"description\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"Second exam of the PG course during the 1920v semester\"},\"created\":{\"value\":\"2020-01-01T16:35:30Z\"},\"categories\":[{\"parameters\":{\"language\":\"pt-PT\"},\"value\":[\"Exame\"]},{\"parameters\":{\"language\":\"en-US\"},\"value\":[\"Exam\"]},{\"parameters\":{\"language\":\"en-GB\"},\"value\":[\"Exam\"]}],\"dtstart\":{\"value\":\"2020-07-22T17:00:00Z\"},\"dtend\":{\"value\":\"2020-07-22T20:00:00Z\"},\"location\":{\"value\":\"Room A.2.6\"}}},{\"type\":\"todo\",\"properties\":{\"uid\":{\"value\":\"t1234\"},\"dtstamp\":{\"value\":\"2020-01-01T16:35:30Z\"},\"summary\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"PG 1st Series\"},\"description\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"First series of exercises for the PG course during the 1920v semester\"},\"attach\":{\"value\":\"https://github.com/isel-leic-daw/1920v-public/wiki/phase-1\"},\"created\":{\"value\":\"2020-01-01T16:35:30Z\"},\"categories\":[{\"parameters\":{\"language\":\"pt-PT\"},\"value\":[\"Avalia\u00e7\u00e3o\",\"Tarefa\",\"Programa\u00e7\u00e3o\"]},{\"parameters\":{\"language\":\"en-US\"},\"value\":[\"Evaluation\",\"Assignment\",\"Programming\"]},{\"parameters\":{\"language\":\"en-GB\"},\"value\":[\"Evaluation\",\"Assignment\",\"Programming\"]}],\"due\":{\"value\":\"2020-07-04T00:00:00Z\"}}},{\"type\":\"journal\",\"properties\":{\"uid\":{\"value\":\"j1234\"},\"summary\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"Error in 1st PG Exam\"},\"description\":{\"parameters\":{\"language\":\"en-US\"},\"value\":\"The first exercise had and ambigous question that resulted in both answers B and C being correct. Therefore both will be awarded full marks.\"},\"attachment\":{\"value\":\"https://github.com/isel-leic-daw/1920v-public/wiki/phase-1\"},\"created\":{\"value\":\"2020-01-01T16:35:30Z\"},\"categories\":[{\"parameters\":{\"language\":\"pt-PT\"},\"value\":[\"Erro\",\"Avalia\u00e7\u00e3o\",\"Exame\",\"Programa\u00e7\u00e3o\"]},{\"parameters\":{\"language\":\"en-US\"},\"value\":[\"Error\",\"Evaluation\",\"Exam\",\"Programming\"]},{\"parameters\":{\"language\":\"en-GB\"},\"value\":[\"Error\",\"Evaluation\",\"Exam\",\"Programming\"]}],\"dtstamp\":{\"value\":\"2020-01-01T16:35:30Z\"},\"dtstart\":{\"value\":\"2020-07-05T17:00:00Z\"},\"relatedTo\":[{\"value\":\"/v0/courses/6/classes/1920v/calendar/e123\"},{\"parameters\":{\"reltype\":\"SIBLING\"},\"value\":\"/v0/courses/6/classes/1920v/calendar/e123\"}]}}]},\"actions\":[{\"name\":\"search\",\"href\":\"/v0/courses/6/classes/1920v/LI11D/calendar?type,startBefore,startAfter,endBefore,endAfter,summary\",\"title\":\"Search components\",\"method\":\"GET\",\"type\":\"application/json\",\"isTemplated\":true,\"fields\":[{\"name\":\"type\",\"type\":\"text\",\"class\":\"https://example.org/param/free-text-query\"},{\"name\":\"startBefore\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"startAfter\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"endBefore\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"endAfter\",\"type\":\"date\",\"class\":\"https://example.org/param/date-query\"},{\"name\":\"summary\",\"type\":\"text\",\"class\":\"https://example.org/param/free-text-query\"}]}],\"links\":[{\"rel\":[\"self\"],\"href\":\"/v0/courses/6/classes/1920v/calendar\"},{\"rel\":[\"about\"],\"href\":\"/v0/courses/6/classes/1920v\"}]}"

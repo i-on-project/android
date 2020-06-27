@@ -28,23 +28,23 @@ class Lecture(
 }
 
 /**
- * Creates an [Lecture] event
+ * Creates a [Lecture] event
  */
 fun createLecture(properties: ComponentProperties): Lecture {
-    val values = properties.rrule?.value?.split(";")
 
     val uid = properties.uid.value.firstOrNull()
     val summary = properties.summary.value.firstOrNull()
     val description = properties.description.value.firstOrNull()
     val startDate = properties.dtstart?.value?.firstOrNull()?.toCalendar()
     val endDate = properties.dtend?.value?.firstOrNull()?.toCalendar()
-    val untilDate = values?.get(1)?.split("=")?.firstOrNull()?.toCalendar()
-    val weekDay = values?.get(2)?.split("=")?.firstOrNull()
+    val untilDate = properties.rrule?.getRuleByName("UNTIL").toCalendar()
+    val weekDay = properties.rrule?.getRuleByName("BYDAY")
     val duration = if (endDate != null && startDate != null) endDate - startDate else null
     val location = properties.location?.value?.firstOrNull()
 
     if (uid != null && summary != null && description != null && startDate != null
-        && untilDate != null && duration != null && weekDay != null) {
+        && untilDate != null && duration != null && weekDay != null
+    ) {
         return Lecture(
             uid,
             summary,
