@@ -6,13 +6,8 @@ import java.net.URI
 class URIConverter {
 
     @TypeConverter
-    fun fromString(uri: String): URI {
-        return URI(uri)
-    }
+    fun fromString(uri: String) = URI(uri)
 
     @TypeConverter
-    fun toString(uri: URI): String {
-        return uri.toString()
-    }
-
+    fun toString(uri: URI?) = uri?.toString() ?: ""
 }

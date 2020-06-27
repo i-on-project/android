@@ -8,4 +8,8 @@ abstract class Event(
     val uid: String,
     val summary: String,
     val description: String
-)
+) {
+    companion object type {
+        const val type = "event"
+    }
+}

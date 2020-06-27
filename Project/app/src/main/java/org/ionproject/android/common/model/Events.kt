@@ -2,7 +2,8 @@ package org.ionproject.android.common.model
 
 import org.ionproject.android.common.dto.ComponentProperties
 import org.ionproject.android.common.dto.EventProperties
-import org.ionproject.android.common.dto.ICalendarDto
+import org.ionproject.android.common.dto.Language
+import org.ionproject.android.common.dto.SirenICalendar
 
 /**
  * This class contains all events that were received from a class section
@@ -19,7 +20,7 @@ class Events(
     }
 }
 
-fun ICalendarDto.toEventsSummary(): Events {
+fun SirenICalendar.toEventsSummary(): Events {
     val exams = mutableListOf<Exam>()
     val lectures = mutableListOf<Lecture>()
     val todos = mutableListOf<Todo>()
@@ -30,19 +31,21 @@ fun ICalendarDto.toEventsSummary(): Events {
     components.forEach { component ->
         val type: String = component.type
         val properties: ComponentProperties = component.properties
-        val categories: List<String> = properties.categories.value
+        val categories: List<String>? = properties.categories.find { it.parameters?.language == Language.EN_GB }?.value
 
-        if (type == "event") {
-            if (categories.contains(Lecture.type))
-                lectures.add(createLecture(properties))
-            else
-                exams.add(createExam(properties))
-        } else if (type == "todo")
-            todos.add(createTodo(properties))
-        else if (type == "journal")
-            journals.add(createJournal(properties))
-
+        when(type) {
+            Event.type -> {
+                if (categories?.find { it.contains(Lecture.type) } != null)
+                    lectures.add(createLecture(properties))
+                else
+                    exams.add(createExam(properties))
+            }
+            Todo.type -> todos.add(createTodo(properties))
+            Journal.type -> journals.add(createJournal(properties))
+        }
     }
-
     return Events(exams, lectures, todos, journals)
 }
+
+
+

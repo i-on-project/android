@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Url
 
-private const val AUTHORIZATION_TOKEN = "5tuMrTm8dD-n2d53e3z2ALYC5JRUshAhZUa7xp3cHH4"
+private const val AUTHORIZATION_TOKEN = "5HyGXjRIZiUj6s09FoRT7FJqbP8dGhTvqO_7gwHCk8E"
 
 interface IonService {
 

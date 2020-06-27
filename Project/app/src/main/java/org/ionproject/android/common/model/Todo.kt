@@ -16,7 +16,7 @@ class Todo(
 ) : Event(type, uid, summary, description) {
 
     companion object {
-        const val type = "Todo"
+        const val type = "todo"
         const val color = "#FF8C00"
     }
 }
@@ -25,13 +25,13 @@ class Todo(
  * Creates a [Todo] event
  */
 fun createTodo(properties: ComponentProperties): Todo {
-    val uid = properties.uid.value[0]
-    val summary = properties.summary.value[0]
-    val description = properties.description.value[0]
-    val attachment = URI(properties.attachment?.value?.get(0) ?: "")
-    val due = properties.due?.value?.get(0)?.toCalendar()
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val attachment = URI(properties.attachment?.value?.firstOrNull() ?: "")
+    val due = properties.due?.value?.firstOrNull()?.toCalendar()
 
-    if (due != null) {
+    if (uid != null && summary != null && description != null && due != null) {
         return Todo(
             uid,
             summary,

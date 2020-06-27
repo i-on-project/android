@@ -12,11 +12,12 @@ class Exam(
     uid: String,
     summary: String,
     description: String,
-    val categories: String,
     val created: Calendar,
     val stamp: Calendar,
     val startDate: Calendar,
-    val endDate: Calendar
+    val endDate: Calendar,
+    // This is nullable because the exam date might have been annouced but the room hasn't
+    val location: String?
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -29,25 +30,27 @@ class Exam(
  * Creates an [Exam] event
  */
 fun createExam(properties: ComponentProperties): Exam {
-    val uid = properties.uid.value[0]
-    val summary = properties.summary.value[0]
-    val description = properties.description.value[0]
-    val categories = properties.categories.value[0]
-    val created = properties.created?.value?.get(0)?.toCalendar()
-    val stamp = properties.dtstamp.value[0].toCalendar()
-    val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
-    val endDate = properties.dtend?.value?.get(0)?.toCalendar()
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val created = properties.created?.value?.firstOrNull()?.toCalendar()
+    val stamp = properties.dtstamp.value.firstOrNull().toCalendar()
+    val startDate = properties.dtstart?.value?.firstOrNull()?.toCalendar()
+    val endDate = properties.dtend?.value?.firstOrNull()?.toCalendar()
+    val location = properties.location?.value?.firstOrNull()
 
-    if (created != null && stamp != null && startDate != null && endDate != null) {
+    if (uid != null && summary != null && description != null && created != null && stamp != null
+        && startDate != null && endDate != null && location != null
+    ) {
         return Exam(
             uid,
             summary,
             description,
-            categories,
             created,
             stamp,
             startDate,
-            endDate
+            endDate,
+            location
         )
     }
     throw IllegalArgumentException("Found a null field while creating an exam")

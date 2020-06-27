@@ -94,18 +94,18 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
 
     /**
      * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
-     * The worker is associated to a list of [ClassSummary] and will check for any changes
+     * The worker is associated to a [ClassCollection] and will check for any changes
      * to them and update the local database in case there are.
      */
-    suspend fun enqueueWorkForClassSummaries(
-        classSummaries: List<ClassSummary>,
+    suspend fun enqueueWorkForClassCollection(
+        classCollection: ClassCollection,
         workImportance: WorkImportance
     ) = enqueueWorkWithInputData(
         workImportance,
-        ClassSummariesWorker::class.java,
-        classSummaries[0].selfUri,
-        CLASS_SUMMARIES_COURSE_KEY to classSummaries[0].courseAcronym,
-        CLASS_SECTION_CALENDAR_TERM_KEY to classSummaries[0].calendarTerm
+        ClassCollectionWorker::class.java,
+        classCollection.fields.selfUri,
+        CLASS_SUMMARIES_COURSE_KEY to classCollection.fields.courseAcronym,
+        CLASS_SECTION_CALENDAR_TERM_KEY to classCollection.fields.calendarTerm
     )
 
     /**

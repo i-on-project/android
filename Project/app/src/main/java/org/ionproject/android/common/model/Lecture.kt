@@ -16,7 +16,9 @@ class Lecture(
     val start: Calendar,
     val duration: Moment,
     val endDate: Calendar,
-    val weekDay: WeekDay
+    val weekDay: WeekDay,
+    // This is nullable because the lectures room might not have been announced
+    val location: String?
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -31,16 +33,18 @@ class Lecture(
 fun createLecture(properties: ComponentProperties): Lecture {
     val values = properties.rrule?.value?.split(";")
 
-    val uid = properties.uid.value[0]
-    val summary = properties.summary.value[0]
-    val description = properties.description.value[0]
-    val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
-    val endDate = properties.dtend?.value?.get(0)?.toCalendar()
-    val untilDate = values?.get(1)?.split("=")?.get(1)?.toCalendar()
-    val weekDay = values?.get(2)?.split("=")?.get(1)
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val startDate = properties.dtstart?.value?.firstOrNull()?.toCalendar()
+    val endDate = properties.dtend?.value?.firstOrNull()?.toCalendar()
+    val untilDate = values?.get(1)?.split("=")?.firstOrNull()?.toCalendar()
+    val weekDay = values?.get(2)?.split("=")?.firstOrNull()
     val duration = if (endDate != null && startDate != null) endDate - startDate else null
+    val location = properties.location?.value?.firstOrNull()
 
-    if (startDate != null && untilDate != null && duration != null && weekDay != null) {
+    if (uid != null && summary != null && description != null && startDate != null
+        && untilDate != null && duration != null && weekDay != null) {
         return Lecture(
             uid,
             summary,
@@ -48,24 +52,12 @@ fun createLecture(properties: ComponentProperties): Lecture {
             startDate,
             Moment(duration.hour, duration.minute),
             untilDate,
-            WeekDay.byShortName(weekDay)
+            WeekDay.byShortName(weekDay),
+            location
         )
     }
     throw IllegalArgumentException("Found a null field while creating a lecture")
 
-}
-
-private fun String?.toMoment(): Moment? {
-    val hoursEndIdx = this?.indexOf("H")
-    val minutesIdx = this?.indexOf("M")
-
-    if (hoursEndIdx != null && minutesIdx != null) {
-        val hours = this?.substring(hoursEndIdx - 2, hoursEndIdx)?.toInt()
-        val minutes = this?.substring(minutesIdx - 2, minutesIdx)?.toInt()
-        if (hours != null && minutes != null)
-            return Moment(hours, minutes)
-    }
-    return null
 }
 
 

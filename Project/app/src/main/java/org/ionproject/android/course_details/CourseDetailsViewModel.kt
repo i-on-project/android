@@ -38,6 +38,12 @@ class CourseDetailsViewModel(
         }
     }
 
+    //Adds the calendar term to the classes URI
+    private fun URI.fromCalendarTerm(calendarTerm: CalendarTerm): URI {
+        val newUri = "${toString()}/${calendarTerm.name}"
+        return URI(newUri)
+    }
+
     /**
      *  Requests the list of classes, from a course, from the API
      *  and calls onResult once the result is available
@@ -47,7 +53,14 @@ class CourseDetailsViewModel(
      */
     fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
         viewModelScope.launch {
-            val classes = classesRepository.getClassesFromCourse(course, calendarTerm)
+            var classes = emptyList<ClassSummary>()
+            if(course.classesUri != null) {
+                classesRepository.getClassCollectionByUri(
+                    course.classesUri.fromCalendarTerm(calendarTerm)
+                )?.let {
+                    classes = it.classes
+                }
+            }
             classesListLiveData.postValue(classes)
         }
     }

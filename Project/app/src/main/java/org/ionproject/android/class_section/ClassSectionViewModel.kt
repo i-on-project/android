@@ -10,7 +10,7 @@ import java.net.URI
 
 class ClassSectionViewModel(
     private val eventsRepository: EventsRepository,
-    private val classSectionRepository: ClassesRepository,
+    private val classesRepository: ClassesRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
@@ -25,29 +25,14 @@ class ClassSectionViewModel(
      * These livedatas should be private and we must have public getters in order
      * to return information holden by these livedatas.
      */
-    private val lecturesLiveData = MutableLiveData<List<Lecture>>()
-    private val examsLiveData = MutableLiveData<List<Exam>>()
-    private val workAssignmentsLiveData = MutableLiveData<List<Todo>>()
-    private val journalsLiveData = MutableLiveData<List<Journal>>()
+    private val eventsLiveData = MutableLiveData<Events>()
 
-    // Public getter to return lecturesLiveData information
-    val lectures: List<Lecture>
-        get() = lecturesLiveData.value ?: emptyList()
-
-    // Public getter to return examsLiveData information
-    val exams: List<Exam>
-        get() = examsLiveData.value ?: emptyList()
-
-    // Public getter to return workAssignments information
-    val workAssignments: List<Todo>
-        get() = workAssignmentsLiveData.value ?: emptyList()
-
-    // Public getter to return journals information
-    val journals: List<Journal>
-        get() = journalsLiveData.value ?: emptyList()
+    // Public property to return eventsLiveData information
+    val events: Events
+        get() = eventsLiveData.value ?: Events.NO_EVENTS
 
     /**
-     * Obtains a classSection details information from the [classSectionRepository]
+     * Obtains a classSection details information from the [classesRepository]
      * and update UI with the result
      *
      * @param classSummary The class summary's details to be collected
@@ -55,67 +40,56 @@ class ClassSectionViewModel(
      */
     fun getClassSectionDetails(classSectionUri: URI, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
-            classSectionRepository.getClassSection(classSectionUri)?.let {
+            classesRepository.getClassSection(classSectionUri)?.let {
                 currClassSection = it
                 onResult(it)
             }
         }
     }
 
-    fun getEvents(uri: URI) {
+    fun getEventsFromClassSection(classSection: ClassSection) {
         viewModelScope.launch {
-            val events = eventsRepository.getEvents(uri)
-            examsLiveData.postValue(events.exams)
-            lecturesLiveData.postValue(events.lectures)
-            workAssignmentsLiveData.postValue(events.todos)
-            journalsLiveData.postValue(events.journals)
+            val classCollection = classesRepository.getClassCollectionByUri(classSection.upURI)
+
+            val exams = mutableListOf<Exam>()
+            val lectures = mutableListOf<Lecture>()
+            val todos = mutableListOf<Todo>()
+            val journals = mutableListOf<Journal>()
+
+            suspend fun getEventsAndAddToLists(uri: URI?) {
+                if (uri != null && uri.path != "") {
+                    val events = eventsRepository.getEvents(uri)
+                    exams.addAll(events.exams)
+                    lectures.addAll(events.lectures)
+                    todos.addAll(events.todos)
+                    journals.addAll(events.journals)
+                }
+            }
+
+            if (classCollection != null)
+                getEventsAndAddToLists(classCollection.fields.calendarURI)
+
+            getEventsAndAddToLists(classSection.calendarURI)
+
+            eventsLiveData.postValue(
+                Events(
+                    exams,
+                    lectures,
+                    todos,
+                    journals
+                )
+            )
         }
     }
 
     /**
-     * Observes if [examsLiveData]'s information has changed.
+     * Observes if [eventsLiveData]'s information has changed.
      *
      * @param lifeCycle The activity's lifecycle
-     * @param onResult callback to be called when [examsLiveData]'s information has changed
+     * @param onResult callback to be called when [eventsLiveData]'s information has changed
      */
-    fun observeExamsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
-        examsLiveData.observe(lifeCycle, Observer {
-            onResult()
-        })
-    }
-
-    /**
-     * Observes if [lecturesLiveData]'s information has changed.
-     *
-     * @param lifeCycle The activity's lifecycle
-     * @param onResult callback to be called when [lecturesLiveData]'s information has changed
-     */
-    fun observeLecturesList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
-        lecturesLiveData.observe(lifeCycle, Observer {
-            onResult()
-        })
-    }
-
-    /**
-     * Observes if [workAssignmentsLiveData]'s information has changed.
-     *
-     * @param lifeCycle The activity's lifecycle
-     * @param onResult callback to be called when [workAssignmentsLiveData]'s information has changed
-     */
-    fun observeWorkAssignmentsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
-        workAssignmentsLiveData.observe(lifeCycle, Observer {
-            onResult()
-        })
-    }
-
-    /**
-     * Observes if [journalsLiveData]'s information has changed.
-     *
-     * @param lifeCycle The activity's lifecycle
-     * @param onResult callback to be called when [journalsLiveData]'s information has changed
-     */
-    fun observerJournalsList(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
-        journalsLiveData.observe(lifeCycle, Observer {
+    fun observeEvents(lifeCycle: LifecycleOwner, onResult: () -> Unit) {
+        eventsLiveData.observe(lifeCycle, Observer {
             onResult()
         })
     }

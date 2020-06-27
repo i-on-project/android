@@ -11,18 +11,22 @@ class Journal(
     summary: String,
     description: String,
     val lastModification: Calendar
-) : Event("Journal", uid, summary, description)
+) : Event("Journal", uid, summary, description) {
+    companion object {
+        const val type = "journal"
+    }
+}
 
 /**
  * Creates an [Journal] event
  */
 fun createJournal(properties: ComponentProperties): Journal {
-    val uid = properties.uid.value[0]
-    val summary = properties.summary.value[0]
-    val description = properties.description.value.get(0)
-    val lastModification = properties.dtstamp.value[0].toCalendar()
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val lastModification = properties.dtstamp.value.firstOrNull().toCalendar()
 
-    if (lastModification != null) {
+    if (uid != null && summary != null && description != null && lastModification != null) {
         return Journal(
             uid,
             summary,

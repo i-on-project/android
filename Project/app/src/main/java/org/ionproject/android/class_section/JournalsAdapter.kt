@@ -18,10 +18,10 @@ class JournalsAdapter(
         return JournalViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.journals.size
+    override fun getItemCount(): Int = model.events.journals.size
 
     override fun onBindViewHolder(holder: JournalViewHolder, position: Int) {
-        holder.bindTo(model.journals[position])
+        holder.bindTo(model.events.journals[position])
     }
 
     class JournalViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -106,7 +106,7 @@ class ClassSectionFragment : Fragment() {
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkBox, it)
 
-            requestEvents(it.calendarURI)
+            requestEvents(it)
         }
     }
 
@@ -149,15 +149,14 @@ class ClassSectionFragment : Fragment() {
     /**
      * Request all events available for the class section [currClassSummary]
      */
-    private fun requestEvents(uri: URI?) {
-        if (uri == null)
-            return
-        viewModel.getEvents(uri)
-
-        viewModel.observeExamsList(this) { examsListAdapter.notifyDataSetChanged() }
-        viewModel.observeLecturesList(this) { lecturesListAdapter.notifyDataSetChanged() }
-        viewModel.observeWorkAssignmentsList(this) { workAssignmentsAdapter.notifyDataSetChanged() }
-        viewModel.observerJournalsList(this) { journalsAdapter.notifyDataSetChanged() }
+    private fun requestEvents(classSection: ClassSection) {
+        viewModel.getEventsFromClassSection(classSection)
+        viewModel.observeEvents(this) {
+            examsListAdapter.notifyDataSetChanged()
+            lecturesListAdapter.notifyDataSetChanged()
+            workAssignmentsAdapter.notifyDataSetChanged()
+            journalsAdapter.notifyDataSetChanged()
+        }
     }
 
     /**
@@ -210,6 +209,4 @@ class ClassSectionFragment : Fragment() {
                 recyclerview_class_section_journals.visibility = View.VISIBLE
         }
     }
-
-
 }

@@ -7,6 +7,7 @@ import org.ionproject.android.common.model.*
 
 @Database(
     entities = arrayOf(
+        ClassCollectionFields::class,
         ClassSummary::class,
         ClassSection::class,
         Suggestion::class,
@@ -29,6 +30,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun programmeDao(): ProgrammeDao
     abstract fun programmeOfferDao(): ProgrammeOfferDao
     abstract fun courseDao(): CourseDao
-    abstract fun classSummaryDao(): ClassSummaryDao
+    abstract fun classCollectionDao(): ClassCollectionDao
     abstract fun calendarTermDao(): CalendarTermDao
 }

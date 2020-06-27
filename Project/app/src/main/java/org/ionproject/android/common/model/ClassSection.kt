@@ -1,6 +1,8 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import androidx.room.Relation
 import java.net.URI
 
@@ -18,25 +20,36 @@ data class ClassSection(
     override var workerId: Int = 0
 ) : ICacheable
 
+
+/**
+ * This type represents the information that is common
+ * among all class summaries of a specific course and calendar term
+ */
+@Entity
+data class ClassCollectionFields(
+    val courseId: Int,
+    val courseAcronym: String,
+    val calendarTerm: String,
+    val calendarURI: URI?,
+    val selfUri: URI,
+    // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
+    @PrimaryKey val courseCalendarTerm: String = "$courseAcronym$calendarTerm",
+    override var workerId: Int = 0
+): ICacheable
+
 /**
  * This type represents a collection of ClassSummaries
  */
 data class ClassCollection(
-    val courseId: Int,
-    val courseAcronym: String,
-    val calendarTerm: String,
+    @Embedded val fields: ClassCollectionFields,
     @Relation(
         entityColumn = "courseCalendarTerm",
         parentColumn = "courseCalendarTerm",
         entity = ClassSummary::class
     )
-    val classes: List<ClassSummary>,
-    val calendarURI: URI?,
-    val selfUri: URI,
-    override val workerId: Int = 0,
-    // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
-    val courseCalendarTerm: String = "$courseAcronym$calendarTerm"
-) : ICacheable
+    val classes: List<ClassSummary>
+
+)
 
 @Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
 data class ClassSummary(
@@ -44,7 +57,6 @@ data class ClassSummary(
     val courseAcronym: String,
     val calendarTerm: String,
     val detailsUri: URI,
-    val selfUri: URI,
     override var workerId: Int = 0,
     // The sole purpose of this property is to establish a relation between ClassCollection and ClassSummary
     val courseCalendarTerm: String = "$courseAcronym$calendarTerm"
@@ -52,7 +64,7 @@ data class ClassSummary(
     override fun equals(other: Any?): Boolean {
         val other = other as ClassSummary
         if (id == other.id && courseAcronym == other.courseAcronym && calendarTerm == other.calendarTerm
-            && detailsUri == other.detailsUri && selfUri == other.selfUri
+            && detailsUri == other.detailsUri
         ) {
             return true
         }
@@ -67,7 +79,6 @@ data class ClassSummary(
         result = 31 * result + courseAcronym.hashCode()
         result = 31 * result + calendarTerm.hashCode()
         result = 31 * result + detailsUri.hashCode()
-        result = 31 * result + selfUri.hashCode()
         result = 31 * result + workerId
         return result
     }
