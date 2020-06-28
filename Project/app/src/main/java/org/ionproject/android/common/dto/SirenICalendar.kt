@@ -58,7 +58,7 @@ data class EventParameter(
 )
 
 data class Rules(
-    private val value: String
+    val value: String
 ) {
     private val ruleMap = mutableMapOf<String, String>()
 
@@ -72,7 +72,7 @@ data class Rules(
     init {
         value.split(";").forEach {
             val rulePair = it.split("=")
-            ruleMap.put(rulePair[0], rulePair[0])
+            ruleMap.put(rulePair[0], rulePair[1])
         }
     }
 
