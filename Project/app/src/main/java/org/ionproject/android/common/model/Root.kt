@@ -10,11 +10,13 @@ import java.net.URI
  */
 data class Root(
     val programmesUri: URI,
-    val calendarTermsUri: URI
+    val calendarTermsUri: URI,
+    val searchUri: URI
 ) : Parcelable {
 
     // ------------------ Parcelable methods -----------------------
     constructor(parcel: Parcel) : this(
+        URI(parcel.readString() ?: ""),
         URI(parcel.readString() ?: ""),
         URI(parcel.readString() ?: "")
     )
@@ -22,6 +24,7 @@ data class Root(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(programmesUri.toString())
         parcel.writeString(calendarTermsUri.toString())
+        parcel.writeString(searchUri.toString())
     }
 
     override fun describeContents(): Int {

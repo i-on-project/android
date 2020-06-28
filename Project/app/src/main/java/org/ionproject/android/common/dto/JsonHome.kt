@@ -18,25 +18,37 @@ import java.net.URI
  */
 data class JsonHome(
     val api: Api,
-    val resources: HashMap<String, IResource>
+    val resources: Map<String, IResource>
 ) {
-    fun getResourceByType(resourceType: ResourceType): IResource? =
+    private fun getResourceByType(resourceType: ResourceType): IResource? =
         resources[resourceType.correctName]
 
     fun toRoot(): Root? {
         val iresourceProgrammes = getResourceByType(ResourceType.PROGRAMMES)
         val iresourceCalendarTerm = getResourceByType(ResourceType.CALENDAR_TERM)
-        if (iresourceProgrammes != null && iresourceCalendarTerm != null) {
+        val iresourceSearch = getResourceByType(ResourceType.SEARCH)
+        if (iresourceProgrammes != null && iresourceCalendarTerm != null && iresourceSearch != null) {
             val programmesResource = iresourceProgrammes as HrefResource
             val calendarTermsResource = iresourceCalendarTerm as HrefTemplateResource
-            return Root(
-                programmesResource.href,
-                calendarTermsResource.hrefTemplate.uri
-            )
+            val searchResource = iresourceSearch as HrefTemplateResource
+
+            // For the search functionality to work correct the resource MUST support
+            // all there query strings
+            if (searchResource.hrefVars.containsKeys("query", "type", "limit", "page")) {
+                return Root(
+                    programmesResource.href,
+                    calendarTermsResource.hrefTemplate.uri,
+                    searchResource.hrefTemplate.uri
+                )
+            }
         }
         return null
     }
 }
+
+private fun <K, V> Map<K, V>.containsKeys(vararg keys: K) =
+    keys.all { this.containsKey(it) }
+
 
 /**
  * Represents the keys of the resources within the JSON Home object
@@ -51,6 +63,9 @@ enum class ResourceType {
     },
     CALENDAR_TERM {
         override val correctName: String = "calendar-terms"
+    },
+    SEARCH {
+        override val correctName: String = "search"
     };
 
     abstract val correctName: String
