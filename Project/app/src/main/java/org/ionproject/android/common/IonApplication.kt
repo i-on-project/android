@@ -4,10 +4,13 @@ import android.app.Application
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.IonService
+import org.ionproject.android.common.ionwebapi.IonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
-import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
@@ -30,6 +33,7 @@ class IonApplication : Application() {
         lateinit var workerManagerFacade: WorkerManagerFacade private set
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
+        lateinit var searchRepository: SearchRepository private set
     }
 
     override fun onCreate() {
@@ -49,21 +53,20 @@ class IonApplication : Application() {
         val ionMapper = JacksonIonMapper()
 
         // Using mocks
-        val webAPI = MockIonWebAPI(ionMapper)
+        //val webAPI = MockIonWebAPI(ionMapper)
 
-        /*val retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val service: IonService = retrofit.create(IonService::class.java)
-        val webAPI = IonWebAPI(service, ionMapper)*/
+        val webAPI = IonWebAPI(service, ionMapper)
 
         IonApplication.db = db
         ionWebAPI = webAPI
 
-        workerRepository =
-            WorkerRepository(db.workerDao())
+        workerRepository = WorkerRepository(db.workerDao())
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
         programmesRepository =
@@ -73,8 +76,7 @@ class IonApplication : Application() {
                 db.programmeOfferDao(),
                 workerManagerFacade
             )
-        coursesRepository =
-            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
+        coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
             ClassesRepository(
                 webAPI,
@@ -82,15 +84,13 @@ class IonApplication : Application() {
                 db.classCollectionDao(),
                 workerManagerFacade
             )
-        favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+        favoritesRepository = FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository =
-            SuggestionsMockRepository(db)
-        eventsRepository =
-            EventsRepository(webAPI)
+        suggestionsMockRepository = SuggestionsMockRepository(db)
+        eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
+        searchRepository = SearchRepository(webAPI)
     }
 
 }

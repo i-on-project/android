@@ -14,7 +14,11 @@ class URITemplate(uriTemplate: String) {
         private set
 
     init {
-        // /v0/programmes{?page,limit} -> /v0/programmes & ?page,limit}
+        /**
+         * Example: /v0/programmes{?page,limit}
+         * uri = /v0/programmes
+         * queryStrings = [page, limit]
+         */
         val uriTemplateParts = uriTemplate.split("{")
 
         uri = URI(uriTemplateParts[0])

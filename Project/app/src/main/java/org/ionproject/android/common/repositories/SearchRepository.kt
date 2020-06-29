@@ -11,10 +11,9 @@ import java.net.URI
 class SearchRepository(private val ionWebAPI: IIonWebAPI) {
 
     /**
-     * Requests all resources which match the [query] from the uri
-     * [Uri]
+     * Requests all resources which match the [query] from the uri [Uri]
      */
-    suspend fun search(searchUri: URI, query: String, page: Int, limit: Int) =
+    suspend fun search(searchUri: URI, query: String, page: Int = 0, limit: Int = 10) =
         withContext(Dispatchers.IO) {
             ionWebAPI.getFromURI(
                 searchUri.addQueryStrings(
@@ -32,5 +31,21 @@ class SearchRepository(private val ionWebAPI: IIonWebAPI) {
 }
 
 private fun URI.addQueryStrings(vararg queryStrings: Pair<String, List<String>>): URI {
-    return this
+    val sb = StringBuilder("$this?")
+
+    fun appendToStringBuilder(queryString: Pair<String, List<String>>) {
+        sb.append(queryString.first)
+        sb.append('=')
+        sb.append(queryString.second.joinToString(separator = ","))
+    }
+
+    queryStrings.forEachIndexed { index, pair ->
+        if (index == 0) appendToStringBuilder(pair)
+        else {
+            sb.append('&')
+            appendToStringBuilder(pair)
+        }
+    }
+
+    return URI.create(sb.toString())
 }

@@ -110,7 +110,6 @@ class MainActivity : AppCompatActivity() {
 
         // Get the SearchView and set the searchable configuration.
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
         val searchView = menu.findItem(R.id.action_search)?.actionView as? SearchView
 
         searchView?.apply {
@@ -184,7 +183,6 @@ class MainActivity : AppCompatActivity() {
             }
             // Passing query text to [SearchResultsFragment]
             sharedViewModel.setQueryText(query)
-
             return
         }
 

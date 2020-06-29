@@ -34,7 +34,7 @@ data class JsonHome(
 
             // For the search functionality to work correct the resource MUST support
             // all there query strings
-            if (searchResource.hrefVars.containsKeys("query", "type", "limit", "page")) {
+            if (searchResource.hrefVars.containsKeys("query", "types", "limit", "page")) {
                 return Root(
                     programmesResource.href,
                     calendarTermsResource.hrefTemplate.uri,
