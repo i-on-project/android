@@ -21,6 +21,18 @@ abstract class SearchResult(
     val resourceURI: URI
 ) {
     /**
+     * We need to override equals method, in order to know how each
+     * SearchResult is equal to another SearchResult.
+     * This comparison is useful for PageListAdapter.
+     */
+    override operator fun equals(other: Any?) : Boolean {
+        if(other !is SearchResult)
+            return false
+        return resourceURI == other.resourceURI
+    }
+
+
+    /**
      * Navigates to the area of the application which represents
      * this result. Should pass the [resourceURI] to [sharedViewModel]
      * and navigate to the area of the application using the [navController]

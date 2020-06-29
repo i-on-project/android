@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_search_results.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
@@ -38,10 +41,23 @@ class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // We just want to make a Toast of the search query text, for now...
+        val navController = findNavController()
+
+        val searchResultsAdapter = SearchResultsAdapter(searchResultsViewModel) {
+            it.navigateToResource(navController, sharedViewModel)
+        }
+
+        recyclerview_search_results.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = searchResultsAdapter
+        }
+
         sharedViewModel.observeQueryText(this) { query ->
             hideKeyboard(view)
             searchResultsViewModel.search(sharedViewModel.root.searchUri, query)
+            searchResultsViewModel.observeSearchResults(this) {
+                searchResultsAdapter.notifyDataSetChanged()
+            }
         }
     }
 

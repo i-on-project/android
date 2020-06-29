@@ -13,7 +13,7 @@ class SearchRepository(private val ionWebAPI: IIonWebAPI) {
     /**
      * Requests all resources which match the [query] from the uri [Uri]
      */
-    suspend fun search(searchUri: URI, query: String, page: Int = 0, limit: Int = 10) =
+    suspend fun search(searchUri: URI, query: String, page: Int, limit: Int) =
         withContext(Dispatchers.IO) {
             ionWebAPI.getFromURI(
                 searchUri.addQueryStrings(
@@ -39,12 +39,10 @@ private fun URI.addQueryStrings(vararg queryStrings: Pair<String, List<String>>)
         sb.append(queryString.second.joinToString(separator = ","))
     }
 
-    queryStrings.forEachIndexed { index, pair ->
-        if (index == 0) appendToStringBuilder(pair)
-        else {
-            sb.append('&')
-            appendToStringBuilder(pair)
-        }
+    appendToStringBuilder(queryStrings[0])
+    for(i in 1 until queryStrings.size) {
+        sb.append('&')
+        appendToStringBuilder(queryStrings[i])
     }
 
     return URI.create(sb.toString())
