@@ -40,7 +40,7 @@ private fun URI.addQueryStrings(vararg queryStrings: Pair<String, List<String>>)
     }
 
     appendToStringBuilder(queryStrings[0])
-    for(i in 1 until queryStrings.size) {
+    for (i in 1 until queryStrings.size) {
         sb.append('&')
         appendToStringBuilder(queryStrings[i])
     }

@@ -25,8 +25,8 @@ abstract class SearchResult(
      * SearchResult is equal to another SearchResult.
      * This comparison is useful for PageListAdapter.
      */
-    override operator fun equals(other: Any?) : Boolean {
-        if(other !is SearchResult)
+    override operator fun equals(other: Any?): Boolean {
+        if (other !is SearchResult)
             return false
         return resourceURI == other.resourceURI
     }
