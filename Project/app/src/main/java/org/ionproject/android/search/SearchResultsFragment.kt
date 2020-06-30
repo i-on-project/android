@@ -56,7 +56,7 @@ class SearchResultsFragment : Fragment() {
             hideKeyboard(view)
             searchResultsViewModel.search(sharedViewModel.root.searchUri, query)
             searchResultsViewModel.observeSearchResults(this) {
-                searchResultsAdapter.notifyDataSetChanged()
+                searchResultsAdapter.submitList(it)
             }
         }
     }
