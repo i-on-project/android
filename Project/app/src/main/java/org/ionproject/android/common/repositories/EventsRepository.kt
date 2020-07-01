@@ -35,9 +35,9 @@ class EventsRepository(
                 events,
                 WorkImportance.VERY_IMPORTANT
             )
-            events.workerId = workerId
+            events.fields.workerId = workerId
         } else {
-            workerManagerFacade.resetWorkerJobsByCacheable(events)
+            workerManagerFacade.resetWorkerJobsByCacheable(events.fields)
         }
         events
     }

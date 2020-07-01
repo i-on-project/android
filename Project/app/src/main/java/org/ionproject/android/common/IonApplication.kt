@@ -89,7 +89,7 @@ class IonApplication : Application() {
         suggestionsMockRepository =
             SuggestionsMockRepository(db)
         eventsRepository =
-            EventsRepository(webAPI)
+            EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(ionWebAPI)
     }
 

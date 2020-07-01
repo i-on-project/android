@@ -2,6 +2,7 @@ package org.ionproject.android.common.model
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import androidx.room.Relation
 import org.ionproject.android.common.dto.*
 import java.net.URI
@@ -16,8 +17,9 @@ import java.net.URI
  */
 @Entity
 data class EventsFields(
-    val selfUri: URI
-)
+    @PrimaryKey val selfUri: URI,
+    override var workerId: Int = 0
+) : ICacheable
 
 /**
  * This class contains all events that were received from a class section
@@ -31,9 +33,8 @@ data class Events(
     val todos: List<Todo>,
     @Relation(parentColumn = "selfUri", entityColumn = "selfUri", entity = Journal::class)
     val journals: List<Journal>,
-    @Embedded val fields: EventsFields,
-    override var workerId: Int = 0
-) : ICacheable {
+    @Embedded val fields: EventsFields
+) {
 
     companion object {
         val NO_EVENTS =
@@ -44,8 +45,8 @@ data class Events(
             lectures: List<Lecture>,
             todos: List<Todo>,
             journals: List<Journal>,
-            selfUri: URI
-        ) = Events(exams,lectures,todos,journals, EventsFields(selfUri))
+            selfUri: URI = URI("")
+        ) = Events(exams, lectures, todos, journals, EventsFields(selfUri))
     }
 }
 
@@ -67,12 +68,12 @@ fun SirenICalendar.toEventsSummary(): Events {
             when (type) {
                 Event.type -> {
                     if (categories?.find { it.contains(Lecture.type) } != null)
-                        lectures.add(createLecture(properties,selfUri))
+                        lectures.add(createLecture(properties, selfUri))
                     else
-                        exams.add(createExam(properties,selfUri))
+                        exams.add(createExam(properties, selfUri))
                 }
-                Todo.type -> todos.add(createTodo(properties,selfUri))
-                Journal.type -> journals.add(createJournal(properties,selfUri))
+                Todo.type -> todos.add(createTodo(properties, selfUri))
+                Journal.type -> journals.add(createJournal(properties, selfUri))
             }
         }
         return Events.create(exams, lectures, todos, journals, selfUri)

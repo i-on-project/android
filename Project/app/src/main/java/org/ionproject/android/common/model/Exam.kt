@@ -2,10 +2,10 @@ package org.ionproject.android.common.model
 
 import androidx.room.Entity
 import org.ionproject.android.common.dto.ComponentProperties
+import java.net.URI
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.net.URI
 
 /**
  * Event to be called as [Exam]

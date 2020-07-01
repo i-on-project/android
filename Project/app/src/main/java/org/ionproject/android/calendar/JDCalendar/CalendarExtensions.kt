@@ -50,6 +50,12 @@ val Calendar.isToday: Boolean
 
 const val NUMBER_OF_WEEK_DAYS = 7
 
+fun Calendar.fromMilis(milis: Long): Calendar {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = milis
+    return calendar
+}
+
 
 /**
  * Returns a new calendar instance which

@@ -26,7 +26,12 @@ import org.ionproject.android.common.model.*
         Lecture::class
     ), version = 1
 )
-@TypeConverters(URIConverter::class)
+@TypeConverters(
+    URIConverter::class,
+    CalendarConverter::class,
+    MomentConverter::class,
+    WeekDayConverter::class
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun suggestionDAO(): SuggestionDAO
     abstract fun favoriteDao(): FavoriteDao

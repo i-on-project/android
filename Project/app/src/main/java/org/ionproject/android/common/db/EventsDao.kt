@@ -3,12 +3,14 @@ package org.ionproject.android.common.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import org.ionproject.android.common.model.*
 import java.net.URI
 
 @Dao
 abstract class EventsDao {
 
+    @Transaction
     @Query("SELECT * FROM EventsFields WHERE selfUri = :uri")
     abstract suspend fun getEventsByUri(uri: URI): Events?
 

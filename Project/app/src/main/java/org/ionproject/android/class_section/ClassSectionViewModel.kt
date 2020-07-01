@@ -59,10 +59,12 @@ class ClassSectionViewModel(
             suspend fun getEventsAndAddToLists(uri: URI?) {
                 if (uri != null && uri.path != "") {
                     val events = eventsRepository.getEvents(uri)
-                    exams.addAll(events.exams)
-                    lectures.addAll(events.lectures)
-                    todos.addAll(events.todos)
-                    journals.addAll(events.journals)
+                    events?.apply {
+                        exams.addAll(events.exams)
+                        lectures.addAll(events.lectures)
+                        todos.addAll(events.todos)
+                        journals.addAll(events.journals)
+                    }
                 }
             }
 
@@ -72,11 +74,12 @@ class ClassSectionViewModel(
             getEventsAndAddToLists(classSection.calendarURI)
 
             eventsLiveData.postValue(
-                Events(
+                Events.create(
                     exams,
                     lectures,
                     todos,
                     journals
+
                 )
             )
         }
