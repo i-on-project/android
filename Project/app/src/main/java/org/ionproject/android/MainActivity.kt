@@ -5,13 +5,16 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
+import android.provider.SearchRecentSuggestions
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -21,13 +24,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.common.model.Suggestion
 import org.ionproject.android.loading.ROOT_KEY
+import org.ionproject.android.search.SearchSuggestionsProvider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
 
     /**
      * lazy initialization with ThreadSafetyMode to NONE because we are sure that
@@ -47,6 +50,12 @@ class MainActivity : AppCompatActivity() {
             this,
             SharedViewModelProvider()
         )[SharedViewModel::class.java]
+    }
+
+    private val deleteSuggestionsDialogFragment: DeleteSuggestionsDialogFragment by lazy(
+        LazyThreadSafetyMode.NONE
+    ) {
+        DeleteSuggestionsDialogFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,6 +108,17 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    /**
+     * Handle action bar items clicks here.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_delete_suggestions) {
+            deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
+            return true
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -244,6 +264,19 @@ class MainActivity : AppCompatActivity() {
          * destination changes.
          */
         bottomnavview_main.setupWithNavController(navController)
+    }
+
+    /**
+     * If user wants to delete all search suggestions, this method will be called.
+     */
+    override fun onConfirmListener(dialog: DialogFragment) {
+        // Delete all recent suggestion queries
+        SearchRecentSuggestions(
+            this,
+            SearchSuggestionsProvider.AUTHORITY,
+            SearchSuggestionsProvider.MODE
+        ).clearHistory()
+        Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT).show()
     }
 
 }
