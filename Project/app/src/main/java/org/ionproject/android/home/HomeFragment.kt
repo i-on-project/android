@@ -22,11 +22,6 @@ class HomeFragment : Fragment() {
         SharedViewModelProvider()
     }
 
-    // Obtaining view model
-    private val viewModel =
-        ViewModelProvider(this, HomeViewModelProvider())[HomeViewModel::class.java]
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +32,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Obtaining view model
+        val viewModel=
+            ViewModelProvider(this, HomeViewModelProvider())[HomeViewModel::class.java]
 
         // Insert custom search suggestions mocks to the database
         viewModel.observeSuggestionsLiveData(viewLifecycleOwner) {
