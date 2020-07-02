@@ -39,10 +39,11 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity> <!-- Content Provider for custom search suggestions -->
+        </activity>
+        <!-- Content Provider for custom search suggestions -->
         <provider
-            android:name=".search.SearchCustomSuggestionsProvider"
-            android:authorities="org.ionproject.android.search.SearchCustomSuggestionsProvider"
+            android:name=".search.SearchSuggestionsProvider"
+            android:authorities="org.ionproject.android.search.SearchSuggestionsProvider"
             android:readPermission="true" />
     </application>
 

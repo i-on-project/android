@@ -24,7 +24,6 @@ class IonApplication : Application() {
         lateinit var programmesRepository: ProgrammesRepository private set
         lateinit var coursesRepository: CourseRepository private set
         lateinit var classesRepository: ClassesRepository private set
-        lateinit var suggestionsMockRepository: SuggestionsMockRepository private set
         lateinit var db: AppDatabase private set
         lateinit var ionWebAPI: IIonWebAPI private set
         lateinit var favoritesRepository: FavoriteRepository private set
@@ -87,7 +86,6 @@ class IonApplication : Application() {
         favoritesRepository = FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository = SuggestionsMockRepository(db)
         eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
         searchRepository = SearchRepository(webAPI)

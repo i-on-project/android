@@ -15,18 +15,6 @@ import org.ionproject.android.SharedViewModelProvider
 
 class HomeFragment : Fragment() {
 
-    /**
-     * This view model is shared between fragments and the MainActivity
-     */
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelProvider()
-    }
-
-    // Obtaining view model
-    private val viewModel =
-        ViewModelProvider(this, HomeViewModelProvider())[HomeViewModel::class.java]
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,12 +25,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Insert custom search suggestions mocks to the database
-        viewModel.observeSuggestionsLiveData(viewLifecycleOwner) {
-            if (it.isEmpty())
-                viewModel.insertMocks()
-        }
 
         // Obtaining navigation controller, used to navigate between fragments
         val navController = findNavController()
@@ -56,7 +38,6 @@ class HomeFragment : Fragment() {
         button_home_calendar.setOnClickListener {
             navController.navigate(R.id.navigation_calendar)
         }
-
 
     }
 }

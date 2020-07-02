@@ -23,7 +23,6 @@ import org.ionproject.android.common.model.*
 )
 @TypeConverters(URIConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun suggestionDAO(): SuggestionDAO
     abstract fun favoriteDao(): FavoriteDao
     abstract fun classSectionDao(): ClassSectionDao
     abstract fun workerDao(): WorkerDao

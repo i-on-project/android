@@ -5,6 +5,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.activity.addCallback
@@ -20,8 +21,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.common.model.Suggestion
 import org.ionproject.android.loading.ROOT_KEY
 
 class MainActivity : AppCompatActivity() {
@@ -136,8 +139,7 @@ class MainActivity : AppCompatActivity() {
 
             /**
              * We must redefine the [setOnSuggestionListener] in order to get the suggestion
-             * query from the search view cursor's adapter to deliver it to the
-             * [SearchResultsFragment].
+             * query from the search view cursor's adapter and set it as it's query text.
              */
             setOnSuggestionListener(object : SearchView.OnSuggestionListener {
                 override fun onSuggestionSelect(position: Int): Boolean {

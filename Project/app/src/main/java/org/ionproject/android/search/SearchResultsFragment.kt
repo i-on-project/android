@@ -2,6 +2,7 @@ package org.ionproject.android.search
 
 import android.app.Activity
 import android.os.Bundle
+import android.provider.SearchRecentSuggestions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,13 @@ class SearchResultsFragment : Fragment() {
         }
 
         sharedViewModel.observeQueryText(this) { query ->
+            // Save our query as a recent suggestion query
+            SearchRecentSuggestions(
+                context,
+                SearchSuggestionsProvider.AUTHORITY,
+                SearchSuggestionsProvider.MODE
+            ).saveRecentQuery(query, null)
+
             hideKeyboard(view)
             searchResultsViewModel.search(sharedViewModel.root.searchUri, query)
             searchResultsViewModel.observeSearchResults(this) {
@@ -62,7 +70,7 @@ class SearchResultsFragment : Fragment() {
     }
 
     // Hide keyboard when user finished typing his query text
-    fun hideKeyboard(view: View) {
+    private fun hideKeyboard(view: View) {
         // Get the input Manager
         val imm: InputMethodManager =
             activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
