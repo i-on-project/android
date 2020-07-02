@@ -38,6 +38,7 @@ class CourseRepository(
                     WorkImportance.IMPORTANT
                 )
                 course.workerId = workerId
+
                 courseDao.insertCourse(course)
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(course)

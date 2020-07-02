@@ -70,14 +70,15 @@ class CourseDetailsViewModel(
      */
     private val calendarTermsLiveData = MutableLiveData<List<CalendarTerm>>()
 
+    val calendarTerms: List<CalendarTerm>
+        get() = calendarTermsLiveData.value ?: emptyList()
+
     fun getAllCalendarTerms(calendarTermsUri: URI) {
         viewModelScope.launch {
             val calendarTerms = calendarTermRepository.getAllCalendarTerm(calendarTermsUri)
             calendarTermsLiveData.postValue(calendarTerms)
         }
     }
-
-    val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
 
     fun observeCalendarTerms(
         lifecycleOwner: LifecycleOwner,
