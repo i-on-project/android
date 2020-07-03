@@ -10,7 +10,6 @@ import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
-import java.lang.IllegalArgumentException
 import java.net.URI
 
 const val NUMBER_OF_WEEK_DAYS = 7
@@ -23,7 +22,7 @@ class ScheduleViewModel(
 ) : ViewModel() {
 
     init {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             throw IllegalArgumentException("Schedule kaboom!!")
         }
     }

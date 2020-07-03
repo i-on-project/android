@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context=".class_section.ClassSectionFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_class_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_class_section_top_section"

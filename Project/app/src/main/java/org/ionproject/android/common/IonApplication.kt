@@ -11,8 +11,6 @@ import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.error.GlobalExceptionHandler
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
