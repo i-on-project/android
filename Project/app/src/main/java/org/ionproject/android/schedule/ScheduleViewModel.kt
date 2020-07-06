@@ -1,7 +1,6 @@
 package org.ionproject.android.schedule
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.Lecture
@@ -20,12 +19,6 @@ class ScheduleViewModel(
     private val classesRepository: ClassesRepository,
     private val eventsRepository: EventsRepository
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            throw IllegalArgumentException("Schedule kaboom!!")
-        }
-    }
 
     private val lecturesLiveData = MutableLiveData<List<MutableList<Lecture>>>()
 
