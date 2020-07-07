@@ -14,9 +14,7 @@ data class CalendarTerm(
     override var workerId: Int = 0
 ) : ICacheable {
 
-    override fun toString(): String {
-        return name
-    }
+    override fun toString() = name
 
     companion object {
         fun fromString(calendarTerm: String): CalendarTerm {

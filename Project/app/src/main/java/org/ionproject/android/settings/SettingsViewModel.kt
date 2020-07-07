@@ -21,7 +21,9 @@ class SettingsViewModel(
     fun getAllPossibleScheduleCalendarTerms(calendarTermsUri: URI) {
         viewModelScope.launch {
             val calendarTerms = calendarTermRepository.getAllCalendarTerm(calendarTermsUri)
-            calendarTermsLiveData.postValue(calendarTerms.subList(0, numberOfCalendarTerms))
+            val size =
+                if (calendarTerms.size < numberOfCalendarTerms) calendarTerms.size else numberOfCalendarTerms
+            calendarTermsLiveData.postValue(calendarTerms.subList(0, size))
         }
     }
 

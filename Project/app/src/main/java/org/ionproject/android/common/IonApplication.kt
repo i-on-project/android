@@ -75,34 +75,27 @@ class IonApplication : Application() {
 
         ionWebAPI = webAPI
 
-        workerRepository =
-            WorkerRepository(db.workerDao())
+        workerRepository = WorkerRepository(db.workerDao())
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
-        programmesRepository =
-            ProgrammesRepository(
-                webAPI,
-                db.programmeDao(),
-                db.programmeOfferDao(),
-                workerManagerFacade
-            )
-        coursesRepository =
-            CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
-        classesRepository =
-            ClassesRepository(
-                webAPI,
-                db.classSectionDao(),
-                db.classCollectionDao(),
-                workerManagerFacade
-            )
-        favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+        programmesRepository = ProgrammesRepository(
+            webAPI,
+            db.programmeDao(),
+            db.programmeOfferDao(),
+            workerManagerFacade
+        )
+        coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
+        classesRepository = ClassesRepository(
+            webAPI,
+            db.classSectionDao(),
+            db.classCollectionDao(),
+            workerManagerFacade
+        )
+        favoritesRepository = FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository =
-            SuggestionsMockRepository(db)
-        eventsRepository =
-            EventsRepository(webAPI)
+        suggestionsMockRepository = SuggestionsMockRepository(db)
+        eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
     }
 

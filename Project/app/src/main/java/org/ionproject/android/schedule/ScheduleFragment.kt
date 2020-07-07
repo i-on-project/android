@@ -1,6 +1,7 @@
 package org.ionproject.android.schedule
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,7 +61,14 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
-        viewModel.getLectures(sharedViewModel.root.calendarTermsUri)
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val termKey = getString(R.string.saved_settings_schedule_calendar_term)
+        val selectedCalendarTerm = sharedPref?.getString(termKey, null)
+
+        if (selectedCalendarTerm == null)
+            viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)
+        else
+            viewModel.getLecturesFromSelectedCalendarTerm(selectedCalendarTerm)
 
         // Back button behaviour
         view.cardview_schedule_back.setOnClickListener {

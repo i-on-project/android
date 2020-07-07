@@ -22,5 +22,5 @@ fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
         }
         return calendarTerms
     }
-    throw MappingFromSirenException("Cannot convert ${this} to a List of CalendarTerm")
+    throw MappingFromSirenException("Cannot convert $this to a List of CalendarTerm")
 }

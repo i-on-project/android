@@ -48,9 +48,9 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupCalendarTermSpinner(spinner: Spinner) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val termKey = getString(R.string.saved_settings_schedule_calendar_term)
-        val currScheduleTerm = sharedPref.getString(termKey, null)
+        val currScheduleTerm = sharedPref?.getString(termKey, null)
 
         viewModel.getAllPossibleScheduleCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
@@ -89,10 +89,13 @@ class SettingsFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = spinner.getItemAtPosition(position) as CalendarTerm
-                // Write to shared preferences file the schedule calendar term
-                with(sharedPref.edit()) {
-                    putString(termKey, selectedItem.name)
-                    commit()
+
+                if (sharedPref != null) {
+                    // Write to shared preferences file the schedule calendar term
+                    with(sharedPref.edit()) {
+                        putString(termKey, selectedItem.name)
+                        commit()
+                    }
                 }
             }
 
