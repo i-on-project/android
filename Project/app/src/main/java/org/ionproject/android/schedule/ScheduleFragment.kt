@@ -6,24 +6,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
-import org.ionproject.android.MainActivity
-import org.ionproject.android.R
-import org.ionproject.android.SharedViewModel
-import org.ionproject.android.SharedViewModelProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.ionproject.android.*
 import org.ionproject.android.common.model.Moment
 
 const val NUMBER_OF_COLUMNS = 8
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : ExceptionHandlingFragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(
@@ -56,6 +55,7 @@ class ScheduleFragment : Fragment() {
     @SuppressLint("SourceLockedOrientationActivity") // Required for locked orientation
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         activity?.bottomnavview_main?.visibility = View.GONE
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -101,8 +101,16 @@ class ScheduleFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
 
-
+    @SuppressLint("SourceLockedOrientationActivity") // Required for locked orientation
+    override fun exceptionHandler() {
+        activity?.lifecycleScope?.launch(Dispatchers.Main) {
+            activity?.bottomnavview_main?.visibility = View.VISIBLE
+            (activity as MainActivity).supportActionBar?.show()
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            findNavController().navigateUp()
+        }
     }
 
 }

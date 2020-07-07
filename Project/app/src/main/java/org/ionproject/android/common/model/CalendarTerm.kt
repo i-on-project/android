@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class CalendarTerm(
-    val years: Int,
+    val year: Int,
     val season: String,
-    @PrimaryKey val name: String = "$years$season",
+    @PrimaryKey val name: String = "$year$season",
     override var workerId: Int = 0
 ) : ICacheable {
 

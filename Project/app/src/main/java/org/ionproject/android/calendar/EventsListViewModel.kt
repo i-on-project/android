@@ -18,8 +18,6 @@ class EventsListViewModel : ViewModel() {
     fun reset() = eventsList.clear()
 
     fun addEvents(events: Events) {
-        eventsList.addAll(events.exams)
-        eventsList.addAll(events.lectures)
-        eventsList.addAll(events.todos)
+        eventsList.addAll(events.exams + events.lectures + events.todos)
     }
 }

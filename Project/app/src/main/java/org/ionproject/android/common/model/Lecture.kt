@@ -65,4 +65,17 @@ fun createLecture(properties: ComponentProperties, selfUri: URI): Lecture {
 
 }
 
+private fun String?.toMoment(): Moment? {
+    val hoursEndIdx = this?.indexOf("H")
+    val minutesIdx = this?.indexOf("M")
+
+    if (hoursEndIdx != null && minutesIdx != null) {
+        val hours = this?.substring(hoursEndIdx - 2, hoursEndIdx)?.toInt()
+        val minutes = this?.substring(minutesIdx - 2, minutesIdx)?.toInt()
+        if (hours != null && minutes != null)
+            return Moment(hours, minutes)
+    }
+    return null
+}
+
 

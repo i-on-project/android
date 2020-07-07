@@ -5,15 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".programmes.ProgrammesFragment"
-    android:orientation="vertical"
-    android:padding="@dimen/fragments_padding_10"
-    >
+    android:orientation="vertical">
+
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_programmes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_programmes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/list_item_programme"
+        android:padding="@dimen/fragments_padding_10"
         />
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

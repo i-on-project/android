@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:context=".class_section.ClassSectionFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_class_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true">
+    </ProgressBar>
+
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_class_section_top_section"
@@ -24,7 +33,7 @@
             android:id="@+id/button_class_section_refresh"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:backgroundTint="@color/primaryLightColor"
+            android:background="@drawable/selector_transparent"
             android:src="@drawable/ic_refresh_white_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -134,7 +143,7 @@
                 android:id="@+id/textView_class_section_lectures"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_menu_book_white_24dp"
                 android:elevation="@dimen/all_sections_3"
                 android:gravity="center_vertical"
@@ -157,7 +166,7 @@
                 android:id="@+id/textView_class_section_exams"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_assignment_white_24dp"
                 android:elevation="3dp"
                 android:gravity="center_vertical"
@@ -180,7 +189,7 @@
                 android:id="@+id/textView_class_section_todos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_assignment_turned_in_white_24dp"
                 android:elevation="3dp"
                 android:gravity="center_vertical"
@@ -204,7 +213,7 @@
                 android:id="@+id/textView_class_section_journals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_message_white_24dp"
                 android:elevation="3dp"
                 android:gravity="center_vertical"

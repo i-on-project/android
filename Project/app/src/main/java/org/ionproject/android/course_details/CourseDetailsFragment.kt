@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,14 +14,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_course_details.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
-class CourseDetailsFragment : Fragment() {
+class CourseDetailsFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -48,7 +50,12 @@ class CourseDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCourseDetails()
+
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
+        setupCourseDetails(viewGroup)
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
@@ -59,7 +66,7 @@ class CourseDetailsFragment : Fragment() {
      * UI with the result. Once the details are obtained then it obtains its classes
      * according to the selected calendar term in the spinner.
      */
-    private fun setupCourseDetails() {
+    private fun setupCourseDetails(viewGroup: ViewGroup) {
         // Setting up all course details
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
@@ -69,6 +76,7 @@ class CourseDetailsFragment : Fragment() {
             courseAcronym.text = it.acronym
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
+            viewGroup.stopLoading()
         }
     }
 
@@ -95,7 +103,6 @@ class CourseDetailsFragment : Fragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
-
         viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
@@ -103,6 +110,7 @@ class CourseDetailsFragment : Fragment() {
         )
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
+            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(it)
         }
 
