@@ -47,7 +47,34 @@ class ClassSectionViewModel(
         }
     }
 
+
+    fun forceGetClassSectionDetails(classSectionUri: URI, onResult: (ClassSection) -> Unit) {
+        viewModelScope.launch {
+            classesRepository.forceGetClassSection(classSectionUri).let {
+                currClassSection = it
+                onResult(it)
+            }
+        }
+    }
+
+
+    fun forceGetEventsFromClassSection(classSection: ClassSection) {
+        getEventsFromClassSection(classSection) {
+            eventsRepository.forceGetEvents(it)
+        }
+    }
+
+
     fun getEventsFromClassSection(classSection: ClassSection) {
+        getEventsFromClassSection(classSection) {
+            eventsRepository.getEvents(it)
+        }
+    }
+
+    private fun getEventsFromClassSection(
+        classSection: ClassSection,
+        getEvents: suspend (URI) -> Events?
+    ) {
         viewModelScope.launch {
             val classCollection = classesRepository.getClassCollectionByUri(classSection.upURI)
 
@@ -58,7 +85,7 @@ class ClassSectionViewModel(
 
             suspend fun getEventsAndAddToLists(uri: URI?) {
                 if (uri != null && uri.path != "") {
-                    val events = eventsRepository.getEvents(uri)
+                    val events = getEvents(uri)
                     events?.apply {
                         exams.addAll(events.exams)
                         lectures.addAll(events.lectures)
@@ -70,7 +97,6 @@ class ClassSectionViewModel(
 
             if (classCollection != null)
                 getEventsAndAddToLists(classCollection.fields.calendarURI)
-
             getEventsAndAddToLists(classSection.calendarURI)
 
             eventsLiveData.postValue(
@@ -84,6 +110,7 @@ class ClassSectionViewModel(
             )
         }
     }
+
 
     /**
      * Observes if [eventsLiveData]'s information has changed.

@@ -83,6 +83,7 @@ class ClassSectionFragment : Fragment() {
             findNavController().navigateUp()
         }
         setupSectionsBehaviour()
+        setupRefreshButtonBehaviour()
     }
 
     /**
@@ -206,6 +207,24 @@ class ClassSectionFragment : Fragment() {
                 recyclerview_class_section_journals.visibility = View.GONE
             else
                 recyclerview_class_section_journals.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupRefreshButtonBehaviour() {
+        button_class_section_refresh.setOnClickListener {
+            // Class Section View Holder Setup
+            val courseTextView = textView_class_section_course
+            val classTermTextView = textView_class_section_class
+            val calendarTermTextView = textView_class_section_calendar_term
+
+            // Search for Class Section Details
+            viewModel.forceGetClassSectionDetails(sharedViewModel.classSectionUri) {
+                courseTextView.text = it.courseAcronym
+                classTermTextView.text = it.id
+                calendarTermTextView.text = it.calendarTerm
+
+                viewModel.forceGetEventsFromClassSection(it)
+            }
         }
     }
 }

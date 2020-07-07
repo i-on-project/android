@@ -20,6 +20,28 @@ class ClassesRepository(
     private val workerManagerFacade: WorkerManagerFacade
 ) {
 
+    suspend fun forceGetClassSection(classSectionUri: URI): ClassSection =
+        withContext(Dispatchers.IO) {
+            val classSectionLocal = classSectionDao.getClassSectionByUri(classSectionUri)
+            val classSectionServer =
+                ionWebAPI.getFromURI(classSectionUri, SirenEntity::class.java)
+                    .toClassSection()
+
+            if (classSectionLocal == null) {
+                val workerId = workerManagerFacade.enqueueWorkForClassSection(
+                    classSectionServer,
+                    WorkImportance.VERY_IMPORTANT
+                )
+                classSectionServer.workerId = workerId
+                classSectionDao.insertClassSection(classSectionServer)
+            } else {
+                classSectionServer.workerId = classSectionLocal.workerId
+                classSectionDao.updateClassSection(classSectionServer)
+                workerManagerFacade.resetWorkerJobsByCacheable(classSectionServer)
+            }
+            classSectionServer
+        }
+
     suspend fun getClassSection(classSectionUri: URI): ClassSection? =
         withContext(Dispatchers.IO) {
             var classSection = classSectionDao.getClassSectionByUri(classSectionUri)
