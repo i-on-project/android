@@ -2,6 +2,7 @@ package org.ionproject.android.schedule
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.common.SharedPreferences
 import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Lecture
@@ -15,6 +16,7 @@ import java.net.URI
 const val NUMBER_OF_WEEK_DAYS = 7
 
 class ScheduleViewModel(
+    private val sharedPreferences: SharedPreferences,
     private val favoriteRepository: FavoriteRepository,
     private val calendarTermRepository: CalendarTermRepository,
     private val classesRepository: ClassesRepository,
@@ -84,9 +86,16 @@ class ScheduleViewModel(
         lecturesLiveData.postValue(sortLecturesByDay(lectures))
     }
 
+    /**
+     * This should get the selected calendar term, if available, on shared preferences file
+     *
+     * @param key The key in order to get the corresponding value
+     * @return The value found on shared preferences file or [null] if not available
+     */
+    fun getSelectedCalendarTerm(key: String) = sharedPreferences.getSelectedCalendarTerm(key)
+
     // Each index represents a different day of week, 0 - monday, 1 - tuesday, ...
     val lecturesByDayOfWeek: List<MutableList<Lecture>>
         get() = lecturesLiveData.value ?: listOf(NUMBER_OF_WEEK_DAYS) { mutableListOf<Lecture>() }
-
 
 }

@@ -1,7 +1,6 @@
 package org.ionproject.android.schedule
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,9 +60,10 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val termKey = getString(R.string.saved_settings_schedule_calendar_term)
-        val selectedCalendarTerm = sharedPref?.getString(termKey, null)
+        val selectedCalendarTermKey = getString(R.string.saved_settings_schedule_calendar_term)
+
+        // Get calendar term that was selected by the user on App Settings
+        val selectedCalendarTerm = viewModel.getSelectedCalendarTerm(selectedCalendarTermKey)
 
         if (selectedCalendarTerm == null)
             viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)

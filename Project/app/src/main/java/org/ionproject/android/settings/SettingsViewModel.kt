@@ -2,11 +2,13 @@ package org.ionproject.android.settings
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.common.SharedPreferences
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import java.net.URI
 
 class SettingsViewModel(
+    private val sharedPreferences: SharedPreferences,
     private val calendarTermRepository: CalendarTermRepository
 ) : ViewModel() {
 
@@ -36,11 +38,27 @@ class SettingsViewModel(
         })
     }
 
-    fun getCalendarTermIndex(currScheduleTerm: String): Int? {
+    // Returns the index of the Calendar Term whose name should be equal to the selected calendar term
+    fun getCalendarTermIndex(selectedCalendarTerm: String): Int? {
         val calendarTerms = calendarTermsLiveData.value
         return calendarTerms?.indexOfFirst {
-            it.name == currScheduleTerm
+            it.name == selectedCalendarTerm
         }
     }
+
+    /**
+     * This should get the selected calendar term, if available, on shared preferences file
+     *
+     * @param key The key in order to get the corresponding value
+     * @return The value found on shared preferences file or [null] if not available
+     */
+    fun getSelectedCalendarTerm(key: String) = sharedPreferences.getSelectedCalendarTerm(key)
+
+    /**
+     * This should write to the shared preferences the current selected calendar term
+     * @param pair The key-value pair to write to shared preferences
+     */
+    fun setSelectedCalendarTerm(pair: Pair<String, String>) =
+        sharedPreferences.writeToSharePref(pair)
 
 }

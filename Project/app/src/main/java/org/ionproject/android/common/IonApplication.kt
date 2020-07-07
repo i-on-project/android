@@ -38,6 +38,7 @@ class IonApplication : Application() {
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
+        lateinit var sharedPreferences: SharedPreferences private set
     }
 
     override fun onCreate() {
@@ -97,6 +98,7 @@ class IonApplication : Application() {
         suggestionsMockRepository = SuggestionsMockRepository(db)
         eventsRepository = EventsRepository(webAPI)
         rootRepository = RootRepository(ionWebAPI)
+        sharedPreferences = SharedPreferences(applicationContext)
     }
 
 }

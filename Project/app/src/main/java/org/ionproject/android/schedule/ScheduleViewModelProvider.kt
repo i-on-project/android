@@ -8,6 +8,7 @@ class ScheduleViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ScheduleViewModel::class.java -> ScheduleViewModel(
+                IonApplication.sharedPreferences,
                 IonApplication.favoritesRepository,
                 IonApplication.calendarTermRepository,
                 IonApplication.classesRepository,

@@ -1,6 +1,5 @@
 package org.ionproject.android.settings
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,9 +47,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupCalendarTermSpinner(spinner: Spinner) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val termKey = getString(R.string.saved_settings_schedule_calendar_term)
-        val currScheduleTerm = sharedPref?.getString(termKey, null)
+        val selectedCalendarTermKey = getString(R.string.saved_settings_schedule_calendar_term)
 
         viewModel.getAllPossibleScheduleCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
@@ -60,16 +57,17 @@ class SettingsFragment : Fragment() {
 
         spinner.adapter = spinnerAdapter
 
-        viewModel.observeCalendarTerms(viewLifecycleOwner) {
+        viewModel.observeCalendarTerms(viewLifecycleOwner) { calendarTerms ->
             spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
-            spinnerAdapter.addAll(it)
+            spinnerAdapter.addAll(calendarTerms)
+            val selectedCalendarTerm = viewModel.getSelectedCalendarTerm(selectedCalendarTermKey)
 
-            if (currScheduleTerm != null) {
+            if (selectedCalendarTerm != null) {
                 /**
                  *  If a schedule calendar term has been saved on shared preferences file
                  *  then show it as the default value for spinner
                  */
-                spinner.setSelection(viewModel.getCalendarTermIndex(currScheduleTerm) ?: 0)
+                spinner.setSelection(viewModel.getCalendarTermIndex(selectedCalendarTerm) ?: 0)
             }
         }
 
@@ -89,16 +87,8 @@ class SettingsFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = spinner.getItemAtPosition(position) as CalendarTerm
-
-                if (sharedPref != null) {
-                    // Write to shared preferences file the schedule calendar term
-                    with(sharedPref.edit()) {
-                        putString(termKey, selectedItem.name)
-                        commit()
-                    }
-                }
+                viewModel.setSelectedCalendarTerm(Pair(selectedCalendarTermKey, selectedItem.name))
             }
-
         }
     }
 }
