@@ -100,4 +100,7 @@
     <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
     <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
     <string name="error_message_exception_handler_fragment">Opps, there was an error =(</string>
+    <string name="title_settings">Settings</string>
+    <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
+    <string name="saved_settings_schedule_calendar_term">SCHEDULE_CALENDAR_TERM</string>
 </resources>

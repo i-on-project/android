@@ -1,7 +1,6 @@
 package org.ionproject.android.error
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import org.ionproject.android.common.IonApplication
 
 typealias ExceptionHandler = (Thread, Throwable) -> Unit
 

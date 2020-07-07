@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -103,6 +104,17 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    /**
+     * Handle action bar items clicks here.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_settings) {
+            navController.navigate(R.id.navigation_settings)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -253,7 +265,6 @@ class MainActivity : AppCompatActivity() {
          */
         bottomnavview_main.setupWithNavController(navController)
     }
-
 
 
 }

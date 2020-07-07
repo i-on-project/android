@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,9 +18,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.ionproject.android.*
-import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.model.Moment
-import java.lang.IllegalArgumentException
 
 const val NUMBER_OF_COLUMNS = 8
 
