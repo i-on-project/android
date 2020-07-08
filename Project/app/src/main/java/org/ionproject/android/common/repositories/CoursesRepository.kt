@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CourseDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.course_details.toCourse
@@ -26,7 +27,7 @@ class CourseRepository(
      *
      * @param courseSummary is the summary representation of a course
      */
-    suspend fun getCourseDetails(courseDetailsUri: URI) =
+    suspend fun getCourseDetails(courseDetailsUri: URI) : Course? =
         withContext(Dispatchers.IO) {
             var course = courseDao.getCourseByUri(courseDetailsUri)
 

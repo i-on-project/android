@@ -39,10 +39,12 @@ private fun URI.addQueryStrings(vararg queryStrings: Pair<String, List<String>>)
         sb.append(queryString.second.joinToString(separator = ","))
     }
 
-    appendToStringBuilder(queryStrings[0])
-    for (i in 1 until queryStrings.size) {
-        sb.append('&')
-        appendToStringBuilder(queryStrings[i])
+    if (queryStrings.isNotEmpty()) {
+        appendToStringBuilder(queryStrings[0])
+        for (i in 1 until queryStrings.size) {
+            sb.append('&')
+            appendToStringBuilder(queryStrings[i])
+        }
     }
 
     return URI.create(sb.toString())

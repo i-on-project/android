@@ -1,5 +1,6 @@
 package org.ionproject.android.common.model
 
+import android.content.res.Resources
 import androidx.navigation.NavController
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
@@ -18,7 +19,8 @@ import java.net.URI
  */
 abstract class SearchResult(
     val properties: Map<String, String>,
-    val resourceURI: URI
+    val resourceURI: URI,
+    val type: SearchResultType
 ) {
     /**
      * We need to override equals method, in order to know how each
@@ -43,7 +45,7 @@ abstract class SearchResult(
 class ClassSectionResult(
     properties: Map<String, String>,
     resourceURI: URI
-) : SearchResult(properties, resourceURI) {
+) : SearchResult(properties, resourceURI, SearchResultType.CLASS_SECTION) {
     override fun navigateToResource(
         navController: NavController,
         sharedViewModel: SharedViewModel
@@ -56,7 +58,7 @@ class ClassSectionResult(
 class CourseDetailsResult(
     properties: Map<String, String>,
     resourceURI: URI
-) : SearchResult(properties, resourceURI) {
+) : SearchResult(properties, resourceURI, SearchResultType.COURSE) {
     override fun navigateToResource(
         navController: NavController,
         sharedViewModel: SharedViewModel
@@ -69,7 +71,7 @@ class CourseDetailsResult(
 class ProgrammeDetailsResult(
     properties: Map<String, String>,
     resourceURI: URI
-) : SearchResult(properties, resourceURI) {
+) : SearchResult(properties, resourceURI, SearchResultType.PROGRAMME) {
     override fun navigateToResource(
         navController: NavController,
         sharedViewModel: SharedViewModel
@@ -81,11 +83,17 @@ class ProgrammeDetailsResult(
 
 enum class SearchResultType {
     COURSE {
+        override fun getNameFromResource(resources: Resources) =
+            resources.getString(R.string.label_course)
+
         override fun toString(): String {
             return "course"
         }
     },
     PROGRAMME {
+        override fun getNameFromResource(resources: Resources) =
+            resources.getString(R.string.label_programme)
+
         override fun toString(): String {
             return "programme"
         }
@@ -94,7 +102,12 @@ enum class SearchResultType {
         override fun toString(): String {
             return "class-section"
         }
+
+        override fun getNameFromResource(resources: Resources) =
+            resources.getString(R.string.title_class_section)
     };
+
+    abstract fun getNameFromResource(resources: Resources): String
 
 }
 

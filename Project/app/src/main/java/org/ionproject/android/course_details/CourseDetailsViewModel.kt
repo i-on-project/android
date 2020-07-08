@@ -57,8 +57,9 @@ class CourseDetailsViewModel(
             if (course.classesUri != null) {
                 classesRepository.getClassCollectionByUri(
                     course.classesUri.fromCalendarTerm(calendarTerm)
-                )?.let {
-                    classes = it.classes
+                ).let {
+                    if(it != null)
+                        classes = it.classes
                 }
             }
             classesListLiveData.postValue(classes)

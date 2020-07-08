@@ -18,6 +18,7 @@ class SearchSuggestionsProvider : SearchRecentSuggestionsProvider() {
     companion object {
         // The content provider authority. In this case, is SearchSuggestionsProvider
         const val AUTHORITY = "org.ionproject.android.search.SearchSuggestionsProvider"
+
         // The database mode. This will present a one line suggestion query
         const val MODE: Int = DATABASE_MODE_QUERIES
     }

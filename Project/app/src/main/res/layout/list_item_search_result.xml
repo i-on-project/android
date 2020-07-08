@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/materialcardview_search_result"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:clickable="true"
+    android:elevation="3dp"
+    android:focusable="true"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="0dp"
+    >
 
-    <Button
-        android:id="@+id/button_search_list_item_searchResult"
-        style="?attr/materialButtonOutlinedStyle"
-        android:text="Search Result"
-        android:textSize="17sp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="@dimen/fragments_padding_20"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/all_list_item_padding_20">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textview_search_result_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Result"
+            android:textSize="@dimen/all_text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_search_result_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Type" />
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

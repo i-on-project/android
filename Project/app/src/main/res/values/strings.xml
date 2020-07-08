@@ -19,8 +19,9 @@
     <string name="mandatory_courses">Mandatory Courses</string>
     <string name="coordinator">Coordinator</string>
 
+    <string name="label_programme">Programme</string>
     <string name="label_term">Curricular term:</string>>
-    <string name="label_course">Course:</string>
+    <string name="label_course">Course</string>
     <string name="label_coordinator">Coordinator:</string>
     <string name="label_mandatory">Mandatory:</string>
     <string name="label_credits">Credits:</string>
@@ -103,4 +104,5 @@
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="toast_message_main">All Search Suggestions have been deleted!</string>
+    <string name="label_no_results">No results</string>
 </resources>

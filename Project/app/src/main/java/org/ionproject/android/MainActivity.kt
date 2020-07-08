@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(),
             deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
             return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -276,7 +276,8 @@ class MainActivity : AppCompatActivity(),
             SearchSuggestionsProvider.AUTHORITY,
             SearchSuggestionsProvider.MODE
         ).clearHistory()
-        Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

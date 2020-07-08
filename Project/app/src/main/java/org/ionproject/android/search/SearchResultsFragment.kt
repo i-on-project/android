@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import org.ionproject.android.R
@@ -51,6 +52,12 @@ class SearchResultsFragment : Fragment() {
         recyclerview_search_results.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = searchResultsAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
 
         sharedViewModel.observeQueryText(this) { query ->

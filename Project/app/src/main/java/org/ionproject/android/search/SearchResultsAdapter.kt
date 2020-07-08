@@ -41,11 +41,15 @@ class SearchResultsAdapter(
         private val onClickListener: (SearchResult) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
-        private val searchResultButton = view.button_search_list_item_searchResult
+        private val searchResultCardView = view.materialcardview_search_result
+        private val searchResultTypeTextView = view.textview_search_result_type
+        private val searchResultTextTextView = view.textview_search_result_text
 
         fun bindTo(searchResult: SearchResult) {
-            searchResultButton.text = searchResult.properties["name"]
-            searchResultButton.setOnClickListener {
+            searchResultTypeTextView.text =
+                searchResult.type.getNameFromResource(itemView.resources)
+            searchResultTextTextView.text = searchResult.properties["name"]
+            searchResultCardView.setOnClickListener {
                 onClickListener(searchResult)
             }
         }

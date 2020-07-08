@@ -7,6 +7,7 @@ import org.ionproject.android.common.db.ClassCollectionDao
 import org.ionproject.android.common.db.ClassSectionDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.model.ClassCollection
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
@@ -40,7 +41,7 @@ class ClassesRepository(
         }
 
 
-    suspend fun getClassCollectionByUri(classesUri: URI) = withContext(Dispatchers.IO) {
+    suspend fun getClassCollectionByUri(classesUri: URI) : ClassCollection? = withContext(Dispatchers.IO) {
         var classCollection = classCollectionDao.getClassCollectionByUri(classesUri)
         if (classCollection == null) {
             classCollection = ionWebAPI.getFromURI(
