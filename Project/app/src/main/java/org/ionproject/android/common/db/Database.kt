@@ -7,6 +7,7 @@ import org.ionproject.android.common.model.*
 
 @Database(
     entities = arrayOf(
+        Root::class,
         ClassCollectionFields::class,
         ClassSummary::class,
         ClassSection::class,
@@ -23,6 +24,7 @@ import org.ionproject.android.common.model.*
 )
 @TypeConverters(URIConverter::class)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun rootDao(): RootDao
     abstract fun suggestionDAO(): SuggestionDAO
     abstract fun favoriteDao(): FavoriteDao
     abstract fun classSectionDao(): ClassSectionDao

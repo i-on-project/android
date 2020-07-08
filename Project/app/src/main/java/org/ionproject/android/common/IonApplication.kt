@@ -97,7 +97,7 @@ class IonApplication : Application() {
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
         suggestionsMockRepository = SuggestionsMockRepository(db)
         eventsRepository = EventsRepository(webAPI)
-        rootRepository = RootRepository(ionWebAPI)
+        rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         sharedPreferences = SharedPreferences(applicationContext)
     }
 

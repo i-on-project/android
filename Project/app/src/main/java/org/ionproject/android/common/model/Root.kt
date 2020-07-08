@@ -2,16 +2,21 @@ package org.ionproject.android.common.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.net.URI
 
 /**
  * This type represents a very simplified version of the
  * JsonHome resource
  */
+@Entity
 data class Root(
     val programmesUri: URI,
-    val calendarTermsUri: URI
-) : Parcelable {
+    val calendarTermsUri: URI,
+    @PrimaryKey val rootUri: URI = URI("/"),
+    override var workerId: Int = 0
+) : Parcelable, ICacheable {
 
     // ------------------ Parcelable methods -----------------------
     constructor(parcel: Parcel) : this(

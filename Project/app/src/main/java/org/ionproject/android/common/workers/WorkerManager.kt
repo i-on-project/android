@@ -25,6 +25,7 @@ const val CLASS_SECTION_ID_KEY = "x2r0hmh20"
 const val CLASS_SECTION_COURSE_KEY = "af2929ff2h9"
 const val CLASS_SECTION_CALENDAR_TERM_KEY = "m2hmx23x23m"
 const val RESOURCE_URI_KEY = "xgx0n2gdngx208"
+const val ROOT_RESOURCE_URI_KEY = "xwg3e0cRmnT54r"
 
 /**
  * Hides the complexity of launching workers with [WorkManager]
@@ -32,6 +33,20 @@ const val RESOURCE_URI_KEY = "xgx0n2gdngx208"
 class WorkerManagerFacade(context: Context, private val workerRepository: WorkerRepository) {
 
     private val workManager = WorkManager.getInstance(context)
+
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated for information about [Root] and will check for any changes
+     * to it and update the local database.
+     */
+    suspend fun enqueueWorkForRootResource(
+        workImportance: WorkImportance,
+        root: Root
+    ) = enqueueWorkWithInputData(
+        workImportance,
+        RootResourceWorker::class.java,
+        root.rootUri
+    )
 
     /**
      * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
@@ -180,7 +195,7 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
                     *inputData
                 )
             )
-            //There is not need to start the work immediately because we have just obtained the most recent resource
+            //There is no need to start the work immediately because we have just obtained the most recent resource
             .setInitialDelay(workImportance.repeatInterval, workImportance.repeatIntervalTimeUnit)
             .build()
         workManager.enqueue(work)
