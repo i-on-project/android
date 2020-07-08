@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/fragments_padding_20"
+    tools:context=".info.InfoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryColor"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="i-on Android is an application provided by the i-on
+        iniciative which was created with the goal of improving some academic
+aspects in the Polytecnic Institute of Engineering of Lisbon. The iniciative was
+created by teachers and students. All the code of the application and the rest of the
+projects from the iniciative is public so feel free to check it out by clicking the i-on logo below." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Privacy policy"
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryColor"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No personal information of the user is saved in the
+application, only the information that is obtained from the i-on services is saved.
+All the information that is saved is stays only in the device and once the application
+is deleted so is the information." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Errors and improvements"
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryColor"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="As all software this application is in constant
+development which means there might be errors that should be fixed and improvements
+that can be made. The i-on Android team is doing its best to detect all the issues but as you
+may realize it is not an easy so please contact us on our github in case you found and error or
+if you feel there is a feature or improvement that should be added." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Github"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryColor"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="https://github.com/i-on-project/android" />
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageview_info_ion_icon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/i_on_logo"
+            android:layout_gravity="center"
+            >
+
+        </ImageView>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+

@@ -15,13 +15,6 @@ import org.ionproject.android.SharedViewModelProvider
 
 class HomeFragment : Fragment() {
 
-    /**
-     * This view model is shared between fragments and the MainActivity
-     */
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelProvider()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +45,12 @@ class HomeFragment : Fragment() {
 
         // Calendar button
         button_home_calendar.setOnClickListener {
-            navController.navigate(R.id.navigation_calendar)
+            navController.navigate(R.id.action_home_to_calendar)
+        }
+
+        // Info button
+        button_home_info.setOnClickListener {
+            navController.navigate(R.id.action_home_to_info)
         }
 
 

@@ -17,6 +17,12 @@
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_calendar"
+            app:destination="@id/navigation_calendar" />
+        <action
+            android:id="@+id/action_home_to_info"
+            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -121,5 +127,11 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
+
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="org.ionproject.android.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 
 </navigation>
