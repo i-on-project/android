@@ -31,6 +31,9 @@ fun ViewGroup.startLoading() {
     }
         ?: throw IllegalStateException("$this does not contain a ProgressBar which means it cannot support loading")
 
+    if(progressBar.visibility == View.VISIBLE)
+        return
+
     progressBar.visibility = View.VISIBLE
 
     this.children.forEach {
@@ -49,6 +52,9 @@ fun ViewGroup.stopLoading() {
         it is ProgressBar
     }
         ?: throw IllegalStateException("$this does not contain a ProgressBar which means it cannot support loading")
+
+    if(progressBar.visibility == View.GONE)
+        return
 
     progressBar.visibility = View.GONE
 
