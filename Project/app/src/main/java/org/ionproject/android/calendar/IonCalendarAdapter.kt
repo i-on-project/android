@@ -117,11 +117,11 @@ class IonCalendarAdapter() : CalendarAdapter<IonCalendarAdapter.JDViewHolder>() 
             // show all events available for this specific day
             view.setOnClickListener {
                 monthDayOnClickListener?.invoke(
-                    Events(
+                    Events.create(
                         exams,
                         lectures,
                         todos,
-                        journals = emptyList()
+                        emptyList()
                     )
                 )
                 onDayClickListener(this)
