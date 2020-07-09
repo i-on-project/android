@@ -6,6 +6,7 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".course_details.CourseDetailsFragment"
+    android:id="@+id/fragment_course_details"
     >
 
     <!-- Loading -->

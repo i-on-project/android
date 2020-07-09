@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CourseDao
@@ -18,7 +19,8 @@ import java.net.URI
 class CourseRepository(
     private val ionWebAPI: IIonWebAPI,
     private val courseDao: CourseDao,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     /**
@@ -28,7 +30,7 @@ class CourseRepository(
      * @param courseSummary is the summary representation of a course
      */
     suspend fun getCourseDetails(courseDetailsUri: URI): Course? =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             var course = courseDao.getCourseByUri(courseDetailsUri)
 
             if (course == null) {

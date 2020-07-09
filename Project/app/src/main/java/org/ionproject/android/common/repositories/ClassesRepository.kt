@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.class_section.toClassSection
@@ -18,11 +19,12 @@ class ClassesRepository(
     private val ionWebAPI: IIonWebAPI,
     private val classSectionDao: ClassSectionDao,
     private val classCollectionDao: ClassCollectionDao,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun forceGetClassSection(classSectionUri: URI): ClassSection =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             val classSectionLocal = classSectionDao.getClassSectionByUri(classSectionUri)
             val classSectionServer =
                 ionWebAPI.getFromURI(classSectionUri, SirenEntity::class.java)

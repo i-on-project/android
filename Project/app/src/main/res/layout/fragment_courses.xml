@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".courses.CoursesFragment">
+    tools:context=".courses.CoursesFragment"
+    android:id="@+id/fragment_courses">
 
     <!-- Loading -->
     <ProgressBar

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/AppTheme"
-    tools:context=".schedule.ScheduleFragment">
+    android:id="@+id/fragment_schedule"
+    >
 
 
     <com.google.android.material.card.MaterialCardView

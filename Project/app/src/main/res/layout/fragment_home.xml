@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeFragment"
     android:padding="@dimen/fragments_padding_20"
+    android:id="@+id/fragment_home"
     >
 
     <Button

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".programmeDetails.ProgrammeDetailsFragment">
+    tools:context=".programmeDetails.ProgrammeDetailsFragment"
+    android:id="@+id/fragment_programme_details">
 
     <!-- Loading -->
     <ProgressBar
