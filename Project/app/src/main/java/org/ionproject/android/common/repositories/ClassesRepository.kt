@@ -7,6 +7,7 @@ import org.ionproject.android.common.db.ClassCollectionDao
 import org.ionproject.android.common.db.ClassSectionDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.model.ClassCollection
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
@@ -62,23 +63,24 @@ class ClassesRepository(
         }
 
 
-    suspend fun getClassCollectionByUri(classesUri: URI) = withContext(Dispatchers.IO) {
-        var classCollection = classCollectionDao.getClassCollectionByUri(classesUri)
-        if (classCollection == null) {
-            classCollection = ionWebAPI.getFromURI(
-                classesUri,
-                SirenEntity::class.java
-            ).toClassCollection()
-            val workerId = workerManagerFacade.enqueueWorkForClassCollection(
-                classCollection,
-                WorkImportance.IMPORTANT
-            )
-            classCollection.fields.workerId = workerId
-            classCollectionDao.insertClassCollection(classCollection)
-        } else {
-            workerManagerFacade.resetWorkerJobsByCacheable(classCollection.fields)
+    suspend fun getClassCollectionByUri(classesUri: URI): ClassCollection? =
+        withContext(Dispatchers.IO) {
+            var classCollection = classCollectionDao.getClassCollectionByUri(classesUri)
+            if (classCollection == null) {
+                classCollection = ionWebAPI.getFromURI(
+                    classesUri,
+                    SirenEntity::class.java
+                ).toClassCollection()
+                val workerId = workerManagerFacade.enqueueWorkForClassCollection(
+                    classCollection,
+                    WorkImportance.IMPORTANT
+                )
+                classCollection.fields.workerId = workerId
+                classCollectionDao.insertClassCollection(classCollection)
+            } else {
+                workerManagerFacade.resetWorkerJobsByCacheable(classCollection.fields)
+            }
+            //Some courses may not have classes in a certain term, in those cases we return an emptyList
+            classCollection
         }
-        //Some courses may not have classes in a certain term, in those cases we return an emptyList
-        classCollection
-    }
 }

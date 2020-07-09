@@ -5,12 +5,16 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.provider.SearchRecentSuggestions
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -24,9 +28,10 @@ import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.loading.ROOT_KEY
+import org.ionproject.android.search.SearchSuggestionsProvider
 
-
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
 
     /**
      * lazy initialization with ThreadSafetyMode to NONE because we are sure that
@@ -52,11 +57,16 @@ class MainActivity : AppCompatActivity() {
         )[SharedViewModel::class.java]
     }
 
+    private val deleteSuggestionsDialogFragment: DeleteSuggestionsDialogFragment by lazy(
+        LazyThreadSafetyMode.NONE
+    ) {
+        DeleteSuggestionsDialogFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_activity.addGradientBackground()
-
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
             sharedViewModel.root = root
@@ -106,6 +116,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Handle action bar items clicks here.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_delete_suggestions) {
+            deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
      * Instantiates the menu XML file @menu/top_bar_menu.xml into a Menu object.
      * Configures the search view by enabling assisted search and adding a search
      * submit button
@@ -117,7 +138,6 @@ class MainActivity : AppCompatActivity() {
 
         // Get the SearchView and set the searchable configuration.
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
         val searchView = menu.findItem(R.id.action_search)?.actionView as? SearchView
 
         searchView?.apply {
@@ -174,9 +194,6 @@ class MainActivity : AppCompatActivity() {
     private fun queryTextSubmitBehaviour(query: String) {
         val currDestination = navController.currentDestination?.id
         if (currDestination != null) {
-            // Passing query text to [SearchResultsFragment]
-            sharedViewModel.searchText = query
-
             if (currDestination != R.id.navigation_search_results) {
                 /**
                  *  Navigating to the SearchResultsFragment and ensuring
@@ -192,6 +209,8 @@ class MainActivity : AppCompatActivity() {
                     ).build()
                 )
             }
+            // Passing query text to [SearchResultsFragment]
+            sharedViewModel.setSearchText(query)
 
             return
         }
@@ -254,5 +273,18 @@ class MainActivity : AppCompatActivity() {
         bottomnavview_main.setupWithNavController(navController)
     }
 
+    /**
+     * If user wants to delete all search suggestions, this method will be called.
+     */
+    override fun onConfirmListener(dialog: DialogFragment) {
+        // Delete all recent suggestion queries
+        SearchRecentSuggestions(
+            this,
+            SearchSuggestionsProvider.AUTHORITY,
+            SearchSuggestionsProvider.MODE
+        ).clearHistory()
+        Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT)
+            .show()
+    }
 
 }

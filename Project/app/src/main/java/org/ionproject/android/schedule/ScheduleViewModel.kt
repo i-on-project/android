@@ -38,8 +38,8 @@ class ScheduleViewModel(
         }
         val lectures = classSections.flatMap {
             if (it?.calendarURI != null) {
-                val lectures = eventsRepository.getEvents(it.calendarURI)?.lectures
-                lectures ?: emptyList()
+                val lectures = eventsRepository.getEvents(it.calendarURI).lectures
+                lectures
             } else
                 emptyList()
         }
