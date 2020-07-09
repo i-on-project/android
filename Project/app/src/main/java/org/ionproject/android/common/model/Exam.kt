@@ -1,6 +1,8 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
 import org.ionproject.android.common.dto.ComponentProperties
+import java.net.URI
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -8,6 +10,7 @@ import java.util.*
 /**
  * Event to be called as [Exam]
  */
+@Entity
 class Exam(
     uid: String,
     summary: String,
@@ -17,7 +20,8 @@ class Exam(
     val startDate: Calendar,
     val endDate: Calendar,
     // This is nullable because the exam date might have been annouced but the room hasn't
-    val location: String?
+    val location: String?,
+    val selfUri: URI
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -29,7 +33,7 @@ class Exam(
 /**
  * Creates an [Exam] event
  */
-fun createExam(properties: ComponentProperties): Exam {
+fun createExam(properties: ComponentProperties, selfUri: URI): Exam {
     val uid = properties.uid.value.firstOrNull()
     val summary = properties.summary.value.firstOrNull()
     val description = properties.description.value.firstOrNull()
@@ -50,7 +54,8 @@ fun createExam(properties: ComponentProperties): Exam {
             stamp,
             startDate,
             endDate,
-            location
+            location,
+            selfUri
         )
     }
     throw IllegalArgumentException("Found a null field while creating an exam")
