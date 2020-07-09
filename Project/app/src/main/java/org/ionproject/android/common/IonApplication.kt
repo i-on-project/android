@@ -63,6 +63,7 @@ class IonApplication : Application() {
         val webAPI = MockIonWebAPI(ionMapper)
 
         /*val retrofit = Retrofit.Builder()
+            .baseUrl("https://host1.dev.ionproject.org")
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
