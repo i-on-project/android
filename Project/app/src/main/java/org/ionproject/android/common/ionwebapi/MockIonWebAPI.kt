@@ -91,6 +91,7 @@ class MockIonWebAPI(private val ionMapper: IIonMapper) : IIonWebAPI {
         CALENDAR_TERMS_PATH_V0 -> calendarTermsMock
         else -> throw URISyntaxException(uri.path, "Uri not implemented or invalid")
     }
+
 }
 
 /**

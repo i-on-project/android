@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,12 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_favorites.view.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : ExceptionHandlingFragment() {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(
@@ -100,6 +100,7 @@ class FavoritesFragment : Fragment() {
         )
         spinner.adapter = spinnerAdapter
         viewModel.observeCalendarTerms(viewLifecycleOwner) {
+            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(it)
         }
 
@@ -114,7 +115,7 @@ class FavoritesFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = viewModel.calendarTerms[position]
+                val selectedItem = spinner.getItemAtPosition(position) as CalendarTerm
                 //Searching for the favorites of the selected calendar term
                 viewModel.getFavoritesFromCalendarTerm(selectedItem)
             }

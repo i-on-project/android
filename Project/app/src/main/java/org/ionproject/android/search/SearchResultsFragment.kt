@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-class SearchResultsFragment : Fragment() {
+class SearchResultsFragment : ExceptionHandlingFragment() {
 
     // This view model is shared between fragments and the MainActivity
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -30,9 +30,8 @@ class SearchResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // We just want to make a Toast of the search query text, for now...
-        sharedViewModel.observeQueryText(this) { query ->
-            Toast.makeText(context, "Query = $query", Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(context, "Query = ${sharedViewModel.searchText}", Toast.LENGTH_SHORT).show()
+
     }
 
 }

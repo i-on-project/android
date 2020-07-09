@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.replaceView
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : ExceptionHandlingFragment() {
     /**
      * Obtaining Calendar's View Model
      */
@@ -73,6 +73,8 @@ class CalendarFragment : Fragment() {
             }
         viewGroup.replaceView(jdcalendar_calendar, progressBar)
 
+        view.setOnClickListener { }
+
         calendarViewModel.apply {
             getFavoriteClassesFromCurrentTerm(
                 sharedViewModel.root.calendarTermsUri,
@@ -108,6 +110,10 @@ class CalendarFragment : Fragment() {
             eventsListAdapter.notifyDataSetChanged() // notify the eventList's adapter to show the new events
         }
         jdcalendar_calendar.adapter = calendarAdapter
+        jdcalendar_calendar.onMonthChangeListener = {
+            eventsListViewModel.reset()
+            eventsListAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroyView() {

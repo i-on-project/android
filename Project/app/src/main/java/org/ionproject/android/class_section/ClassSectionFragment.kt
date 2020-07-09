@@ -5,19 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
-class ClassSectionFragment : Fragment() {
+class ClassSectionFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -74,11 +76,16 @@ class ClassSectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
         setupLecturesList()
         setupExamsList()
         setupWorkAssignmentsList()
         setupJournalsList()
-        setupClassSectionDetails()
+        setupClassSectionDetails(viewGroup)
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
@@ -89,7 +96,7 @@ class ClassSectionFragment : Fragment() {
      * Requests the details of the current class and updates
      * the respective UI elements with them.
      */
-    private fun setupClassSectionDetails() {
+    private fun setupClassSectionDetails(viewGroup: ViewGroup) {
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
@@ -105,7 +112,7 @@ class ClassSectionFragment : Fragment() {
             //Setup checkbox behaviour only after the details of the class are obtained
             setupCheckboxBehaviour(checkBox, it)
 
-            requestEvents(it)
+            requestEvents(it, viewGroup)
         }
     }
 
@@ -148,13 +155,17 @@ class ClassSectionFragment : Fragment() {
     /**
      * Request all events available for the class section [currClassSummary]
      */
-    private fun requestEvents(classSection: ClassSection) {
+    private fun requestEvents(
+        classSection: ClassSection,
+        viewGroup: ViewGroup
+    ) {
         viewModel.getEventsFromClassSection(classSection)
         viewModel.observeEvents(this) {
             examsListAdapter.notifyDataSetChanged()
             lecturesListAdapter.notifyDataSetChanged()
             workAssignmentsAdapter.notifyDataSetChanged()
             journalsAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
         }
     }
 

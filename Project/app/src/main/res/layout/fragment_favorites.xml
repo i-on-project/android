@@ -24,8 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_calendar_term"
+            android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_18"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinner_favorites_calendar_terms"

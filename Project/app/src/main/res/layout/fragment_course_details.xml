@@ -8,6 +8,16 @@
     tools:context=".course_details.CourseDetailsFragment"
     >
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_course_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
     <!-- Top Section -->
     <LinearLayout
         android:id="@+id/constraintlayout_course_details_top_section"

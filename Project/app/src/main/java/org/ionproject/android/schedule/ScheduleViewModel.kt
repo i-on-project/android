@@ -20,7 +20,6 @@ class ScheduleViewModel(
     private val eventsRepository: EventsRepository
 ) : ViewModel() {
 
-
     private val lecturesLiveData = MutableLiveData<List<MutableList<Lecture>>>()
 
     /**
