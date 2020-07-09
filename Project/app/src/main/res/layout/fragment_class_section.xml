@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context=".class_section.ClassSectionFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_class_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_class_section_top_section"
@@ -126,7 +136,6 @@
                 android:background="@color/primaryLightColor"
                 android:drawableEnd="@drawable/ic_menu_book_white_24dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/sections_marginTop_4"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"

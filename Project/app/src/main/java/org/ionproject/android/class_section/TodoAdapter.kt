@@ -21,10 +21,10 @@ class TodoAdapter(
         return TodoViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.workAssignments.size
+    override fun getItemCount(): Int = model.events.todos.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.bindTo(model.workAssignments[position])
+        holder.bindTo(model.events.todos[position])
     }
 
     class TodoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

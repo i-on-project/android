@@ -5,7 +5,6 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Course
-import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
@@ -33,11 +32,16 @@ class CourseDetailsViewModel(
      *  @param courseSummary summary representation of a course
      *  @param callback to be executed once the course details are available
      */
-    fun getCourseDetails(programmeOffer: ProgrammeOffer?, onResult: (Course) -> Unit) {
-        if (programmeOffer != null)
-            viewModelScope.launch {
-                courseRepository.getCourseDetails(programmeOffer)?.let(onResult)
-            }
+    fun getCourseDetails(courseDetailsUri: URI, onResult: (Course) -> Unit) {
+        viewModelScope.launch {
+            courseRepository.getCourseDetails(courseDetailsUri)?.let(onResult)
+        }
+    }
+
+    //Adds the calendar term to the classes URI
+    private fun URI.fromCalendarTerm(calendarTerm: CalendarTerm): URI {
+        val newUri = "${toString()}/${calendarTerm.name}"
+        return URI(newUri)
     }
 
     /**
@@ -49,7 +53,14 @@ class CourseDetailsViewModel(
      */
     fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
         viewModelScope.launch {
-            val classes = classesRepository.getClassesFromCourse(course, calendarTerm)
+            var classes = emptyList<ClassSummary>()
+            if (course.classesUri != null) {
+                classesRepository.getClassCollectionByUri(
+                    course.classesUri.fromCalendarTerm(calendarTerm)
+                )?.let {
+                    classes = it.classes
+                }
+            }
             classesListLiveData.postValue(classes)
         }
     }

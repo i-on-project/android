@@ -17,16 +17,16 @@ interface FavoriteDao {
     This method needs to return a livedata so that when an element is removed from the favorites list,
     the UI is updated without having to perform a new database request explicitly.
      */
-    @Query("SELECT * FROM Favorite WHERE calendar_term = :calendarTerm")
+    @Query("SELECT * FROM Favorite WHERE calendarTerm = :calendarTerm")
     fun findFavoritesFromCalendarTerm(calendarTerm: String): LiveData<List<Favorite>>
 
-    @Query("SELECT * FROM Favorite WHERE calendar_term = :calendarTerm")
+    @Query("SELECT * FROM Favorite WHERE calendarTerm = :calendarTerm")
     suspend fun suspendFindFavoritesFromCalendarTerm(calendarTerm: String): List<Favorite>
 
     @Delete
     suspend fun deleteFavorite(favorite: Favorite): Int
 
-    @Query("SELECT COUNT(*) FROM Favorite WHERE courseAcronym = :course AND calendar_term=:calendarTerm AND id=:classSection")
+    @Query("SELECT COUNT(*) FROM Favorite WHERE courseAcronym = :course AND calendarTerm=:calendarTerm AND id=:classSection")
     suspend fun favoriteExists(course: String, calendarTerm: String, classSection: String): Int
 
 }

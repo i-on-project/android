@@ -1,5 +1,7 @@
 package org.ionproject.android.common.model
 
+import org.ionproject.android.calendar.jdcalendar.hour
+import org.ionproject.android.calendar.jdcalendar.minute
 import java.util.*
 
 
@@ -22,10 +24,8 @@ import java.util.*
 data class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
 
     override fun toString(): String {
-
         val stringHours = if (hours > 9) "$hours" else "0$hours"
         val stringMinutes = if (minutes > 9) "$minutes" else "0$minutes"
-
         return "$stringHours.$stringMinutes"
     }
 
@@ -50,9 +50,7 @@ data class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
     }
 
     companion object {
-        fun fromCalendar(calendar: Calendar): Moment {
-            return Moment(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
-        }
+        fun fromCalendar(calendar: Calendar) = Moment(calendar.hour, calendar.minute)
 
         val OneHour = Moment(1, 0)
         val ThirtyMinutes = Moment(0, 30)
@@ -65,7 +63,7 @@ data class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
             if (newHours == 24)
                 newHours = 0
             else
-                newHours = newHours - 23
+                newHours -= 23
         }
 
         var newMinutes = minutes + moment.minutes

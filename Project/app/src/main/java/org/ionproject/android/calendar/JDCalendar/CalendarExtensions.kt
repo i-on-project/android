@@ -3,6 +3,7 @@ package org.ionproject.android.calendar.jdcalendar
 import android.content.Context
 import org.ionproject.android.R
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Contains a set of auxiliary functions and properties to facilitate the use of the Calendar type from Java.
@@ -45,6 +46,7 @@ val Calendar.isToday: Boolean
         val today = Calendar.getInstance()
         return day == today.day && month == today.month && year == today.year
     }
+
 
 const val NUMBER_OF_WEEK_DAYS = 7
 
@@ -155,6 +157,15 @@ fun Calendar.weekDaysUntil(endDate: Calendar): Int {
         curr.add(Calendar.WEEK_OF_MONTH, 1)
     }
     return count
+}
+
+operator fun Calendar.minus(other: Calendar): Calendar {
+    val start = other.timeInMillis
+    val end = timeInMillis
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = abs(end - start)
+    calendar.timeZone = TimeZone.getTimeZone("GMT")
+    return calendar
 }
 
 /** Return the name of the month at which this instance is at */

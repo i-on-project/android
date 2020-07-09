@@ -1,7 +1,9 @@
 package org.ionproject.android
 
 import androidx.lifecycle.ViewModel
-import org.ionproject.android.common.model.*
+import org.ionproject.android.common.model.ProgrammeOfferSummary
+import org.ionproject.android.common.model.Root
+import java.net.URI
 
 /**
  * This view model is used to shared information between fragments and the main activity,
@@ -19,22 +21,23 @@ class SharedViewModel : ViewModel() {
     lateinit var root: Root
 
     /**
-     * programmeOffer is used to pass data from [org.ionproject.android.courses.CoursesFragment]
-    to [org.ionproject.android.course_details.CourseDetailsFragment]
+     * [courseDetailsUri] is used to pass the uri from [org.ionproject.android.courses.CoursesFragment]
+    to [org.ionproject.android.course_details.CourseDetailsFragment] which is required to obtain the CourseDetails.
      */
-    lateinit var programmeOffer: ProgrammeOffer
+    lateinit var courseDetailsUri: URI
 
     /**
-     * classSummary is used to pass data from [org.ionproject.android.course_details.CourseDetailsFragment]
+     * [classSectionUri] is used to pass the uri from [org.ionproject.android.course_details.CourseDetailsFragment]
     and [org.ionproject.android.favorites.FavoritesFragment] to [org.ionproject.android.class_section.ClassSectionFragment]
+    which is required to obtain the ClassSection.
      */
-    lateinit var classSummary: ClassSummary
+    lateinit var classSectionUri: URI
 
     /**
-     * programmeSummary is used to pass data from [org.ionproject.android.programmes.ProgrammesFragment]
-    to [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]
+     * [programmeDetailsUri] is used to pass the uri from [org.ionproject.android.programmes.ProgrammesFragment]
+    to [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment] which is required to obtain the ProgrammeDetails.
      */
-    lateinit var programmeSummary: ProgrammeSummary
+    lateinit var programmeDetailsUri: URI
 
     /**
      * programme is used to pass data from [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]

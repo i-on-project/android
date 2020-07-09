@@ -13,7 +13,16 @@ data class CalendarTerm(
     @PrimaryKey val name: String = "$year$season",
     override var workerId: Int = 0
 ) : ICacheable {
+
     override fun toString(): String {
         return name
+    }
+
+    companion object {
+        fun fromString(calendarTerm: String): CalendarTerm {
+            val years = calendarTerm.substring(0, 4).toInt()
+            val season = calendarTerm.substring(4)
+            return CalendarTerm(years, season)
+        }
     }
 }

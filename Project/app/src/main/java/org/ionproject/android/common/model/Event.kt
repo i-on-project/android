@@ -6,6 +6,10 @@ package org.ionproject.android.common.model
 abstract class Event(
     val eventType: String,
     val uid: String,
-    val summary: String?,
-    val description: String?
-)
+    val summary: String,
+    val description: String
+) {
+    companion object type {
+        const val type = "event"
+    }
+}

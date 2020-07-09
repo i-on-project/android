@@ -1,6 +1,6 @@
 package org.ionproject.android.common.repositories
 
-import org.ionproject.android.common.dto.ICalendarDto
+import org.ionproject.android.common.dto.SirenICalendar
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.model.toEventsSummary
@@ -20,6 +20,6 @@ class EventsRepository(private val ionWebAPI: IIonWebAPI) {
      */
     suspend fun getEvents(uri: URI): Events =
         ionWebAPI
-            .getFromURI(uri, ICalendarDto::class.java)
+            .getFromURI(uri, SirenICalendar::class.java)
             .toEventsSummary()
 }

@@ -1,5 +1,8 @@
 package org.ionproject.android.common.model
 
+import org.ionproject.android.calendar.jdcalendar.hour
+import org.ionproject.android.calendar.jdcalendar.minus
+import org.ionproject.android.calendar.jdcalendar.minute
 import org.ionproject.android.common.dto.ComponentProperties
 import java.util.*
 
@@ -13,7 +16,9 @@ class Lecture(
     val start: Calendar,
     val duration: Moment,
     val endDate: Calendar,
-    val weekDay: WeekDay
+    val weekDay: WeekDay,
+    // This is nullable because the lectures room might not have been announced
+    val location: String?
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -23,29 +28,32 @@ class Lecture(
 }
 
 /**
- * Creates an [Lecture] event
+ * Creates a [Lecture] event
  */
 fun createLecture(properties: ComponentProperties): Lecture {
-    val values = properties.rrule?.value?.split(";")
 
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val startDate = properties.dtstart?.value?.firstOrNull()?.toCalendar()
+    val endDate = properties.dtend?.value?.firstOrNull()?.toCalendar()
+    val untilDate = properties.rrule?.getRuleByName("UNTIL").toCalendar()
+    val weekDay = properties.rrule?.getRuleByName("BYDAY")
+    val duration = if (endDate != null && startDate != null) endDate - startDate else null
+    val location = properties.location?.value?.firstOrNull()
 
-    val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
-    val start = properties.dtstart?.value?.get(0)?.toCalendar()
-    val duration = properties.duration?.value?.get(0)?.toMoment()
-    val endDate = values?.get(1)?.split("=")?.get(1)?.toCalendar()
-    val weekDay = values?.get(2)?.split("=")?.get(1)
-
-    if (summary != null && description != null && start != null && endDate != null && duration != null && weekDay != null) {
+    if (uid != null && summary != null && description != null && startDate != null
+        && untilDate != null && duration != null && weekDay != null
+    ) {
         return Lecture(
             uid,
             summary,
             description,
-            start,
-            duration,
-            endDate,
-            WeekDay.byShortName(weekDay)
+            startDate,
+            Moment(duration.hour, duration.minute),
+            untilDate,
+            WeekDay.byShortName(weekDay),
+            location
         )
     }
     throw IllegalArgumentException("Found a null field while creating a lecture")

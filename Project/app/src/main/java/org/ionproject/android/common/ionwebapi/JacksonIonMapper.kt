@@ -8,7 +8,10 @@ import kotlinx.coroutines.withContext
 
 class JacksonIonMapper : IIonMapper {
 
-    private val mapper = ObjectMapper().registerKotlinModule()
+    private val mapper = ObjectMapper().registerKotlinModule().apply {
+        configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    }
 
     /**
      * This is using the [Dispatchers.Default] because its optimized to perform CPU-intensive work
@@ -19,9 +22,7 @@ class JacksonIonMapper : IIonMapper {
     override suspend fun <T> parse(responseBody: String, klass: Class<T>): T =
         withContext(Dispatchers.Default) {
             val reader = mapper.readerFor(klass)
-            reader
-                .with(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-                .readValue<T>(responseBody)
+            reader.readValue<T>(responseBody)
         }
 
 }

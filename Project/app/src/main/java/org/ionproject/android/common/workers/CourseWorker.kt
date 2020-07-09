@@ -31,7 +31,8 @@ class CourseWorker(
     override suspend fun job(): Boolean {
         if (courseId != -1 && courseUri != "") {
             val courseServer =
-                ionWebAPI.getFromURI(URI(courseUri), SirenEntity::class.java).toCourse()
+                ionWebAPI.getFromURI(URI(courseUri), SirenEntity::class.java)
+                    .toCourse()
             courseDao.updateCourse(courseServer)
             return true
         }

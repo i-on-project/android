@@ -36,7 +36,7 @@ class ProgrammesListAdapter(
         fun bindTo(programmeSummary: ProgrammeSummary) {
             buttonProgramme.text = programmeSummary.acronym
             buttonProgramme.setOnClickListener {
-                sharedViewModel.programmeSummary = programmeSummary
+                sharedViewModel.programmeDetailsUri = programmeSummary.detailsUri
                 it.findNavController().navigate(R.id.action_programmes_to_programme_details)
             }
         }
