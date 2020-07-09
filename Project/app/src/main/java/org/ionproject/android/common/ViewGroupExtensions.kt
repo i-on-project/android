@@ -23,6 +23,9 @@ fun ViewGroup.replaceView(currentView: View, newView: View) {
  * Finds the [ProgressBar] contained in the ViewGroup, makes it visible.
  * The rest of the views become invisible
  *
+ * To use this method the [ViewGroup] must contain a progress bar otherwise
+ * and exception is thrown
+ *
  * @throws IllegalStateException if the [this] does not contain a progress bar
  */
 fun ViewGroup.startLoading() {
@@ -42,6 +45,9 @@ fun ViewGroup.startLoading() {
  * Finds the [ProgressBar] contained in the ViewGroup, makes it invisible.
  * The rest of the views become Visible
  *
+ * To use this method the [ViewGroup] must contain a progress bar otherwise
+ * and exception is thrown
+ *
  * @throws IllegalStateException if the [this] does not contain a progress bar
  */
 fun ViewGroup.stopLoading() {
@@ -49,6 +55,10 @@ fun ViewGroup.stopLoading() {
         it is ProgressBar
     }
         ?: throw IllegalStateException("$this does not contain a ProgressBar which means it cannot support loading")
+
+    // Since this method is usually called within an observer, it may be called multiple times, which would lead to multiple children traversals
+    if (progressBar.visibility == View.GONE)
+        return
 
     progressBar.visibility = View.GONE
 
