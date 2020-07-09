@@ -20,7 +20,8 @@ class EventsRepository(
     private val workerManagerFacade: WorkerManagerFacade
 ) {
     /**
-     * This should return all events available for a class
+     * Obtains all events directly from the API or from the local Db
+     * from the resource with [uri]
      *
      * @param uri URI to make a request to the Web API
      *
@@ -36,10 +37,39 @@ class EventsRepository(
                 WorkImportance.VERY_IMPORTANT
             )
             events.fields.workerId = workerId
+            eventsDao.insertEvents(events)
         } else {
             workerManagerFacade.resetWorkerJobsByCacheable(events.fields)
         }
         events
+    }
+
+    /**
+     * Obtains all events directly from the API and NEVER from the local Db
+     * from the resource with [uri]
+     *
+     * @param uri URI to make a request to the Web API
+     *
+     * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
+     */
+    suspend fun forceGetEvents(uri: URI) = withContext(Dispatchers.IO) {
+        val eventsLocal = eventsDao.getEventsByUri(uri)
+        val eventsServer = ionWebAPI.getFromURI(uri, SirenICalendar::class.java).toEventsSummary()
+
+        if (eventsLocal == null) {
+            val workerId = workerManagerFacade.enqueueWorkForEvents(
+                eventsServer,
+                WorkImportance.VERY_IMPORTANT
+            )
+            eventsServer.fields.workerId = workerId
+        } else {
+            eventsServer.fields.workerId = eventsLocal.fields.workerId
+            eventsDao.deleteEventsByUri(eventsLocal.fields.selfUri)
+            workerManagerFacade.resetWorkerJobsByCacheable(eventsServer.fields)
+        }
+        eventsDao.insertEvents(eventsServer)
+
+        eventsServer
     }
 
 }

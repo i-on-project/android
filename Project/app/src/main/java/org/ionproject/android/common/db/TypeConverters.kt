@@ -41,7 +41,7 @@ class MomentConverter {
 class WeekDayConverter {
 
     @TypeConverter
-    fun fromInt(weekDay: Int) = WeekDay.byNumber(weekDay)
+    fun fromInt(weekDay: Int) = WeekDay.values()[weekDay]
 
     @TypeConverter
     fun toInt(weekDay: WeekDay) = weekDay.ordinal
