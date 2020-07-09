@@ -7,18 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search_results.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 
-
-class SearchResultsFragment : Fragment() {
+class SearchResultsFragment : ExceptionHandlingFragment() {
 
     // This view model is shared between fragments and the MainActivity
     private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -60,7 +59,7 @@ class SearchResultsFragment : Fragment() {
             )
         }
 
-        sharedViewModel.observeQueryText(this) { query ->
+        sharedViewModel.observeSearchText(viewLifecycleOwner) { query ->
             // Save our query as a recent suggestion query
             SearchRecentSuggestions(
                 context,
@@ -74,6 +73,8 @@ class SearchResultsFragment : Fragment() {
                 searchResultsAdapter.submitList(it)
             }
         }
+
+
     }
 
     // Hide keyboard when user finished typing his query text

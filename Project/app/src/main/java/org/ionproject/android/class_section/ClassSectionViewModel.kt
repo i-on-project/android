@@ -47,7 +47,34 @@ class ClassSectionViewModel(
         }
     }
 
+
+    fun forceGetClassSectionDetails(classSectionUri: URI, onResult: (ClassSection) -> Unit) {
+        viewModelScope.launch {
+            classesRepository.forceGetClassSection(classSectionUri).let {
+                currClassSection = it
+                onResult(it)
+            }
+        }
+    }
+
+
+    fun forceGetEventsFromClassSection(classSection: ClassSection) {
+        getEventsFromClassSection(classSection) {
+            eventsRepository.forceGetEvents(it)
+        }
+    }
+
+
     fun getEventsFromClassSection(classSection: ClassSection) {
+        getEventsFromClassSection(classSection) {
+            eventsRepository.getEvents(it)
+        }
+    }
+
+    private fun getEventsFromClassSection(
+        classSection: ClassSection,
+        getEvents: suspend (URI) -> Events?
+    ) {
         viewModelScope.launch {
             val classCollection = classesRepository.getClassCollectionByUri(classSection.upURI)
 
@@ -58,29 +85,32 @@ class ClassSectionViewModel(
 
             suspend fun getEventsAndAddToLists(uri: URI?) {
                 if (uri != null && uri.path != "") {
-                    val events = eventsRepository.getEvents(uri)
-                    exams.addAll(events.exams)
-                    lectures.addAll(events.lectures)
-                    todos.addAll(events.todos)
-                    journals.addAll(events.journals)
+                    val events = getEvents(uri)
+                    events?.apply {
+                        exams.addAll(events.exams)
+                        lectures.addAll(events.lectures)
+                        todos.addAll(events.todos)
+                        journals.addAll(events.journals)
+                    }
                 }
             }
 
             if (classCollection != null)
                 getEventsAndAddToLists(classCollection.fields.calendarURI)
-
             getEventsAndAddToLists(classSection.calendarURI)
 
             eventsLiveData.postValue(
-                Events(
+                Events.create(
                     exams,
                     lectures,
                     todos,
                     journals
+
                 )
             )
         }
     }
+
 
     /**
      * Observes if [eventsLiveData]'s information has changed.

@@ -1,16 +1,20 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
 import org.ionproject.android.common.dto.ComponentProperties
+import java.net.URI
 import java.util.*
 
 /**
  * Event to be called as [Journal]
  */
+@Entity
 class Journal(
     uid: String,
     summary: String,
     description: String,
-    val lastModification: Calendar
+    val lastModification: Calendar,
+    val selfUri: URI
 ) : Event("Journal", uid, summary, description) {
     companion object {
         const val type = "journal"
@@ -20,7 +24,7 @@ class Journal(
 /**
  * Creates an [Journal] event
  */
-fun createJournal(properties: ComponentProperties): Journal {
+fun createJournal(properties: ComponentProperties, selfUri: URI): Journal {
     val uid = properties.uid.value.firstOrNull()
     val summary = properties.summary.value.firstOrNull()
     val description = properties.description.value.firstOrNull()
@@ -31,7 +35,8 @@ fun createJournal(properties: ComponentProperties): Journal {
             uid,
             summary,
             description,
-            lastModification
+            lastModification,
+            selfUri
         )
     }
     throw IllegalArgumentException("Found a null field while creating a journal")

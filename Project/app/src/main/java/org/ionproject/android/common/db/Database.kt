@@ -18,10 +18,20 @@ import org.ionproject.android.common.model.*
         ProgrammeOfferSummary::class,
         Course::class,
         CalendarTerm::class,
-        Favorite::class
+        Favorite::class,
+        EventsFields::class,
+        Exam::class,
+        Todo::class,
+        Journal::class,
+        Lecture::class
     ), version = 1
 )
-@TypeConverters(URIConverter::class)
+@TypeConverters(
+    URIConverter::class,
+    CalendarConverter::class,
+    MomentConverter::class,
+    WeekDayConverter::class
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
     abstract fun classSectionDao(): ClassSectionDao
@@ -31,4 +41,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun courseDao(): CourseDao
     abstract fun classCollectionDao(): ClassCollectionDao
     abstract fun calendarTermDao(): CalendarTermDao
+    abstract fun eventsDao(): EventsDao
 }

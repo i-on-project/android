@@ -16,7 +16,6 @@ import java.util.*
  * Exports events to another calendar application via Intent
  * https://developer.android.com/guide/topics/providers/calendar-provider#intents
  */
-
 fun Lecture.export(context: Context) {
     val duration = this.duration
     val endDate = this.endDate

@@ -20,7 +20,6 @@ class ScheduleViewModel(
     private val eventsRepository: EventsRepository
 ) : ViewModel() {
 
-
     private val lecturesLiveData = MutableLiveData<List<MutableList<Lecture>>>()
 
     /**
@@ -38,9 +37,10 @@ class ScheduleViewModel(
             classesRepository.getClassSection(it.selfURI)
         }
         val lectures = classSections.flatMap {
-            if (it?.calendarURI != null)
-                eventsRepository.getEvents(it.calendarURI).lectures
-            else
+            if (it?.calendarURI != null) {
+                val lectures = eventsRepository.getEvents(it.calendarURI).lectures
+                lectures
+            } else
                 emptyList()
         }
 

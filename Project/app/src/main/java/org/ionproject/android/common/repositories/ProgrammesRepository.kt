@@ -6,7 +6,10 @@ import org.ionproject.android.common.db.ProgrammeDao
 import org.ionproject.android.common.db.ProgrammeOfferDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.*
+import org.ionproject.android.common.model.ProgrammeOffer
+import org.ionproject.android.common.model.ProgrammeOfferSummary
+import org.ionproject.android.common.model.ProgrammeSummary
+import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.programmes.toProgramme
@@ -53,7 +56,7 @@ class ProgrammesRepository(
      */
     suspend fun getProgrammeDetails(
         programmeDetailsUri: URI
-    ) : ProgrammeWithOffers? = withContext(Dispatchers.IO) {
+    ): ProgrammeWithOffers? = withContext(Dispatchers.IO) {
         var programmeWithOffers = programmeDao.getProgrammeWithOffersByUri(programmeDetailsUri)
 
         if (programmeWithOffers == null) {

@@ -16,8 +16,8 @@ private val ROOT_URI_V0 = URI("/")
  */
 class RootRepository(private val ionWebAPI: IIonWebAPI) {
 
-    suspend fun getJsonHome() = withContext(Dispatchers.IO)
-    {
-        ionWebAPI.getFromURI(ROOT_URI_V0, JsonHome::class.java).toRoot()
-    }
+    suspend fun getJsonHome() =
+        withContext(Dispatchers.IO) {
+            ionWebAPI.getFromURI(ROOT_URI_V0, JsonHome::class.java).toRoot()
+        }
 }

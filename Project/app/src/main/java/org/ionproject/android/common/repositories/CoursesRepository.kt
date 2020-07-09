@@ -27,7 +27,7 @@ class CourseRepository(
      *
      * @param courseSummary is the summary representation of a course
      */
-    suspend fun getCourseDetails(courseDetailsUri: URI) : Course? =
+    suspend fun getCourseDetails(courseDetailsUri: URI): Course? =
         withContext(Dispatchers.IO) {
             var course = courseDao.getCourseByUri(courseDetailsUri)
 
@@ -39,6 +39,7 @@ class CourseRepository(
                     WorkImportance.IMPORTANT
                 )
                 course.workerId = workerId
+
                 courseDao.insertCourse(course)
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(course)

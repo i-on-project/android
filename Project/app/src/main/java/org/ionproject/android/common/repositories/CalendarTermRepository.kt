@@ -39,7 +39,7 @@ class CalendarTermRepository(
             } else {
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
-            calendarTerms.sortedByDescending { it.years }
+            calendarTerms.sortedByDescending { it.year }
         }
 
     suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =
@@ -47,7 +47,7 @@ class CalendarTermRepository(
             val calendarTerms = getAllCalendarTerm(calendarTermsUri)
             var mostRecentCalendarTerm = calendarTerms[0]
             calendarTerms.forEach {
-                if (it.years > mostRecentCalendarTerm.years)
+                if (it.year > mostRecentCalendarTerm.year)
                     mostRecentCalendarTerm = it
             }
             mostRecentCalendarTerm

@@ -5,19 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_courses.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
-class CoursesFragment : Fragment() {
+class CoursesFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -36,6 +38,10 @@ class CoursesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
 
         //Obtaining view model
         val viewModel =
@@ -57,6 +63,7 @@ class CoursesFragment : Fragment() {
 
         viewModel.observeCoursesLiveData(this) {
             coursesListAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
         }
 
         view.addSwipeRightGesture {
@@ -69,8 +76,5 @@ class CoursesFragment : Fragment() {
             else
                 (it as Button).text = it.resources.getString(R.string.mandatory_courses)
         }
-
     }
-
-
 }

@@ -24,6 +24,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.loading.ROOT_KEY
@@ -42,7 +43,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
-        findNavController(R.id.fragment_main_navhost)
+        findNavController(R.id.fragment_main_navhost).apply {
+            addOnDestinationChangedListener { controller, destination, arguments ->
+                IonApplication.globalExceptionHandler.unRegisterCurrExceptionHandler()
+            }
+        }
     }
 
     private val sharedViewModel: SharedViewModel by lazy(LazyThreadSafetyMode.NONE) {
@@ -61,7 +66,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        constraintlayout_mainactivity.addGradientBackground()
+        main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
             sharedViewModel.root = root
@@ -159,7 +164,8 @@ class MainActivity : AppCompatActivity(),
 
             /**
              * We must redefine the [setOnSuggestionListener] in order to get the suggestion
-             * query from the search view cursor's adapter and set it as it's query text.
+             * query from the search view cursor's adapter to deliver it to the
+             * [SearchResultsFragment].
              */
             setOnSuggestionListener(object : SearchView.OnSuggestionListener {
                 override fun onSuggestionSelect(position: Int): Boolean {
@@ -204,7 +210,8 @@ class MainActivity : AppCompatActivity(),
                 )
             }
             // Passing query text to [SearchResultsFragment]
-            sharedViewModel.setQueryText(query)
+            sharedViewModel.setSearchText(query)
+
             return
         }
 

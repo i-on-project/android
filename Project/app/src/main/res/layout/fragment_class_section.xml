@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,18 +8,36 @@
     android:orientation="vertical"
     tools:context=".class_section.ClassSectionFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_class_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true">
+    </ProgressBar>
+
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_class_section_top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"
+        android:elevation="3dp"
         android:padding="@dimen/fragments_padding_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="3dp"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/button_class_section_refresh"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/selector_transparent"
+            android:src="@drawable/ic_refresh_white_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="refresh layout" />
 
         <CheckBox
             android:id="@+id/checkbox_class_section_favorite"
@@ -27,9 +46,10 @@
             android:button="@drawable/selector_favorite_24dp"
             android:contentDescription="@string/imageView_favorite"
             app:buttonTint="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/all_margin_30"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/button_class_section_refresh"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <!-- Class Name -->
         <TextView
@@ -123,18 +143,17 @@
                 android:id="@+id/textView_class_section_lectures"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_menu_book_white_24dp"
+                android:elevation="@dimen/all_sections_3"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
-                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
                 android:text="@string/label_lectures"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/all_text_18"
-                android:elevation="@dimen/all_sections_3"
-                />
+                android:textSize="@dimen/all_text_18" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_class_section_lectures"
@@ -147,18 +166,17 @@
                 android:id="@+id/textView_class_section_exams"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_assignment_white_24dp"
+                android:elevation="3dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
-                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
                 android:text="@string/label_exams"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/all_text_18"
-                android:elevation="3dp"
-                />
+                android:textSize="@dimen/all_text_18" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_class_section_exams"
@@ -171,18 +189,17 @@
                 android:id="@+id/textView_class_section_todos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_assignment_turned_in_white_24dp"
+                android:elevation="3dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
-                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
                 android:text="@string/label_todo"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/all_text_18"
-                android:elevation="3dp"
-                />
+                android:textSize="@dimen/all_text_18" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_class_section_todos"
@@ -196,18 +213,17 @@
                 android:id="@+id/textView_class_section_journals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryLightColor"
+                android:background="@drawable/selector_transparent"
                 android:drawableEnd="@drawable/ic_message_white_24dp"
+                android:elevation="3dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/all_list_item_padding_20"
-                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
                 android:text="@string/label_journals"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/all_text_18"
-                android:elevation="3dp"
-                />
+                android:textSize="@dimen/all_text_18" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_class_section_journals"

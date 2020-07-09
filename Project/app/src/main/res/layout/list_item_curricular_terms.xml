@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/button_terms_list_item_term"
-        style="?attr/materialButtonOutlinedStyle"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="@string/label_curricular_term_placeholder"
         android:textSize="17sp"
 

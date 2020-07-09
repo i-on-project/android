@@ -16,13 +16,22 @@ import java.net.URI
 class SharedViewModel : ViewModel() {
 
     // Search text used to pass data from search bar to searchResultFragment
-    private val searchText = MutableLiveData<String>()
+    private val searchTextLiveData = MutableLiveData<String>()
 
-    fun observeQueryText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) =
-        searchText.observe(lifecycleOwner, Observer { onUpdate(it) })
+    /**
+     * Updates SearchTextLiveData
+     */
+    fun setSearchText(query: String) {
+        searchTextLiveData.postValue(query)
+    }
 
-    fun setQueryText(searchQuery: String) {
-        searchText.postValue(searchQuery)
+    /**
+     * Observes the live data and calls onUpdate when a change occurs
+     */
+    fun observeSearchText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) {
+        searchTextLiveData.observe(lifecycleOwner, Observer {
+            onUpdate(it)
+        })
     }
 
     /**

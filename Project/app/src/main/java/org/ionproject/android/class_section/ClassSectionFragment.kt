@@ -5,19 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_class_section.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
-class ClassSectionFragment : Fragment() {
+class ClassSectionFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -64,6 +66,11 @@ class ClassSectionFragment : Fragment() {
         JournalsAdapter(viewModel)
     }
 
+    /**
+     * ViewGroup which contains all this fragments views
+     */
+    lateinit var viewGroup: ViewGroup
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,6 +81,11 @@ class ClassSectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adds loading
+        viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
         setupLecturesList()
         setupExamsList()
         setupWorkAssignmentsList()
@@ -83,6 +95,7 @@ class ClassSectionFragment : Fragment() {
             findNavController().navigateUp()
         }
         setupSectionsBehaviour()
+        setupRefreshButtonBehaviour()
     }
 
     /**
@@ -148,13 +161,16 @@ class ClassSectionFragment : Fragment() {
     /**
      * Request all events available for the class section [currClassSummary]
      */
-    private fun requestEvents(classSection: ClassSection) {
+    private fun requestEvents(
+        classSection: ClassSection
+    ) {
         viewModel.getEventsFromClassSection(classSection)
         viewModel.observeEvents(this) {
             examsListAdapter.notifyDataSetChanged()
             lecturesListAdapter.notifyDataSetChanged()
             workAssignmentsAdapter.notifyDataSetChanged()
             journalsAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
         }
     }
 
@@ -206,6 +222,26 @@ class ClassSectionFragment : Fragment() {
                 recyclerview_class_section_journals.visibility = View.GONE
             else
                 recyclerview_class_section_journals.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupRefreshButtonBehaviour() {
+        button_class_section_refresh.setOnClickListener {
+            viewGroup.startLoading()
+
+            // Class Section View Holder Setup
+            val courseTextView = textView_class_section_course
+            val classTermTextView = textView_class_section_class
+            val calendarTermTextView = textView_class_section_calendar_term
+
+            // Search for Class Section Details
+            viewModel.forceGetClassSectionDetails(sharedViewModel.classSectionUri) {
+                courseTextView.text = it.courseAcronym
+                classTermTextView.text = it.id
+                calendarTermTextView.text = it.calendarTerm
+
+                viewModel.forceGetEventsFromClassSection(it)
+            }
         }
     }
 }

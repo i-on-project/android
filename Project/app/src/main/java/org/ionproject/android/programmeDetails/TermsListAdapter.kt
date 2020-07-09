@@ -31,11 +31,11 @@ class TermsListAdapter(private val terms: Int, private val sharedViewModel: Shar
         val button = view.button_terms_list_item_term
 
         fun bind(term: Int) {
-            button.text =
-                view.resources.getString(
-                    R.string.label_curricular_term_placeholder,
-                    term.toString()
-                )
+            button.text = view.resources.getString(
+                R.string.label_curricular_term_placeholder,
+                term.toString()
+            )
+
             button.setOnClickListener {
                 sharedViewModel.curricularTerm = term
                 view.findNavController().navigate(R.id.action_programme_details_to_courses)
