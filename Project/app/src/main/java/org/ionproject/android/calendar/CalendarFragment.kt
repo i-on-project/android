@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -81,7 +80,7 @@ class CalendarFragment : ExceptionHandlingFragment() {
                 sharedViewModel.root.calendarTermsUri,
                 this@CalendarFragment
             ) { favorites ->
-                getEvents(favorites) { events ->
+                getEventsByFavorites(favorites) { events ->
                     // replace progress bar with calendar
                     viewGroup.replaceView(progressBar, jdcalendar_calendar)
                     createCalendarWithEvents(events)

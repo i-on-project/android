@@ -49,7 +49,7 @@ class CoursesListAdapter(
         fun bindTo(programmeOffer: ProgrammeOffer) {
             courseButton.text = programmeOffer.acronym
             courseButton.setOnClickListener {
-                sharedViewModel.programmeOffer = programmeOffer
+                sharedViewModel.courseDetailsUri = programmeOffer.detailsUri
                 view.findNavController().navigate(R.id.action_courses_to_course_details)
             }
         }

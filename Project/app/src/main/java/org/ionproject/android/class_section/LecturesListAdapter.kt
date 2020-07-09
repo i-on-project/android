@@ -21,10 +21,10 @@ class LecturesListAdapter(
         return LectureViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.lectures.size
+    override fun getItemCount(): Int = model.events.lectures.size
 
     override fun onBindViewHolder(holder: LectureViewHolder, position: Int) {
-        holder.bindTo(model.lectures[position])
+        holder.bindTo(model.events.lectures[position])
     }
 
     class LectureViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

@@ -1,6 +1,8 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
 import org.ionproject.android.common.dto.ComponentProperties
+import java.net.URI
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -8,15 +10,18 @@ import java.util.*
 /**
  * Event to be called as [Exam]
  */
+@Entity
 class Exam(
     uid: String,
     summary: String,
     description: String,
-    val categories: String,
     val created: Calendar,
     val stamp: Calendar,
     val startDate: Calendar,
-    val endDate: Calendar
+    val endDate: Calendar,
+    // This is nullable because the exam date might have been annouced but the room hasn't
+    val location: String?,
+    val selfUri: URI
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -28,26 +33,29 @@ class Exam(
 /**
  * Creates an [Exam] event
  */
-fun createExam(properties: ComponentProperties): Exam {
-    val uid = properties.uid.value[0]
-    val summary = properties.summary?.value?.get(0)
-    val description = properties.description?.value?.get(0)
-    val categories = properties.categories?.value?.get(0)
-    val created = properties.created?.value?.get(0)?.toCalendar()
-    val stamp = properties.dtstamp?.value?.get(0)?.toCalendar()
-    val startDate = properties.dtstart?.value?.get(0)?.toCalendar()
-    val endDate = properties.dtend?.value?.get(0)?.toCalendar()
+fun createExam(properties: ComponentProperties, selfUri: URI): Exam {
+    val uid = properties.uid.value.firstOrNull()
+    val summary = properties.summary.value.firstOrNull()
+    val description = properties.description.value.firstOrNull()
+    val created = properties.created?.value?.firstOrNull()?.toCalendar()
+    val stamp = properties.dtstamp.value.firstOrNull().toCalendar()
+    val startDate = properties.dtstart?.value?.firstOrNull()?.toCalendar()
+    val endDate = properties.dtend?.value?.firstOrNull()?.toCalendar()
+    val location = properties.location?.value?.firstOrNull()
 
-    if (summary != null && description != null && categories != null && created != null && stamp != null && startDate != null && endDate != null) {
+    if (uid != null && summary != null && description != null && created != null && stamp != null
+        && startDate != null && endDate != null && location != null
+    ) {
         return Exam(
             uid,
             summary,
             description,
-            categories,
             created,
             stamp,
             startDate,
-            endDate
+            endDate,
+            location,
+            selfUri
         )
     }
     throw IllegalArgumentException("Found a null field while creating an exam")
@@ -82,20 +90,3 @@ fun String?.toCalendar(): Calendar? {
     return null
 }
 
-/*fun String?.toMoment(): Moment? {
-    if (this.isNullOrEmpty())
-        return null
-
-    val calendar = Calendar.getInstance()
-    val date = formatter.parse(this)
-
-    if (date != null) {
-        calendar.time = date
-        return Moment(
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE)
-        )
-    }
-
-    return null
-}*/

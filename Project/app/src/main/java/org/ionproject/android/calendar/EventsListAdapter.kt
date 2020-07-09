@@ -45,9 +45,9 @@ class EventsListAdapter(
             clearTextFromExtras()
 
             when (event) {
-                is Lecture -> showInfoAboutAnLecture(event)
+                is Lecture -> showInfoAboutALecture(event)
                 is Exam -> showInfoAboutAnExam(event)
-                is Todo -> showInfoAboutAnTodo(event)
+                is Todo -> showInfoAboutATodo(event)
             }
         }
 
@@ -55,7 +55,7 @@ class EventsListAdapter(
          * This method should show which week day the [Lecture] starts and his duration
          * e.g: Week day: Monday  Duration: 11:30h - 13:00h
          */
-        private fun showInfoAboutAnLecture(lecture: Lecture) {
+        private fun showInfoAboutALecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
 
@@ -72,7 +72,6 @@ class EventsListAdapter(
             eventExportButton.setOnClickListener {
                 lecture.export(it.context)
             }
-
         }
 
         /**
@@ -81,7 +80,6 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
 
             var day = exam.startDate.day.fillWithZero()
@@ -99,7 +97,6 @@ class EventsListAdapter(
                 hour,
                 minute
             )
-
             eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
 
             day = exam.endDate.day.fillWithZero()
@@ -120,16 +117,14 @@ class EventsListAdapter(
             eventExportButton.setOnClickListener {
                 exam.export(it.context)
             }
-
         }
 
         /**
          * This method should show which week day the [Todo]'s delivery date
          * e.g: Delivery: 15/06/2020 - 23:59h
          */
-        private fun showInfoAboutAnTodo(todo: Todo) {
+        private fun showInfoAboutATodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-
             eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
 
             val day = todo.due.day.fillWithZero()
@@ -151,7 +146,6 @@ class EventsListAdapter(
             eventExportButton.setOnClickListener {
                 todo.export(it.context)
             }
-
         }
 
         private fun clearTextFromExtras() {

@@ -99,5 +99,6 @@
     <string name="loading_i_on">Loading i-on</string>
     <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
     <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
-    <string name="error_message_exception_handler_fragment">Opps, there was an error =(</string>
+    <string name="error_message_exception_handler_fragment">Oops, there was an error =(</string>
+    <string name="label_curricular_terms">Curricular terms</string>
 </resources>

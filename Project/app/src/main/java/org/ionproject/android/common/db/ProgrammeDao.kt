@@ -5,6 +5,7 @@ import org.ionproject.android.common.model.Programme
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.ProgrammeSummary
 import org.ionproject.android.common.model.ProgrammeWithOffers
+import java.net.URI
 
 @Dao
 abstract class ProgrammeDao {
@@ -12,6 +13,10 @@ abstract class ProgrammeDao {
     @Transaction //Using this annotation so because it performs two db operations which this way are atomic
     @Query("SELECT * FROM Programme WHERE id = :id")
     abstract suspend fun getProgrammeWithOffersById(id: Int): ProgrammeWithOffers?
+
+    @Transaction //Using this annotation so because it performs two db operations which this way are atomic
+    @Query("SELECT * FROM Programme WHERE selfUri = :uri")
+    abstract suspend fun getProgrammeWithOffersByUri(uri: URI): ProgrammeWithOffers?
 
     suspend fun insertProgrammeWithOffers(programmeWithOffers: ProgrammeWithOffers) {
         insertProgramme(programmeWithOffers.programme)

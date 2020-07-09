@@ -14,7 +14,6 @@ Navigation path:
 
 Programmes -> ProgrammeDetails -> ProgrammeOffers -> CourseDetails -> Classes -> ClassDetails -> Events
 
-
 ## Calendar Terms
 This resource provides the list of calendar terms (1819i, 1819v, 1920i, 1920v ...). Currently we use this in two areas of the application, in favorites, so that the user can filter its favorites according to the calendar term, and in course details, so that the user can obtain the classes of a specific calendar term. 
 

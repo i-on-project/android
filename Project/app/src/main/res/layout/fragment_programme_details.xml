@@ -7,6 +7,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".programmeDetails.ProgrammeDetailsFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_programme_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
+
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_programme_details_top_section"
@@ -41,7 +52,7 @@
 
     <!-- Bottom Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_class_section_bottom_section"
+        android:id="@+id/constraintlayout_programme_details_bottom_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/fragments_padding_10">
@@ -53,7 +64,10 @@
             android:gravity="center_horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Curricular Terms" />
+            android:text="@string/label_curricular_terms"
+            android:textColor="@color/secondaryColor"
+            android:textSize="@dimen/all_text_18"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_programme_details_terms"

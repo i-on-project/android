@@ -7,6 +7,7 @@ import org.ionproject.android.common.model.*
 
 @Database(
     entities = arrayOf(
+        ClassCollectionFields::class,
         ClassSummary::class,
         ClassSection::class,
         Suggestion::class,
@@ -17,10 +18,20 @@ import org.ionproject.android.common.model.*
         ProgrammeOfferSummary::class,
         Course::class,
         CalendarTerm::class,
-        Favorite::class
+        Favorite::class,
+        EventsFields::class,
+        Exam::class,
+        Todo::class,
+        Journal::class,
+        Lecture::class
     ), version = 1
 )
-@TypeConverters(URIConverter::class)
+@TypeConverters(
+    URIConverter::class,
+    CalendarConverter::class,
+    MomentConverter::class,
+    WeekDayConverter::class
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun suggestionDAO(): SuggestionDAO
     abstract fun favoriteDao(): FavoriteDao
@@ -29,6 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun programmeDao(): ProgrammeDao
     abstract fun programmeOfferDao(): ProgrammeOfferDao
     abstract fun courseDao(): CourseDao
-    abstract fun classSummaryDao(): ClassSummaryDao
+    abstract fun classCollectionDao(): ClassCollectionDao
     abstract fun calendarTermDao(): CalendarTermDao
+    abstract fun eventsDao(): EventsDao
 }

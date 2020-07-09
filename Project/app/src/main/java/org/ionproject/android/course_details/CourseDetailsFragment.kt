@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,6 +21,8 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class CourseDetailsFragment : ExceptionHandlingFragment() {
 
@@ -49,7 +50,12 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCourseDetails()
+
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
+        setupCourseDetails(viewGroup)
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
@@ -60,23 +66,21 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
      * UI with the result. Once the details are obtained then it obtains its classes
      * according to the selected calendar term in the spinner.
      */
-    private fun setupCourseDetails() {
+    private fun setupCourseDetails(viewGroup: ViewGroup) {
         // Setting up all course details
         val courseFullName = textview_course_details_full_name
-        val courseYear = textview_course_details_year
-        val courseSemester = textview_course_details_semester
+        val courseAcronym = textview_course_details_acronym
 
-        viewModel.getCourseDetails(sharedViewModel.programmeOffer) {
+        viewModel.getCourseDetails(sharedViewModel.courseDetailsUri) {
             courseFullName.text = it.name
-            courseYear.text = "1ºAno" //TODO Get course year
-            courseSemester.text = "1ºSemestre" //TODO Get course term
+            courseAcronym.text = it.acronym
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
+            viewGroup.stopLoading()
         }
     }
 
     private fun setupCourseClassesList(classesList: RecyclerView) {
-        //TODO: Confirm if this is the right context
         classesList.layoutManager = LinearLayoutManager(context)
         classesList.addItemDecoration(
             DividerItemDecoration(

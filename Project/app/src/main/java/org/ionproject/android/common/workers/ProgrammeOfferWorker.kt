@@ -30,10 +30,16 @@ class ProgrammeOfferWorker(
 
     override suspend fun job(): Boolean {
         if (programmeOfferId != -1 && programmeOfferUri != "") {
-            val programmeOfferServer =
-                ionWebAPI.getFromURI(URI(programmeOfferUri), SirenEntity::class.java)
-                    .toProgrammeOffer()
-            programmeOfferDao.updateProgrammeOffer(programmeOfferServer)
+            val programmeOfferLocal = programmeOfferDao.getProgrammeOfferById(programmeOfferId)
+            if (programmeOfferLocal != null) {
+                val programmeOfferServer =
+                    ionWebAPI.getFromURI(URI(programmeOfferUri), SirenEntity::class.java)
+                        .toProgrammeOffer(programmeOfferLocal.courseID)
+                programmeOfferDao.updateProgrammeOffer(programmeOfferServer)
+                if (programmeOfferLocal != programmeOfferServer) {
+                    programmeOfferDao.updateProgrammeOffer(programmeOfferServer)
+                }
+            }
             return true
         }
         return false

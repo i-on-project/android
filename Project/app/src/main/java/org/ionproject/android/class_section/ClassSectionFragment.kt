@@ -15,8 +15,9 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
-import org.ionproject.android.common.model.ClassSummary
-import java.net.URI
+import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class ClassSectionFragment : ExceptionHandlingFragment() {
 
@@ -25,13 +26,6 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
      */
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelProvider()
-    }
-
-    /**
-     * Class passed via SharedViewmodel
-     */
-    private val currClassSummary: ClassSummary by lazy {
-        sharedViewModel.classSummary
     }
 
     /**
@@ -72,6 +66,11 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         JournalsAdapter(viewModel)
     }
 
+    /**
+     * ViewGroup which contains all this fragments views
+     */
+    lateinit var viewGroup: ViewGroup
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,6 +81,11 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adds loading
+        viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
         setupLecturesList()
         setupExamsList()
         setupWorkAssignmentsList()
@@ -91,6 +95,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
             findNavController().navigateUp()
         }
         setupSectionsBehaviour()
+        setupRefreshButtonBehaviour()
     }
 
     /**
@@ -105,15 +110,15 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(currClassSummary) {
+        viewModel.getClassSectionDetails(sharedViewModel.classSectionUri) {
             courseTextView.text = it.courseAcronym
             classTermTextView.text = it.id
             calendarTermTextView.text = it.calendarTerm
 
             //Setup checkbox behaviour only after the details of the class are obtained
-            setupCheckboxBehaviour(checkBox)
+            setupCheckboxBehaviour(checkBox, it)
 
-            requestEvents(it.calendarURI)
+            requestEvents(it)
         }
     }
 
@@ -156,31 +161,36 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
     /**
      * Request all events available for the class section [currClassSummary]
      */
-    private fun requestEvents(uri: URI?) {
-        if (uri == null)
-            return
-        viewModel.getEvents(uri)
-
-        viewModel.observeExamsList(this) { examsListAdapter.notifyDataSetChanged() }
-        viewModel.observeLecturesList(this) { lecturesListAdapter.notifyDataSetChanged() }
-        viewModel.observeWorkAssignmentsList(this) { workAssignmentsAdapter.notifyDataSetChanged() }
-        viewModel.observerJournalsList(this) { journalsAdapter.notifyDataSetChanged() }
+    private fun requestEvents(
+        classSection: ClassSection
+    ) {
+        viewModel.getEventsFromClassSection(classSection)
+        viewModel.observeEvents(this) {
+            examsListAdapter.notifyDataSetChanged()
+            lecturesListAdapter.notifyDataSetChanged()
+            workAssignmentsAdapter.notifyDataSetChanged()
+            journalsAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
+        }
     }
 
     /**
      * Defines what happens when the checkbox is clicked
      */
-    private fun setupCheckboxBehaviour(checkBox: CheckBox) {
+    private fun setupCheckboxBehaviour(
+        checkBox: CheckBox,
+        classSection: ClassSection
+    ) {
         //If the checks box was checked before, then it must be updated
-        viewModel.isThisClassFavorite(currClassSummary) {
+        viewModel.isThisClassFavorite(classSection) {
             checkBox.isChecked = it
         }
         checkBox.setOnClickListener {
             val isChecked = checkBox.isChecked
             if (isChecked) {
-                viewModel.addClassToFavorites(currClassSummary)
+                viewModel.addClassToFavorites(classSection)
             } else {
-                viewModel.removeClassFromFavorites(currClassSummary)
+                viewModel.removeClassFromFavorites(classSection)
             }
         }
     }
@@ -215,5 +225,23 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         }
     }
 
+    private fun setupRefreshButtonBehaviour() {
+        button_class_section_refresh.setOnClickListener {
+            viewGroup.startLoading()
 
+            // Class Section View Holder Setup
+            val courseTextView = textView_class_section_course
+            val classTermTextView = textView_class_section_class
+            val calendarTermTextView = textView_class_section_calendar_term
+
+            // Search for Class Section Details
+            viewModel.forceGetClassSectionDetails(sharedViewModel.classSectionUri) {
+                courseTextView.text = it.courseAcronym
+                classTermTextView.text = it.id
+                calendarTermTextView.text = it.calendarTerm
+
+                viewModel.forceGetEventsFromClassSection(it)
+            }
+        }
+    }
 }

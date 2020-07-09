@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_programme_details.*
 import org.ionproject.android.ExceptionHandlingFragment
@@ -15,6 +15,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
@@ -43,7 +45,19 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        programmeViewModel.getCourseDetails(sharedViewModel.programmeSummary) {
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
+        // Adding dividers between items in the grid
+        recyclerview_programme_details_terms.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+        programmeViewModel.getProgrammeDetails(sharedViewModel.programmeDetailsUri) {
+            viewGroup.stopLoading()
             textview_programme_details_name.text = it.programme.name
             textview_programme_details_acronym.text = it.programme.acronym
             recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)
@@ -51,12 +65,11 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
                 TermsListAdapter(it.programme.termSize, sharedViewModel)
             sharedViewModel.programmeOfferSummaries =
                 it.programmeOffers //Sharing programme here otherwise it have to be passed to TermsListAdapter
+
         }
 
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
     }
-
-
 }

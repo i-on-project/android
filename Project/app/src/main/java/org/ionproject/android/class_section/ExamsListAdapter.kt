@@ -22,10 +22,10 @@ class ExamsListAdapter(
         return ExamViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.exams.size
+    override fun getItemCount(): Int = model.events.exams.size
 
     override fun onBindViewHolder(holder: ExamViewHolder, position: Int) {
-        holder.bindTo(model.exams[position])
+        holder.bindTo(model.events.exams[position])
     }
 
     class ExamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
