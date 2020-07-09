@@ -37,11 +37,13 @@ class ScheduleViewModel(
             classesRepository.getClassSection(it.selfURI)
         }
         val lectures = classSections.flatMap {
+            var toRet = emptyList<Lecture>()
             if (it?.calendarURI != null) {
-                val lectures = eventsRepository.getEvents(it.calendarURI).lectures
-                lectures
-            } else
-                emptyList()
+                val events = eventsRepository.getEvents(it.calendarURI)
+                if(events != null)
+                    toRet = events.lectures
+            }
+            toRet
         }
 
         lecturesLiveData.postValue(sortLecturesByDay(lectures))

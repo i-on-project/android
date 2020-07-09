@@ -34,7 +34,7 @@ class SearchResultsAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchResultsViewHolder, position: Int) =
-        holder.bindTo(searchResultsViewModel.searchResults[position])
+        getItem(position).let { if (it != null) holder.bindTo(it) }
 
     class SearchResultsViewHolder(
         view: View,

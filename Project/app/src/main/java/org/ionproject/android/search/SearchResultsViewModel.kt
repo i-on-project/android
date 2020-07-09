@@ -14,12 +14,12 @@ class SearchResultsViewModel(
 
     companion object {
         // Number of search results to be displayed per page request
-        private const val pageSize = 10
+        const val PAGE_SIZE = 10
 
         // Creating PagedList config
         private val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setPageSize(pageSize)
+            .setPageSize(PAGE_SIZE)
             .build()
     }
 
