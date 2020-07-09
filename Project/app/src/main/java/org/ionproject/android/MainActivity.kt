@@ -123,6 +123,10 @@ class MainActivity : AppCompatActivity(),
             deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
             return true
         }
+        if (item.itemId == R.id.action_settings) {
+            navController.navigate(R.id.navigation_settings)
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 

@@ -55,7 +55,9 @@ class FavoritesViewModel(
         }
     }
 
-    val calendarTerms: List<CalendarTerm> get() = calendarTermsLiveData.value ?: emptyList()
+    val calendarTerms: List<CalendarTerm>
+        get() = calendarTermsLiveData.value ?: emptyList()
+
     fun observeCalendarTerms(
         lifecycleOwner: LifecycleOwner,
         onUpdate: (List<CalendarTerm>) -> Unit

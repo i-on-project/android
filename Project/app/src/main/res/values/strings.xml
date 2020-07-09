@@ -106,4 +106,7 @@
     <string name="dialog_button_cancel">Cancel</string>
     <string name="toast_message_main">All Search Suggestions have been deleted!</string>
     <string name="label_no_results">No results</string>
+    <string name="title_settings">Settings</string>
+    <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
+    <string name="saved_settings_schedule_calendar_term">SCHEDULE_CALENDAR_TERM</string>
 </resources>

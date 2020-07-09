@@ -60,7 +60,15 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
-        viewModel.getLectures(sharedViewModel.root.calendarTermsUri)
+        val selectedCalendarTermKey = getString(R.string.saved_settings_schedule_calendar_term)
+
+        // Get calendar term that was selected by the user on App Settings
+        val selectedCalendarTerm = viewModel.getSelectedCalendarTerm(selectedCalendarTermKey)
+
+        if (selectedCalendarTerm == null)
+            viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)
+        else
+            viewModel.getLecturesFromSelectedCalendarTerm(selectedCalendarTerm)
 
         // Back button behaviour
         view.cardview_schedule_back.setOnClickListener {

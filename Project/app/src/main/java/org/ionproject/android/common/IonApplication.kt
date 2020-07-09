@@ -38,6 +38,7 @@ class IonApplication : Application() {
         lateinit var rootRepository: RootRepository private set
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
+        lateinit var sharedPreferences: SharedPreferences private set
     }
 
     override fun onCreate() {
@@ -75,17 +76,15 @@ class IonApplication : Application() {
 
         ionWebAPI = webAPI
 
-        workerRepository =
-            WorkerRepository(db.workerDao())
+        workerRepository = WorkerRepository(db.workerDao())
         workerManagerFacade = WorkerManagerFacade(applicationContext, workerRepository)
 
-        programmesRepository =
-            ProgrammesRepository(
-                webAPI,
-                db.programmeDao(),
-                db.programmeOfferDao(),
-                workerManagerFacade
-            )
+        programmesRepository = ProgrammesRepository(
+            webAPI,
+            db.programmeDao(),
+            db.programmeOfferDao(),
+            workerManagerFacade
+        )
         coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
         classesRepository =
             ClassesRepository(
@@ -102,6 +101,7 @@ class IonApplication : Application() {
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(ionWebAPI)
         searchRepository = SearchRepository(webAPI)
+        sharedPreferences = SharedPreferences(applicationContext)
     }
 
 }
