@@ -42,9 +42,14 @@ class MainActivity : AppCompatActivity(),
         toolbar_main
     }
 
+    private var searchViewItem: MenuItem? = null
+
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost).apply {
             addOnDestinationChangedListener { controller, destination, arguments ->
+                // Collapse search view if fragment destination is not Search Results Fragment
+                if(destination.id != R.id.navigation_search_results)
+                    searchViewItem?.collapseActionView()
                 IonApplication.globalExceptionHandler.unRegisterCurrExceptionHandler()
             }
         }
@@ -142,7 +147,8 @@ class MainActivity : AppCompatActivity(),
 
         // Get the SearchView and set the searchable configuration.
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.action_search)?.actionView as? SearchView
+        searchViewItem = menu.findItem(R.id.action_search)
+        val searchView = searchViewItem?.actionView as? SearchView
 
         searchView?.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))

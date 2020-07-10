@@ -30,11 +30,11 @@
     <string name="label_classes">Classes:</string>
     <string name="label_enroll">Enroll:</string>
     <string name="label_class">Class</string>
-    <string name="label_id">ID:</string>
+    <string name="label_id" translatable="false">ID:</string>
     <string name="label_events">Events:</string>
     <string name="label_teacher">Teacher:</string>
     <string name="label_exams">Exams</string>
-    <string name="label_favorites_placeholder">%1$s - %2$s</string>
+    <string name="label_favorites_placeholder" translatable="false">%1$s - %2$s</string>
     <string name="label_calendar_term">Calendar term</string>
     <string name="label_lectures">Lectures</string>
     <string name="label_calendar_termV2">Calendar term:</string>
@@ -50,11 +50,11 @@
     <string name="label_journals">Journals</string>
 
     <string name="enroll_btn">Enroll</string>
-    <string name="teacher_name_start">Prof.</string>
-    <string name="app_label">i-on</string>
+    <string name="teacher_name_start" translatable="false">Prof.</string>
+    <string name="app_label" translatable="false">i-on</string>
     <string name="search_hint">Search…</string>
     <string name="label_semester">Semester</string>
-    <string name="imageView_favorite">favorite_icon</string>
+    <string name="imageView_favorite" translatable="false">favorite_icon</string>
     <string name="imageButton_clear_recent_search">Clear recent search</string>
     <string name="monday_short">MON</string>
     <string name="tuesday_short">TUE</string>
@@ -71,12 +71,12 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="label_schedule_hours_placeholder">%1$s - %2$s</string>>
-    <string name="placeholder_lecture">%1$s: %2$s %3$s:%4$sh - %5$s:%6$sh</string>
-    <string name="placeholder_exam">%1$s: %2$d/%3$d/%4$d</string>
-    <string name="placeholder_todo">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
-    <string name="placeholder_interval">%1$s:%2$sh - %3$s:%4$sh</string>
-    <string name="placeholder_time">%1$s/%2$s/%3$s %4$s:%5$sh</string>
+    <string name="label_schedule_hours_placeholder" translatable="false">%1$s - %2$s</string>>
+    <string name="placeholder_lecture" translatable="false">%1$s: %2$s %3$s:%4$sh - %5$s:%6$sh</string>
+    <string name="placeholder_exam" translatable="false">%1$s: %2$d/%3$d/%4$d</string>
+    <string name="placeholder_todo" translatable="false">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
+    <string name="placeholder_interval" translatable="false">%1$s:%2$sh - %3$s:%4$sh</string>
+    <string name="placeholder_time" translatable="false">%1$s/%2$s/%3$s %4$s:%5$sh</string>
 
     <string name="january">January</string>
     <string name="february">February</string>
@@ -91,8 +91,6 @@
     <string name="november">November</string>
     <string name="december">December</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_export">export</string>
     <string name="warning_no_more_classes">There are no more classes left this semester</string>
     <string name="label_outdated_app">Application seems to be outdated :(</string>
@@ -108,5 +106,5 @@
     <string name="label_no_results">No results</string>
     <string name="title_settings">Settings</string>
     <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
-    <string name="saved_settings_schedule_calendar_term">SCHEDULE_CALENDAR_TERM</string>
+    <string name="saved_settings_schedule_calendar_term" translatable="false">SCHEDULE_CALENDAR_TERM</string>
 </resources>
