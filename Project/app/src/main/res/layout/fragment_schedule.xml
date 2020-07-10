@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_schedule"
     style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/AppTheme"
-    android:id="@+id/fragment_schedule"
-    >
+    android:theme="@style/AppTheme">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -30,20 +29,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="0dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/primaryColor"
-                >
+                app:cardCornerRadius="0dp">
 
                 <!-- Hours -->
                 <ImageView
                     android:id="@+id/button_schedule_back"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_left_arrow_black_24dp"/>
+                    android:src="@drawable/ic_left_arrow_black_24dp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView

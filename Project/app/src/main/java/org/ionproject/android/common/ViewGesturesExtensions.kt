@@ -1,16 +1,31 @@
 package org.ionproject.android.common
 
+import android.app.Activity
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.abs
+
 
 /**
  * Extensions functions that add gestures to views. The gesture
  * also adds animation to the view so that it follows the recommendations from material.io:
  * https://material.io/design/interaction/gestures.html#properties
  */
+
+fun getScreenWidth(view: View): Float {
+    var activity = view.context
+    if (activity is Activity) {
+        val displayMetrics = DisplayMetrics()
+        (activity as AppCompatActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return displayMetrics.widthPixels.toFloat()
+    } else {
+        throw IllegalArgumentException("$view must be contained within and activity to support swipe")
+    }
+}
 
 fun View.addSwipeRightGesture(
     onSwipeRight: () -> Unit
@@ -21,7 +36,8 @@ fun View.addSwipeRightGesture(
         var velocityTracker = VelocityTracker.obtain()
         val ALPHA_THRESHOLD = 0.1F // When this alpha is reached parameter functions are called
         val SWIPE_THRESHOLD =
-            500 // The distance swiped at which the view turns completely transparent
+            getScreenWidth(this@addSwipeRightGesture) / 3 // The distance swiped at which the view turns completely transparent
+        val VELOCITY_THRESHOLD = 3
 
         override fun onTouch(view: View, event: MotionEvent): Boolean {
 
@@ -42,7 +58,7 @@ fun View.addSwipeRightGesture(
                     val deltaX = touchedX - startX
 
                     if (deltaX > 0) { // Has user moved finger to right?
-                        if (velocityTracker.xVelocity >= 3) // Was it a fast swipe?
+                        if (velocityTracker.xVelocity >= VELOCITY_THRESHOLD) // Was it a fast swipe?
                             view.alpha = 0F
                         else {
                             val layoutParams =
@@ -84,7 +100,8 @@ fun View.addSwipeUpGesture(
         var velocityTracker = VelocityTracker.obtain()
         val ALPHA_THRESHOLD = 0.1F // When this alpha is reached parameter functions are called
         val SWIPE_THRESHOLD =
-            500 // The distance swiped at which the view turns completely transparent
+            getScreenWidth(this@addSwipeUpGesture) / 3 // The distance swiped at which the view turns completely transparent
+        val VELOCITY_THRESHOLD = 3
 
         override fun onTouch(view: View, event: MotionEvent): Boolean {
 
@@ -101,7 +118,7 @@ fun View.addSwipeUpGesture(
                     val deltaY = touchedY - startY
 
                     if (deltaY < 0) { // Has user moved finger up?
-                        if (velocityTracker.yVelocity >= 3) // Was it a fast swipe?
+                        if (velocityTracker.yVelocity >= VELOCITY_THRESHOLD) // Was it a fast swipe?
                             view.alpha = 0F
                         else {
                             val layoutParams =

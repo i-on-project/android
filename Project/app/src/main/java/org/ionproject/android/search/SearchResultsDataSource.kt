@@ -32,7 +32,12 @@ class SearchResultsDataSource(
     ) {
         scope.launch {
             val result: List<SearchResult> =
-                searchRepository.search(searchUri, query, FIRST_PAGE, SearchResultsViewModel.PAGE_SIZE)
+                searchRepository.search(
+                    searchUri,
+                    query,
+                    FIRST_PAGE,
+                    SearchResultsViewModel.PAGE_SIZE
+                )
             callback.onResult(result, null, FIRST_PAGE + 1)
         }
     }
@@ -46,7 +51,12 @@ class SearchResultsDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, SearchResult>) {
         scope.launch {
             val result: List<SearchResult> =
-                searchRepository.search(searchUri, query, params.key, SearchResultsViewModel.PAGE_SIZE)
+                searchRepository.search(
+                    searchUri,
+                    query,
+                    params.key,
+                    SearchResultsViewModel.PAGE_SIZE
+                )
             val nextPage = if (result.isNotEmpty()) params.key + 1 else null
             callback.onResult(result, nextPage)
         }
@@ -61,7 +71,12 @@ class SearchResultsDataSource(
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, SearchResult>) {
         scope.launch {
             val result: List<SearchResult> =
-                searchRepository.search(searchUri, query, params.key, SearchResultsViewModel.PAGE_SIZE)
+                searchRepository.search(
+                    searchUri,
+                    query,
+                    params.key,
+                    SearchResultsViewModel.PAGE_SIZE
+                )
             val prevPage = if (params.key > 1) params.key - 1 else null
             callback.onResult(result, prevPage)
         }

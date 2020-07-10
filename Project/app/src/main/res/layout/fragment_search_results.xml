@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".search.SearchResultsFragment"
     android:orientation="vertical"
-    >
+    tools:context=".search.SearchResultsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_search_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="9"
-        tools:listitem="@layout/list_item_search_result"/>
+        tools:listitem="@layout/list_item_search_result" />
 
 </LinearLayout>

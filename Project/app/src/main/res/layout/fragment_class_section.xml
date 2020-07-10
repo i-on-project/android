@@ -3,20 +3,18 @@
 <org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_class_section"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/fragment_class_section"
-    >
+    android:orientation="vertical">
 
     <!-- Loading -->
     <ProgressBar
         android:id="@+id/progressbar_class_section"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="true">
-    </ProgressBar>
+        android:indeterminate="true"></ProgressBar>
 
     <!-- Top Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,22 +33,22 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/selector_transparent"
+            android:contentDescription="refresh layout"
             android:src="@drawable/ic_refresh_white_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="refresh layout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/checkbox_class_section_favorite"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginTop="@dimen/all_margin_30"
             android:button="@drawable/selector_favorite_24dp"
             android:contentDescription="@string/imageView_favorite"
             app:buttonTint="@android:color/white"
-            android:layout_marginTop="@dimen/all_margin_30"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_class_section_refresh"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/button_class_section_refresh" />
 
         <!-- Class Name -->
         <TextView

@@ -9,14 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="org.ionproject.android.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_to_programmes"
             app:destination="@id/navigation_programmes"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
         <action
             android:id="@+id/action_home_to_settings"
             app:destination="@id/navigation_settings" />
@@ -32,23 +32,23 @@
         android:id="@+id/navigation_favorites"
         android:name="org.ionproject.android.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favorites_to_class_section"
             app:destination="@id/navigation_class_section"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
             app:popUpTo="@id/navigation_class_section"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_favorites_to_programmes"
             app:destination="@id/navigation_programmes"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
@@ -61,28 +61,28 @@
         android:id="@+id/navigation_courses"
         android:name="org.ionproject.android.courses.CoursesFragment"
         android:label="@string/title_courses"
-        tools:layout="@layout/fragment_courses" >
+        tools:layout="@layout/fragment_courses">
         <action
             android:id="@+id/action_courses_to_course_details"
             app:destination="@id/navigation_course_details"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_course_details"
         android:name="org.ionproject.android.course_details.CourseDetailsFragment"
         android:label="@string/title_course_details"
-        tools:layout="@layout/fragment_course_details" >
+        tools:layout="@layout/fragment_course_details">
         <action
             android:id="@+id/action_course_details_to_class_section"
             app:destination="@id/navigation_class_section"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
@@ -91,38 +91,38 @@
         android:label="@string/title_search_results"
         tools:layout="@layout/fragment_search_results" />
 
-     <fragment
+    <fragment
         android:id="@+id/navigation_calendar"
         android:name="org.ionproject.android.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
-        
+
     <fragment
         android:id="@+id/navigation_programmes"
         android:name="org.ionproject.android.programmes.ProgrammesFragment"
         android:label="@string/title_programmes"
-        tools:layout="@layout/fragment_programmes" >
+        tools:layout="@layout/fragment_programmes">
         <action
             android:id="@+id/action_programmes_to_programme_details"
             app:destination="@id/navigation_programme_details"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_programme_details"
         android:name="org.ionproject.android.programmeDetails.ProgrammeDetailsFragment"
         android:label="@string/title_programme_details"
-        tools:layout="@layout/fragment_programme_details" >
+        tools:layout="@layout/fragment_programme_details">
         <action
             android:id="@+id/action_programme_details_to_courses"
             app:destination="@id/navigation_courses"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment

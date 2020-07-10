@@ -4,13 +4,13 @@ import android.app.Application
 import android.content.Intent
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.ionwebapi.*
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.MockIonWebAPI
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.error.GlobalExceptionHandler
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
@@ -61,15 +61,15 @@ class IonApplication : Application() {
         val ionMapper = JacksonIonMapper()
 
         // Using mocks
-        //val webAPI = MockIonWebAPI(ionMapper)
+        val webAPI = MockIonWebAPI(ionMapper)
 
-        val retrofit = Retrofit.Builder()
+        /*val retrofit = Retrofit.Builder()
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val service: IonService = retrofit.create(IonService::class.java)
-        val webAPI = IonWebAPI(service, ionMapper)
+        val webAPI = IonWebAPI(service, ionMapper)*/
 
         ionWebAPI = webAPI
 

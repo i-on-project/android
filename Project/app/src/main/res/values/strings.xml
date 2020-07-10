@@ -101,7 +101,7 @@
     <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
     <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
     <string name="error_message_exception_handler_fragment">Oops, there was an error =(</string>
-    <string name="label_curricular_terms">Curricular terms</string>   
+    <string name="label_curricular_terms">Curricular terms</string>
     <string name="dialog_main">Are you sure you want to delete all search suggestions?</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_cancel">Cancel</string>
