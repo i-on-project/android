@@ -81,7 +81,7 @@ class ScheduleViewModel(
             var toRet = emptyList<Lecture>()
             if (it?.calendarURI != null) {
                 val events = eventsRepository.getEvents(it.calendarURI)
-                if(events != null)
+                if (events != null)
                     toRet = events.lectures
             }
             toRet

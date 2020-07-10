@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(),
         findNavController(R.id.fragment_main_navhost).apply {
             addOnDestinationChangedListener { controller, destination, arguments ->
                 // Collapse search view if fragment destination is not Search Results Fragment
-                if(destination.id != R.id.navigation_search_results)
+                if (destination.id != R.id.navigation_search_results)
                     searchViewItem?.collapseActionView()
                 IonApplication.globalExceptionHandler.unRegisterCurrExceptionHandler()
             }
