@@ -77,6 +77,7 @@
     <string name="placeholder_todo">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
     <string name="placeholder_interval">%1$s:%2$sh - %3$s:%4$sh</string>
     <string name="placeholder_time">%1$s/%2$s/%3$s %4$s:%5$sh</string>
+    <string name="placeholder_schedule">%1$s - %2$s</string>
 
     <string name="january">January</string>
     <string name="february">February</string>
@@ -108,5 +109,5 @@
     <string name="label_no_results">No results</string>
     <string name="title_settings">Settings</string>
     <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
-    <string name="saved_settings_schedule_calendar_term">SCHEDULE_CALENDAR_TERM</string>
+    <string name="label_list_event_location">Location:</string>
 </resources>

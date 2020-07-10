@@ -60,10 +60,8 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         (activity as MainActivity).supportActionBar?.hide()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
-        val selectedCalendarTermKey = getString(R.string.saved_settings_schedule_calendar_term)
-
         // Get calendar term that was selected by the user on App Settings
-        val selectedCalendarTerm = viewModel.getSelectedCalendarTerm(selectedCalendarTermKey)
+        val selectedCalendarTerm = viewModel.getSelectedCalendarTerm()
 
         if (selectedCalendarTerm == null)
             viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)

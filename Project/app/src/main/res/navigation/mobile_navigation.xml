@@ -17,6 +17,9 @@
             app:popExitAnim="@anim/fragment_fade_exit"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/navigation_settings" />
     </fragment>
 
     <fragment

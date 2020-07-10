@@ -72,6 +72,10 @@ class EventsListAdapter(
             eventExportButton.setOnClickListener {
                 lecture.export(it.context)
             }
+            if (lecture.location != null) {
+                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_location)
+                eventExtraResult2.text = lecture.location
+            }
         }
 
         /**
@@ -133,7 +137,6 @@ class EventsListAdapter(
 
             val hour = todo.due.hour.fillWithZero()
             val minute = todo.due.minute.fillWithZero()
-            val second = todo.due.second.fillWithZero()
 
             eventExtraResult1.text = view.resources.getString(
                 R.string.placeholder_time,

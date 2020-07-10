@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Intent
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.IonService
-import org.ionproject.android.common.ionwebapi.IonWebAPI
-import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.error.ErrorActivity
@@ -38,14 +35,14 @@ class IonApplication : Application() {
         lateinit var rootRepository: RootRepository private set
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
-        lateinit var sharedPreferences: SharedPreferences private set
+        lateinit var preferences: Preferences private set
     }
 
     override fun onCreate() {
         super.onCreate()
 
         globalExceptionHandler =
-            GlobalExceptionHandler { thread, throwable ->
+            GlobalExceptionHandler { _, _ ->
                 val intent = Intent(applicationContext, ErrorActivity::class.java)
                 applicationContext.startActivity(intent)
             }
@@ -101,7 +98,7 @@ class IonApplication : Application() {
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(ionWebAPI)
         searchRepository = SearchRepository(webAPI)
-        sharedPreferences = SharedPreferences(applicationContext)
+        preferences = Preferences(applicationContext)
     }
 
 }

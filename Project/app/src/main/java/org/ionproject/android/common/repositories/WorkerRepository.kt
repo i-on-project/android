@@ -25,10 +25,8 @@ class WorkerRepository(
 
     suspend fun resetWorkerJobsById(id: Int) = withContext(dispatcher) {
         val worker = workerDao.getWorkerById(id)
-        if (worker != null) {
-            worker.resetNumberOfJobs()
-            updateWorker(worker)
-        }
+        worker.resetNumberOfJobs()
+        updateWorker(worker)
     }
 
 }

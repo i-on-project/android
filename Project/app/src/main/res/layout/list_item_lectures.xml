@@ -18,6 +18,14 @@
         android:textColor="@android:color/black"
         />
 
+    <TextView
+        android:id="@+id/textview_list_item_lectures_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="room G.2.0.5"
+        />
+
     <Button
         android:id="@+id/button_list_item_lectures_export"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
