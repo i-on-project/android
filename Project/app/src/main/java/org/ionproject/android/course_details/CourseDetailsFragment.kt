@@ -21,6 +21,8 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Course
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class CourseDetailsFragment : ExceptionHandlingFragment() {
 
@@ -48,7 +50,12 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCourseDetails()
+
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
+        setupCourseDetails(viewGroup)
         view.addSwipeRightGesture {
             findNavController().navigateUp()
         }
@@ -59,7 +66,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
      * UI with the result. Once the details are obtained then it obtains its classes
      * according to the selected calendar term in the spinner.
      */
-    private fun setupCourseDetails() {
+    private fun setupCourseDetails(viewGroup: ViewGroup) {
         // Setting up all course details
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
@@ -69,6 +76,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
             courseAcronym.text = it.acronym
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
+            viewGroup.stopLoading()
         }
     }
 

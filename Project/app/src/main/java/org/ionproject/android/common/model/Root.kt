@@ -14,6 +14,7 @@ import java.net.URI
 data class Root(
     val programmesUri: URI,
     val calendarTermsUri: URI,
+    val searchUri: URI,
     @PrimaryKey val rootUri: URI = URI("/"),
     override var workerId: Int = 0
 ) : Parcelable, ICacheable {
@@ -21,17 +22,17 @@ data class Root(
     // ------------------ Parcelable methods -----------------------
     constructor(parcel: Parcel) : this(
         URI(parcel.readString() ?: ""),
+        URI(parcel.readString() ?: ""),
         URI(parcel.readString() ?: "")
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(programmesUri.toString())
         parcel.writeString(calendarTermsUri.toString())
+        parcel.writeString(searchUri.toString())
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<Root> {
         override fun createFromParcel(parcel: Parcel): Root {

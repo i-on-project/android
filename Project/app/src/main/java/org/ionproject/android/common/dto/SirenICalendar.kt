@@ -72,7 +72,7 @@ data class Rules(
     init {
         value.split(";").forEach {
             val rulePair = it.split("=")
-            ruleMap.put(rulePair[0], rulePair[1])
+            ruleMap[rulePair[0]] = rulePair[1]
         }
     }
 
@@ -80,7 +80,7 @@ data class Rules(
      * @param rname is the name of the rule
      * @return the value of the rule or null if rule does not exist
      */
-    fun getRuleByName(rname: String): String? = ruleMap.get(rname)
+    fun getRuleByName(rname: String): String? = ruleMap[rname]
 }
 
 data class Related(

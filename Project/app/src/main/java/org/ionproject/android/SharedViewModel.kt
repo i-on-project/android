@@ -1,5 +1,8 @@
 package org.ionproject.android
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.Root
@@ -13,7 +16,23 @@ import java.net.URI
 class SharedViewModel : ViewModel() {
 
     // Search text used to pass data from search bar to searchResultFragment
-    lateinit var searchText: String
+    private val searchTextLiveData = MutableLiveData<String>()
+
+    /**
+     * Updates SearchTextLiveData
+     */
+    fun setSearchText(query: String) {
+        searchTextLiveData.postValue(query)
+    }
+
+    /**
+     * Observes the live data and calls onUpdate when a change occurs
+     */
+    fun observeSearchText(lifecycleOwner: LifecycleOwner, onUpdate: (String) -> Unit) {
+        searchTextLiveData.observe(lifecycleOwner, Observer {
+            onUpdate(it)
+        })
+    }
 
     /**
      * [Root] used check for the existence of resources

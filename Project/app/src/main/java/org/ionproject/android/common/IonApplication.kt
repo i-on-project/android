@@ -28,7 +28,6 @@ class IonApplication : Application() {
         lateinit var programmesRepository: ProgrammesRepository private set
         lateinit var coursesRepository: CourseRepository private set
         lateinit var classesRepository: ClassesRepository private set
-        lateinit var suggestionsMockRepository: SuggestionsMockRepository private set
         lateinit var db: AppDatabase private set
         lateinit var ionWebAPI: IIonWebAPI private set
         lateinit var favoritesRepository: FavoriteRepository private set
@@ -37,6 +36,7 @@ class IonApplication : Application() {
         lateinit var workerManagerFacade: WorkerManagerFacade private set
         lateinit var eventsRepository: EventsRepository
         lateinit var rootRepository: RootRepository private set
+        lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var sharedPreferences: SharedPreferences private set
     }
@@ -86,18 +86,21 @@ class IonApplication : Application() {
             workerManagerFacade
         )
         coursesRepository = CourseRepository(webAPI, db.courseDao(), workerManagerFacade)
-        classesRepository = ClassesRepository(
-            webAPI,
-            db.classSectionDao(),
-            db.classCollectionDao(),
-            workerManagerFacade
-        )
-        favoritesRepository = FavoriteRepository(db.favoriteDao())
+        classesRepository =
+            ClassesRepository(
+                webAPI,
+                db.classSectionDao(),
+                db.classCollectionDao(),
+                workerManagerFacade
+            )
+        favoritesRepository =
+            FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
             CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
-        suggestionsMockRepository = SuggestionsMockRepository(db)
-        eventsRepository = EventsRepository(webAPI)
+        eventsRepository =
+            EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
+        searchRepository = SearchRepository(webAPI)
         sharedPreferences = SharedPreferences(applicationContext)
     }
 

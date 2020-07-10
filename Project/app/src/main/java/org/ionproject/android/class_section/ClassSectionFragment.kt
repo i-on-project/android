@@ -16,6 +16,8 @@ import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class ClassSectionFragment : ExceptionHandlingFragment() {
 
@@ -64,6 +66,11 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         JournalsAdapter(viewModel)
     }
 
+    /**
+     * ViewGroup which contains all this fragments views
+     */
+    lateinit var viewGroup: ViewGroup
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,6 +81,11 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adds loading
+        viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
         setupLecturesList()
         setupExamsList()
         setupWorkAssignmentsList()
@@ -83,6 +95,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
             findNavController().navigateUp()
         }
         setupSectionsBehaviour()
+        setupRefreshButtonBehaviour()
     }
 
     /**
@@ -148,13 +161,16 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
     /**
      * Request all events available for the class section [currClassSummary]
      */
-    private fun requestEvents(classSection: ClassSection) {
+    private fun requestEvents(
+        classSection: ClassSection
+    ) {
         viewModel.getEventsFromClassSection(classSection)
         viewModel.observeEvents(this) {
             examsListAdapter.notifyDataSetChanged()
             lecturesListAdapter.notifyDataSetChanged()
             workAssignmentsAdapter.notifyDataSetChanged()
             journalsAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
         }
     }
 
@@ -206,6 +222,26 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
                 recyclerview_class_section_journals.visibility = View.GONE
             else
                 recyclerview_class_section_journals.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupRefreshButtonBehaviour() {
+        button_class_section_refresh.setOnClickListener {
+            viewGroup.startLoading()
+
+            // Class Section View Holder Setup
+            val courseTextView = textView_class_section_course
+            val classTermTextView = textView_class_section_class
+            val calendarTermTextView = textView_class_section_calendar_term
+
+            // Search for Class Section Details
+            viewModel.forceGetClassSectionDetails(sharedViewModel.classSectionUri) {
+                courseTextView.text = it.courseAcronym
+                classTermTextView.text = it.id
+                calendarTermTextView.text = it.calendarTerm
+
+                viewModel.forceGetEventsFromClassSection(it)
+            }
         }
     }
 }

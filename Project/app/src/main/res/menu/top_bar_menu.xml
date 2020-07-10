@@ -9,8 +9,15 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
+        android:id="@+id/action_delete_suggestions"
+        android:icon="@drawable/ic_delete_suggestions_24"
+        android:title="@string/title_delete_suggestions"
+        app:showAsAction="ifRoom|collapseActionView"/>
+        
+     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_white_24"
         android:title="@string/title_settings"
         app:showAsAction="ifRoom|collapseActionView"/>
+        
 </menu>

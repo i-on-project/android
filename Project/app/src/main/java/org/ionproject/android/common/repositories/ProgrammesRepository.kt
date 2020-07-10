@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.ProgrammeDao
@@ -9,6 +10,7 @@ import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.ProgrammeSummary
+import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.programmes.toProgramme
@@ -20,7 +22,8 @@ class ProgrammesRepository(
     private val ionWebAPI: IIonWebAPI,
     private val programmeDao: ProgrammeDao,
     private val programmeOfferDao: ProgrammeOfferDao,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     /**
@@ -28,7 +31,7 @@ class ProgrammesRepository(
      * and maps from [SirenEntity] to [List<ProgrammeSummary>].
      */
     suspend fun getAllProgrammes(programmesUri: URI) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             var programmes = programmeDao.getAllProgrammeSummaries()
 
             if (programmes.count() == 0) {
@@ -55,7 +58,7 @@ class ProgrammesRepository(
      */
     suspend fun getProgrammeDetails(
         programmeDetailsUri: URI
-    ) = withContext(Dispatchers.IO) {
+    ): ProgrammeWithOffers? = withContext(dispatcher) {
         var programmeWithOffers = programmeDao.getProgrammeWithOffersByUri(programmeDetailsUri)
 
         if (programmeWithOffers == null) {
@@ -81,7 +84,7 @@ class ProgrammesRepository(
      * and maps from [SirenEntity] to [ProgrammeOffer].
      */
     suspend fun getProgrammeOfferDetails(programmeOfferSummary: ProgrammeOfferSummary) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             var programmeOffer = programmeOfferDao.getProgrammeOfferById(programmeOfferSummary.id)
 
             if (programmeOffer == null) {

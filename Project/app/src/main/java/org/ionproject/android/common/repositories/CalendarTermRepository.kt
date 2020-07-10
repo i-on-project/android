@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CalendarTermDao
@@ -14,14 +15,15 @@ import java.net.URI
 class CalendarTermRepository(
     private val ionWebAPI: IIonWebAPI,
     private val calendarTermDao: CalendarTermDao,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     /**
      * Obtains all calendar terms from the IonWebAPI
      */
     suspend fun getAllCalendarTerm(calendarTermsUri: URI): List<CalendarTerm> =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             var calendarTerms = calendarTermDao.getAllCalendarTerms()
 
             if (calendarTerms.count() == 0) {

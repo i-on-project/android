@@ -4,10 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".courses.CoursesFragment"
-    android:padding="@dimen/fragments_padding_10"
-    >
+    android:id="@+id/fragment_courses">
+
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_courses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_courses_list"
@@ -15,6 +24,7 @@
         android:layout_height="wrap_content"
         tools:itemCount="5"
         tools:listitem="@layout/list_item_courses"
+        android:padding="@dimen/fragments_padding_10"
         />
 
     <Button
@@ -22,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/optional_courses"
+        android:layout_marginLeft="@dimen/fragments_padding_10"
+        android:layout_marginRight="@dimen/fragments_padding_10"
         >
     </Button>
 

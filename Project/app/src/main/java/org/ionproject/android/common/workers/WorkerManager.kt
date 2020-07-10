@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit
 
 /**
  * These are random keys used to pass data to workers
- * TODO Is their value important? Or can it be random as it is?
  */
 const val WORKER_ID_KEY = "19x781x2b"
 const val PROGRAMME_ID_KEY = "c4094c20"
@@ -152,6 +151,20 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
         workImportance,
         CalendarTermsWorker::class.java,
         calendarTermsUri
+    )
+
+    /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to an [Events] object and will check for any changes
+     * to it and update the local database in case there are.
+     */
+    suspend fun enqueueWorkForEvents(
+        events: Events,
+        workImportance: WorkImportance
+    ) = enqueueWorkWithInputData(
+        workImportance,
+        EventsWorker::class.java,
+        events.fields.selfUri
     )
 
     /**

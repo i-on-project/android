@@ -63,7 +63,6 @@ class FavoritesFragment : ExceptionHandlingFragment() {
      * Adds the swipe action to delete a favorite.
      */
     private fun setupFavoritesListBehaviour(favoritesList: RecyclerView) {
-        //TODO Confirm if this is the right context
         favoritesList.layoutManager = LinearLayoutManager(context)
 
         val favoritesListAdapter = FavoritesListAdapter(viewModel, sharedViewModel)

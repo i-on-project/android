@@ -16,6 +16,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class CoursesFragment : ExceptionHandlingFragment() {
 
@@ -37,6 +39,10 @@ class CoursesFragment : ExceptionHandlingFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Adds loading
+        val viewGroup = view as ViewGroup
+        viewGroup.startLoading()
+
         //Obtaining view model
         val viewModel =
             ViewModelProvider(this, CoursesViewModelProvider())[CoursesViewModel::class.java]
@@ -57,6 +63,7 @@ class CoursesFragment : ExceptionHandlingFragment() {
 
         viewModel.observeCoursesLiveData(this) {
             coursesListAdapter.notifyDataSetChanged()
+            viewGroup.stopLoading()
         }
 
         view.addSwipeRightGesture {

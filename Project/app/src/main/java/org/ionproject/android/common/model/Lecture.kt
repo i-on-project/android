@@ -1,14 +1,17 @@
 package org.ionproject.android.common.model
 
+import androidx.room.Entity
 import org.ionproject.android.calendar.jdcalendar.hour
 import org.ionproject.android.calendar.jdcalendar.minus
 import org.ionproject.android.calendar.jdcalendar.minute
 import org.ionproject.android.common.dto.ComponentProperties
+import java.net.URI
 import java.util.*
 
 /**
  * Event to be called as [Lecture]
  */
+@Entity
 class Lecture(
     uid: String,
     summary: String,
@@ -18,7 +21,8 @@ class Lecture(
     val endDate: Calendar,
     val weekDay: WeekDay,
     // This is nullable because the lectures room might not have been announced
-    val location: String?
+    val location: String?,
+    val selfUri: URI
 ) : Event(type, uid, summary, description) {
 
     companion object {
@@ -30,7 +34,7 @@ class Lecture(
 /**
  * Creates a [Lecture] event
  */
-fun createLecture(properties: ComponentProperties): Lecture {
+fun createLecture(properties: ComponentProperties, selfUri: URI): Lecture {
 
     val uid = properties.uid.value.firstOrNull()
     val summary = properties.summary.value.firstOrNull()
@@ -53,7 +57,8 @@ fun createLecture(properties: ComponentProperties): Lecture {
             Moment(duration.hour, duration.minute),
             untilDate,
             WeekDay.byShortName(weekDay),
-            location
+            location,
+            selfUri
         )
     }
     throw IllegalArgumentException("Found a null field while creating a lecture")

@@ -6,7 +6,18 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".course_details.CourseDetailsFragment"
+    android:id="@+id/fragment_course_details"
     >
+
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_course_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
 
     <!-- Top Section -->
     <LinearLayout

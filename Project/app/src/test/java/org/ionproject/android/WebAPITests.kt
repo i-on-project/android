@@ -29,7 +29,7 @@ class WebAPITests {
             webAPI.getFromURI(URI("/"), JsonHome::class.java)
         }
         assert(jsonHome.api.title == "i-on Core")
-        assert(jsonHome.resources.size > 0)
+        assert(jsonHome.resources.isNotEmpty())
     }
 
     @Test
