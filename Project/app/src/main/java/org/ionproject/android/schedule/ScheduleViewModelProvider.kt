@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import org.ionproject.android.common.IonApplication
 
 class ScheduleViewModelProvider : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ScheduleViewModel::class.java -> ScheduleViewModel(
-                IonApplication.sharedPreferences,
+                IonApplication.preferences,
                 IonApplication.favoritesRepository,
                 IonApplication.calendarTermRepository,
                 IonApplication.classesRepository,

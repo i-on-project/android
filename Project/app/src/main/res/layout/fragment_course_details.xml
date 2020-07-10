@@ -1,56 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_course_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".course_details.CourseDetailsFragment"
-    android:id="@+id/fragment_course_details"
-    >
+    tools:context=".course_details.CourseDetailsFragment">
 
     <!-- Loading -->
     <ProgressBar
         android:id="@+id/progressbar_course_details"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="true"
-        >
-    </ProgressBar>
+        android:indeterminate="true"></ProgressBar>
 
     <!-- Top Section -->
     <LinearLayout
         android:id="@+id/constraintlayout_course_details_top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/primaryLightColor"
-        android:padding="@dimen/fragments_padding_20"
-        >
+        android:orientation="vertical"
+        android:padding="@dimen/fragments_padding_20">
 
         <TextView
             android:id="@+id/textview_course_details_full_name"
 
-            android:text="Course Full Name"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/all_text_25"
-            android:textStyle="bold"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:text="Course Full Name"
+            android:textColor="@color/primaryTextColor"
+
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textview_course_details_acronym"
 
-            android:text="Course Acronym"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/all_text_18"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:text="Course Acronym"
+
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18" />
 
     </LinearLayout>
 
@@ -59,8 +53,7 @@
         android:id="@+id/constraintlayout_course_details_bottom_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp">
         <!-- Term selection Section -->
         <LinearLayout
             android:id="@+id/linearLayout_course_details_term_selection_section"
@@ -90,8 +83,7 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toEndOf="@+id/textview_course_details_term_label"
                 app:layout_constraintTop_toTopOf="@+id/textview_course_details_term_label"
-                tools:listitem="@android:layout/simple_spinner_dropdown_item"
-                />
+                tools:listitem="@android:layout/simple_spinner_dropdown_item" />
 
         </LinearLayout>
 
@@ -99,11 +91,10 @@
             android:id="@+id/recyclerview_course_details_classes_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/list_item_classes"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout_course_details_term_selection_section"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_course_details_term_selection_section"
+            tools:listitem="@layout/list_item_classes" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

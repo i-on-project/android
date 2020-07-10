@@ -4,6 +4,15 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 typealias ExceptionHandler = (Thread, Throwable) -> Unit
 
+/**
+ * Handles all exceptions thrown within the application.
+ *
+ * [defaultExceptionHandler] is the default exception handler
+ *
+ * [currExceptionHandler] is the handler that can be specified by a component (e.g Fragment)
+ *
+ * All exceptions are recorded to Crashlitycs.
+ */
 class GlobalExceptionHandler(
     val defaultExceptionHandler: ExceptionHandler
 ) {

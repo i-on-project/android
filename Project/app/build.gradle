@@ -18,8 +18,19 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            /*
+             Ensures the local db schema is saved every time there is a database change,
+             its a good practice as recommended by the docs:
+             https://developer.android.com/reference/androidx/room/Database#exportSchema()
+
+             But we can't forget to not ship them when placing the app in playstore.
+             */
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":"$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {

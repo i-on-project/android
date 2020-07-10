@@ -70,6 +70,7 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
      * @param convertView is the recycled view used to represent the same item previously
      * @param parent is the view in which this view is contained
      */
+    @Suppress("UNCHECKED_CAST")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         if (parent == null)
             throw IllegalArgumentException("Parent is null")

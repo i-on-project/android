@@ -11,11 +11,11 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"/>
+        android:indeterminate="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/loading_i_on"/>
+        android:text="@string/loading_i_on" />
 
 </LinearLayout>

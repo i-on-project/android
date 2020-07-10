@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(),
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost).apply {
-            addOnDestinationChangedListener { controller, destination, arguments ->
+            addOnDestinationChangedListener { _, _, _ ->
                 IonApplication.globalExceptionHandler.unRegisterCurrExceptionHandler()
             }
         }
@@ -121,10 +121,6 @@ class MainActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_delete_suggestions) {
             deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
-            return true
-        }
-        if (item.itemId == R.id.action_settings) {
-            navController.navigate(R.id.navigation_settings)
             return true
         }
         return super.onOptionsItemSelected(item)

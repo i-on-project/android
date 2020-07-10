@@ -63,13 +63,9 @@ class ScheduleGridAdapter(
      * All lectures that happen between 8:00 and 8:30
      */
     private fun List<Lecture>.inInterval(interval: Interval) = this.filter {
-        if (it.start != null && it.duration != null) {
-            val startMoment = Moment.fromCalendar(it.start)
-            val classInterval = Interval(startMoment, startMoment + it.duration)
-            interval.first >= classInterval.first && interval.second <= classInterval.second
-        } else {
-            false
-        }
+        val startMoment = Moment.fromCalendar(it.start)
+        val classInterval = Interval(startMoment, startMoment + it.duration)
+        interval.first >= classInterval.first && interval.second <= classInterval.second
     }
 
     /**
@@ -113,22 +109,29 @@ class ScheduleGridAdapter(
     class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         val text = view.textview_schedule_text
-        val cardView = view.cardview_grid_item_schedule
 
         fun bind(lectures: List<Lecture>) {
             if (lectures.count() > 0) { // Multiple lectures in the same block
-                cardView.isVisible = true
-                cardView.setBackgroundColor(Color.GRAY)
-                var classesText = lectures[0].summary
+                text.isVisible = true
+                text.setBackgroundColor(Color.GRAY)
+                var classesText = view.resources.getString(
+                    R.string.placeholder_schedule,
+                    lectures[0].summary,
+                    lectures[0].location ?: ""
+                )
 
                 if (lectures.count() > 1) {
                     for (i in 1 until lectures.count()) {
-                        classesText += "\n" + lectures[i].summary
+                        classesText += "\n" + view.resources.getString(
+                            R.string.placeholder_schedule,
+                            lectures[i].summary,
+                            lectures[i].location ?: ""
+                        )
                     }
                 }
                 text.text = classesText
             } else {
-                cardView.isVisible = false
+                text.isVisible = false
                 text.text = ""
             }
         }
