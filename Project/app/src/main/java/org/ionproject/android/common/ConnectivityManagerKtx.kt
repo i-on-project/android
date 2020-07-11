@@ -1,6 +1,10 @@
 package org.ionproject.android.common
 
+import android.content.Context
 import android.net.ConnectivityManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.*
 
 /**
  * This file follows the documentation:
@@ -24,4 +28,67 @@ fun ConnectivityManager.hasConnectivity(): Boolean {
         }
     }
     return false
+}
+
+
+
+typealias ConnectivityObserver = (Boolean) -> Unit
+
+private const val CONNECTION_CHECK_PERIOD_MILLIS = 5000L
+
+/**
+ * IMPORTANT:
+ * [ObservableConnectivity] is NOT thread-safe
+ *
+ * Only the UI Thread should call [observe] and [stopObserving]
+ */
+class ObservableConnectivity(
+    context: Context
+) {
+
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    private var prevConnectionState: Boolean = connectivityManager.hasConnectivity()
+
+    private val observers = mutableMapOf<LifecycleOwner, ConnectivityObserver>()
+
+    private var coroutineScope: CoroutineScope? = null
+
+    /**
+     * [observer] WILL execute in the UI Thread, so it should only contain
+     * UI related operations
+     */
+    fun observe(lifecycleOwner: LifecycleOwner, observer: ConnectivityObserver) {
+        if (!observers.containsKey(lifecycleOwner)) {
+            if (!prevConnectionState)
+                observer(prevConnectionState)
+            observers.put(lifecycleOwner, observer)
+        }
+    }
+
+    fun startObservingConnection(coroutineScope: CoroutineScope) {
+        if (this.coroutineScope != coroutineScope) {
+            this.coroutineScope = coroutineScope
+            coroutineScope.launch(Dispatchers.Default) {
+                while (true) {
+                    // Obtain new connection state
+                    val newConnectionState = connectivityManager.hasConnectivity()
+
+                    // If the new connection state has changed then notify observers
+                    if (newConnectionState != prevConnectionState) {
+                        prevConnectionState = newConnectionState
+
+                        withContext(Dispatchers.Main) {
+                            observers.forEach {
+                                if (it.key.lifecycle.currentState != Lifecycle.State.DESTROYED)
+                                    it.value.invoke(newConnectionState)
+                            }
+                        }
+                    }
+                    delay(CONNECTION_CHECK_PERIOD_MILLIS)
+                }
+            }
+        }
+    }
 }

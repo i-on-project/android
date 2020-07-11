@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.ionproject.android.common.IonApplication
-import java.net.SocketTimeoutException
+import java.io.IOException
 
 abstract class ExceptionHandlingFragment : Fragment() {
 
@@ -24,7 +24,7 @@ abstract class ExceptionHandlingFragment : Fragment() {
         var errorMessage =
             this.resources.getString(R.string.error_message_exception_handler_fragment)
 
-        if (throwable is SocketTimeoutException)
+        if (throwable is IOException)
             errorMessage =
                 this.resources.getString(R.string.error_message_exception_no_connectivity_handler_fragment)
 

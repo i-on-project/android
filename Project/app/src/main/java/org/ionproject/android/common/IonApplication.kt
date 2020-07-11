@@ -1,9 +1,7 @@
 package org.ionproject.android.common
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import androidx.room.Room
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
@@ -41,7 +39,7 @@ class IonApplication : Application() {
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
-        lateinit var connectivityManager: ConnectivityManager private set
+        lateinit var observableConnectivity: ObservableConnectivity private set
     }
 
     override fun onCreate() {
@@ -105,8 +103,7 @@ class IonApplication : Application() {
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         searchRepository = SearchRepository(webAPI)
         preferences = Preferences(applicationContext)
-        connectivityManager =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        observableConnectivity = ObservableConnectivity(applicationContext)
     }
 
 }

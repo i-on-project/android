@@ -1,11 +1,8 @@
 package org.ionproject.android
 
-import android.net.ConnectivityManager
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import org.ionproject.android.common.hasConnectivity
+import androidx.lifecycle.*
+import org.ionproject.android.common.ConnectivityObserver
+import org.ionproject.android.common.ObservableConnectivity
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.Root
 import java.net.URI
@@ -15,9 +12,17 @@ import java.net.URI
  * the other approach is to use arguments, but that approach is not recommended by the android
  * docs if you are sharing objects.
  */
-class SharedViewModel(
-    private val connectivityManager: ConnectivityManager
-) : ViewModel() {
+class SharedViewModel(private val observableConnectivity: ObservableConnectivity) : ViewModel() {
+
+    init {
+        observableConnectivity.startObservingConnection(viewModelScope)
+    }
+
+    fun observeConnection(
+        lifecycleOwner: LifecycleOwner,
+        connectivityObserver: ConnectivityObserver
+    ) =
+        observableConnectivity.observe(lifecycleOwner, connectivityObserver)
 
     // Search text used to pass data from search bar to searchResultFragment
     private val searchTextLiveData = MutableLiveData<String>()
@@ -37,11 +42,6 @@ class SharedViewModel(
             onUpdate(it)
         })
     }
-
-    /**
-     * Check if there is an internet connectivity
-     */
-    fun hasConnectivity() = connectivityManager.hasConnectivity()
 
     /**
      * [Root] used check for the existence of resources

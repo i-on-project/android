@@ -86,13 +86,21 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun validateDeviceConnectivity() {
-        if (!sharedViewModel.hasConnectivity()) {
-            AlertDialog.Builder(this)
-                .setTitle(resources.getString(R.string.title_warning))
-                .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
-                .setPositiveButton(android.R.string.ok) { _, _ -> }
-                .create()
-                .show()
+        sharedViewModel.observeConnection(this) { hasConnection ->
+            if (hasConnection)
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.label_connection_reestablished_main_activity),
+                    Toast.LENGTH_LONG
+                ).show()
+            else
+                AlertDialog.Builder(this)
+                    .setTitle(resources.getString(R.string.title_warning))
+                    .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
+                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+                    .create()
+                    .show()
+
         }
     }
 

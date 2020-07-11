@@ -9,7 +9,7 @@ class SharedViewModelProvider : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            SharedViewModel::class.java -> SharedViewModel(IonApplication.connectivityManager)
+            SharedViewModel::class.java -> SharedViewModel(IonApplication.observableConnectivity)
             else -> throw IllegalArgumentException("Class $modelClass is not valid for this provider")
         } as T
     }
