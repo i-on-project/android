@@ -115,7 +115,7 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             activity?.bottomnavview_main?.visibility = View.VISIBLE
             (activity as MainActivity).supportActionBar?.show()
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            findNavController().navigateUp()
+            super.exceptionHandler()
         }
     }
 

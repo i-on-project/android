@@ -25,7 +25,7 @@ const val JSON_HOME_SUBTYPE = "json-home"
 const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
 
 /**
- * For details regarding the Siren media type, see <a href="https://github.com/kevinswiber/siren">Siren</a>
+ * For details regarding the Siren media type, see "https://github.com/kevinswiber/siren"
  */
 data class SirenEntity(
     @JsonProperty("class") val clazz: List<String>? = null,

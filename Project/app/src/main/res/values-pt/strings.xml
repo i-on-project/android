@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IonAndroid</string>
     <string name="title_home">Principal</string>
     <string name="title_favorites">Favoritos</string>
     <string name="title_schedule">Horário</string>
     <string name="title_courses">Unidade Curricular</string>
     <string name="title_calendar">Calendário</string>
     <string name="title_class">Turma</string>
-    <string name="title_class_section">Secção da Turma</string>
+    <string name="title_class_section">Secção de turma</string>
     <string name="title_search">Pesquisa</string>
     <string name="title_delete_suggestions">Apagar Sugestões</string>
     <string name="title_search_results">Resultados de pesquisa</string>
@@ -76,10 +75,10 @@
     <string name="november">Novembro</string>
     <string name="december">Dezembro</string>
     <string name="label_export">Exportar</string>
-    <string name="warning_no_more_classes">Não existe mais turmas para este semestre</string>
+    <string name="warning_no_more_classes">Não existem mais turmas para este semestre</string>
     <string name="label_outdated_app">A aplicação parece estar desatualizada =(</string>
-    <string name="loading_i_on">A carregar o i-on</string>
-    <string name="warning_due_date_has_passed">O prazo de termino desta tarefa já termino!</string>
+    <string name="loading_i_on">A carregar i-on</string>
+    <string name="warning_due_date_has_passed">O prazo de entrega desta tarefa já passou!</string>
     <string name="warning_start_date_has_passed">A data de começo deste exame já passou!</string>
     <string name="error_message_exception_handler_fragment">Oops, ocorreu um erro =(</string>
     <string name="label_curricular_terms">Período Curricular</string>
@@ -90,4 +89,5 @@
     <string name="label_no_results">Não há resultados</string>
     <string name="title_settings">Definições</string>
     <string name="textView_settings_calendar_term">Período Curricular \\n do Horário:</string>
+    <string name="label_list_event_location">Localização:</string>
 </resources>
