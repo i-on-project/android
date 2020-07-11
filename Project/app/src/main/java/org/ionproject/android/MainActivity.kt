@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity(),
                     .setPositiveButton(android.R.string.ok) { _, _ -> }
                     .create()
                     .show()
-
         }
     }
 

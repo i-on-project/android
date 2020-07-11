@@ -28,6 +28,6 @@ abstract class ExceptionHandlingFragment : Fragment() {
             errorMessage =
                 this.resources.getString(R.string.error_message_exception_no_connectivity_handler_fragment)
 
-        Toast.makeText(this.context, errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this.context, errorMessage, Toast.LENGTH_SHORT).show()
     }
 }
