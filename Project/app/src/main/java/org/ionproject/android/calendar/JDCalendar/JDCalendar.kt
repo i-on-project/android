@@ -176,6 +176,17 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
     /**
      * Applies all custom attributes to its respective view elements
      * Adds behaviour to each view element.
+     *
+     * The [nextButton] and [prevButton] launch a coroutine and in a background
+     * thread update the days of the calendar. By calling advanceMonths() from a background
+     * thread the UI thread becomes free to do whatever it needs.
+     *
+     * IMPORTANT: The coroutines launched are saved in a list and should be cancelled once the
+     * activity or fragment where this calendar is contained is destroyed to avoid
+     * memory leaks. To cancel the coroutines a call to [destroy] should be made inside onDestroy or
+     * onDestroyView depending if the calendar is contained in an [Activity] or [Fragment] respectively.
+     * This ensures that if this view is destroyed and the coroutines it launched are still doing work
+     * they are cancelled.
      */
     init {
         applyCustomAttributes()

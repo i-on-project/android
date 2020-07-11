@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_courses"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".courses.CoursesFragment"
-    android:id="@+id/fragment_courses">
+    tools:context=".courses.CoursesFragment">
 
     <!-- Loading -->
     <ProgressBar
         android:id="@+id/progressbar_courses"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="true"
-        >
-    </ProgressBar>
+        android:indeterminate="true"></ProgressBar>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_courses_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="5"
-        tools:listitem="@layout/list_item_courses"
         android:padding="@dimen/fragments_padding_10"
-        />
+        tools:itemCount="5"
+        tools:listitem="@layout/list_item_courses" />
 
     <Button
         android:id="@+id/button_courses_optional_courses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/optional_courses"
         android:layout_marginLeft="@dimen/fragments_padding_10"
         android:layout_marginRight="@dimen/fragments_padding_10"
-        >
-    </Button>
+        android:text="@string/optional_courses"></Button>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_settings.*
+import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.CalendarTerm
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : ExceptionHandlingFragment() {
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -47,9 +47,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupCalendarTermSpinner(spinner: Spinner) {
-        val selectedCalendarTermKey = getString(R.string.saved_settings_schedule_calendar_term)
-
-        viewModel.getAllPossibleScheduleCalendarTerms(sharedViewModel.root.calendarTermsUri)
+        viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
 
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item
@@ -60,14 +58,15 @@ class SettingsFragment : Fragment() {
         viewModel.observeCalendarTerms(viewLifecycleOwner) { calendarTerms ->
             spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
             spinnerAdapter.addAll(calendarTerms)
-            val selectedCalendarTerm = viewModel.getSelectedCalendarTerm(selectedCalendarTermKey)
+            val selectedCalendarTerm = viewModel.getSelectedCalendarTerm()
 
             if (selectedCalendarTerm != null) {
                 /**
                  *  If a schedule calendar term has been saved on shared preferences file
                  *  then show it as the default value for spinner
                  */
-                spinner.setSelection(viewModel.getCalendarTermIndex(selectedCalendarTerm) ?: 0)
+                val idx = calendarTerms.indexOfFirst { it.name == selectedCalendarTerm }
+                spinner.setSelection(if (idx > -1) idx else 0)
             }
         }
 
@@ -87,7 +86,7 @@ class SettingsFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = spinner.getItemAtPosition(position) as CalendarTerm
-                viewModel.setSelectedCalendarTerm(Pair(selectedCalendarTermKey, selectedItem.name))
+                viewModel.setSelectedCalendarTerm(selectedItem.name)
             }
         }
     }

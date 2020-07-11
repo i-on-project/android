@@ -30,6 +30,7 @@ class LecturesListAdapter(
     class LectureViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val lectureTextView = view.textview_list_item_lectures
+        private val locationTextView = view.textview_list_item_lectures_location
         private val exportButton = view.button_list_item_lectures_export
 
         fun bindTo(lecture: Lecture) {
@@ -45,6 +46,8 @@ class LecturesListAdapter(
                 endMoment.hours.fillWithZero(),
                 endMoment.minutes.fillWithZero()
             )
+
+            locationTextView.text = lecture.location ?: ""
 
             exportButton.setOnClickListener {
                 lecture.export(it.context)

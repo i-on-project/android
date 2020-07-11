@@ -25,7 +25,8 @@ import org.ionproject.android.common.model.*
         Todo::class,
         Journal::class,
         Lecture::class
-    ), version = 1
+    ), version = 1,
+    exportSchema = true
 )
 @TypeConverters(
     URIConverter::class,
