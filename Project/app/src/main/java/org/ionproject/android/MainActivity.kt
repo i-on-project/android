@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(),
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost).apply {
-            addOnDestinationChangedListener { _, _, _ ->
+            addOnDestinationChangedListener { _, destination, _ ->
                 // Collapse search view if fragment destination is not Search Results Fragment
                 if (destination.id != R.id.navigation_search_results)
                     searchViewItem?.collapseActionView()

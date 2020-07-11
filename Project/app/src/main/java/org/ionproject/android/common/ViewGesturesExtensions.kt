@@ -16,8 +16,8 @@ import kotlin.math.abs
  * https://material.io/design/interaction/gestures.html#properties
  */
 
-fun getScreenWidth(view: View): Float {
-    var activity = view.context
+private fun getScreenWidth(view: View): Float {
+    val activity = view.context
     if (activity is Activity) {
         val displayMetrics = DisplayMetrics()
         (activity as AppCompatActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
