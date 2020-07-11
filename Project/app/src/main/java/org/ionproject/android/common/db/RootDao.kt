@@ -9,11 +9,11 @@ interface RootDao {
     fun getRootResource(): Root?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertRootResource(root: Root)
+    suspend fun insertRootResource(root: Root)
 
     @Update
-    abstract suspend fun updateRootResource(newRoot: Root)
+    suspend fun updateRootResource(newRoot: Root)
 
     @Query("DELETE FROM ROOT")
-    abstract suspend fun deleteRootResource()
+    suspend fun deleteRootResource()
 }

@@ -24,9 +24,10 @@ class RootResourceWorker(
     }
 
     override suspend fun job(): Boolean {
-        if(rootResourceURI != "") {
-            val rootResource = ionWebAPI.getFromURI(URI(rootResourceURI), JsonHome::class.java).toRoot()
-            if(rootResource != null) {
+        if (rootResourceURI != "") {
+            val rootResource =
+                ionWebAPI.getFromURI(URI(rootResourceURI), JsonHome::class.java).toRoot()
+            if (rootResource != null) {
                 rootDao.deleteRootResource()
                 rootDao.insertRootResource(rootResource)
                 return true

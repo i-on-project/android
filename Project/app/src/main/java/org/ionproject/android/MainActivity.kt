@@ -1,6 +1,7 @@
 package org.ionproject.android
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        validateDeviceConnectivity()
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
@@ -83,8 +85,19 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    private fun validateDeviceConnectivity() {
+        if (!sharedViewModel.hasConnectivity()) {
+            AlertDialog.Builder(this)
+                .setTitle(resources.getString(R.string.title_warning))
+                .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .create()
+                .show()
+        }
+    }
+
     /**
-     * Adds a callback to the onBackPressedDispacher which will be called
+     * Adds a callback to the onBackPressedDispatcher which will be called
      * when the user clicks the back button. This callback guarantees that
      * when the back button is pressed the navigation controller navigates
      * to the previous destination.
@@ -291,6 +304,15 @@ class MainActivity : AppCompatActivity(),
         ).clearHistory()
         Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT)
             .show()
+    }
+
+    /**
+     * We must send all recorded exceptions to firebase because otherwise they will only be sent
+     * after the user opens the application again
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        IonApplication.globalExceptionHandler.sendAllExceptionsToFirebase()
     }
 
 }

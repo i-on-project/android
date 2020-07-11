@@ -90,4 +90,7 @@
     <string name="title_settings">Definições</string>
     <string name="textView_settings_calendar_term">Período Curricular \\n do Horário:</string>
     <string name="label_list_event_location">Localização:</string>
+    <string name="error_message_exception_no_connectivity_handler_fragment">Não é possível aceder a esta funcionalidade porque o dispositivo não tem acesso à internet!</string>
+    <string name="title_warning">Aviso!</string>
+    <string name="label_no_connectivity_main_activity">O dispositivo não tem conectividade para a internet, portanto algumas das funcionalidades da aplicação estarão limitadas até que seja estabelecida uma conexão.</string>
 </resources>

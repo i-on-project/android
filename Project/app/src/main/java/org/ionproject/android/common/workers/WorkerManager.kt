@@ -1,10 +1,7 @@
 package org.ionproject.android.common.workers
 
 import android.content.Context
-import androidx.work.Constraints
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import androidx.work.*
 import org.ionproject.android.common.model.*
 import org.ionproject.android.common.repositories.WorkerRepository
 import java.net.URI
@@ -195,6 +192,8 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
             .setConstraints(
                 //This constraints should be reconsidered, especially in very important work that generates notifications like for an event
                 Constraints.Builder()
+                    // All workers need an internet connection in order to perform their job
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
                     // Most work will involve the db so if the storage is low it shouldn't be done
                     .setRequiresStorageNotLow(true)
                     // Some of the work is CPU intensive, for example parsing a Web API response

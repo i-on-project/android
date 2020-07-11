@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.MainActivity
 import org.ionproject.android.R
+import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity
 
@@ -35,4 +36,14 @@ class LoadingActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * We must send all recorded exceptions to firebase because otherwise they will only be sent
+     * after the user opens the application again
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        IonApplication.globalExceptionHandler.sendAllExceptionsToFirebase()
+    }
+
 }

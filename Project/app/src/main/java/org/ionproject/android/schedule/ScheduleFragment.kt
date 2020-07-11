@@ -110,12 +110,12 @@ class ScheduleFragment : ExceptionHandlingFragment() {
     }
 
     @SuppressLint("SourceLockedOrientationActivity") // Required for locked orientation
-    override fun exceptionHandler() {
+    override fun exceptionHandler(throwable: Throwable) {
         activity?.lifecycleScope?.launch(Dispatchers.Main) {
             activity?.bottomnavview_main?.visibility = View.VISIBLE
             (activity as MainActivity).supportActionBar?.show()
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            super.exceptionHandler()
+            super.exceptionHandler(throwable)
         }
     }
 

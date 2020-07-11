@@ -28,9 +28,9 @@ class RootRepository(
             // Verify if root resource is stored locally
             var rootResource = rootResourceDao.getRootResource()
 
-            if(rootResource == null) {
+            if (rootResource == null) {
                 rootResource = ionWebAPI.getFromURI(ROOT_URI_V0, JsonHome::class.java).toRoot()
-                if(rootResource != null) {
+                if (rootResource != null) {
                     // Save root resource into local database and create a worker for it
                     val workerId = workerManagerFacade.enqueueWorkForRootResource(
                         WorkImportance.VERY_IMPORTANT,

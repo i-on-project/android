@@ -40,4 +40,5 @@ class GlobalExceptionHandler(
         currExceptionHandler = null
     }
 
+    fun sendAllExceptionsToFirebase() = crashlytics.sendUnsentReports()
 }

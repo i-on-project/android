@@ -1,6 +1,8 @@
 package org.ionproject.android.common
 
 import android.app.Activity
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.VelocityTracker
@@ -9,6 +11,20 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.abs
 
+fun View.addGradientBackground(
+    bottomColor: Int = Color.parseColor("#f8f2f1"),
+    topColor: Int = Color.WHITE
+) {
+    val gradientDrawable = GradientDrawable(
+        GradientDrawable.Orientation.TOP_BOTTOM,
+        intArrayOf(
+            topColor,
+            bottomColor
+        )
+    )
+    gradientDrawable.cornerRadius = 0f
+    this.background = gradientDrawable
+}
 
 /**
  * Extensions functions that add gestures to views. The gesture
@@ -149,5 +165,3 @@ fun View.addSwipeUpGesture(
         }
     })
 }
-
-

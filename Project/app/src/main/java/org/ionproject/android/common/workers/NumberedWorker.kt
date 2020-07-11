@@ -3,7 +3,9 @@ package org.ionproject.android.common.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.ionproject.android.common.IonApplication
+import org.ionproject.android.common.model.BackgroundWorker
 
 /**
  * Base worker contains all the worker managing logic like adding to database,
@@ -20,6 +22,10 @@ abstract class NumberedWorker(
         context,
         params
     ) {
+
+    private val crashlytics: FirebaseCrashlytics by lazy(LazyThreadSafetyMode.NONE) {
+        FirebaseCrashlytics.getInstance()
+    }
 
     private val workerRepository by lazy(LazyThreadSafetyMode.NONE) {
         IonApplication.workerRepository
@@ -42,26 +48,46 @@ abstract class NumberedWorker(
     abstract suspend fun lastJob()
 
     override suspend fun doWork(): Result {
-        val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
+        var worker: BackgroundWorker? = null
+        try {
+            val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
 
-        // workerId is mandatory for work execution therefore stop it if it doesn't come
-        if (workerId == -1)
-            return Result.failure()
+            // workerId is mandatory for work execution therefore stop it if it doesn't come
+            if (workerId == -1)
+                return Result.failure()
 
-        val worker = workerRepository.getWorkerById(workerId)
-        worker.decrementNumberOfJobs()
-        workerRepository.updateWorker(worker)
+            worker = workerRepository.getWorkerById(workerId)
 
-        if (worker.currNumberOfJobs == 0) {
-            // Worker has finished all its jobs so perform lastJob
-            lastJob()
-            workerRepository.deleteWorker(worker)
+            if (worker.currNumberOfJobs == 0) {
+                // Worker has finished all its jobs so perform lastJob
+                lastJob()
+                workerRepository.deleteWorker(worker)
+                return Result.failure()
+            }
+
+            // Worker still has jobs to perform
+            if (!job()) {
+                // There was a problem while passing the input data to the worker so we stop it
+                workerRepository.deleteWorker(worker)
+                return Result.failure()
+            }
+
+            // Decrement number of jobs and update worker in database
+            worker.decrementNumberOfJobs()
+            workerRepository.updateWorker(worker)
+
+        } catch (ex: Exception) {
+            crashlytics.recordException(ex)
+            if (worker != null) {
+                try {
+                    workerRepository.deleteWorker(worker)
+                } catch (ex: Exception) {
+                    crashlytics.recordException(ex)
+                }
+            }
+            crashlytics.sendUnsentReports()
             return Result.failure()
         }
-
-        // Worker still has jobs to perform
-        if (!job()) // There was a problem while passing the input data to the worker so we stop it
-            return Result.failure()
         return Result.success()
     }
 

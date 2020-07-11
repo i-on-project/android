@@ -108,4 +108,7 @@
     <string name="title_settings">Settings</string>
     <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
     <string name="label_list_event_location">Location:</string>
+    <string name="error_message_exception_no_connectivity_handler_fragment">Cannot access this functionality because there is no connectivity!</string>
+    <string name="label_no_connectivity_main_activity">The device does not have connectivity at the moment, therefore the functionalities will be limited until there is connection available.</string>
+    <string name="title_warning">Warning!</string>
 </resources>
