@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="9"
-        tools:listitem="@layout/list_item_search_result"/>
+        tools:listitem="@layout/list_item_search_result" />
 
 </LinearLayout>

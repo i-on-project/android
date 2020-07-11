@@ -8,8 +8,7 @@
     android:elevation="3dp"
     android:focusable="true"
     app:cardBackgroundColor="@android:color/white"
-    app:cardElevation="0dp"
-    >
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"

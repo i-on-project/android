@@ -12,7 +12,7 @@ abstract class ExceptionHandlingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        IonApplication.globalExceptionHandler.registerCurrExceptionHandler { thread, throwable ->
+        IonApplication.globalExceptionHandler.registerCurrExceptionHandler { _, _ ->
             exceptionHandler()
         }
     }

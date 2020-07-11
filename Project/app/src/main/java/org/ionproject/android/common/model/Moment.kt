@@ -30,8 +30,8 @@ data class Moment(val hours: Int, val minutes: Int) : Comparable<Moment> {
     }
 
     override fun equals(other: Any?): Boolean {
-        val other = other as Moment
-        return other.hours == hours && other.minutes == minutes
+        val otherMoment = other as Moment
+        return otherMoment.hours == hours && otherMoment.minutes == minutes
     }
 
     override fun compareTo(other: Moment): Int {

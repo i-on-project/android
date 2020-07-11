@@ -6,6 +6,7 @@ import org.ionproject.android.common.IonApplication
 
 class ClassSectionViewModelProvider : ViewModelProvider.Factory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ClassSectionViewModel::class.java -> ClassSectionViewModel(

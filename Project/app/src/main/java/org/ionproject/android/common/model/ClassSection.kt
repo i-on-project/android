@@ -62,9 +62,9 @@ data class ClassSummary(
     val courseCalendarTerm: String = "$courseAcronym$calendarTerm"
 ) : ICacheable {
     override fun equals(other: Any?): Boolean {
-        val other = other as ClassSummary
-        if (id == other.id && courseAcronym == other.courseAcronym && calendarTerm == other.calendarTerm
-            && detailsUri == other.detailsUri
+        val otherClassSummary = other as ClassSummary
+        if (id == otherClassSummary.id && courseAcronym == otherClassSummary.courseAcronym && calendarTerm == otherClassSummary.calendarTerm
+            && detailsUri == otherClassSummary.detailsUri
         ) {
             return true
         }
