@@ -18,11 +18,19 @@ class SharedViewModel(private val observableConnectivity: ObservableConnectivity
         observableConnectivity.startObservingConnection(viewModelScope)
     }
 
+    private var hasWarned = false
     fun observeConnection(
         lifecycleOwner: LifecycleOwner,
         connectivityObserver: ConnectivityObserver
-    ) =
+    ) {
+        if (!hasWarned && !observableConnectivity.hasConnectivity()) {
+            hasWarned = true
+            connectivityObserver(false)
+        }
         observableConnectivity.observe(lifecycleOwner, connectivityObserver)
+
+    }
+
 
     // Search text used to pass data from search bar to searchResultFragment
     private val searchTextLiveData = MutableLiveData<String>()

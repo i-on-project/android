@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".calendar.CalendarFragment">
 
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_calendar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"/>
+
     <org.ionproject.android.calendar.jdcalendar.JDCalendar
         android:id="@+id/jdcalendar_calendar"
         android:layout_width="match_parent"
@@ -20,6 +28,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_calendar_events_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/list_item_event_item"
+        />
 
 </LinearLayout>

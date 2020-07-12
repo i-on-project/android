@@ -11,6 +11,7 @@ import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity
 
+// Random value key used to pass the root object from [LoadingActivity] to [MainActivity] via the intent
 const val ROOT_KEY = "m0192exe1gxe12x1"
 
 class LoadingActivity : AppCompatActivity() {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,7 +14,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Events
-import org.ionproject.android.common.replaceView
+import org.ionproject.android.common.startLoading
+import org.ionproject.android.common.stopLoading
 
 class CalendarFragment : ExceptionHandlingFragment() {
     /**
@@ -67,13 +67,7 @@ class CalendarFragment : ExceptionHandlingFragment() {
 
         // Hide calendar, show progress bar
         val viewGroup = jdcalendar_calendar.parent as ViewGroup
-        val progressBar =
-            ProgressBar(this.context, null, android.R.attr.progressBarStyleHorizontal).apply {
-                isIndeterminate = true
-            }
-        viewGroup.replaceView(jdcalendar_calendar, progressBar)
-
-        view.setOnClickListener { }
+        viewGroup.startLoading()
 
         calendarViewModel.apply {
             getFavoriteClassesFromCurrentTerm(
@@ -81,8 +75,7 @@ class CalendarFragment : ExceptionHandlingFragment() {
                 this@CalendarFragment
             ) { favorites ->
                 getEventsByFavorites(favorites) { events ->
-                    // replace progress bar with calendar
-                    viewGroup.replaceView(progressBar, jdcalendar_calendar)
+                    viewGroup.stopLoading()
                     createCalendarWithEvents(events)
                 }
             }

@@ -31,7 +31,6 @@ fun ConnectivityManager.hasConnectivity(): Boolean {
 }
 
 
-
 typealias ConnectivityObserver = (Boolean) -> Unit
 
 private const val CONNECTION_CHECK_PERIOD_MILLIS = 5000L
@@ -55,16 +54,21 @@ class ObservableConnectivity(
 
     private var coroutineScope: CoroutineScope? = null
 
+    fun hasConnectivity() = connectivityManager.hasConnectivity()
+
     /**
      * [observer] WILL execute in the UI Thread, so it should only contain
      * UI related operations
      */
     fun observe(lifecycleOwner: LifecycleOwner, observer: ConnectivityObserver) {
-        if (!observers.containsKey(lifecycleOwner)) {
-            if (!prevConnectionState)
-                observer(prevConnectionState)
-            observers.put(lifecycleOwner, observer)
-        }
+        if (lifecycleOwner.lifecycle.currentState == Lifecycle.State.DESTROYED)
+            return // Ignore
+
+        // Only add observer if it does not exist already
+        if (observers.get(lifecycleOwner) != null)
+            return
+
+        observers.put(lifecycleOwner, observer)
     }
 
     fun startObservingConnection(coroutineScope: CoroutineScope) {
@@ -78,7 +82,6 @@ class ObservableConnectivity(
                     // If the new connection state has changed then notify observers
                     if (newConnectionState != prevConnectionState) {
                         prevConnectionState = newConnectionState
-
                         withContext(Dispatchers.Main) {
                             observers.forEach {
                                 if (it.key.lifecycle.currentState != Lifecycle.State.DESTROYED)

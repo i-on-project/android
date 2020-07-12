@@ -47,8 +47,10 @@ class CalendarViewModel(
             val events = favorites.mapNotNull {
                 val classSection: ClassSection? = classesRepository.getClassSection(it.selfURI)
                 val uri = classSection?.calendarURI
-                if (uri != null) eventsRepository.getEvents(uri)
-                else null
+                if (uri != null)
+                    eventsRepository.getEvents(uri)
+                else
+                    null
             }
             onResult(events)
         }
