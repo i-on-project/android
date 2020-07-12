@@ -39,7 +39,7 @@ private const val CONNECTION_CHECK_PERIOD_MILLIS = 5000L
  * IMPORTANT:
  * [ObservableConnectivity] is NOT thread-safe
  *
- * Only the UI Thread should call [observe] and [stopObserving]
+ * Only the UI Thread should call [observe] and [startObservingConnection]
  */
 class ObservableConnectivity(
     context: Context
@@ -61,6 +61,7 @@ class ObservableConnectivity(
      * UI related operations
      */
     fun observe(lifecycleOwner: LifecycleOwner, observer: ConnectivityObserver) {
+<<<<<<< HEAD
         if (lifecycleOwner.lifecycle.currentState == Lifecycle.State.DESTROYED)
             return // Ignore
 
@@ -69,6 +70,13 @@ class ObservableConnectivity(
             return
 
         observers.put(lifecycleOwner, observer)
+=======
+        if (!observers.containsKey(lifecycleOwner)) {
+            if (!prevConnectionState)
+                observer(prevConnectionState)
+            observers[lifecycleOwner] = observer
+        }
+>>>>>>> e56325a21f36c74c4d38337bcc6f17de6e5a3024
     }
 
     fun startObservingConnection(coroutineScope: CoroutineScope) {
