@@ -21,7 +21,6 @@ const val CLASS_SECTION_ID_KEY = "x2r0hmh20"
 const val CLASS_SECTION_COURSE_KEY = "af2929ff2h9"
 const val CLASS_SECTION_CALENDAR_TERM_KEY = "m2hmx23x23m"
 const val RESOURCE_URI_KEY = "xgx0n2gdngx208"
-const val ROOT_RESOURCE_URI_KEY = "xwg3e0cRmnT54r"
 
 /**
  * Hides the complexity of launching workers with [WorkManager]

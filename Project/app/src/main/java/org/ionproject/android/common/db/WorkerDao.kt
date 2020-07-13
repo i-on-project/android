@@ -7,7 +7,7 @@ import org.ionproject.android.common.model.BackgroundWorker
 interface WorkerDao {
 
     @Query("SELECT * FROM BackgroundWorker WHERE id = :id")
-    suspend fun getWorkerById(id: Int): BackgroundWorker
+    suspend fun getWorkerById(id: Int): BackgroundWorker?
 
     @Insert
     suspend fun insertWorker(worker: BackgroundWorker): Long

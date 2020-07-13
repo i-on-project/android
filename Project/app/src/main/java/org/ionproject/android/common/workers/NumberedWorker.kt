@@ -56,7 +56,7 @@ abstract class NumberedWorker(
             if (workerId == -1)
                 return Result.failure()
 
-            worker = workerRepository.getWorkerById(workerId)
+            worker = workerRepository.getWorkerById(workerId) ?: return Result.failure()
 
             if (worker.currNumberOfJobs == 0) {
                 // Worker has finished all its jobs so perform lastJob
