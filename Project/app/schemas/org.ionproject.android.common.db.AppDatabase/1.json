@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "394225bad010e492044753dff48dbc29",
+    "identityHash": "d15be1e11354a283bf84f152011936bc",
     "entities": [
       {
         "tableName": "Root",
@@ -474,7 +474,7 @@
       },
       {
         "tableName": "Course",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `acronym` TEXT NOT NULL, `name` TEXT NOT NULL, `classesUri` TEXT, `eventsUri` TEXT, `selfUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `acronym` TEXT NOT NULL, `name` TEXT NOT NULL, `classesUri` TEXT, `selfUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -497,12 +497,6 @@
           {
             "fieldPath": "classesUri",
             "columnName": "classesUri",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "eventsUri",
-            "columnName": "eventsUri",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -885,12 +879,56 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Classes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courseId` INTEGER NOT NULL, `calendarTerm` TEXT NOT NULL, `selfUri` TEXT NOT NULL, `upUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`selfUri`))",
+        "fields": [
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calendarTerm",
+            "columnName": "calendarTerm",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selfUri",
+            "columnName": "selfUri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "upUri",
+            "columnName": "upUri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "workerId",
+            "columnName": "workerId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "selfUri"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '394225bad010e492044753dff48dbc29')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd15be1e11354a283bf84f152011936bc')"
     ]
   }
 }

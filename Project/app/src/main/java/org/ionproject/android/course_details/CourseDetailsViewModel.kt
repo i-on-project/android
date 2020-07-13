@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
+import org.ionproject.android.common.model.Classes
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
@@ -51,40 +52,35 @@ class CourseDetailsViewModel(
      *  @param course detailed representation of a course
      *  @param callback to be executed once the class list is available
      */
-    fun getClassesFromCourse(course: Course, calendarTerm: CalendarTerm) {
+    fun getClassesFromCourse(classesUri: URI) {
         viewModelScope.launch {
-            var classes = emptyList<ClassSummary>()
-            if (course.classesUri != null) {
-                classesRepository.getClassCollectionByUri(
-                    course.classesUri.fromCalendarTerm(calendarTerm)
-                ).let {
-                    if (it != null)
-                        classes = it.classes
-                }
+            classesRepository.getClassCollectionByUri(
+                classesUri
+            ).let {
+                classesListLiveData.postValue(it?.classes ?: emptyList())
             }
-            classesListLiveData.postValue(classes)
         }
+
     }
 
     /**
-     * Calendar terms Section
+     * Course classes by calendar term
      */
-    private val calendarTermsLiveData = MutableLiveData<List<CalendarTerm>>()
+    private val classesLiveData = MutableLiveData<List<Classes>>()
 
-    val calendarTerms: List<CalendarTerm>
-        get() = calendarTermsLiveData.value ?: emptyList()
+    val classes: List<Classes> get() = classesLiveData.value ?: emptyList()
 
-    fun getAllCalendarTerms(calendarTermsUri: URI) {
+    fun getClasses(classesUri: URI) {
         viewModelScope.launch {
-            val calendarTerms = calendarTermRepository.getAllCalendarTerm(calendarTermsUri)
-            calendarTermsLiveData.postValue(calendarTerms)
+            val classes = classesRepository.getClassesFromUri(classesUri)
+            classesLiveData.postValue(classes)
         }
     }
 
-    fun observeCalendarTerms(
+    fun observeClasses(
         lifecycleOwner: LifecycleOwner,
-        onUpdate: (List<CalendarTerm>) -> Unit
+        onUpdate: (List<Classes>) -> Unit
     ) {
-        calendarTermsLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
+        classesLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 }

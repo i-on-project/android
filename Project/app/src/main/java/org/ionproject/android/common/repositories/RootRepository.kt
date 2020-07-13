@@ -3,7 +3,6 @@ package org.ionproject.android.common.repositories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.RootDao
-import org.ionproject.android.common.dto.JSON_HOME_SUBTYPE
 import org.ionproject.android.common.dto.JsonHome
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JSON_HOME_MEDIA_TYPE

@@ -17,7 +17,6 @@ data class Course(
     val acronym: String,
     val name: String,
     val classesUri: URI?, //This is the URI used to navigate to this course classes
-    val eventsUri: URI?, //This is the URI used to navigate to this course events
     val selfUri: URI,
     override var workerId: Int = 0
 ) : ICacheable

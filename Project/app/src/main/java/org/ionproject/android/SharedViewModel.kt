@@ -28,7 +28,7 @@ class SharedViewModel(private val observableConnectivity: ObservableConnectivity
             connectivityObserver(false)
         }
         observableConnectivity.observe(lifecycleOwner) {
-            if(!hasWarned) hasWarned = true
+            if (!hasWarned) hasWarned = true
             connectivityObserver(it)
         }
 

@@ -7,7 +7,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class JacksonIonMapper(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : IIonMapper {
+class JacksonIonMapper(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) :
+    IIonMapper {
 
     private val mapper = ObjectMapper().registerKotlinModule().apply {
         configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)

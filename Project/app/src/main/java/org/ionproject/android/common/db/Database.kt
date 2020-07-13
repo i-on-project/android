@@ -24,7 +24,8 @@ import org.ionproject.android.common.model.*
         Exam::class,
         Todo::class,
         Journal::class,
-        Lecture::class
+        Lecture::class,
+        Classes::class
     ), version = 1,
     exportSchema = true
 )
@@ -45,4 +46,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun classCollectionDao(): ClassCollectionDao
     abstract fun calendarTermDao(): CalendarTermDao
     abstract fun eventsDao(): EventsDao
+    abstract fun classesDao(): ClassesDao
 }

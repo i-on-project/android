@@ -22,22 +22,13 @@ class GlobalExceptionHandler(
      * Overriding the defaultExceptionHandler which closes the aplication
      */
     init {
-        val prevDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { t: Thread, e: Throwable ->
             try {
                 // Sends information about an "non-fatal" exception to crashlytics, e.g. caught exceptions like this
                 crashlytics.recordException(e)
                 currExceptionHandler?.invoke(t, e) ?: defaultExceptionHandler(t, e)
             } catch (ex: Exception) {
-                // An exception occurred when executing one of the handler so close
-                // the application and record exception
-                if (prevDefaultExceptionHandler != null)
-                    prevDefaultExceptionHandler.uncaughtException(t, ex)
-                else {
-                    crashlytics.recordException(ex)
-                    android.os.Process.killProcess(android.os.Process.myPid())
-                    System.exit(1)
-                }
+                crashlytics.recordException(ex)
             }
         }
     }

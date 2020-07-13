@@ -2,8 +2,6 @@ package org.ionproject.android.common.ionwebapi
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.common.dto.APPLICATION_TYPE
-import org.ionproject.android.common.dto.SIREN_SUBTYPE
 import java.net.URI
 
 class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonMapper) :

@@ -19,7 +19,7 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
-import org.ionproject.android.common.model.CalendarTerm
+import org.ionproject.android.common.model.Classes
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
@@ -103,33 +103,35 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
-        viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
+        // There is no point in obtaining the classes if there aren't any
+        if (course.classesUri != null) {
+            viewModel.getClasses(course.classesUri)
 
-        val spinnerAdapter = ArrayAdapter<CalendarTerm>(
-            requireContext(), R.layout.support_simple_spinner_dropdown_item
-        )
-        spinner.adapter = spinnerAdapter
-        viewModel.observeCalendarTerms(viewLifecycleOwner) {
-            spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
-            spinnerAdapter.addAll(it)
-        }
-
-        //Ensures that when an item is selected in the spinner the favorites list is updated
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            val spinnerAdapter = ArrayAdapter<Classes>(
+                requireContext(), R.layout.support_simple_spinner_dropdown_item
+            )
+            spinner.adapter = spinnerAdapter
+            viewModel.observeClasses(viewLifecycleOwner) {
+                spinnerAdapter.clear() // Making sure that spinner has no information before adding new information
+                spinnerAdapter.addAll(it)
             }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = viewModel.calendarTerms[position]
-                //Obtaining the classes from that course
-                viewModel.getClassesFromCourse(course, selectedItem)
-            }
+            //Ensures that when an item is selected in the spinner the favorites list is updated
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                }
 
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedItem = viewModel.classes[position]
+                    //Obtaining the classes from that course
+                    viewModel.getClassesFromCourse(selectedItem.selfUri)
+                }
+            }
         }
     }
 
