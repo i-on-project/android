@@ -20,7 +20,7 @@ class MockIonWebAPI(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IIonWebAPI {
 
-    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>): T {
+    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String): T {
         val responseBody: String = get(uri)
         return ionMapper.parse(responseBody, klass)
     }

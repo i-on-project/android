@@ -77,6 +77,7 @@ abstract class NumberedWorker(
             workerRepository.updateWorker(worker)
 
         } catch (ex: Exception) {
+            // Catching all exceptions that occur within a Worker and recording them to crashlitycs
             crashlytics.recordException(ex)
             if (worker != null) {
                 try {
