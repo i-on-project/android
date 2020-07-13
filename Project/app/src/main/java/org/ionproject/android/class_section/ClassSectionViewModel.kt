@@ -2,7 +2,8 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.model.*
+import org.ionproject.android.common.model.ClassSection
+import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
@@ -47,7 +48,6 @@ class ClassSectionViewModel(
         }
     }
 
-
     fun forceGetClassSectionDetails(classSectionUri: URI, onResult: (ClassSection) -> Unit) {
         viewModelScope.launch {
             classesRepository.forceGetClassSection(classSectionUri).let {
@@ -57,60 +57,30 @@ class ClassSectionViewModel(
         }
     }
 
-
     fun forceGetEventsFromClassSection(classSection: ClassSection) {
-        getEventsFromClassSection(classSection) {
-            eventsRepository.forceGetEvents(it)
+        viewModelScope.launch {
+            val events = eventsRepository.getAllEventsFromClassSection(
+                classSection = classSection,
+                getEvents = { eventsRepository.forceGetEvents(it) }
+            ) {
+                classesRepository.getClassCollectionByUri(it)
+            }
+            eventsLiveData.postValue(events)
         }
     }
-
 
     fun getEventsFromClassSection(classSection: ClassSection) {
-        getEventsFromClassSection(classSection) {
-            eventsRepository.getEvents(it)
-        }
-    }
-
-    private fun getEventsFromClassSection(
-        classSection: ClassSection,
-        getEvents: suspend (URI) -> Events?
-    ) {
         viewModelScope.launch {
-            val classCollection = classesRepository.getClassCollectionByUri(classSection.upURI)
-
-            val exams = mutableListOf<Exam>()
-            val lectures = mutableListOf<Lecture>()
-            val todos = mutableListOf<Todo>()
-            val journals = mutableListOf<Journal>()
-
-            suspend fun getEventsAndAddToLists(uri: URI?) {
-                if (uri != null && uri.path != "") {
-                    val events = getEvents(uri)
-                    events?.apply {
-                        exams.addAll(events.exams)
-                        lectures.addAll(events.lectures)
-                        todos.addAll(events.todos)
-                        journals.addAll(events.journals)
-                    }
-                }
+            val events = eventsRepository.getAllEventsFromClassSection(
+                classSection = classSection,
+                getEvents = { eventsRepository.getEvents(it) }
+            ) {
+                classesRepository.getClassCollectionByUri(it)
             }
-
-            if (classCollection != null)
-                getEventsAndAddToLists(classCollection.fields.calendarURI)
-            getEventsAndAddToLists(classSection.calendarURI)
-
-            eventsLiveData.postValue(
-                Events.create(
-                    exams,
-                    lectures,
-                    todos,
-                    journals
-
-                )
-            )
+            eventsLiveData.postValue(events)
         }
-    }
 
+    }
 
     /**
      * Observes if [eventsLiveData]'s information has changed.

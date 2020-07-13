@@ -81,6 +81,9 @@ class CourseDetailsViewModel(
         lifecycleOwner: LifecycleOwner,
         onUpdate: (List<Classes>) -> Unit
     ) {
-        classesLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
+        classesLiveData.observe(
+            lifecycleOwner,
+            Observer { onUpdate(it) }
+        )
     }
 }

@@ -5,7 +5,7 @@ import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.EventsDao
 import org.ionproject.android.common.dto.SirenICalendar
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.model.toEventsSummary
+import org.ionproject.android.common.model.*
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI
@@ -70,6 +70,47 @@ class EventsRepository(
         eventsDao.insertEvents(eventsServer)
 
         eventsServer
+    }
+
+    /**
+     * Gets all [Lecture] events from a [ClassSection] and also all
+     * [Exam], [Journal] and [Todo] from a [Class].
+     *
+     * @param classSection The class section to get events from
+     * @param getEvents Method which should return all events (In this case getEvents or forceGetEvents from this class)
+     * @param getClassCollectionByUri Method which should return a class collection, in order to get it's events
+     *
+     * @return Events Object which contains all [Lecture], [Exam], [Journal] and [Todo] events.
+     */
+    suspend fun getAllEventsFromClassSection(
+        classSection: ClassSection,
+        getEvents: suspend (URI) -> Events?,
+        getClassCollectionByUri: suspend (URI) -> ClassCollection?
+    ): Events {
+        val classCollection = getClassCollectionByUri(classSection.upURI)
+
+        val exams = mutableListOf<Exam>()
+        val lectures = mutableListOf<Lecture>()
+        val todos = mutableListOf<Todo>()
+        val journals = mutableListOf<Journal>()
+
+        suspend fun getEventsAndAddToLists(uri: URI?) {
+            if (uri != null && uri.path != "") {
+                val events = getEvents(uri)
+                events?.apply {
+                    exams.addAll(events.exams)
+                    lectures.addAll(events.lectures)
+                    todos.addAll(events.todos)
+                    journals.addAll(events.journals)
+                }
+            }
+        }
+
+        if (classCollection != null)
+            getEventsAndAddToLists(classCollection.fields.calendarURI)
+        getEventsAndAddToLists(classSection.calendarURI)
+
+        return Events.create(exams, lectures, todos, journals)
     }
 
 }

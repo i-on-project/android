@@ -190,8 +190,8 @@ private enum class Month(private val monthResId: Int) {
     JUNE(R.string.june),
     JULY(R.string.july),
     AUGUST(R.string.august),
-    OCTOBER(R.string.october),
     SEPTEMBER(R.string.september),
+    OCTOBER(R.string.october),
     NOVEMBER(R.string.november),
     DECEMBER(R.string.december);
 
