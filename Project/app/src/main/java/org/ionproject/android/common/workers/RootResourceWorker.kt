@@ -20,7 +20,7 @@ class RootResourceWorker(
     }
 
     private val rootResourceURI by lazy(LazyThreadSafetyMode.NONE) {
-        inputData.getString(ROOT_RESOURCE_URI_KEY) ?: ""
+        inputData.getString(RESOURCE_URI_KEY) ?: ""
     }
 
     override suspend fun job(): Boolean {
