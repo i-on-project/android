@@ -18,7 +18,6 @@ class GlobalExceptionHandler(
 ) {
     private val crashlytics: FirebaseCrashlytics = FirebaseCrashlytics.getInstance()
 
-
     /**
      * Overriding the defaultExceptionHandler which closes the aplication
      */
@@ -26,9 +25,9 @@ class GlobalExceptionHandler(
         val prevDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { t: Thread, e: Throwable ->
             try {
-                currExceptionHandler?.invoke(t, e) ?: defaultExceptionHandler(t, e)
                 // Sends information about an "non-fatal" exception to crashlytics, e.g. caught exceptions like this
                 crashlytics.recordException(e)
+                currExceptionHandler?.invoke(t, e) ?: defaultExceptionHandler(t, e)
             } catch (ex: Exception) {
                 // An exception occurred when executing one of the handler so close
                 // the application and record exception
