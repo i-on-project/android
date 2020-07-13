@@ -51,12 +51,6 @@ class IonApplication : Application() {
         globalExceptionHandler =
             GlobalExceptionHandler { _, throwable ->
                 val intent = Intent(applicationContext, ErrorActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                val errorMessage = when (throwable) {
-                    is IOException -> resources.getString(R.string.label_no_connectivity_loading)
-                    else -> null
-                }
-                intent.putExtra(ERROR_KEY, errorMessage)
                 applicationContext.startActivity(intent)
             }
 
