@@ -17,7 +17,7 @@ class ErrorActivity : AppCompatActivity() {
         linearlayout_activity_error.addGradientBackground()
 
         // Apply error message if it was passed via the intent
-        savedInstanceState?.getString(ERROR_KEY)?.apply {
+        intent.getStringExtra(ERROR_KEY)?.apply {
             textview_error_activity_message.text = this
         }
 

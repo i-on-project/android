@@ -113,4 +113,5 @@
     <string name="label_no_connectivity_loading">The i-on services might be down or the device does not have connectivity at the moment and you don\'t have any local data saved for some functionalities to work.</string>
     <string name="title_warning">Warning!</string>
     <string name="label_connection_reestablished_main_activity">Connection was re-established, all app functionalities are now working =)</string>
+    <string name="label_error_loading">We\'re sorry but it seems that an error occured. Try restarting the application.</string>
 </resources>

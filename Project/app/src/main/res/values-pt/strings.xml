@@ -95,4 +95,5 @@
     <string name="label_no_connectivity_main_activity">O dispositivo não tem conectividade para a internet, portanto algumas das funcionalidades da aplicação estarão limitadas até que seja estabelecida uma conexão.</string>
     <string name="label_connection_reestablished_main_activity">Foi estabelecida uma conexão no dispositivo logo as funcionalidades estão novamente a funcionar =)</string>
     <string name="label_no_connectivity_loading">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades.</string>
+    <string name="label_error_loading">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
 </resources>
