@@ -20,6 +20,20 @@ data class ClassSection(
     override var workerId: Int = 0
 ) : ICacheable
 
+/**
+ * This type represents a class list from
+ * a course in a certain calendar term
+ */
+@Entity
+data class Classes(
+    val courseId: Int,
+    val calendarTerm: String,
+    @PrimaryKey val selfUri: URI,
+    val upUri: URI, // represents the list of classes in which this classes obj is contained,
+    override var workerId: Int = 0
+) : ICacheable {
+    override fun toString() = calendarTerm
+}
 
 /**
  * This type represents the information that is common
@@ -48,7 +62,6 @@ data class ClassCollection(
         entity = ClassSummary::class
     )
     val classes: List<ClassSummary>
-
 )
 
 @Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
@@ -82,6 +95,10 @@ data class ClassSummary(
         result = 31 * result + workerId
         return result
     }
-
 }
+
+
+
+
+
 

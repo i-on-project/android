@@ -1,9 +1,7 @@
 package org.ionproject.android.common
 
 import android.app.Application
-import android.content.Intent
 import androidx.room.Room
-import org.ionproject.android.R
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.IonService
@@ -11,12 +9,8 @@ import org.ionproject.android.common.ionwebapi.IonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
-import org.ionproject.android.error.ERROR_KEY
-import org.ionproject.android.error.ErrorActivity
-import org.ionproject.android.error.GlobalExceptionHandler
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.IOException
 
 private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
@@ -49,16 +43,7 @@ class IonApplication : Application() {
         super.onCreate()
 
         globalExceptionHandler =
-            GlobalExceptionHandler { _, throwable ->
-                val intent = Intent(applicationContext, ErrorActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                val errorMessage = when (throwable) {
-                    is IOException -> resources.getString(R.string.label_no_connectivity_loading)
-                    else -> null
-                }
-                intent.putExtra(ERROR_KEY, errorMessage)
-                applicationContext.startActivity(intent)
-            }
+            GlobalExceptionHandler()
 
         /**
          * Our app runs in a single process therefore we follow
@@ -101,6 +86,7 @@ class IonApplication : Application() {
                 webAPI,
                 db.classSectionDao(),
                 db.classCollectionDao(),
+                db.classesDao(),
                 workerManagerFacade
             )
         favoritesRepository =

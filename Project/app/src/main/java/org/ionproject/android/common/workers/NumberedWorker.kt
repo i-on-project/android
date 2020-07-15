@@ -49,6 +49,7 @@ abstract class NumberedWorker(
 
     override suspend fun doWork(): Result {
         var worker: BackgroundWorker? = null
+        var performedLastJob = false
         try {
             val workerId = inputData.getLong(WORKER_ID_KEY, -1).toInt()
 
@@ -61,6 +62,7 @@ abstract class NumberedWorker(
             if (worker.currNumberOfJobs == 0) {
                 // Worker has finished all its jobs so perform lastJob
                 lastJob()
+                performedLastJob = true
                 workerRepository.deleteWorker(worker)
                 return Result.failure()
             }
@@ -77,10 +79,19 @@ abstract class NumberedWorker(
             workerRepository.updateWorker(worker)
 
         } catch (ex: Exception) {
+            // Catching all exceptions that occur within a Worker and recording them to crashlitycs
             crashlytics.recordException(ex)
             if (worker != null) {
                 try {
                     workerRepository.deleteWorker(worker)
+                } catch (ex: Exception) {
+                    crashlytics.recordException(ex)
+                }
+            }
+            // If the worker hasn't performed the last job, then we have to do it now
+            if (!performedLastJob) {
+                try {
+                    lastJob()
                 } catch (ex: Exception) {
                     crashlytics.recordException(ex)
                 }

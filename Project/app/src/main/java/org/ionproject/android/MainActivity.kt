@@ -12,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
@@ -31,7 +30,7 @@ import org.ionproject.android.common.model.Root
 import org.ionproject.android.loading.ROOT_KEY
 import org.ionproject.android.search.SearchSuggestionsProvider
 
-class MainActivity : AppCompatActivity(),
+class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
 
     /**
@@ -311,15 +310,6 @@ class MainActivity : AppCompatActivity(),
         ).clearHistory()
         Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT)
             .show()
-    }
-
-    /**
-     * We must send all recorded exceptions to firebase because otherwise they will only be sent
-     * after the user opens the application again
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        IonApplication.globalExceptionHandler.sendAllExceptionsToFirebase()
     }
 
 }

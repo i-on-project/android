@@ -164,6 +164,20 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     )
 
     /**
+     * Creates a [PeriodicWorkRequest] and adds it to the workerManager.
+     * The worker is associated to the list of [Classes] and will check for any changes
+     * to it and update the local database in case there are.
+     */
+    suspend fun enqueueWorkForClasses(
+        classesUri: URI,
+        workImportance: WorkImportance
+    ) = enqueueWorkWithInputData(
+        workImportance,
+        ClassesWorker::class.java,
+        classesUri
+    )
+
+    /**
      * Creates a [PeriodicWorkRequest] and adds it to the workerManager
      *
      * @param repeatInterval is the frequency of the [PeriodicWorkRequest]
@@ -220,6 +234,8 @@ class WorkerManagerFacade(context: Context, private val workerRepository: Worker
     suspend fun resetWorkerJobsByCacheable(iCacheable: ICacheable) {
         workerRepository.resetWorkerJobsById(iCacheable.workerId)
     }
+
+
 }
 
 

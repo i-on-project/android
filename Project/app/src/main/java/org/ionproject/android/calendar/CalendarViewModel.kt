@@ -39,18 +39,22 @@ class CalendarViewModel(
     /**
      * Gets all events available for all favorites chosen by the user
      */
-    fun getEventsByFavorites(
+    fun getAllEventsFromFavorites(
         favorites: List<Favorite>,
         onResult: (List<Events>) -> Unit
     ) {
         viewModelScope.launch {
             val events = favorites.mapNotNull {
                 val classSection: ClassSection? = classesRepository.getClassSection(it.selfURI)
-                val uri = classSection?.calendarURI
-                if (uri != null)
-                    eventsRepository.getEvents(uri)
+                if (classSection != null)
+                    eventsRepository.getAllEventsFromClassSection(
+                        classSection = classSection,
+                        getEvents = { uri -> eventsRepository.getEvents(uri) },
+                        getClassCollectionByUri = { classesUri ->
+                            classesRepository.getClassCollectionByUri(classesUri)
+                        })
                 else
-                    null
+                    Events.NO_EVENTS
             }
             onResult(events)
         }

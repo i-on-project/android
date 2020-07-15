@@ -74,7 +74,7 @@ class CalendarFragment : ExceptionHandlingFragment() {
                 sharedViewModel.root.calendarTermsUri,
                 this@CalendarFragment
             ) { favorites ->
-                getEventsByFavorites(favorites) { events ->
+                getAllEventsFromFavorites(favorites) { events ->
                     viewGroup.stopLoading()
                     createCalendarWithEvents(events)
                 }

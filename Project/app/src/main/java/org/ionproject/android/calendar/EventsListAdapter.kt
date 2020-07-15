@@ -37,7 +37,6 @@ class EventsListAdapter(
         private val eventColor = view.imageview_list_item_event_color
         private val eventExportButton = view.button_list_item_event_export
 
-
         fun bindTo(event: Event) {
             eventType.text = event.eventType
             eventSummary.text = event.summary

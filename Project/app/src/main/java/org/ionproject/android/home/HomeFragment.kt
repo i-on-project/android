@@ -38,6 +38,5 @@ class HomeFragment : Fragment() {
         button_home_settings.setOnClickListener {
             navController.navigate(R.id.action_home_to_settings)
         }
-
     }
 }
