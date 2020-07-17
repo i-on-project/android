@@ -10,11 +10,11 @@ import android.net.wifi.WifiManager
 
 
 /**
- * [IObservableConnectivity] implementation used for devices where the Android SDK level is
+ * [IConnectivityObservable] implementation used for devices where the Android SDK level is
  * below 24
  */
 @Suppress("DEPRECATION")
-class LegacyObservableConnectivity(private val context: Context) : IObservableConnectivity {
+class LegacyConnectivityObservable(private val context: Context) : IConnectivityObservable {
 
     private val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private var receiver: ConnectivityBroadcastReceiver? = null

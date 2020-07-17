@@ -11,6 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import org.ionproject.android.course_details.ClassesListAdapter
 import org.ionproject.android.courses.CoursesListAdapter
+import org.ionproject.android.main.MainActivity
 import org.ionproject.android.programmeDetails.TermsListAdapter
 import org.ionproject.android.programmes.ProgrammesListAdapter
 import org.junit.Rule

@@ -7,7 +7,7 @@ import android.os.Build
 object ObservableConnectivityFactory {
 
     /**
-     * Creates a different implementation of the [IObservableConnectivity] interface
+     * Creates a different implementation of the [IConnectivityObservable] interface
      * according to the android SDK Version
      *
      * From API level 24 upwards the implementation uses the Network Callbacks
@@ -15,9 +15,9 @@ object ObservableConnectivityFactory {
      * because [ConnectivityManager.getActiveNetworkInfo] is deprecated. Below API level 24 it
      * uses a BroadcastReceiver.
      */
-    fun create(context: Context): IObservableConnectivity =
+    fun create(context: Context): IConnectivityObservable =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            ObservableConnectivity(context)
+            ConnectivityObservable(context)
         else
-            LegacyObservableConnectivity(context)
+            LegacyConnectivityObservable(context)
 }

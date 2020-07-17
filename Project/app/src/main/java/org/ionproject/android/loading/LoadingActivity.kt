@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
-import org.ionproject.android.MainActivity
+import org.ionproject.android.main.MainActivity
 import org.ionproject.android.R
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity

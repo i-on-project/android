@@ -1,4 +1,4 @@
-package org.ionproject.android
+package org.ionproject.android.main
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -24,6 +24,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import org.ionproject.android.*
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
@@ -62,6 +63,13 @@ class MainActivity : ExceptionHandlingActivity(),
         )[SharedViewModel::class.java]
     }
 
+    private val viewModel: MainViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProvider(
+            this,
+            MainViewModelProvider()
+        )[MainViewModel::class.java]
+    }
+
     private val deleteSuggestionsDialogFragment: DeleteSuggestionsDialogFragment by lazy(
         LazyThreadSafetyMode.NONE
     ) {
@@ -89,17 +97,17 @@ class MainActivity : ExceptionHandlingActivity(),
      * and shows dialog when its lost
      */
     private fun observeConnectivity() {
-
         val connectivityLostDialog = AlertDialog.Builder(this)
             .setTitle(resources.getString(R.string.title_warning))
             .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
             .setPositiveButton(android.R.string.ok) { _, _ -> }
             .create()
 
-        if (!IonApplication.observableConnectivity.hasConnectivity())
+        // When application has been started, we want to check if there is already a network connectivity
+        if (!viewModel.hasConnectivityBeenChecked() && !viewModel.hasConnectivity())
             connectivityLostDialog.show()
 
-        IonApplication.observableConnectivity.observe {
+        viewModel.observeConnectivity {
             connectivityLostDialog.show()
         }
     }
@@ -107,9 +115,9 @@ class MainActivity : ExceptionHandlingActivity(),
     /**
      * Stops observing the device connectivity
      */
-    override fun onStop() {
-        super.onStop()
-        IonApplication.observableConnectivity.stopObserving()
+    override fun onDestroy() {
+        super.onDestroy()
+        IonApplication.connectivityObservable.stopObserving()
     }
 
     /**

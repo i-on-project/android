@@ -2,7 +2,7 @@ package org.ionproject.android.common
 
 import android.app.Application
 import androidx.room.Room
-import org.ionproject.android.common.connectivity.IObservableConnectivity
+import org.ionproject.android.common.connectivity.IConnectivityObservable
 import org.ionproject.android.common.connectivity.ObservableConnectivityFactory
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.*
@@ -34,14 +34,13 @@ class IonApplication : Application() {
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
-        lateinit var observableConnectivity: IObservableConnectivity private set
+        lateinit var connectivityObservable: IConnectivityObservable private set
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        globalExceptionHandler =
-            GlobalExceptionHandler()
+        globalExceptionHandler = GlobalExceptionHandler()
 
         /**
          * Our app runs in a single process therefore we follow
@@ -97,7 +96,7 @@ class IonApplication : Application() {
         searchRepository = SearchRepository(webAPI)
         preferences =
             Preferences(applicationContext)
-        observableConnectivity = ObservableConnectivityFactory.create(applicationContext)
+        connectivityObservable = ObservableConnectivityFactory.create(applicationContext)
     }
 
 }
