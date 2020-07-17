@@ -10,7 +10,7 @@
     <string name="title_search">Pesquisa</string>
     <string name="title_delete_suggestions">Apagar Sugestões</string>
     <string name="title_search_results">Resultados de pesquisa</string>
-    <string name="title_curricular_terms">Períodos Curriculares</string>
+    <string name="title_curricular_terms">Semestres Curriculares</string>
     <string name="title_course_details">Detalhes da Unidade Curricular</string>
     <string name="title_programmes">Cursos</string>
     <string name="title_programme_details">Detalhes do Curso</string>
@@ -18,25 +18,25 @@
     <string name="mandatory_courses">Unidades curriculares obrigatórias</string>
     <string name="coordinator">Coordenador</string>
     <string name="label_programme">Curso</string>
-    <string name="label_term">Período Curricular:</string>
+    <string name="label_term">Semestre Curricular:</string>
     <string name="label_course">Unidade Curricular</string>
     <string name="label_coordinator">Coordenador:</string>
     <string name="label_mandatory">Obrigatório:</string>
     <string name="label_credits">Créditos:</string>
     <string name="label_year">Ano:</string>
-    <string name="label_curricular_term">Período Curricular:</string>
+    <string name="label_curricular_term">Semestre Curricular:</string>
     <string name="label_classes">Turmas:</string>
     <string name="label_enroll">Matricular:</string>
     <string name="label_class">Turma</string>
     <string name="label_events">Eventos:</string>
     <string name="label_teacher">Professor:</string>
     <string name="label_exams">Exames</string>
-    <string name="label_calendar_term">Período do Calendário</string>
+    <string name="label_calendar_term">Semestre de Calendário</string>
     <string name="label_lectures">Aulas</string>
-    <string name="label_calendar_termV2">Período do Calendário:</string>
+    <string name="label_calendar_termV2">Semestre de Calendário:</string>
     <string name="label_favorites_delete_message">Favorito apagado com sucesso!</string>
     <string name="label_favorite_undo">Desfazer</string>
-    <string name="label_curricular_term_placeholder">%1$s Período</string>
+    <string name="label_curricular_term_placeholder">%1$s Semestre</string>
     <string name="label_list_event_week_Day">Dia da semana:</string>
     <string name="label_list_event_duration">Duração:</string>
     <string name="label_list_event_starts">Começo:</string>
@@ -81,14 +81,14 @@
     <string name="warning_due_date_has_passed">O prazo de entrega desta tarefa já passou!</string>
     <string name="warning_start_date_has_passed">A data de começo deste exame já passou!</string>
     <string name="error_message_exception_handler_fragment">Oops, ocorreu um erro =(</string>
-    <string name="label_curricular_terms">Período Curricular</string>
+    <string name="label_curricular_terms">Semestre Curricular</string>
     <string name="dialog_main">Tem a certeza que quer apagar todas as sugestões recentes?</string>
     <string name="dialog_button_yes">Sim</string>
     <string name="dialog_button_cancel">Cancelar</string>
     <string name="toast_message_main">Todas as sugestões foram apagadas!</string>
     <string name="label_no_results">Não há resultados</string>
     <string name="title_settings">Definições</string>
-    <string name="textView_settings_calendar_term">Período Curricular \\n do Horário:</string>
+    <string name="textView_settings_calendar_term">Semestre de calendário do Horário:</string>
     <string name="label_list_event_location">Localização:</string>
     <string name="error_message_exception_no_connectivity_handler_fragment">Não é possível aceder a esta funcionalidade porque o dispositivo não tem acesso à internet!</string>
     <string name="title_warning">Aviso!</string>
@@ -96,4 +96,5 @@
     <string name="label_connection_reestablished_main_activity">Foi estabelecida uma conexão no dispositivo logo as funcionalidades estão novamente a funcionar =)</string>
     <string name="label_no_connectivity_loading">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades.</string>
     <string name="label_error_loading">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
+    <string name="error_message_exception_resource_not_available_handler_fragment">Este recurso não está disponível :(</string>
 </resources>

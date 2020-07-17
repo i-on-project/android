@@ -96,7 +96,6 @@ abstract class NumberedWorker(
                     crashlytics.recordException(ex)
                 }
             }
-            crashlytics.sendUnsentReports()
             return Result.failure()
         }
         return Result.success()

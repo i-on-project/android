@@ -3,7 +3,7 @@ package org.ionproject.android.common.model
 import androidx.room.PrimaryKey
 
 /**
- * This a class to be extended from class [Exam],[Lecture],[Journal] and from [Todo]
+ * This a class to be extended from classes [Exam],[Lecture],[Journal] and [Todo]
  */
 abstract class Event(
     var eventType: String,

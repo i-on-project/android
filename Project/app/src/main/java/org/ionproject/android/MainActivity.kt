@@ -71,7 +71,7 @@ class MainActivity : ExceptionHandlingActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        validateDeviceConnectivity()
+        observeConnectivity()
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
@@ -84,22 +84,32 @@ class MainActivity : ExceptionHandlingActivity(),
         }
     }
 
-    private fun validateDeviceConnectivity() {
-        sharedViewModel.observeConnection(this) { hasConnection ->
-            if (hasConnection)
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.label_connection_reestablished_main_activity),
-                    Toast.LENGTH_LONG
-                ).show()
-            else
-                AlertDialog.Builder(this)
-                    .setTitle(resources.getString(R.string.title_warning))
-                    .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-                    .create()
-                    .show()
+    /**
+     * Starts observing the device connectivity
+     * and shows dialog when its lost
+     */
+    private fun observeConnectivity() {
+
+        val connectivityLostDialog = AlertDialog.Builder(this)
+            .setTitle(resources.getString(R.string.title_warning))
+            .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
+            .setPositiveButton(android.R.string.ok) { _, _ -> }
+            .create()
+
+        if (!IonApplication.observableConnectivity.hasConnectivity())
+            connectivityLostDialog.show()
+
+        IonApplication.observableConnectivity.observe {
+            connectivityLostDialog.show()
         }
+    }
+
+    /**
+     * Stops observing the device connectivity
+     */
+    override fun onStop() {
+        super.onStop()
+        IonApplication.observableConnectivity.stopObserving()
     }
 
     /**

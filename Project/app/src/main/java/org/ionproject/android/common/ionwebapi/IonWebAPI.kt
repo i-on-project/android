@@ -1,5 +1,6 @@
 package org.ionproject.android.common.ionwebapi
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
@@ -18,6 +19,7 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         accept: String
     ): T {
         val response = withContext(Dispatchers.IO) {
+            Log.d("API", "Requesting resource from uri $uri")
             ionService.getFromUri(uri.toString(), accept)
         }
         return ionMapper.parse(response, klass)

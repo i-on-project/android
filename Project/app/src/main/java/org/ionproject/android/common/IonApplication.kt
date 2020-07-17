@@ -2,17 +2,15 @@ package org.ionproject.android.common
 
 import android.app.Application
 import androidx.room.Room
+import org.ionproject.android.common.connectivity.IObservableConnectivity
+import org.ionproject.android.common.connectivity.ObservableConnectivityFactory
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.IonService
-import org.ionproject.android.common.ionwebapi.IonWebAPI
-import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-
-private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
 /**
  * This class is used to hold instances that need the singleton pattern,
@@ -36,7 +34,7 @@ class IonApplication : Application() {
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
-        lateinit var observableConnectivity: ObservableConnectivity private set
+        lateinit var observableConnectivity: IObservableConnectivity private set
     }
 
     override fun onCreate() {
@@ -97,8 +95,9 @@ class IonApplication : Application() {
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         searchRepository = SearchRepository(webAPI)
-        preferences = Preferences(applicationContext)
-        observableConnectivity = ObservableConnectivity(applicationContext)
+        preferences =
+            Preferences(applicationContext)
+        observableConnectivity = ObservableConnectivityFactory.create(applicationContext)
     }
 
 }

@@ -2,7 +2,6 @@ package org.ionproject.android.settings
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.Preferences
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import java.net.URI
