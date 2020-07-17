@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.ionproject.android.*
 import org.ionproject.android.common.model.Moment
+import org.ionproject.android.main.MainActivity
 
 const val NUMBER_OF_COLUMNS = 8
 

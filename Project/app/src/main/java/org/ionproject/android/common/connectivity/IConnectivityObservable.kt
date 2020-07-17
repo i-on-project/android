@@ -4,7 +4,7 @@ package org.ionproject.android.common.connectivity
 /**
  * Implementation of this interface should observe the device connectivity
  */
-interface IObservableConnectivity {
+interface IConnectivityObservable {
 
     /**
      * Starts observing the connectivity
@@ -19,7 +19,7 @@ interface IObservableConnectivity {
     fun stopObserving()
 
     /**
-     * Checks if there is connectivity available immediatly
+     * Checks if there is connectivity available immediately
      */
     fun hasConnectivity(): Boolean
 }

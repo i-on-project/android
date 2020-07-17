@@ -13,6 +13,7 @@ import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.model.Favorite
+import org.ionproject.android.main.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
