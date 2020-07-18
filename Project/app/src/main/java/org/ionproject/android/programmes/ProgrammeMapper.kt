@@ -41,7 +41,7 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
 
     val programmeOfferSummaryList = mutableListOf<ProgrammeOfferSummary>()
 
-    if (programmeId != null && acr != null && name != null && termSize != null && selfUri != null) {
+    if (programmeId != null && acr != null && termSize != null && selfUri != null) {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 

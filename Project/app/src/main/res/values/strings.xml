@@ -117,4 +117,5 @@
     <string name="error_message_exception_resource_not_available_handler_fragment">Resource not available :(</string>
     <string name="oops" translatable="false">Oops!</string>
     <string name="close">close</string>
+    <string name="label_name_not_available">Name not available</string>
 </resources>

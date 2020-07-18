@@ -15,7 +15,7 @@ fun SirenEntity.toCourse(): Course {
     val classesLink: URI? =
         entities?.findEmbeddedEntityByRel("/rel/class")?.links?.findByRel("self")
 
-    if (id != null && properties != null && acronym != null && name != null && selfUri != null) {
+    if (id != null && properties != null && acronym != null && selfUri != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
             id = id.toInt(),

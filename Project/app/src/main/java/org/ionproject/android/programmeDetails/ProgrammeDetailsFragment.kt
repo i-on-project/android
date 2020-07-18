@@ -58,7 +58,10 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
         programmeViewModel.getProgrammeDetails(sharedViewModel.programmeDetailsUri) {
             viewGroup.stopLoading()
-            textview_programme_details_name.text = it.programme.name
+            // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
+            textview_programme_details_name.text =
+                it.programme.name
+                    ?: resources.getString(R.string.label_name_not_available)
             textview_programme_details_acronym.text = it.programme.acronym
             recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)
             recyclerview_programme_details_terms.adapter =

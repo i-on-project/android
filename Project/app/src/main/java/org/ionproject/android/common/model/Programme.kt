@@ -12,7 +12,7 @@ import java.net.URI
 @Entity
 data class Programme(
     @PrimaryKey val id: Int,
-    val name: String,
+    val name: String?,
     val acronym: String,
     val termSize: Int,
     val selfUri: URI,
