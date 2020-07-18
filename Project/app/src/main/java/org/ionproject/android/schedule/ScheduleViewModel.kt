@@ -48,6 +48,15 @@ class ScheduleViewModel(
             calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
         }
 
+    /**
+     * Gets lectures from the first calendar term available from the list of favorites
+     */
+    fun getLecturesFromFirstCalendarFromFavorites() =
+        viewModelScope.launch {
+            val calendarTerm: CalendarTerm? = calendarTermRepository.getAllCalendarTermsFromFavorites().firstOrNull()
+            calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
+        }
+
     fun observerLecturesLiveData(
         lifecycleOwner: LifecycleOwner,
         onUpdate: (List<MutableList<Lecture>>) -> Unit

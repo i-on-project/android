@@ -68,7 +68,7 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         val selectedCalendarTerm = viewModel.getSelectedCalendarTerm()
 
         if (selectedCalendarTerm == null)
-            viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)
+            viewModel.getLecturesFromFirstCalendarFromFavorites()
         else
             viewModel.getLecturesFromSelectedCalendarTerm(selectedCalendarTerm)
 
@@ -108,7 +108,8 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             this.adapter = adapter
 
             viewModel.observerLecturesLiveData(viewLifecycleOwner) {
-                adapter.notifyDataSetChanged()
+                if(it.isNotEmpty())
+                    adapter.notifyDataSetChanged()
             }
         }
     }

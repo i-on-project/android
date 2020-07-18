@@ -92,7 +92,7 @@ class FavoritesFragment : ExceptionHandlingFragment() {
      * according to that calendar term
      */
     private fun setupCalendarTermSpinner(spinner: Spinner) {
-        viewModel.getAllCalendarTerms(sharedViewModel.root.calendarTermsUri)
+        viewModel.getAllCalendarTermsFromFavorites()
 
         val spinnerAdapter = ArrayAdapter<CalendarTerm>(
             requireContext(), R.layout.support_simple_spinner_dropdown_item

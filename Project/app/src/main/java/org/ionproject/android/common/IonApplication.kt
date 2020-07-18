@@ -93,7 +93,7 @@ class IonApplication : Application() {
         favoritesRepository =
             FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
-            CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
+            CalendarTermRepository(webAPI, db.calendarTermDao(), db.favoriteDao(), workerManagerFacade)
         eventsRepository =
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)

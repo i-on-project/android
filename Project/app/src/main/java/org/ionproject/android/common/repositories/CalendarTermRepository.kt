@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CalendarTermDao
+import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
@@ -15,6 +16,7 @@ import java.net.URI
 class CalendarTermRepository(
     private val ionWebAPI: IIonWebAPI,
     private val calendarTermDao: CalendarTermDao,
+    private val favoritesDao: FavoriteDao,
     private val workerManagerFacade: WorkerManagerFacade,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
@@ -45,6 +47,16 @@ class CalendarTermRepository(
                 workerManagerFacade.resetWorkerJobsByCacheable(calendarTerms[0])
             }
             calendarTerms.sortedByDescending { it.year }
+        }
+
+    /**
+     * Gets all Calendar Terms from the list of favorites
+     */
+    suspend fun getAllCalendarTermsFromFavorites(): List<CalendarTerm> =
+        withContext(dispatcher) {
+            favoritesDao.getCalendarTermsFromFavorites().map {
+                CalendarTerm.fromString(it)
+            }
         }
 
     suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm? =
