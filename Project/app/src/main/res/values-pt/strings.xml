@@ -97,4 +97,5 @@
     <string name="label_no_connectivity_loading">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades.</string>
     <string name="label_error_loading">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
     <string name="error_message_exception_resource_not_available_handler_fragment">Este recurso não está disponível :(</string>
+    <string name="close">fechar</string>
 </resources>

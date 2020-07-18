@@ -2,8 +2,8 @@ package org.ionproject.android.common
 
 import android.app.Application
 import androidx.room.Room
+import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
 import org.ionproject.android.common.connectivity.IConnectivityObservable
-import org.ionproject.android.common.connectivity.ObservableConnectivityFactory
 import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
@@ -15,6 +15,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 /**
  * This class is used to hold instances that need the singleton pattern,
  * its fields are accessible from any point in the application.
+ *
+ * It injects the dependencies into these classes
  */
 class IonApplication : Application() {
 
@@ -52,12 +54,13 @@ class IonApplication : Application() {
             AppDatabase::class.java, "ion-database"
         ).build()
 
-        // Used to map string http responses to SirenEntities
         val ionMapper = JacksonIonMapper()
 
-        // Using mocks
+        //------- Using mocked API -----------
         //val webAPI = MockIonWebAPI(ionMapper)
+        //------------------------------------
 
+        //------- Using real API -------------
         val retrofit = Retrofit.Builder()
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -65,6 +68,7 @@ class IonApplication : Application() {
 
         val service: IonService = retrofit.create(IonService::class.java)
         val webAPI = IonWebAPI(service, ionMapper)
+        //------------------------------------
 
         ionWebAPI = webAPI
 
@@ -96,7 +100,7 @@ class IonApplication : Application() {
         searchRepository = SearchRepository(webAPI)
         preferences =
             Preferences(applicationContext)
-        connectivityObservable = ObservableConnectivityFactory.create(applicationContext)
+        connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
     }
 
 }

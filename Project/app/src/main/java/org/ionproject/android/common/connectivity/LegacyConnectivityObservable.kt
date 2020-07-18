@@ -21,7 +21,7 @@ class LegacyConnectivityObservable(private val context: Context) : IConnectivity
 
     override fun observe(onConnectionLost: () -> Unit) {
         if (receiver != null)
-            throw IllegalStateException("Already registered and observer, must unregister first")
+            throw IllegalStateException("Already registered an observer, must unregister first")
         receiver = ConnectivityBroadcastReceiver(cm, onConnectionLost)
         context.registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
@@ -39,6 +39,7 @@ class LegacyConnectivityObservable(private val context: Context) : IConnectivity
     ) :
         BroadcastReceiver() {
 
+        // Method executes on the UI Thread
         override fun onReceive(context: Context, intent: Intent) {
             // on some devices ConnectivityManager.getActiveNetworkInfo() does not provide the correct network state
             // https://issuetracker.google.com/issues/37137911

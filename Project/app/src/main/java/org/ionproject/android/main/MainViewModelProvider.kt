@@ -3,9 +3,9 @@ package org.ionproject.android.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ionproject.android.common.IonApplication
-import java.lang.IllegalArgumentException
 
-class MainViewModelProvider: ViewModelProvider.Factory {
+@Suppress("UNCHECKED_CAST")
+class MainViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             MainViewModel::class.java -> MainViewModel(IonApplication.connectivityObservable)

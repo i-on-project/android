@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 
-object ObservableConnectivityFactory {
+object ConnectivityObservableFactory {
 
     /**
      * Creates a different implementation of the [IConnectivityObservable] interface

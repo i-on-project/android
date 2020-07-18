@@ -109,13 +109,17 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
         val node: TreeNode = p.readValueAsTree()
 
         /**
-         * If property "properties" or "links" or "actions" exists then
+         * If property "properties" or "links" or "actions" or "entities" exists then
          * it must be an EmbeddedEntity
          * else is an EmbeddedLink
          */
         return p.codec.treeToValue(
             node,
-            if (node.get("properties") != null || node.get("links") != null) EmbeddedEntity::class.java
+            if (node.get("properties") != null ||
+                node.get("links") != null ||
+                node.get("actions") != null ||
+                node.get("entities") != null
+            ) EmbeddedEntity::class.java
             else EmbeddedLink::class.java
         )
     }

@@ -45,7 +45,7 @@ class ScheduleViewModel(
     fun getLecturesFromCurrentCalendar(calendarTermsUri: URI) =
         viewModelScope.launch {
             val calendarTerm = calendarTermRepository.getMostRecentCalendarTerm(calendarTermsUri)
-            getLectures(calendarTerm)
+            calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
         }
 
     fun observerLecturesLiveData(

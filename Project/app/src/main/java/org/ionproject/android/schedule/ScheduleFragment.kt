@@ -17,7 +17,10 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.ionproject.android.*
+import org.ionproject.android.ExceptionHandlingFragment
+import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Moment
 import org.ionproject.android.main.MainActivity
 

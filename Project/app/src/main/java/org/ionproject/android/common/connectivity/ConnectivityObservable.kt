@@ -5,6 +5,8 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.RequiresApi
 
 /**
@@ -16,19 +18,19 @@ class ConnectivityObservable(context: Context) : IConnectivityObservable {
 
     private val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private var networkCallback: ConnectivityCallback? = null
+    private val mainHandler by lazy(LazyThreadSafetyMode.NONE) { Handler(Looper.getMainLooper()) }
 
     override fun observe(onConnectionLost: () -> Unit) {
         if (networkCallback != null)
-            throw IllegalStateException("Already registered and observed, must unregister first")
+            throw IllegalStateException("Already registered an observed, must unregister first")
         networkCallback = ConnectivityCallback(onConnectionLost)
-        cm.registerDefaultNetworkCallback(networkCallback)
+        cm.registerDefaultNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
     }
 
     override fun stopObserving() {
-        if (networkCallback != null) {
-            cm.unregisterNetworkCallback(networkCallback)
-            networkCallback = null
-        }
+        cm.unregisterNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
+        networkCallback = null
+
     }
 
     override fun hasConnectivity(): Boolean {
@@ -43,9 +45,11 @@ class ConnectivityObservable(context: Context) : IConnectivityObservable {
     ) :
         ConnectivityManager.NetworkCallback() {
 
+        // Method executes on the Connectivity Thread (NOT the UI Thread)
         override fun onLost(network: Network) {
             super.onLost(network)
-            onConnectionLost()
+            // Dispatches execution of onConnectionLost on the MainThread
+            mainHandler.post(onConnectionLost)
         }
     }
 }

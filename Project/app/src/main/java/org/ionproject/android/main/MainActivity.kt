@@ -103,10 +103,6 @@ class MainActivity : ExceptionHandlingActivity(),
             .setPositiveButton(android.R.string.ok) { _, _ -> }
             .create()
 
-        // When application has been started, we want to check if there is already a network connectivity
-        if (!viewModel.hasConnectivityBeenChecked() && !viewModel.hasConnectivity())
-            connectivityLostDialog.show()
-
         viewModel.observeConnectivity {
             connectivityLostDialog.show()
         }

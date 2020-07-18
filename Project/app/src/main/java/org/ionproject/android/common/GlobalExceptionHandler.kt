@@ -98,6 +98,4 @@ class GlobalExceptionHandler {
     fun unRegisterBaseExceptionHandler() {
         baseExceptionHandler = defaultExceptionHandler
     }
-
-    fun sendAllExceptionsToFirebase() = crashlytics.sendUnsentReports()
 }

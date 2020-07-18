@@ -20,7 +20,10 @@ class CalendarTermRepository(
 ) {
 
     /**
-     * Obtains all calendar terms from the IonWebAPI
+     * Obtains all calendar terms from the IonWebAPI and sorts
+     * them by the descending order of the year
+     *
+     * E.g: (1920v,1920i,1819v,1819i...)
      */
     suspend fun getAllCalendarTerm(calendarTermsUri: URI): List<CalendarTerm> =
         withContext(dispatcher) {
@@ -44,14 +47,17 @@ class CalendarTermRepository(
             calendarTerms.sortedByDescending { it.year }
         }
 
-    suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =
+    suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm? =
         withContext(Dispatchers.IO) {
             val calendarTerms = getAllCalendarTerm(calendarTermsUri)
-            var mostRecentCalendarTerm = calendarTerms[0]
-            calendarTerms.forEach {
-                if (it.year > mostRecentCalendarTerm.year)
-                    mostRecentCalendarTerm = it
+            if (calendarTerms.count() > 0) {
+                var mostRecentCalendarTerm = calendarTerms.first()
+                calendarTerms.forEach {
+                    if (it.year > mostRecentCalendarTerm.year)
+                        mostRecentCalendarTerm = it
+                }
+                return@withContext mostRecentCalendarTerm
             }
-            mostRecentCalendarTerm
+            return@withContext null
         }
 }
