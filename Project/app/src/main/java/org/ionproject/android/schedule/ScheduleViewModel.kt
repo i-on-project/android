@@ -53,7 +53,8 @@ class ScheduleViewModel(
      */
     fun getLecturesFromFirstCalendarFromFavorites() =
         viewModelScope.launch {
-            val calendarTerm: CalendarTerm? = calendarTermRepository.getAllCalendarTermsFromFavorites().firstOrNull()
+            val calendarTerm: CalendarTerm? =
+                calendarTermRepository.getAllCalendarTermsFromFavorites().firstOrNull()
             calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
         }
 

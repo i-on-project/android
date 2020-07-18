@@ -39,7 +39,7 @@ class SettingsViewModel(
         }
     }
 
-    private fun postIntoLiveData(calendarTerms: List<CalendarTerm>){
+    private fun postIntoLiveData(calendarTerms: List<CalendarTerm>) {
         val size =
             if (calendarTerms.size < NUMBER_OF_CALENDAR_TERMS)
                 calendarTerms.size

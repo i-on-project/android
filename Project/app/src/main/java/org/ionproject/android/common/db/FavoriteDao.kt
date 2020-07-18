@@ -14,7 +14,7 @@ interface FavoriteDao {
     suspend fun insertFavorite(favorite: Favorite)
 
     @Query("SELECT DISTINCT calendarTerm FROM Favorite")
-    suspend fun getCalendarTermsFromFavorites() : List<String>
+    suspend fun getCalendarTermsFromFavorites(): List<String>
 
     /*
     This method needs to return a livedata so that when an element is removed from the favorites list,

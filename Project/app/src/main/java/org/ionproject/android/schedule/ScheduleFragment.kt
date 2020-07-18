@@ -108,7 +108,7 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             this.adapter = adapter
 
             viewModel.observerLecturesLiveData(viewLifecycleOwner) {
-                if(it.isNotEmpty())
+                if (it.isNotEmpty())
                     adapter.notifyDataSetChanged()
             }
         }
