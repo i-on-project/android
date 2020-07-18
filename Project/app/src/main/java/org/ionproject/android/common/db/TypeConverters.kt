@@ -46,3 +46,13 @@ class WeekDayConverter {
     @TypeConverter
     fun toInt(weekDay: WeekDay) = weekDay.ordinal
 }
+
+class IntegerListConverter {
+
+    @TypeConverter
+    fun fromIntegerList(integerList: List<Int>): String = integerList.joinToString(separator = ",")
+
+    @TypeConverter
+    fun fromString(integerListString: String): List<Int> =
+        integerListString.split(',').map { it.toInt() }
+}

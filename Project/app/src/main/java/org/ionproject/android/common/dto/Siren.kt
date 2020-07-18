@@ -29,7 +29,7 @@ const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
  */
 data class SirenEntity(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: HashMap<String, String>? = null, //Using hashmap because it uses less memory then linkedHashMap
+    val properties: HashMap<String, Any>? = null, //Using hashmap because it uses less memory then linkedHashMap
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: List<SirenAction>? = null,
@@ -93,7 +93,7 @@ data class EmbeddedLink(
 data class EmbeddedEntity(
     val rel: List<String>,
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: HashMap<String, String>? = null,
+    val properties: HashMap<String, Any>? = null,
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: SirenAction? = null,

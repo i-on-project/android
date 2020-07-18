@@ -18,7 +18,7 @@ import java.net.URI
  * - ProgrammeDetails
  */
 abstract class SearchResult(
-    val properties: Map<String, String>,
+    val properties: Map<String, Any>,
     val resourceURI: URI,
     val type: SearchResultType
 ) {
@@ -43,7 +43,7 @@ abstract class SearchResult(
 }
 
 class ClassSectionResult(
-    properties: Map<String, String>,
+    properties: Map<String, Any>,
     resourceURI: URI
 ) : SearchResult(properties, resourceURI, SearchResultType.CLASS_SECTION) {
     override fun navigateToResource(
@@ -56,7 +56,7 @@ class ClassSectionResult(
 }
 
 class CourseDetailsResult(
-    properties: Map<String, String>,
+    properties: Map<String, Any>,
     resourceURI: URI
 ) : SearchResult(properties, resourceURI, SearchResultType.COURSE) {
     override fun navigateToResource(
@@ -69,7 +69,7 @@ class CourseDetailsResult(
 }
 
 class ProgrammeDetailsResult(
-    properties: Map<String, String>,
+    properties: Map<String, Any>,
     resourceURI: URI
 ) : SearchResult(properties, resourceURI, SearchResultType.PROGRAMME) {
     override fun navigateToResource(

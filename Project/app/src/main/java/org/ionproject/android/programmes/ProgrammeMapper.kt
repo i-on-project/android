@@ -11,15 +11,15 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
     entities?.forEach {
         val embeddedEntity = (it as EmbeddedEntity)
 
-        val id = embeddedEntity.properties?.get("programmeId")
-        val acr = embeddedEntity.properties?.get("acronym")
+        val id = embeddedEntity.properties?.get("programmeId") as? Int
+        val acr = embeddedEntity.properties?.get("acronym") as? String
         val detailsUri = embeddedEntity.links?.first()?.href
         val selfUri = this.links?.first()?.href
 
         if (id != null && acr != null && detailsUri != null && selfUri != null)
             programmesList.add(
                 ProgrammeSummary(
-                    id = id.toInt(),
+                    id = id,
                     acronym = acr,
                     detailsUri = detailsUri,
                     selfUri = selfUri
@@ -33,10 +33,10 @@ fun SirenEntity.toProgrammeSummaryList(): List<ProgrammeSummary> {
 }
 
 fun SirenEntity.toProgramme(): ProgrammeWithOffers {
-    val programmeId = properties?.get("id")
-    val acr = properties?.get("acronym")
-    val name = properties?.get("name")
-    val termSize = properties?.get("termSize")
+    val programmeId = properties?.get("id") as? Int
+    val acr = properties?.get("acronym") as? String
+    val name = properties?.get("name") as? String
+    val termSize = properties?.get("termSize") as? Int
     val selfUri = links?.first()?.href
 
     val programmeOfferSummaryList = mutableListOf<ProgrammeOfferSummary>()
@@ -45,19 +45,19 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
         entities?.forEach {
             val embeddedEntity = (it as EmbeddedEntity)
 
-            val id = embeddedEntity.properties?.get("id")
-            val courseId = embeddedEntity.properties?.get("courseId")
-            val termNumber = embeddedEntity.properties?.get("termNumber")
+            val id = embeddedEntity.properties?.get("id") as? Int
+            val courseId = embeddedEntity.properties?.get("courseId") as? Int
+            val termNumbers = embeddedEntity.properties?.get("termNumber") as? ArrayList<Int>
             val detailsUri = embeddedEntity.links?.first()?.href
 
-            if (id != null && courseId != null && termNumber != null && detailsUri != null)
+            if (id != null && courseId != null && termNumbers != null && detailsUri != null)
                 programmeOfferSummaryList.add(
                     ProgrammeOfferSummary(
-                        id = id.toInt(),
-                        courseId = courseId.toInt(),
-                        termNumber = termNumber.toInt(),
+                        id = id,
+                        courseId = courseId,
+                        termNumbers = termNumbers,
                         detailsUri = detailsUri,
-                        programmeId = programmeId.toInt()
+                        programmeId = programmeId
                     )
                 )
             else
@@ -78,24 +78,24 @@ fun SirenEntity.toProgramme(): ProgrammeWithOffers {
 }
 
 fun SirenEntity.toProgrammeOffer(courseID: Int): ProgrammeOffer {
-    val id = properties?.get("id")
-    val acr = properties?.get("acronym")
-    val termNumber = properties?.get("termNumber")
-    val optional = properties?.get("optional")
+    val id = properties?.get("id") as? Int
+    val acr = properties?.get("acronym") as? String
+    val termNumbers = properties?.get("termNumber") as? ArrayList<Int>
+    val optional = properties?.get("optional") as? Boolean
     val selfUri = links?.first()?.href
 
     val detailsUri = (entities?.first() as EmbeddedEntity).links?.first()?.href
 
-    if (id != null && acr != null && termNumber != null && optional != null && detailsUri != null && selfUri != null) {
+    if (id != null && acr != null && termNumbers != null && optional != null && detailsUri != null && selfUri != null) {
         return ProgrammeOffer(
-            id = id.toInt(),
+            id = id,
             courseID = courseID,
             acronym = acr,
-            termNumber = termNumber.toInt(),
-            optional = optional.toBoolean(),
+            termNumbers = termNumbers,
+            optional = optional,
             detailsUri = detailsUri,
             selfUri = selfUri
         )
     }
-    throw MappingFromSirenException("Cannot convert ${this} to ProgrammeOffer")
+    throw MappingFromSirenException("Cannot convert $this to ProgrammeOffer")
 }

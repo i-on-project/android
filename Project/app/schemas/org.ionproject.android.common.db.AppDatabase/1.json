@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4692ec2aadcad04ef2edd1efd2c2dfff",
+    "identityHash": "be1659b34ee1a416ada6634137003e77",
     "entities": [
       {
         "tableName": "Root",
@@ -368,7 +368,7 @@
       },
       {
         "tableName": "ProgrammeOffer",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `courseID` INTEGER NOT NULL, `acronym` TEXT NOT NULL, `termNumber` INTEGER NOT NULL, `optional` INTEGER NOT NULL, `detailsUri` TEXT NOT NULL, `selfUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `courseID` INTEGER NOT NULL, `acronym` TEXT NOT NULL, `termNumbers` TEXT NOT NULL, `optional` INTEGER NOT NULL, `detailsUri` TEXT NOT NULL, `selfUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -389,9 +389,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "termNumber",
-            "columnName": "termNumber",
-            "affinity": "INTEGER",
+            "fieldPath": "termNumbers",
+            "columnName": "termNumbers",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -430,7 +430,7 @@
       },
       {
         "tableName": "ProgrammeOfferSummary",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `courseId` INTEGER NOT NULL, `termNumber` INTEGER NOT NULL, `detailsUri` TEXT NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `courseId` INTEGER NOT NULL, `termNumbers` TEXT NOT NULL, `detailsUri` TEXT NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -445,9 +445,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "termNumber",
-            "columnName": "termNumber",
-            "affinity": "INTEGER",
+            "fieldPath": "termNumbers",
+            "columnName": "termNumbers",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -928,7 +928,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4692ec2aadcad04ef2edd1efd2c2dfff')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be1659b34ee1a416ada6634137003e77')"
     ]
   }
 }

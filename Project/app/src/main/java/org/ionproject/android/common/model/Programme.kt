@@ -53,7 +53,7 @@ data class ProgrammeOffer(
     @PrimaryKey val id: Int,
     val courseID: Int,
     val acronym: String,
-    val termNumber: Int,
+    val termNumbers: List<Int>,
     val optional: Boolean,
     val detailsUri: URI,
     val selfUri: URI,
@@ -67,7 +67,7 @@ data class ProgrammeOffer(
 data class ProgrammeOfferSummary(
     @PrimaryKey val id: Int,
     val courseId: Int,
-    val termNumber: Int,
+    val termNumbers: List<Int>,
     val detailsUri: URI,
     val programmeId: Int
 )
