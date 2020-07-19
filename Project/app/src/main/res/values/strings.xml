@@ -14,6 +14,7 @@
     <string name="title_course_details">Course Details</string>
     <string name="title_programmes">Programmes</string>
     <string name="title_programme_details">Programme Details</string>
+    <string name="title_info" translatable="false">Info</string>
 
     <string name="optional_courses">Optional Courses</string>
     <string name="mandatory_courses">Mandatory Courses</string>
@@ -118,4 +119,10 @@
     <string name="oops" translatable="false">Oops!</string>
     <string name="close">close</string>
     <string name="label_name_not_available">Name not available</string>
+    <string name="personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is unninstalled the information is deleted.</string>
+    <string name="about_info">i-on Android is a mobile application developed by members of the i-on iniciative. The iniciative was created with the goal of improving some academic aspects in the Polytechnic Institute of Engineering of Lisbon. The iniciative was created by teachers and students. All the code from this application and the rest of the projects from the iniciative is public so feel free to check it out by clicking the i-on logo below.</string>
+    <string name="title_about">About</string>
+    <string name="title_personal_data">Personal data</string>
+    <string name="title_errors_improvement">Errors and improvements</string>
+    <string name="errors_improvement_info">As with all software, this application is in constant development which means there might be errors that have to be fixed and improvements that can be made. The i-on Android team is doing its best to detect all the issues but, as you may realize, it\'s not an easy task so please contact us on via our github in case you found an error or if you feel there is a feature or improvement that should be added.</string>
 </resources>

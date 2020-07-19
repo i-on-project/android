@@ -20,6 +20,12 @@
         <action
             android:id="@+id/action_home_to_settings"
             app:destination="@id/navigation_settings" />
+    	<action
+            android:id="@+id/action_home_to_calendar"
+            app:destination="@id/navigation_calendar" />
+        <action
+            android:id="@+id/action_home_to_info"
+            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -130,5 +136,11 @@
         android:name="org.ionproject.android.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+	
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="org.ionproject.android.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 
 </navigation>

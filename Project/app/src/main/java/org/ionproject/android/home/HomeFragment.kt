@@ -32,9 +32,15 @@ class HomeFragment : Fragment() {
 
         // Calendar button
         button_home_calendar.setOnClickListener {
-            navController.navigate(R.id.navigation_calendar)
+            navController.navigate(R.id.action_home_to_calendar)
         }
 
+        // Info button
+        button_home_info.setOnClickListener {
+            navController.navigate(R.id.action_home_to_info)
+        }
+
+        // Settings button
         button_home_settings.setOnClickListener {
             navController.navigate(R.id.action_home_to_settings)
         }

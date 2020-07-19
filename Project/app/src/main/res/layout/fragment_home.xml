@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:drawableEnd="@drawable/ic_school_white_24"
-        android:text="@string/title_programmes"></Button>
+        android:text="@string/title_programmes"/>
 
     <Button
         android:id="@+id/button_home_calendar"
@@ -21,7 +21,15 @@
         android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:drawableEnd="@drawable/ic_calendar_today_white_24dp"
-        android:text="@string/title_calendar"></Button>
+        android:text="@string/title_calendar"/>
+	
+    <Button
+        android:id="@+id/button_home_info"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:drawableEnd="@drawable/ic__info_24dp"
+        android:text="@string/title_info" />
 
     <Button
         android:id="@+id/button_home_settings"
@@ -29,6 +37,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:drawableEnd="@drawable/ic_settings_white_24"
-        android:text="@string/title_settings"></Button>
+        android:text="@string/title_settings"/>
+	
 
 </LinearLayout>
