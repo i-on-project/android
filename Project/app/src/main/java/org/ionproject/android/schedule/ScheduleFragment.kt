@@ -17,8 +17,12 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.ionproject.android.*
+import org.ionproject.android.ExceptionHandlingFragment
+import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Moment
+import org.ionproject.android.main.MainActivity
 
 const val NUMBER_OF_COLUMNS = 8
 
@@ -64,7 +68,7 @@ class ScheduleFragment : ExceptionHandlingFragment() {
         val selectedCalendarTerm = viewModel.getSelectedCalendarTerm()
 
         if (selectedCalendarTerm == null)
-            viewModel.getLecturesFromCurrentCalendar(sharedViewModel.root.calendarTermsUri)
+            viewModel.getLecturesFromFirstCalendarFromFavorites()
         else
             viewModel.getLecturesFromSelectedCalendarTerm(selectedCalendarTerm)
 
@@ -104,7 +108,8 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             this.adapter = adapter
 
             viewModel.observerLecturesLiveData(viewLifecycleOwner) {
-                adapter.notifyDataSetChanged()
+                if (it.isNotEmpty())
+                    adapter.notifyDataSetChanged()
             }
         }
     }

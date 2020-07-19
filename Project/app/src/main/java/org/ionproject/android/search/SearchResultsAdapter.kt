@@ -48,7 +48,7 @@ class SearchResultsAdapter(
         fun bindTo(searchResult: SearchResult) {
             searchResultTypeTextView.text =
                 searchResult.type.getNameFromResource(itemView.resources)
-            searchResultTextTextView.text = searchResult.properties["name"]
+            searchResultTextTextView.text = searchResult.properties["name"] as String
             searchResultCardView.setOnClickListener {
                 onClickListener(searchResult)
             }

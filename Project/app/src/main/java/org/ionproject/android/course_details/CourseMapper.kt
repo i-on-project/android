@@ -8,17 +8,17 @@ import java.net.URI
  *  Converts from a [SirenEntity] to [Course]
  */
 fun SirenEntity.toCourse(): Course {
-    val id = properties?.get("id")
-    val acronym = properties?.get("acronym")
-    val name = properties?.get("name")
+    val id = properties?.get("id") as? Int
+    val acronym = properties?.get("acronym") as? String
+    val name = properties?.get("name") as? String
     val selfUri = links?.findByRel("self")
     val classesLink: URI? =
         entities?.findEmbeddedEntityByRel("/rel/class")?.links?.findByRel("self")
 
-    if (id != null && properties != null && acronym != null && name != null && selfUri != null) {
+    if (id != null && properties != null && acronym != null && selfUri != null) {
         //Using double bang operator because we are sure this properties cannot be null here
         return Course(
-            id = id.toInt(),
+            id = id,
             acronym = acronym,
             name = name,
             classesUri = classesLink,
@@ -34,20 +34,19 @@ fun SirenEntity.toCourse(): Course {
 fun SirenEntity.toClassCollection(): ClassCollection {
     val classesSummary = mutableListOf<ClassSummary>()
 
-    val courseId = properties?.get("courseId")?.toInt()
-    val courseAcronym = properties?.get("courseAcr")
-    val calendarTerm = properties?.get("calendarTerm")
+    val courseId = properties?.get("courseId") as? Int
+    val courseAcronym = properties?.get("courseAcr") as? String
+    val calendarTerm = properties?.get("calendarTerm") as? String
     var calendarUri: URI? = null
     val selfUri = links?.findByRel("self")
 
     if (courseAcronym != null && calendarTerm != null && selfUri != null && courseId != null) {
         entities?.forEach {
-            val embeddedEntity = (it as EmbeddedEntity)
+            val embeddedEntity = (it as? EmbeddedEntity)
 
-            embeddedEntity.clazz?.apply {
-                //There is an event sub-entity which is not from the class "class", which we must exclude
+            embeddedEntity?.clazz?.apply {
                 if (embeddedEntity.clazz.containsAll(listOf("class", "section"))) {
-                    val id = embeddedEntity.properties?.get("id")
+                    val id = embeddedEntity.properties?.get("id") as? String
                     val detailsUri: URI? = embeddedEntity.links?.findByRel("self")
 
                     if (id != null && detailsUri != null)
@@ -58,8 +57,7 @@ fun SirenEntity.toClassCollection(): ClassCollection {
                 } else if (embeddedEntity.clazz.contains("calendar")) {
                     calendarUri = embeddedEntity.links?.findByRel("self")
                 }
-
-            } ?: throw MappingFromSirenException("Cannot convert $this to List of ClassSummary")
+            }
         }
         return ClassCollection(
             ClassCollectionFields(
@@ -81,32 +79,24 @@ fun SirenEntity.toClassCollection(): ClassCollection {
 fun SirenEntity.toClasses(): List<Classes> {
     val classesList = mutableListOf<Classes>()
 
-    val courseId = properties?.get("cid")?.toInt()
+    val courseId = properties?.get("cid") as? Int
     val selfUriPath =
         links?.findByRel("self")?.path // This is required because it might be an hreftemplate
 
     if (courseId != null && selfUriPath != null) {
-        entities?.forEach {
-            val embeddedEntity = (it as EmbeddedEntity)
+        entities?.findEmbeddedEntitiesByRel("item")?.forEach {
+            val calendarTerm = it.properties?.get("calendarTerm") as? String
+            val detailsUri: URI? = it.links?.findByRel("self")
 
-            embeddedEntity.clazz?.apply {
-                //There is an event sub-entity which is not from the class "class", which we must exclude
-                if (embeddedEntity.clazz.containsAll(listOf("class"))) {
-                    val calendarTerm = embeddedEntity.properties?.get("calendarTerm")
-                    val detailsUri: URI? = embeddedEntity.links?.findByRel("self")
-
-                    if (calendarTerm != null && detailsUri != null)
-                        classesList.add(
-                            Classes(
-                                courseId,
-                                calendarTerm,
-                                detailsUri,
-                                URI(selfUriPath)
-                            )
-                        )
-                }
-
-            } ?: throw MappingFromSirenException("Cannot convert $it to Classes")
+            if (calendarTerm != null && detailsUri != null)
+                classesList.add(
+                    Classes(
+                        courseId,
+                        calendarTerm,
+                        detailsUri,
+                        URI(selfUriPath)
+                    )
+                )
         }
         return classesList
     }

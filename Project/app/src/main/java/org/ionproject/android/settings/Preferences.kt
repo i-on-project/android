@@ -1,4 +1,4 @@
-package org.ionproject.android.common
+package org.ionproject.android.settings
 
 import android.content.Context
 import android.content.SharedPreferences

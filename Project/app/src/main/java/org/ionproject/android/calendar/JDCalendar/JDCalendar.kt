@@ -6,13 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.view_jdcalendar.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.ionproject.android.R
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 
 /**
  * This type represents a calendar and exposes some properties and methods for customization
@@ -23,8 +21,10 @@ import kotlin.coroutines.CoroutineContext
  * 3ª - second init block applies custom attributes and behaviour to the views
  * that have now been instantiated
  */
-class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),
-    CoroutineScope {
+class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+
+    // Scope to be used to launch coroutines, runs on the UI Thread
+    private val scope = MainScope()
 
     //----------------------------------Public methods-----------------------------------
     var adapter: CalendarAdapter<*> = JDCalendarAdapter()
@@ -180,13 +180,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
      * The [nextButton] and [prevButton] launch a coroutine and in a background
      * thread update the days of the calendar. By calling advanceMonths() from a background
      * thread the UI thread becomes free to do whatever it needs.
-     *
-     * IMPORTANT: The coroutines launched are saved in a list and should be cancelled once the
-     * activity or fragment where this calendar is contained is destroyed to avoid
-     * memory leaks. To cancel the coroutines a call to [destroy] should be made inside onDestroy or
-     * onDestroyView depending if the calendar is contained in an [Activity] or [Fragment] respectively.
-     * This ensures that if this view is destroyed and the coroutines it launched are still doing work
-     * they are cancelled.
      */
     init {
         applyCustomAttributes()
@@ -194,18 +187,18 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         updateTopSection(baseAdapter.calendar) //Setting current month
 
         nextButton.setOnClickListener {
-            launchedCoroutines.add(launch {
+            scope.launch {
                 val calendar = baseAdapter.advanceMonths(1)
                 updateTopSection(calendar)
                 onMonthChangeListener()
-            })
+            }
         }
         prevButton.setOnClickListener {
-            launchedCoroutines.add(launch {
+            scope.launch {
                 val calendar = baseAdapter.advanceMonths(-1)
                 updateTopSection(calendar)
                 onMonthChangeListener()
-            })
+            }
         }
     }
 
@@ -279,21 +272,19 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         yearTextView.text = "${calendar.year}"
     }
 
-    private val launchedCoroutines = mutableListOf<Job>()
-
     /**
-     * Goes through all created coroutines and cancels the ones which
-    are active.
-
-    MUST be called
+     * This method MUST be called!
+     *
+     * Cancels all coroutines launched within this scope
+     *
+     * The coroutines launched must be cancelled once the
+     * activity or fragment where this calendar is contained is destroyed.
+     * To cancel the coroutines a call to [destroy] should be made inside onDestroy or
+     * onDestroyView depending if the calendar is contained in an [Activity] or [Fragment] respectively.
+     * This ensures that if this view is destroyed and the coroutines it launched are still doing work
+     * they are cancelled.
      */
     fun destroy() {
-        launchedCoroutines.forEach {
-            if (it.isActive)
-                it.cancel()
-        }
+        scope.cancel()
     }
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
 }

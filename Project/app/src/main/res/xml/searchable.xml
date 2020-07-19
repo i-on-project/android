@@ -4,4 +4,4 @@
     android:label="@string/app_label"
     android:queryAfterZeroResults="true"
     android:searchSuggestAuthority="org.ionproject.android.search.SearchSuggestionsProvider"
-    android:searchSuggestSelection=" ?"></searchable>
+    android:searchSuggestSelection=" ?" />

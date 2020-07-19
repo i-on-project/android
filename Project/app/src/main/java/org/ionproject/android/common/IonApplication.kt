@@ -2,21 +2,21 @@ package org.ionproject.android.common
 
 import android.app.Application
 import androidx.room.Room
+import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
+import org.ionproject.android.common.connectivity.IConnectivityObservable
 import org.ionproject.android.common.db.AppDatabase
-import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.IonService
-import org.ionproject.android.common.ionwebapi.IonWebAPI
-import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-
-private const val WEB_API_HOST = "https://host1.dev.ionproject.org"
 
 /**
  * This class is used to hold instances that need the singleton pattern,
  * its fields are accessible from any point in the application.
+ *
+ * It injects the dependencies into these classes
  */
 class IonApplication : Application() {
 
@@ -36,14 +36,13 @@ class IonApplication : Application() {
         lateinit var searchRepository: SearchRepository private set
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
-        lateinit var observableConnectivity: ObservableConnectivity private set
+        lateinit var connectivityObservable: IConnectivityObservable private set
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        globalExceptionHandler =
-            GlobalExceptionHandler()
+        globalExceptionHandler = GlobalExceptionHandler()
 
         /**
          * Our app runs in a single process therefore we follow
@@ -55,12 +54,13 @@ class IonApplication : Application() {
             AppDatabase::class.java, "ion-database"
         ).build()
 
-        // Used to map string http responses to SirenEntities
         val ionMapper = JacksonIonMapper()
 
-        // Using mocks
+        //------- Using mocked API -----------
         //val webAPI = MockIonWebAPI(ionMapper)
+        //------------------------------------
 
+        //------- Using real API -------------
         val retrofit = Retrofit.Builder()
             .baseUrl(WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -68,6 +68,7 @@ class IonApplication : Application() {
 
         val service: IonService = retrofit.create(IonService::class.java)
         val webAPI = IonWebAPI(service, ionMapper)
+        //------------------------------------
 
         ionWebAPI = webAPI
 
@@ -92,13 +93,19 @@ class IonApplication : Application() {
         favoritesRepository =
             FavoriteRepository(db.favoriteDao())
         calendarTermRepository =
-            CalendarTermRepository(webAPI, db.calendarTermDao(), workerManagerFacade)
+            CalendarTermRepository(
+                webAPI,
+                db.calendarTermDao(),
+                db.favoriteDao(),
+                workerManagerFacade
+            )
         eventsRepository =
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         searchRepository = SearchRepository(webAPI)
-        preferences = Preferences(applicationContext)
-        observableConnectivity = ObservableConnectivity(applicationContext)
+        preferences =
+            Preferences(applicationContext)
+        connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
     }
 
 }

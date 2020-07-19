@@ -16,6 +16,11 @@ class ErrorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_error)
         linearlayout_activity_error.addGradientBackground()
 
+        // Closes the error activity
+        button_activity_error_close.setOnClickListener {
+            finish()
+        }
+
         // Apply error message if it was passed via the intent
         intent.getStringExtra(ERROR_KEY)?.apply {
             textview_error_activity_message.text = this

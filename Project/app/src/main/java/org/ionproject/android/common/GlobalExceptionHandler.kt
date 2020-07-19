@@ -2,6 +2,7 @@ package org.ionproject.android.common
 
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import retrofit2.HttpException
 
 typealias ExceptionHandler = (Thread, Throwable) -> Unit
 
@@ -52,9 +53,22 @@ class GlobalExceptionHandler {
                 // Its only occurring on the Xiaomi Redmi Note 7, on the emulator
                 // the problem does not seem to occur.
                 // TODO Revisit this approach and maybe consider abandoning it
-                if (e === lastException)
+                if (e === lastException) {
                     lastException = null
-                else {
+                    crashlytics.log("Exception $e was caught twice!")
+                    crashlytics.recordException(e)
+                } else {
+                    // Logging request id when the
+                    if (e is HttpException) {
+                        val requestId = e.response()?.headers()?.get("Request-Id")
+                        requestId?.let {
+                            Log.e(
+                                "GlobalExceptionHandler",
+                                "Request with id $requestId caused an exception"
+                            )
+                            crashlytics.log("Request with id $requestId caused an exception")
+                        }
+                    }
                     lastException = e
                     // Sends information about an "non-fatal" exception to crashlytics, e.g. caught exceptions like this
                     Log.e("GlobalExceptionHandler", "$t threw $e", e)
@@ -84,6 +98,4 @@ class GlobalExceptionHandler {
     fun unRegisterBaseExceptionHandler() {
         baseExceptionHandler = defaultExceptionHandler
     }
-
-    fun sendAllExceptionsToFirebase() = crashlytics.sendUnsentReports()
 }

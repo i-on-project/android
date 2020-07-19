@@ -2,7 +2,6 @@ package org.ionproject.android.settings
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.Preferences
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import java.net.URI
@@ -20,13 +19,33 @@ class SettingsViewModel(
      */
     private val calendarTermsLiveData = MutableLiveData<List<CalendarTerm>>()
 
+    /**
+     * Gets all calendar Terms from calendar-terms uri resource
+     */
     fun getAllCalendarTerms(calendarTermsUri: URI) {
         viewModelScope.launch {
             val calendarTerms = calendarTermRepository.getAllCalendarTerm(calendarTermsUri)
-            val size =
-                if (calendarTerms.size < NUMBER_OF_CALENDAR_TERMS) calendarTerms.size else NUMBER_OF_CALENDAR_TERMS
-            calendarTermsLiveData.postValue(calendarTerms.subList(0, size))
+            postIntoLiveData(calendarTerms)
         }
+    }
+
+    /**
+     * Gets all Calendar Terms from the list of favorites
+     */
+    fun getAllCalendarTermsFromFavorites() {
+        viewModelScope.launch {
+            val calendarTerms = calendarTermRepository.getAllCalendarTermsFromFavorites()
+            postIntoLiveData(calendarTerms)
+        }
+    }
+
+    private fun postIntoLiveData(calendarTerms: List<CalendarTerm>) {
+        val size =
+            if (calendarTerms.size < NUMBER_OF_CALENDAR_TERMS)
+                calendarTerms.size
+            else
+                NUMBER_OF_CALENDAR_TERMS
+        calendarTermsLiveData.postValue(calendarTerms.subList(0, size))
     }
 
     fun observeCalendarTerms(

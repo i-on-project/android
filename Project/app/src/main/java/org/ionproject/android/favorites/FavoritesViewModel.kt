@@ -55,6 +55,13 @@ class FavoritesViewModel(
         }
     }
 
+    fun getAllCalendarTermsFromFavorites() {
+        viewModelScope.launch {
+            val calendarTerms = calendarTermRepository.getAllCalendarTermsFromFavorites()
+            calendarTermsLiveData.postValue(calendarTerms)
+        }
+    }
+
     val calendarTerms: List<CalendarTerm>
         get() = calendarTermsLiveData.value ?: emptyList()
 

@@ -43,7 +43,7 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
             val deferredOffers = mutableListOf<Deferred<ProgrammeOffer?>>()
             //Launching parallel coroutines to increase the speed of the method execution
             for (programmeOfferSummary in programmeOfferSummaries) {
-                if (programmeOfferSummary.termNumber == curricularTerm)
+                if (programmeOfferSummary.termNumbers.contains(curricularTerm))
                     deferredOffers.add(async {
                         programmesRepository.getProgrammeOfferDetails(
                             programmeOfferSummary

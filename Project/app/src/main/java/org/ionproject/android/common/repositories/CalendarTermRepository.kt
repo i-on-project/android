@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.CalendarTermDao
+import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.model.CalendarTerm
@@ -15,12 +16,16 @@ import java.net.URI
 class CalendarTermRepository(
     private val ionWebAPI: IIonWebAPI,
     private val calendarTermDao: CalendarTermDao,
+    private val favoritesDao: FavoriteDao,
     private val workerManagerFacade: WorkerManagerFacade,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     /**
-     * Obtains all calendar terms from the IonWebAPI
+     * Obtains all calendar terms from the IonWebAPI and sorts
+     * them by the descending order of the year
+     *
+     * E.g: (1920v,1920i,1819v,1819i...)
      */
     suspend fun getAllCalendarTerm(calendarTermsUri: URI): List<CalendarTerm> =
         withContext(dispatcher) {
@@ -44,14 +49,27 @@ class CalendarTermRepository(
             calendarTerms.sortedByDescending { it.year }
         }
 
-    suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm =
+    /**
+     * Gets all Calendar Terms from the list of favorites
+     */
+    suspend fun getAllCalendarTermsFromFavorites(): List<CalendarTerm> =
+        withContext(dispatcher) {
+            favoritesDao.getCalendarTermsFromFavorites().map {
+                CalendarTerm.fromString(it)
+            }
+        }
+
+    suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm? =
         withContext(Dispatchers.IO) {
             val calendarTerms = getAllCalendarTerm(calendarTermsUri)
-            var mostRecentCalendarTerm = calendarTerms[0]
-            calendarTerms.forEach {
-                if (it.year > mostRecentCalendarTerm.year)
-                    mostRecentCalendarTerm = it
+            if (calendarTerms.count() > 0) {
+                var mostRecentCalendarTerm = calendarTerms.first()
+                calendarTerms.forEach {
+                    if (it.year > mostRecentCalendarTerm.year)
+                        mostRecentCalendarTerm = it
+                }
+                return@withContext mostRecentCalendarTerm
             }
-            mostRecentCalendarTerm
+            return@withContext null
         }
 }

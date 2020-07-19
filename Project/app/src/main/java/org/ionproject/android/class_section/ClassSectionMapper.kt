@@ -12,9 +12,9 @@ import java.net.URI
  */
 fun SirenEntity.toClassSection(): ClassSection {
     val calendarURI: URI? = (entities?.firstOrNull() as EmbeddedEntity).links?.first()?.href
-    val courseAcronym = properties?.get("courseAcr")
-    val calendarTerm = properties?.get("calendarTerm")
-    val id = properties?.get("id")
+    val courseAcronym = properties?.get("courseAcr") as? String
+    val calendarTerm = properties?.get("calendarTerm") as? String
+    val id = properties?.get("id") as? String
     val selfUri = links?.findByRel("self")
     val upUri = links?.findByRel("collection")
 

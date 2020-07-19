@@ -69,7 +69,7 @@ fun SirenICalendar.toEventsSummary(): Events {
                 Event.type -> {
                     if (categories?.find { it.contains(Lecture.type) } != null)
                         lectures.add(createLecture(properties, selfUri))
-                    else
+                    else if (categories?.find { it.contains(Exam.type) } != null)
                         exams.add(createExam(properties, selfUri))
                 }
                 Todo.type -> todos.add(createTodo(properties, selfUri))

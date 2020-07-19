@@ -17,6 +17,15 @@ class JacksonParserTests {
     private val jacksonMapper = JacksonIonMapper(TestCoroutineDispatcher())
 
     @Test
+    fun jsonPropertiesDeserializer() = runBlockingTest {
+        val httpResponse = "{\"properties\":{\"name\":1,\"ids\":[1,2,3,\"a\"],\"obj\":{\"cool\":1}}}"
+        val parsedResponse : SirenProperties = jacksonMapper.parse(httpResponse, SirenProperties::class.java)
+
+        assertTrue(parsedResponse.properties?.get("name") as Int == 1)
+        assertTrue((parsedResponse.properties["ids"] as? ArrayList<*>)?.size == 4)
+    }
+
+    @Test
     fun extraProperty() = runBlockingTest {
 
         val allProgrammesMock = "{\n" +
@@ -272,3 +281,7 @@ class JacksonParserTests {
         val result = jacksonMapper.parse(invalidJson,SirenEntity::class.java)
     }
 }
+
+private class SirenProperties(
+    val properties: HashMap<String,Any>? = null
+)

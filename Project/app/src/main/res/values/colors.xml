@@ -11,6 +11,7 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="bottomBackgroundGradientColor">#f8f2f1</color>
+    <color name="errorColor">#EC3144</color>
 </resources>
 
     <!--

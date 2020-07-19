@@ -12,8 +12,12 @@ fun SirenEntity.toCalendarTermList(): List<CalendarTerm> {
     if (clazz != null && clazz.contains("calendar-term") && clazz.contains("collection")) {
         entities?.forEach {
             val embeddedEntity = it as EmbeddedEntity
-            val name = embeddedEntity.properties?.get("name")
+            val name = embeddedEntity.properties?.get("name") as? String
 
+            // Here we are assuming the format of calendar term is for example 1920v
+            // Data inserted by integration is unfortunatly not following this format
+            // This approach should be reconsidered in the future if the data from integration
+            // is not correct.
             if (name != null) {
                 val year = name.substring(0, 4).toInt()
                 val season = name.substring(4)

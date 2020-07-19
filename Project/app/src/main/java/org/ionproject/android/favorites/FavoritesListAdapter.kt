@@ -2,11 +2,11 @@ package org.ionproject.android.favorites
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -67,7 +67,7 @@ class FavoritesListAdapter(
 
         private val colorDrawableBackground =
             ContextCompat.getDrawable(context, R.drawable.shape_square_left_round_corners)?.apply {
-                setTint(Color.parseColor("#eb303d")) // TODO Not hardcoded
+                setTint(ResourcesCompat.getColor(context.resources, R.color.errorColor, null))
             }
         private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_white_24dp)
 

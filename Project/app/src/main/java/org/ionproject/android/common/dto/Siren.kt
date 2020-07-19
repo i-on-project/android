@@ -29,7 +29,7 @@ const val URL_ENCODED_SUBTYPE = "x-www-form-urlencoded"
  */
 data class SirenEntity(
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: HashMap<String, String>? = null, //Using hashmap because it uses less memory then linkedHashMap
+    val properties: HashMap<String, Any>? = null, //Using hashmap because it uses less memory then linkedHashMap
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: List<SirenAction>? = null,
@@ -93,7 +93,7 @@ data class EmbeddedLink(
 data class EmbeddedEntity(
     val rel: List<String>,
     @JsonProperty("class") val clazz: List<String>? = null,
-    val properties: HashMap<String, String>? = null,
+    val properties: HashMap<String, Any>? = null,
     val entities: List<SubEntity>? = null,
     val links: List<SirenLink>? = null,
     val actions: SirenAction? = null,
@@ -109,13 +109,17 @@ class SubEntityDeserializer : StdDeserializer<SubEntity>(
         val node: TreeNode = p.readValueAsTree()
 
         /**
-         * If property "properties" or "links" or "actions" exists then
+         * If property "properties" or "links" or "actions" or "entities" exists then
          * it must be an EmbeddedEntity
          * else is an EmbeddedLink
          */
         return p.codec.treeToValue(
             node,
-            if (node.get("properties") != null || node.get("links") != null) EmbeddedEntity::class.java
+            if (node.get("properties") != null ||
+                node.get("links") != null ||
+                node.get("actions") != null ||
+                node.get("entities") != null
+            ) EmbeddedEntity::class.java
             else EmbeddedLink::class.java
         )
     }
@@ -135,3 +139,9 @@ fun List<SubEntity>.findEmbeddedEntityByRel(rel: String): EmbeddedEntity? =
 
 fun List<SubEntity>.findEmbeddedLinkByRel(rel: String): EmbeddedLink? =
     this.find { it is EmbeddedEntity && it.rel.contains(rel) } as? EmbeddedLink
+
+fun List<SubEntity>.findEmbeddedEntitiesByRel(rel: String): List<EmbeddedEntity> =
+    this.mapNotNull { if (it is EmbeddedEntity && it.rel.contains(rel)) it else null }
+
+fun List<SubEntity>.findEmbeddedLinksByRel(rel: String): List<EmbeddedLink> =
+    this.mapNotNull { if (it is EmbeddedLink && it.rel.contains(rel)) it else null }

@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
-import org.ionproject.android.MainActivity
 import org.ionproject.android.R
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.main.MainActivity
 
 // Random value key used to pass the root object from [LoadingActivity] to [MainActivity] via the intent
 const val ROOT_KEY = "m0192exe1gxe12x1"

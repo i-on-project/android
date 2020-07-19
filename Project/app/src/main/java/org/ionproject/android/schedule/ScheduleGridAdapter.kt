@@ -45,15 +45,25 @@ class ScheduleGridAdapter(
             CourseViewHolder(view)
         }
     )
+
     private val bindViewHolderFunctions = listOf(
         { holder: RecyclerView.ViewHolder, position: Int ->
             (holder as HoursViewHolder).bind(intervals[position / NUMBER_OF_COLUMNS])
         },
         { holder: RecyclerView.ViewHolder, position: Int ->
             val currColumn = (position + NUMBER_OF_COLUMNS) % NUMBER_OF_COLUMNS
-            var lectures = model.lecturesByDayOfWeek[currColumn - 1].toList()
-            lectures = lectures.inInterval(intervals[position / NUMBER_OF_COLUMNS])
-            (holder as CourseViewHolder).bind(lectures)
+            val lectures = model.lecturesByDayOfWeek
+
+            //TODO: Maybe try to improve this code
+            if (lectures.isNotEmpty()) {
+                val lecturesByDayOfWeek = lectures[currColumn - 1].toList()
+                val lecturesInInterval =
+                    lecturesByDayOfWeek.inInterval(intervals[position / NUMBER_OF_COLUMNS])
+                (holder as CourseViewHolder).bind(lecturesInInterval)
+            } else {
+                (holder as CourseViewHolder).bind(emptyList())
+            }
+
         }
     )
 

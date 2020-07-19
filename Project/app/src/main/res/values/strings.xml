@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">IonAndroid</string>
+    <string name="app_name" translatable="false">i-on Android</string>
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_schedule">Schedule</string>
@@ -113,5 +113,9 @@
     <string name="label_no_connectivity_loading">The i-on services might be down or the device does not have connectivity at the moment and you don\'t have any local data saved for some functionalities to work.</string>
     <string name="title_warning">Warning!</string>
     <string name="label_connection_reestablished_main_activity">Connection was re-established, all app functionalities are now working =)</string>
-    <string name="label_error_loading">We\'re sorry but it seems that an error occured. Try restarting the application.</string>
+    <string name="label_error_loading">We\'re sorry but it seems that an error occurred. Try restarting the application.</string>
+    <string name="error_message_exception_resource_not_available_handler_fragment">Resource not available :(</string>
+    <string name="oops" translatable="false">Oops!</string>
+    <string name="close">close</string>
+    <string name="label_name_not_available">Name not available</string>
 </resources>

@@ -2,7 +2,6 @@ package org.ionproject.android.schedule
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ionproject.android.common.Preferences
 import org.ionproject.android.common.listOf
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.Lecture
@@ -11,6 +10,7 @@ import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.settings.Preferences
 import java.net.URI
 
 const val NUMBER_OF_WEEK_DAYS = 7
@@ -45,7 +45,17 @@ class ScheduleViewModel(
     fun getLecturesFromCurrentCalendar(calendarTermsUri: URI) =
         viewModelScope.launch {
             val calendarTerm = calendarTermRepository.getMostRecentCalendarTerm(calendarTermsUri)
-            getLectures(calendarTerm)
+            calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
+        }
+
+    /**
+     * Gets lectures from the first calendar term available from the list of favorites
+     */
+    fun getLecturesFromFirstCalendarFromFavorites() =
+        viewModelScope.launch {
+            val calendarTerm: CalendarTerm? =
+                calendarTermRepository.getAllCalendarTermsFromFavorites().firstOrNull()
+            calendarTerm?.let { getLectures(it) } ?: lecturesLiveData.postValue(emptyList())
         }
 
     fun observerLecturesLiveData(

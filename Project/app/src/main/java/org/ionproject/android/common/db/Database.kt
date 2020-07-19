@@ -33,7 +33,8 @@ import org.ionproject.android.common.model.*
     URIConverter::class,
     CalendarConverter::class,
     MomentConverter::class,
-    WeekDayConverter::class
+    WeekDayConverter::class,
+    IntegerListConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun rootDao(): RootDao

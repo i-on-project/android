@@ -15,7 +15,7 @@ import java.net.URI
 data class Course(
     @PrimaryKey val id: Int,
     val acronym: String,
-    val name: String,
+    val name: String?,
     val classesUri: URI?, //This is the URI used to navigate to this course classes
     val selfUri: URI,
     override var workerId: Int = 0

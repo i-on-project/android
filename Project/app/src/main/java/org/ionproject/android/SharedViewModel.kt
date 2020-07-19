@@ -1,8 +1,9 @@
 package org.ionproject.android
 
-import androidx.lifecycle.*
-import org.ionproject.android.common.ConnectivityObserver
-import org.ionproject.android.common.ObservableConnectivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.Root
 import java.net.URI
@@ -12,27 +13,7 @@ import java.net.URI
  * the other approach is to use arguments, but that approach is not recommended by the android
  * docs if you are sharing objects.
  */
-class SharedViewModel(private val observableConnectivity: ObservableConnectivity) : ViewModel() {
-
-    init {
-        observableConnectivity.startObservingConnection(viewModelScope)
-    }
-
-    private var hasWarned = false
-    fun observeConnection(
-        lifecycleOwner: LifecycleOwner,
-        connectivityObserver: ConnectivityObserver
-    ) {
-        if (!hasWarned && !observableConnectivity.hasConnectivity()) {
-            hasWarned = true
-            connectivityObserver(false)
-        }
-        observableConnectivity.observe(lifecycleOwner) {
-            if (!hasWarned) hasWarned = true
-            connectivityObserver(it)
-        }
-
-    }
+class SharedViewModel : ViewModel() {
 
 
     // Search text used to pass data from search bar to searchResultFragment
