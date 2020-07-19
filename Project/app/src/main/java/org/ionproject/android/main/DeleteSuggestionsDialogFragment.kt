@@ -1,4 +1,4 @@
-package org.ionproject.android
+package org.ionproject.android.main
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import org.ionproject.android.R
 
 class DeleteSuggestionsDialogFragment : DialogFragment() {
     // Instance of the interface to deliver action events

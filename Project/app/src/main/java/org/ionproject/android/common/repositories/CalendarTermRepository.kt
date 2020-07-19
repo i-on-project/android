@@ -60,7 +60,7 @@ class CalendarTermRepository(
         }
 
     suspend fun getMostRecentCalendarTerm(calendarTermsUri: URI): CalendarTerm? =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             val calendarTerms = getAllCalendarTerm(calendarTermsUri)
             if (calendarTerms.count() > 0) {
                 var mostRecentCalendarTerm = calendarTerms.first()

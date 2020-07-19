@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.dto.SirenEntity
@@ -8,13 +9,16 @@ import org.ionproject.android.common.model.SearchResultType
 import org.ionproject.android.search.toSearchResults
 import java.net.URI
 
-class SearchRepository(private val ionWebAPI: IIonWebAPI) {
+class SearchRepository(
+    private val ionWebAPI: IIonWebAPI,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     /**
      * Requests all resources which match the [query] from the uri [Uri]
      */
     suspend fun search(searchUri: URI, query: String, page: Int, limit: Int) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             ionWebAPI.getFromURI(
                 searchUri.addQueryStrings(
                     "query" to listOf(query),

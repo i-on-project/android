@@ -54,7 +54,6 @@ class ScheduleGridAdapter(
             val currColumn = (position + NUMBER_OF_COLUMNS) % NUMBER_OF_COLUMNS
             val lectures = model.lecturesByDayOfWeek
 
-            //TODO: Maybe try to improve this code
             if (lectures.isNotEmpty()) {
                 val lecturesByDayOfWeek = lectures[currColumn - 1].toList()
                 val lecturesInInterval =

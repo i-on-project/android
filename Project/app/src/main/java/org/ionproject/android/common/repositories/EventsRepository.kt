@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.EventsDao
@@ -17,7 +18,8 @@ import java.net.URI
 class EventsRepository(
     private val eventsDao: EventsDao,
     private val ionWebAPI: IIonWebAPI,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     /**
      * Obtains all events directly from the API or from the local Db
@@ -27,7 +29,7 @@ class EventsRepository(
      *
      * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
      */
-    suspend fun getEvents(uri: URI) = withContext(Dispatchers.IO) {
+    suspend fun getEvents(uri: URI) = withContext(dispatcher) {
         var events = eventsDao.getEventsByUri(uri)
 
         if (events == null) {
@@ -52,7 +54,7 @@ class EventsRepository(
      *
      * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
      */
-    suspend fun forceGetEvents(uri: URI) = withContext(Dispatchers.IO) {
+    suspend fun forceGetEvents(uri: URI) = withContext(dispatcher) {
         val eventsLocal = eventsDao.getEventsByUri(uri)
         val eventsServer = ionWebAPI.getFromURI(uri, SirenICalendar::class.java).toEventsSummary()
 

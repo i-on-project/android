@@ -81,23 +81,24 @@ class FavoriteRepository(
      * @return a LiveData list of favorites from a specific term
      */
     suspend fun suspendGetFavoritesFromTerm(calendarTerm: CalendarTerm) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             favoriteDao.suspendFindFavoritesFromCalendarTerm(calendarTerm.name)
         }
 
     /**
      * Checks if a favorite exist
      */
-    suspend fun isClassFavorite(classSection: ClassSection): Boolean {
-        if (favoriteDao.favoriteExists(
-                classSection.courseAcronym,
-                classSection.calendarTerm,
-                classSection.id
-            ) > 0
-        )
-            return true
-        return false
-    }
+    suspend fun isClassFavorite(classSection: ClassSection) =
+        withContext(dispatcher) {
+            if (favoriteDao.favoriteExists(
+                    classSection.courseAcronym,
+                    classSection.calendarTerm,
+                    classSection.id
+                ) > 0
+            )
+                return@withContext true
+            return@withContext false
+        }
 
     /**
      * Adds a favorite to the local database

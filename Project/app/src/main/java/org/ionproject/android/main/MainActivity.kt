@@ -24,7 +24,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-import org.ionproject.android.*
+import org.ionproject.android.ExceptionHandlingActivity
+import org.ionproject.android.R
+import org.ionproject.android.SharedViewModel
+import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root

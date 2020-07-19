@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.RootDao
@@ -21,11 +22,12 @@ private val ROOT_URI_V0 = URI("/")
 class RootRepository(
     private val rootResourceDao: RootDao,
     private val ionWebAPI: IIonWebAPI,
-    private val workerManagerFacade: WorkerManagerFacade
+    private val workerManagerFacade: WorkerManagerFacade,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun getJsonHome() =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             // Verify if root resource is stored locally
             var rootResource = rootResourceDao.getRootResource()
 
