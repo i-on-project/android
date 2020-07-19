@@ -139,3 +139,9 @@ fun List<SubEntity>.findEmbeddedEntityByRel(rel: String): EmbeddedEntity? =
 
 fun List<SubEntity>.findEmbeddedLinkByRel(rel: String): EmbeddedLink? =
     this.find { it is EmbeddedEntity && it.rel.contains(rel) } as? EmbeddedLink
+
+fun List<SubEntity>.findEmbeddedEntitiesByRel(rel: String): List<EmbeddedEntity> =
+    this.mapNotNull { if (it is EmbeddedEntity && it.rel.contains(rel)) it else null }
+
+fun List<SubEntity>.findEmbeddedLinksByRel(rel: String): List<EmbeddedLink> =
+    this.mapNotNull { if (it is EmbeddedLink && it.rel.contains(rel)) it else null }
