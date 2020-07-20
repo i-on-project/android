@@ -14,13 +14,13 @@
 # Android
 Repository for the Android i-on component.
 
-I-on Android is a mobile application which presents academic information retrieved from the Web API made available from I-on Core project.
+I-on Android is a mobile application which presents academic information retrieved from the Web API made available from i-on Core project.
 
 # Testing the application
 To test the application one must:
 
 1. Contact the developers via their student emails to obtain the file google-services.json and the authorization token for the read API because they cannot be committed to the repository for security reasons.
-  The authorization token can be also obtained from ion-Core's developers.
+  The authorization token can be also obtained from i-on Core's developers.
 
 2. Once google-services.json has been obtained it has to placed in the folder: Project/app
 
