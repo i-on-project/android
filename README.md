@@ -37,13 +37,14 @@ const val WEB_API_AUTHORIZATION_TOKEN = "ASK_THE_DEVELOPERS" (replace with autho
     
   ```kotlin
   val retrofit = Retrofit.Builder()
-              .baseUrl("https://host1.dev.ionproject.org")
-              .addConverterFactory(ScalarsConverterFactory.create())
-              .build()
+            .baseUrl(WEB_API_HOST)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
 
   val service: IonService = retrofit.create(IonService::class.java)
   val webAPI = IonWebAPI(service, ionMapper)
   ```
+  
 5. Finally open the project in the latest version of Android Studio and run the LoadingActivity on an emulator or your phone.
 
 **IMPORTANT:** To run the application the phone or emulator MUST support at least the version 21 of the Android SDK.
