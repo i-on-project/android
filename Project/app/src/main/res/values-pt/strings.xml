@@ -88,13 +88,13 @@
     <string name="toast_message_main">Todas as sugestões foram apagadas!</string>
     <string name="label_no_results">Não há resultados</string>
     <string name="title_settings">Definições</string>
-    <string name="textView_settings_calendar_term">Semestre de calendário do Horário:</string>
+    <string name="textView_settings_calendar_term">Semestre de calendário\n do Horário:</string>
     <string name="label_list_event_location">Localização:</string>
     <string name="error_message_exception_no_connectivity_handler_fragment">Não é possível aceder a esta funcionalidade porque o dispositivo não tem acesso à internet!</string>
     <string name="title_warning">Aviso!</string>
     <string name="label_no_connectivity_main_activity">O dispositivo não tem conectividade para a internet, portanto algumas das funcionalidades da aplicação estarão limitadas até que seja estabelecida uma conexão.</string>
     <string name="label_connection_reestablished_main_activity">Foi estabelecida uma conexão no dispositivo logo as funcionalidades estão novamente a funcionar =)</string>
-    <string name="label_no_connectivity_loading">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades.</string>
+    <string name="label_no_connectivity_loading">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades offline.</string>
     <string name="label_error_loading">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
     <string name="error_message_exception_resource_not_available_handler_fragment">Este recurso não está disponível :(</string>
     <string name="close">fechar</string>

@@ -82,7 +82,6 @@ class MainActivity : ExceptionHandlingActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        observeConnectivity()
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(ROOT_KEY)
         if (root != null) {
@@ -112,10 +111,18 @@ class MainActivity : ExceptionHandlingActivity(),
     }
 
     /**
+     * Start observing the connection
+     */
+    override fun onStart() {
+        super.onStart()
+        observeConnectivity()
+    }
+
+    /**
      * Stops observing the device connectivity
      */
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         IonApplication.connectivityObservable.stopObserving()
     }
 

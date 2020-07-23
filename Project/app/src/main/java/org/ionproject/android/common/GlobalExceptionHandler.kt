@@ -58,8 +58,16 @@ class GlobalExceptionHandler {
                     crashlytics.log("Exception $e was caught twice!")
                     crashlytics.recordException(e)
                 } else {
-                    // Logging request id when the
+                    if (e is Error) {
+                        // If the throwable is an Error, then the runtime might be unstable
+                        // therefore we cannot use our custom handler, the application has to be closed
+                        // The default exception handler will send a "fatal" error to crashlytics
+                        defaultExceptionHandler(t, e)
+                        return@setDefaultUncaughtExceptionHandler
+                    }
+                    // Logging request id
                     if (e is HttpException) {
+
                         val requestId = e.response()?.headers()?.get("Request-Id")
                         requestId?.let {
                             Log.e(
