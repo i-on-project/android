@@ -24,10 +24,10 @@ abstract class ExceptionHandlingFragment : Fragment() {
         findNavController().navigateUp()
 
         val errorMessage = when (throwable) {
-            is JsonProcessingException -> this.resources.getString(R.string.error_message_exception_handler_fragment)
-            is HttpException -> this.resources.getString(R.string.error_message_exception_resource_not_available_handler_fragment)
-            is IOException -> this.resources.getString(R.string.error_message_exception_no_connectivity_handler_fragment)
-            else -> this.resources.getString(R.string.error_message_exception_handler_fragment)
+            is JsonProcessingException -> this.resources.getString(R.string.error_message_exception_all)
+            is HttpException -> this.resources.getString(R.string.error_message_exception_resource_not_available_all)
+            is IOException -> this.resources.getString(R.string.error_message_exception_no_connectivity_all)
+            else -> this.resources.getString(R.string.error_message_exception_all)
         }
 
         Toast.makeText(this.context, errorMessage, Toast.LENGTH_SHORT).show()

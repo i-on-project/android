@@ -24,14 +24,14 @@ class DeleteSuggestionsDialogFragment : DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setMessage(R.string.dialog_main)
+            builder.setMessage(R.string.dialog_delete_search_suggestions_message_main)
                 .setPositiveButton(
-                    R.string.dialog_button_yes,
+                    R.string.dialog_delete_search_suggestions_button_yes_main,
                     DialogInterface.OnClickListener { _, _ ->
                         listener.onConfirmListener(this)
                     })
                 .setNegativeButton(
-                    R.string.dialog_button_cancel,
+                    R.string.dialog_delete_search_suggestions_button_cancel_main,
                     DialogInterface.OnClickListener { _, _ ->
 
                     })

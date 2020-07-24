@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/label_curricular_terms"
+            android:text="@string/label_curricular_terms_programme_details"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_18"
             android:textStyle="bold"

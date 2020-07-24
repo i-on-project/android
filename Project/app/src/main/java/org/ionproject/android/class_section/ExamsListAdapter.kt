@@ -35,7 +35,7 @@ class ExamsListAdapter(
 
         fun bindTo(exam: Exam) {
             examTextView.text = view.resources.getString(
-                R.string.placeholder_exam,
+                R.string.placeholder_exam_all,
                 exam.summary,
                 exam.endDate.day,
                 exam.endDate.month,

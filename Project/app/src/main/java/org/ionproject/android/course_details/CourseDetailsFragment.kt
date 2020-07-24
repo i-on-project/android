@@ -83,7 +83,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         viewModel.getCourseDetails(courseDetailsUri) {
             // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
             courseFullName.text = it.name
-                ?: resources.getString(R.string.label_name_not_available)
+                ?: resources.getString(R.string.label_name_not_available_all)
             courseAcronym.text = it.acronym
             setupCourseClassesList(recyclerview_course_details_classes_list)
             setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)

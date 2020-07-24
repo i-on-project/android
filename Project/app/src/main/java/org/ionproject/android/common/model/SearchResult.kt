@@ -84,7 +84,7 @@ class ProgrammeDetailsResult(
 enum class SearchResultType {
     COURSE {
         override fun getNameFromResource(resources: Resources) =
-            resources.getString(R.string.label_course)
+            resources.getString(R.string.label_course_class_section)
 
         override fun toString(): String {
             return "course"

@@ -44,7 +44,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="@dimen/all_margin_30"
             android:button="@drawable/selector_favorite_24dp"
-            android:contentDescription="@string/imageView_favorite"
+            android:contentDescription="@string/imageView_favorite_class_section"
             app:buttonTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:id="@+id/textview_class_section_class_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_class"
+            android:text="@string/label_class_class_section"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_25"
             android:textStyle="bold"
@@ -82,7 +82,7 @@
             android:id="@+id/textview_class_section_label_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_course"
+            android:text="@string/label_course_class_section"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_18"
             app:layout_constraintBottom_toTopOf="@id/textview_class_section_label_calendar_term"
@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="@string/label_calendar_termV2"
+            android:text="@string/label_calendar_term_class_section"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_18"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +150,7 @@
                 android:paddingTop="@dimen/sections_padding_8"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
-                android:text="@string/label_lectures"
+                android:text="@string/label_lectures_all"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/all_text_18" />
 
@@ -173,7 +173,7 @@
                 android:paddingTop="@dimen/sections_padding_8"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
-                android:text="@string/label_exams"
+                android:text="@string/label_exams_all"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/all_text_18" />
 
@@ -196,7 +196,7 @@
                 android:paddingTop="@dimen/sections_padding_8"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
-                android:text="@string/label_todo"
+                android:text="@string/label_todo_all"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/all_text_18" />
 
@@ -220,7 +220,7 @@
                 android:paddingTop="@dimen/sections_padding_8"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
-                android:text="@string/label_journals"
+                android:text="@string/label_journals_all"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/all_text_18" />
 

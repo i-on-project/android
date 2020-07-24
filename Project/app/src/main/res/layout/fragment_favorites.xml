@@ -23,7 +23,7 @@
             android:id="@+id/textview_favorites_term_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_calendar_term"
+            android:text="@string/label_calendar_term_course_details"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_18"
             android:textStyle="bold" />

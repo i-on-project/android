@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">i-on Android</string>
+    <string name="app_label" translatable="false">i-on</string>
+
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_schedule">Schedule</string>
@@ -14,115 +16,108 @@
     <string name="title_course_details">Course Details</string>
     <string name="title_programmes">Programmes</string>
     <string name="title_programme_details">Programme Details</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_warning_all">Warning!</string>
     <string name="title_info" translatable="false">Info</string>
+    <string name="title_oops_error" translatable="false">Oops!</string>
 
-    <string name="optional_courses">Optional Courses</string>
-    <string name="mandatory_courses">Mandatory Courses</string>
-    <string name="coordinator">Coordinator</string>
+    <string name="button_label_optional_courses">Optional Courses</string>
+    <string name="button_label_mandatory_courses">Mandatory Courses</string>
 
     <string name="label_programme">Programme</string>
-    <string name="label_term">Curricular term:</string>>
-    <string name="label_course">Course</string>
-    <string name="label_coordinator">Coordinator:</string>
-    <string name="label_mandatory">Mandatory:</string>
-    <string name="label_credits">Credits:</string>
-    <string name="label_year">Year:</string>
-    <string name="label_curricular_term">Curricular Term:</string>
-    <string name="label_classes">Classes:</string>
-    <string name="label_enroll">Enroll:</string>
-    <string name="label_class">Class</string>
-    <string name="label_id" translatable="false">ID:</string>
-    <string name="label_events">Events:</string>
-    <string name="label_teacher">Teacher:</string>
-    <string name="label_exams">Exams</string>
-    <string name="label_favorites_placeholder" translatable="false">%1$s - %2$s</string>
-    <string name="label_calendar_term">Calendar term</string>
-    <string name="label_lectures">Lectures</string>
-    <string name="label_calendar_termV2">Calendar term:</string>
-    <string name="label_favorites_delete_message">Successfully deleted favorite!</string>
-    <string name="label_favorite_undo">Undo</string>
-    <string name="label_curricular_term_placeholder">%1$s Term</string>
-    <string name="label_list_event_week_Day">Week day:</string>
-    <string name="label_list_event_duration">Duration:</string>
-    <string name="label_list_event_starts">Starts:</string>
-    <string name="label_list_event_ends">Ends:</string>
-    <string name="label_list_event_delivery">Delivery:</string>
-    <string name="label_todo">Todos</string>
-    <string name="label_journals">Journals</string>
+    <string name="label_course_class_section">Course</string>
+    <string name="label_class_class_section">Class</string>
+    <string name="label_events_calendar">Events:</string>
+    <string name="label_exams_all">Exams</string>
 
-    <string name="enroll_btn">Enroll</string>
-    <string name="teacher_name_start" translatable="false">Prof.</string>
-    <string name="app_label" translatable="false">i-on</string>
-    <string name="search_hint">Search…</string>
-    <string name="label_semester">Semester</string>
-    <string name="imageView_favorite" translatable="false">favorite_icon</string>
-    <string name="imageButton_clear_recent_search">Clear recent search</string>
-    <string name="monday_short">MON</string>
-    <string name="tuesday_short">TUE</string>
-    <string name="wednesday_short">WED</string>
-    <string name="thursday_short">THU</string>
-    <string name="friday_short">FRI</string>
-    <string name="saturday_short">SAT</string>
-    <string name="sunday_short">SUN</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="label_favorites_placeholder_favorites" translatable="false">%1$s - %2$s</string>
+    <string name="label_calendar_term_course_details">Calendar term</string>
+    <string name="label_calendar_term_class_section">Calendar term:</string>
+    <string name="label_curricular_terms_programme_details">Curricular terms</string>
+    <string name="label_favorites_delete_message_favorites">Successfully deleted favorite!</string>
+    <string name="label_favorite_undo_favorites">Undo</string>
+    <string name="label_list_event_week_day_calendar">Week day:</string>
+    <string name="label_list_event_duration_calendar">Duration:</string>
+    <string name="label_list_event_starts_calendar">Starts:</string>
+    <string name="label_list_event_ends_calendar">Ends:</string>
+    <string name="label_list_event_delivery_calendar">Delivery:</string>
+    <string name="label_lectures_all">Lectures</string>
+    <string name="label_todo_all">Todos</string>
+    <string name="label_journals_all">Journals</string>
+    <string name="label_semester_all">Semester</string>
+    <string name="label_about_info">About</string>
+    <string name="label_personal_data_info">Personal data</string>
+    <string name="label_errors_improvement_info">Errors and improvements</string>
 
-    <string name="label_schedule_hours_placeholder" translatable="false">%1$s - %2$s</string>>
-    <string name="placeholder_lecture" translatable="false">%1$s: %2$s %3$s:%4$sh - %5$s:%6$sh</string>
-    <string name="placeholder_exam" translatable="false">%1$s: %2$d/%3$d/%4$d</string>
-    <string name="placeholder_todo" translatable="false">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
-    <string name="placeholder_interval" translatable="false">%1$s:%2$sh - %3$s:%4$sh</string>
-    <string name="placeholder_time" translatable="false">%1$s/%2$s/%3$s %4$s:%5$sh</string>
+    <string name="label_export_all">export</string>
+    <string name="label_button_close_error">close</string>
+    <string name="label_outdated_app_all">Application seems to be outdated :(</string>
+    <string name="label_loading_i_on_loading">Loading i-on</string>
+    <string name="label_name_not_available_all">Name not available</string>
+    <string name="label_list_event_location_calendar">Location:</string>
+
+    <string name="label_no_connectivity_main">The device does not have connectivity at the moment, therefore the functionalities will be limited until there is connection available.</string>
+    <string name="label_no_connectivity_loading_error">The i-on services might be down or the device does not have connectivity at the moment and you don\'t have any local data saved for some functionalities to work.</string>
+    <string name="label_error_loading_error">We\'re sorry but it seems that an error occurred. Try restarting the application.</string>
+
+    <string name="label_monday_short_calendar">MON</string>
+    <string name="label_tuesday_short_calendar">TUE</string>
+    <string name="label_wednesday_short_calendar">WED</string>
+    <string name="label_thursday_short_calendar">THU</string>
+    <string name="label_friday_short_calendar">FRI</string>
+    <string name="label_saturday_short_calendar">SAT</string>
+    <string name="label_sunday_short_calendar">SUN</string>
+
+    <string name="label_monday_schedule">Monday</string>
+    <string name="label_tuesday_schedule">Tuesday</string>
+    <string name="label_wednesday_schedule">Wednesday</string>
+    <string name="label_thursday_schedule">Thursday</string>
+    <string name="label_friday_schedule">Friday</string>
+    <string name="label_saturday_schedule">Saturday</string>
+    <string name="label_sunday_schedule">Sunday</string>
+
+    <string name="label_january_calendar">January</string>
+    <string name="label_february_calendar">February</string>
+    <string name="label_march_calendar">March</string>
+    <string name="label_april_calendar">April</string>
+    <string name="label_may_calendar">May</string>
+    <string name="label_june_calendar">June</string>
+    <string name="label_july_calendar">July</string>
+    <string name="label_august_calendar">August</string>
+    <string name="label_october_calendar">October</string>
+    <string name="label_september_calendar">September</string>
+    <string name="label_november_calendar">November</string>
+    <string name="label_december_calendar">December</string>
+
+    <string name="hint_search_main">Search…</string>
+    <string name="imageView_favorite_class_section" translatable="false">favorite_icon</string>
+    <string name="imageButton_clear_recent_search_main">Clear recent search</string>
+    <string name="toast_search_suggestions_deleted_message_main">All Search Suggestions have been deleted!</string>
+    <string name="textView_calendar_term_settings">Calendar Term \n Schedule:</string>
+
+    <string name="placeholder_curricular_term_programme_details">%1$s Term</string>
+    <string name="placeholder_schedule_hours_schedule" translatable="false">%1$s - %2$s</string>>
+    <string name="placeholder_lecture_all" translatable="false">%1$s: %2$s %3$s:%4$sh - %5$s:%6$sh</string>
+    <string name="placeholder_exam_all" translatable="false">%1$s: %2$d/%3$d/%4$d</string>
+    <string name="placeholder_todo_all" translatable="false">%1$s: %2$d/%3$d/%4$d %5$s:%6$sh</string>
+    <string name="placeholder_interval_calendar" translatable="false">%1$s:%2$sh - %3$s:%4$sh</string>
+    <string name="placeholder_time_calendar" translatable="false">%1$s/%2$s/%3$s %4$s:%5$sh</string>
     <string name="placeholder_schedule" translatable="false">%1$s - %2$s</string>
 
-    <string name="january">January</string>
-    <string name="february">February</string>
-    <string name="march">March</string>
-    <string name="april">April</string>
-    <string name="may">May</string>
-    <string name="june">June</string>
-    <string name="july">July</string>
-    <string name="august">August</string>
-    <string name="october">October</string>
-    <string name="september">September</string>
-    <string name="november">November</string>
-    <string name="december">December</string>
+    <string name="warning_no_more_classes_all">There are no more classes left this semester</string>
+    <string name="warning_due_date_has_passed_all">The due date of this todo has already passed!</string>
+    <string name="warning_start_date_has_passed_all">The start date of this exam has already passed</string>
 
-    <string name="label_export">export</string>
-    <string name="warning_no_more_classes">There are no more classes left this semester</string>
-    <string name="label_outdated_app">Application seems to be outdated :(</string>
-    <string name="loading_i_on">Loading i-on</string>
-    <string name="warning_due_date_has_passed">The due date of this todo has already passed!</string>
-    <string name="warning_start_date_has_passed">The start date of this exam has already passed</string>
-    <string name="error_message_exception_handler_fragment">Oops, there was an error =(</string>
-    <string name="label_curricular_terms">Curricular terms</string>
-    <string name="dialog_main">Are you sure you want to delete all search suggestions?</string>
-    <string name="dialog_button_yes">Yes</string>
-    <string name="dialog_button_cancel">Cancel</string>
-    <string name="toast_message_main">All Search Suggestions have been deleted!</string>
-    <string name="label_no_results">No results</string>
-    <string name="title_settings">Settings</string>
-    <string name="textView_settings_calendar_term">Calendar Term \n Schedule:</string>
-    <string name="label_list_event_location">Location:</string>
-    <string name="error_message_exception_no_connectivity_handler_fragment">Cannot access this functionality because there is no connectivity!</string>
-    <string name="label_no_connectivity_main_activity">The device does not have connectivity at the moment, therefore the functionalities will be limited until there is connection available.</string>
-    <string name="label_no_connectivity_loading">The i-on services might be down or the device does not have connectivity at the moment and you don\'t have any local data saved for some functionalities to work offline.</string>
-    <string name="title_warning">Warning!</string>
-    <string name="label_connection_reestablished_main_activity">Connection was re-established, all app functionalities are now working =)</string>
-    <string name="label_error_loading">We\'re sorry but it seems that an error occurred. Try restarting the application.</string>
-    <string name="error_message_exception_resource_not_available_handler_fragment">Resource not available :(</string>
-    <string name="oops" translatable="false">Oops!</string>
-    <string name="close">close</string>
-    <string name="label_name_not_available">Name not available</string>
-    <string name="personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is unninstalled the information is deleted.</string>
-    <string name="about_info">i-on Android is a mobile application developed by members of the i-on iniciative. The iniciative was created with the goal of improving some academic aspects in the Polytechnic Institute of Engineering of Lisbon. The iniciative was created by teachers and students. All the code from this application and the rest of the projects from the iniciative is public so feel free to check it out by clicking the i-on logo below.</string>
-    <string name="title_about">About</string>
-    <string name="title_personal_data">Personal data</string>
-    <string name="title_errors_improvement">Errors and improvements</string>
+    <string name="dialog_delete_search_suggestions_message_main">Are you sure you want to delete all search suggestions?</string>
+    <string name="dialog_delete_search_suggestions_button_yes_main">Yes</string>
+    <string name="dialog_delete_search_suggestions_button_cancel_main">Cancel</string>
+
+    <string name="error_message_exception_all">Oops, there was an error =(</string>
+    <string name="error_message_exception_no_connectivity_all">Cannot access this functionality because there is no connectivity!</string>
+    <string name="error_message_exception_resource_not_available_all">Resource not available :(</string>
     <string name="errors_improvement_info">As with all software, this application is in constant development which means there might be errors that have to be fixed and improvements that can be made. The i-on Android team is doing its best to detect all the issues but, as you may realize, it\'s not an easy task so please contact us on via our github in case you found an error or if you feel there is a feature or improvement that should be added.</string>
+
+    <string name="message_personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is unninstalled the information is deleted.</string>
+    <string name="message_about_info">i-on Android is a mobile application developed by members of the i-on iniciative. The iniciative was created with the goal of improving some academic aspects in the Polytechnic Institute of Engineering of Lisbon. The iniciative was created by teachers and students. All the code from this application and the rest of the projects from the iniciative is public so feel free to check it out by clicking the i-on logo below.</string>
+
 </resources>

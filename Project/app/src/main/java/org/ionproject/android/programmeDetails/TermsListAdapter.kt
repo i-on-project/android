@@ -32,7 +32,7 @@ class TermsListAdapter(private val terms: Int, private val sharedViewModel: Shar
 
         fun bind(term: Int) {
             button.text = view.resources.getString(
-                R.string.label_curricular_term_placeholder,
+                R.string.placeholder_curricular_term_programme_details,
                 term.toString()
             )
 

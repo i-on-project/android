@@ -8,13 +8,13 @@ import org.ionproject.android.R
  * this way, when the application language is altered, so is the month
  */
 enum class WeekDay(private val weekDayResId: Int) {
-    MONDAY(R.string.monday),
-    TUESDAY(R.string.tuesday),
-    WEDNESDAY(R.string.wednesday),
-    THURSDAY(R.string.thursday),
-    FRIDAY(R.string.friday),
-    SATURDAY(R.string.saturday),
-    SUNDAY(R.string.sunday);
+    MONDAY(R.string.label_monday_schedule),
+    TUESDAY(R.string.label_tuesday_schedule),
+    WEDNESDAY(R.string.label_wednesday_schedule),
+    THURSDAY(R.string.label_thursday_schedule),
+    FRIDAY(R.string.label_friday_schedule),
+    SATURDAY(R.string.label_saturday_schedule),
+    SUNDAY(R.string.label_sunday_schedule);
 
     fun getName(ctx: Context) = ctx.resources.getString(weekDayResId)
 

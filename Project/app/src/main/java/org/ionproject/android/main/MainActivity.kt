@@ -90,8 +90,8 @@ class MainActivity : ExceptionHandlingActivity(),
      */
     private fun observeConnectivity() {
         val connectivityLostDialog = AlertDialog.Builder(this)
-            .setTitle(resources.getString(R.string.title_warning))
-            .setMessage(resources.getString(R.string.label_no_connectivity_main_activity))
+            .setTitle(resources.getString(R.string.title_warning_all))
+            .setMessage(resources.getString(R.string.label_no_connectivity_main))
             .setPositiveButton(android.R.string.ok) { _, _ -> }
             .create()
 
@@ -328,7 +328,11 @@ class MainActivity : ExceptionHandlingActivity(),
             SearchSuggestionsProvider.AUTHORITY,
             SearchSuggestionsProvider.MODE
         ).clearHistory()
-        Toast.makeText(this, resources.getString(R.string.toast_message_main), Toast.LENGTH_SHORT)
+        Toast.makeText(
+            this,
+            resources.getString(R.string.toast_search_suggestions_deleted_message_main),
+            Toast.LENGTH_SHORT
+        )
             .show()
     }
 
