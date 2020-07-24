@@ -49,20 +49,19 @@
     </LinearLayout>
 
     <!-- Bottom Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintlayout_course_details_bottom_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="10dp">
         <!-- Term selection Section -->
         <LinearLayout
             android:id="@+id/linearLayout_course_details_term_selection_section"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/textview_course_details_term_label"
@@ -71,30 +70,21 @@
                 android:text="@string/label_calendar_term_course_details"
                 android:textColor="@color/secondaryColor"
                 android:textSize="@dimen/all_text_18"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spinner_course_details_calendar_terms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/textview_course_details_term_label"
-                app:layout_constraintTop_toTopOf="@+id/textview_course_details_term_label"
                 tools:listitem="@android:layout/simple_spinner_dropdown_item" />
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_course_details_classes_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout_course_details_term_selection_section"
             tools:listitem="@layout/list_item_classes" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

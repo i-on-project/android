@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/calendar_terms_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="@dimen/all_list_item_padding_20">
 
     <TextView
         android:id="@+id/textview_curricular_terms_list_item_semester_name"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:text="Semester name"
-
         android:textColor="@color/secondaryColor"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="17sp"/>
 
     <TextView
         android:id="@+id/textview_curricular_terms_list_item_semester_year"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-        android:text="Semester year"
+        android:text="Semester acronym"
+        android:textColor="@color/secondaryLightColor" />
 
-        android:textColor="@color/secondaryLightColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_curricular_terms_list_item_semester_name" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

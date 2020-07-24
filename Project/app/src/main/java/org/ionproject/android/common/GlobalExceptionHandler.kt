@@ -38,7 +38,7 @@ class GlobalExceptionHandler {
         defaultExceptionHandler =
             if (prevDefaultUncaughtExceptionHandler != null) { t: Thread, e: Throwable ->
                 prevDefaultUncaughtExceptionHandler.uncaughtException(t, e)
-            } else { t: Thread, e: Throwable ->
+            } else { _: Thread, e: Throwable ->
                 // Application MUST be closed
                 crashlytics.recordException(e)
                 android.os.Process.killProcess(android.os.Process.myPid())

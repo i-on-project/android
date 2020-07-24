@@ -14,14 +14,15 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"></ProgressBar>
+        android:indeterminate="true"/>
 
 
     <!-- Top Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintlayout_programme_details_top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/primaryLightColor"
         android:padding="@dimen/fragments_padding_20">
 
@@ -32,9 +33,7 @@
             android:text="Programme full name"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_25"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textview_programme_details_acronym"
@@ -42,17 +41,15 @@
             android:layout_height="wrap_content"
             android:text="Programme Acronym"
             android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/all_text_18"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_programme_details_name" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="@dimen/all_text_18" />
+    </LinearLayout>
 
     <!-- Bottom Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintlayout_programme_details_bottom_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="@dimen/fragments_padding_10">
 
         <TextView
@@ -63,17 +60,13 @@
             android:text="@string/label_curricular_terms_programme_details"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_18"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_programme_details_terms"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_programme_details_title_terms" />
+            android:layout_height="wrap_content" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

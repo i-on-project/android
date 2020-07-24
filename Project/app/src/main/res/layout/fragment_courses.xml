@@ -13,7 +13,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"></ProgressBar>
+        android:indeterminate="true"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/fragments_padding_10"
         android:layout_marginRight="@dimen/fragments_padding_10"
-        android:text="@string/button_label_optional_courses"></Button>
+        android:text="@string/button_label_optional_courses"/>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>
