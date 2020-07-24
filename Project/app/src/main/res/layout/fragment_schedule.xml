@@ -139,5 +139,4 @@
         app:spanCount="8"
         tools:listitem="@layout/grid_item_schedule_hours_minutes" />
 
-
 </LinearLayout>
