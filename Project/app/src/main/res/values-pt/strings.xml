@@ -16,20 +16,10 @@
     <string name="title_programme_details">Detalhes do Curso</string>
     <string name="button_label_optional_courses">Unidades curriculares opcionais</string>
     <string name="button_label_mandatory_courses">Unidades curriculares obrigatórias</string>
-    <string name="coordinator">Coordenador</string>
     <string name="label_programme">Curso</string>
-    <string name="label_term">Semestre Curricular:</string>
     <string name="label_course_class_section">Unidade Curricular</string>
-    <string name="label_coordinator">Coordenador:</string>
-    <string name="label_mandatory">Obrigatório:</string>
-    <string name="label_credits">Créditos:</string>
-    <string name="label_year">Ano:</string>
-    <string name="label_curricular_term">Semestre Curricular:</string>
-    <string name="label_classes">Turmas:</string>
-    <string name="label_enroll_class_section">Matricular:</string>
     <string name="label_class_class_section">Turma</string>
     <string name="label_events_calendar">Eventos:</string>
-    <string name="label_teacher">Professor:</string>
     <string name="label_exams_all">Exames</string>
     <string name="label_calendar_term_course_details">Semestre de Calendário</string>
     <string name="label_lectures_all">Aulas</string>
@@ -44,7 +34,6 @@
     <string name="label_list_event_delivery_calendar">Entrega:</string>
     <string name="label_todo_all">Tarefas</string>
     <string name="label_journals_all">Notícias</string>
-    <string name="enroll_btn">Matricular</string>
     <string name="hint_search_main">Pesquisar...</string>
     <string name="label_semester_all">Semestre</string>
     <string name="imageButton_clear_recent_search_main">Limpar pesquisas recentes</string>
@@ -86,14 +75,12 @@
     <string name="dialog_delete_search_suggestions_button_yes_main">Sim</string>
     <string name="dialog_delete_search_suggestions_button_cancel_main">Cancelar</string>
     <string name="toast_search_suggestions_deleted_message_main">Todas as sugestões foram apagadas!</string>
-    <string name="label_no_results_search">Não há resultados</string>
     <string name="title_settings">Definições</string>
     <string name="textView_calendar_term_settings">Semestre de calendário do Horário:</string>
     <string name="label_list_event_location_calendar">Localização:</string>
     <string name="error_message_exception_no_connectivity_all">Não é possível aceder a esta funcionalidade porque o dispositivo não tem acesso à internet!</string>
     <string name="title_warning_all">Aviso!</string>
     <string name="label_no_connectivity_main">O dispositivo não tem conectividade para a internet, portanto algumas das funcionalidades da aplicação estarão limitadas até que seja estabelecida uma conexão.</string>
-    <string name="label_connection_reestablished_main_activity">Foi estabelecida uma conexão no dispositivo logo as funcionalidades estão novamente a funcionar =)</string>
     <string name="label_no_connectivity_loading_error">O serviços i-on podem estar offline de momento ou o dispositivo não tem conectivitidade neste momento e não existem dados guardados localmente que permitam disponibilizar algumas funcionalidades.</string>
     <string name="label_error_loading_error">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
     <string name="error_message_exception_resource_not_available_all">Este recurso não está disponível :(</string>

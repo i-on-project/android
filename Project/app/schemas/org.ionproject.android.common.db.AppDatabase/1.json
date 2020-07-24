@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "be1659b34ee1a416ada6634137003e77",
+    "identityHash": "16b637cef788da062d94d7c81a91394b",
     "entities": [
       {
         "tableName": "Root",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`programmesUri` TEXT NOT NULL, `calendarTermsUri` TEXT NOT NULL, `searchUri` TEXT NOT NULL, `rootUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`rootUri`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`programmesUri` TEXT NOT NULL, `calendarTermsUri` TEXT NOT NULL, `searchUri` TEXT, `rootUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`rootUri`))",
         "fields": [
           {
             "fieldPath": "programmesUri",
@@ -24,7 +24,7 @@
             "fieldPath": "searchUri",
             "columnName": "searchUri",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "rootUri",
@@ -928,7 +928,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be1659b34ee1a416ada6634137003e77')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16b637cef788da062d94d7c81a91394b')"
     ]
   }
 }

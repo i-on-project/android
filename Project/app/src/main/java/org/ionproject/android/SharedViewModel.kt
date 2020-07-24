@@ -44,26 +44,26 @@ class SharedViewModel : ViewModel() {
      * [courseDetailsUri] is used to pass the uri from [org.ionproject.android.courses.CoursesFragment]
     to [org.ionproject.android.course_details.CourseDetailsFragment] which is required to obtain the CourseDetails.
      */
-    lateinit var courseDetailsUri: URI
+    var courseDetailsUri: URI? = null
 
     /**
      * [classSectionUri] is used to pass the uri from [org.ionproject.android.course_details.CourseDetailsFragment]
     and [org.ionproject.android.favorites.FavoritesFragment] to [org.ionproject.android.class_section.ClassSectionFragment]
     which is required to obtain the ClassSection.
      */
-    lateinit var classSectionUri: URI
+    var classSectionUri: URI? = null
 
     /**
      * [programmeDetailsUri] is used to pass the uri from [org.ionproject.android.programmes.ProgrammesFragment]
     to [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment] which is required to obtain the ProgrammeDetails.
      */
-    lateinit var programmeDetailsUri: URI
+    var programmeDetailsUri: URI? = null
 
     /**
      * programme is used to pass data from [org.ionproject.android.programmeDetails.ProgrammeDetailsFragment]
     to [org.ionproject.android.courses.CoursesFragment]
      */
-    lateinit var programmeOfferSummaries: List<ProgrammeOfferSummary>
+    var programmeOfferSummaries: List<ProgrammeOfferSummary> = emptyList()
     var curricularTerm: Int = 0
 
 

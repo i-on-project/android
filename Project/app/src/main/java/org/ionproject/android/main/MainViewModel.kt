@@ -24,6 +24,7 @@ class MainViewModel(
         }
         // Because NetworkCallbacks are not executed on the UI thread we use coroutines to do so.
         connectivityObservable.observe {
+            firstConnectivityChecked = true
             onConnectionChanged()
         }
     }

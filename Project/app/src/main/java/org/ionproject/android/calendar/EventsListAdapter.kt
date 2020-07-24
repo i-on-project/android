@@ -56,7 +56,8 @@ class EventsListAdapter(
          */
         private fun showInfoAboutALecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration_calendar)
+            eventExtraLabel1.text =
+                view.resources.getText(R.string.label_list_event_duration_calendar)
 
             val startMoment = Moment.fromCalendar(lecture.start)
             val endMoment = startMoment + lecture.duration
@@ -72,7 +73,8 @@ class EventsListAdapter(
                 lecture.export(it.context)
             }
             if (lecture.location != null) {
-                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_location_calendar)
+                eventExtraLabel2.text =
+                    view.resources.getText(R.string.label_list_event_location_calendar)
                 eventExtraResult2.text = lecture.location
             }
         }
@@ -83,7 +85,8 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts_calendar)
+            eventExtraLabel1.text =
+                view.resources.getText(R.string.label_list_event_starts_calendar)
 
             var day = exam.startDate.day.fillWithZero()
             var month = (exam.startDate.month).fillWithZero()
@@ -128,7 +131,8 @@ class EventsListAdapter(
          */
         private fun showInfoAboutATodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery_calendar)
+            eventExtraLabel1.text =
+                view.resources.getText(R.string.label_list_event_delivery_calendar)
 
             val day = todo.due.day.fillWithZero()
             val month = todo.due.month.fillWithZero()

@@ -111,4 +111,10 @@ class FavoriteRepository(
         }
     }
 
+    suspend fun getAllFavorites(): List<Favorite> =
+        withContext(dispatcher) {
+            favoriteDao.getAllFavorites()
+        }
+
+
 }

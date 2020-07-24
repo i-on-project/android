@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
-import org.ionproject.android.SharedViewModel
-import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
@@ -36,13 +33,6 @@ class CalendarFragment : ExceptionHandlingFragment() {
             this,
             EventsListViewModelProvider()
         )[EventsListViewModel::class.java]
-    }
-
-    /*
-    This view model is shared between fragments and the MainActivity
-     */
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelProvider()
     }
 
     /**
@@ -69,16 +59,9 @@ class CalendarFragment : ExceptionHandlingFragment() {
         val viewGroup = jdcalendar_calendar.parent as ViewGroup
         viewGroup.startLoading()
 
-        calendarViewModel.apply {
-            getFavoriteClassesFromCurrentTerm(
-                sharedViewModel.root.calendarTermsUri,
-                this@CalendarFragment
-            ) { favorites ->
-                getAllEventsFromFavorites(favorites) { events ->
-                    viewGroup.stopLoading()
-                    createCalendarWithEvents(events)
-                }
-            }
+        calendarViewModel.getAllEventsFromFavorites { events ->
+            viewGroup.stopLoading()
+            createCalendarWithEvents(events)
         }
     }
 

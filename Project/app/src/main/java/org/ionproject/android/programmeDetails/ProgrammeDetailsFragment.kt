@@ -27,6 +27,15 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
         SharedViewModelProvider()
     }
 
+    /**
+     * Uri used to obtain the programme details
+     */
+    private val programmeDetailsUriUri by lazy(LazyThreadSafetyMode.NONE) {
+        val programmeDetailsUri = sharedViewModel.programmeDetailsUri
+        programmeDetailsUri
+            ?: throw IllegalArgumentException("ProgrammeDetailsUri is missing! Cannot load ProgrammeDetailsFragment without it.")
+    }
+
     private val programmeViewModel: ProgrammeDetailsViewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(
             this,
@@ -56,9 +65,9 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
             )
         )
 
-        programmeViewModel.getProgrammeDetails(sharedViewModel.programmeDetailsUri) {
+        programmeViewModel.getProgrammeDetails(programmeDetailsUriUri) {
             viewGroup.stopLoading()
-            // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
+            // Name is not mandatory (as mentioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
             textview_programme_details_name.text =
                 it.programme.name
                     ?: resources.getString(R.string.label_name_not_available_all)

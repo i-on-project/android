@@ -74,7 +74,8 @@ class CoursesFragment : ExceptionHandlingFragment() {
             if (viewModel.changeListType())
                 (it as Button).text = it.resources.getString(R.string.button_label_optional_courses)
             else
-                (it as Button).text = it.resources.getString(R.string.button_label_mandatory_courses)
+                (it as Button).text =
+                    it.resources.getString(R.string.button_label_mandatory_courses)
         }
     }
 }

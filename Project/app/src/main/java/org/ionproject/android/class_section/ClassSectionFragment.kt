@@ -18,6 +18,7 @@ import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import java.net.URI
 
 class ClassSectionFragment : ExceptionHandlingFragment() {
 
@@ -36,6 +37,15 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
             this,
             ClassSectionViewModelProvider()
         )[ClassSectionViewModel::class.java]
+    }
+
+    /**
+     * Uri used to obtain the class section
+     */
+    private val classSectionUri: URI by lazy(LazyThreadSafetyMode.NONE) {
+        val classSectionUri = sharedViewModel.classSectionUri
+        classSectionUri
+            ?: throw IllegalArgumentException("ClassSectionUri is missing! Cannot load ClassSectionFragment without it.")
     }
 
     /**
@@ -103,6 +113,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
      * the respective UI elements with them.
      */
     private fun setupClassSectionDetails() {
+
         // Class Section View Holder Setup
         val courseTextView = textView_class_section_course
         val classTermTextView = textView_class_section_class
@@ -110,7 +121,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(sharedViewModel.classSectionUri) {
+        viewModel.getClassSectionDetails(classSectionUri) {
             courseTextView.text = it.courseAcronym
             classTermTextView.text = it.id
             calendarTermTextView.text = it.calendarTerm
@@ -235,7 +246,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
             val calendarTermTextView = textView_class_section_calendar_term
 
             // Search for Class Section Details
-            viewModel.forceGetClassSectionDetails(sharedViewModel.classSectionUri) {
+            viewModel.forceGetClassSectionDetails(classSectionUri) {
                 courseTextView.text = it.courseAcronym
                 classTermTextView.text = it.id
                 calendarTermTextView.text = it.calendarTerm

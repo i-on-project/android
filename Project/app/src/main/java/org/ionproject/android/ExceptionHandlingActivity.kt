@@ -32,7 +32,7 @@ abstract class ExceptionHandlingActivity : AppCompatActivity() {
         when (throwable) {
             is JsonProcessingException -> intent.putExtra(
                 ERROR_KEY,
-                R.string.label_error_loading_error
+                resources.getString(R.string.label_error_loading_error)
             )
             is IOException -> intent.putExtra(
                 ERROR_KEY,
@@ -40,7 +40,7 @@ abstract class ExceptionHandlingActivity : AppCompatActivity() {
             )
             else -> intent.putExtra(
                 ERROR_KEY,
-                resources.getString(R.string.label_outdated_app_all)
+                resources.getString(R.string.label_error_loading_error)
             )
         }
         this.startActivity(intent)
