@@ -32,7 +32,7 @@
     <string name="label_list_event_starts_calendar">Começo:</string>
     <string name="label_list_event_ends_calendar">Termino:</string>
     <string name="label_list_event_delivery_calendar">Entrega:</string>
-    <string name="label_todo_all">Tarefas</string>
+    <string name="label_todos_all">Tarefas</string>
     <string name="label_journals_all">Notícias</string>
     <string name="hint_search_main">Pesquisar...</string>
     <string name="label_semester_all">Semestre</string>
@@ -92,4 +92,8 @@
     <string name="label_about_info">Acerca de</string>
     <string name="errors_improvement_info">Como em qualquer software, a aplicação android está em constante desenvolvimento o que significa que podem existir erros que têm de ser corrigidos e melhorias que podem ser feitas. A equipa i-on Android está a fazer o seu melhor para detetar todos os problemas,  mas como é óbvio não é uma tarefa fácil. Por isso, por favor, contacte-nos via Github caso encontre um erro ou se achar que existe uma funcionalidade ou melhoria que deveria ser adicionada.</string>
     <string name="message_about_info">A aplicação i-on Android é uma aplicação móvel desenvolvida por membros da iniciativa i-on. Esta iniciativa foi criada com o objetivo de melhorar alguns aspetos da atividade académica no Instituto Superior de Engenharia de Lisboa. A iniciativa foi criada por alunos e professores. Todo código desta aplicação e do resto dos projetos da iniciativa é público, portanto se tiver curiosidade carregue no logótipo i-on em baixo que o levará ao nosso Github.</string>
+    <string name="label_lecture_all">Aula</string>
+    <string name="label_exam_all">Exame</string>
+    <string name="label_todo_all">Tarefa</string>
+    <string name="label_journal_all">Notícia</string>
 </resources>

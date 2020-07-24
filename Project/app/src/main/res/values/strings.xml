@@ -28,7 +28,6 @@
     <string name="label_course_class_section">Course</string>
     <string name="label_class_class_section">Class</string>
     <string name="label_events_calendar">Events:</string>
-    <string name="label_exams_all">Exams</string>
 
     <string name="label_favorites_placeholder_favorites" translatable="false">%1$s - %2$s</string>
     <string name="label_calendar_term_course_details">Calendar term</string>
@@ -42,8 +41,13 @@
     <string name="label_list_event_ends_calendar">Ends:</string>
     <string name="label_list_event_delivery_calendar">Delivery:</string>
     <string name="label_lectures_all">Lectures</string>
-    <string name="label_todo_all">Todos</string>
+    <string name="label_exams_all">Exams</string>
+    <string name="label_todos_all">Todos</string>
     <string name="label_journals_all">Journals</string>
+    <string name="label_lecture_all">Lecture</string>
+    <string name="label_exam_all">Exam</string>
+    <string name="label_todo_all">Todo</string>
+    <string name="label_journal_all">Journals</string>
     <string name="label_semester_all">Semester</string>
     <string name="label_about_info">About</string>
     <string name="label_personal_data_info">Personal data</string>
