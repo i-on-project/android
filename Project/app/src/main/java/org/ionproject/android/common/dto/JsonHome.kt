@@ -27,20 +27,31 @@ data class JsonHome(
         val iresourceProgrammes = getResourceByType(ResourceType.PROGRAMMES)
         val iresourceCalendarTerm = getResourceByType(ResourceType.CALENDAR_TERM)
         val iresourceSearch = getResourceByType(ResourceType.SEARCH)
-        if (iresourceProgrammes != null && iresourceCalendarTerm != null && iresourceSearch != null) {
+        if (iresourceProgrammes != null && iresourceCalendarTerm != null) {
             val programmesResource = iresourceProgrammes as HrefResource
             val calendarTermsResource = iresourceCalendarTerm as HrefTemplateResource
-            val searchResource = iresourceSearch as HrefTemplateResource
+            val searchResource = iresourceSearch as? HrefTemplateResource
 
-            // For the search functionality to work correct the resource MUST support
+            // For the search functionality to work correctly the resource MUST support
             // all there query strings
-            if (searchResource.hrefVars.containsKeys("query", "types", "limit", "page")) {
+            if (searchResource != null && searchResource.hrefVars.containsKeys(
+                    "query",
+                    "types",
+                    "limit",
+                    "page"
+                )
+            ) {
                 return Root(
                     programmesResource.href,
                     calendarTermsResource.hrefTemplate.uri,
                     searchResource.hrefTemplate.uri
                 )
             }
+            return Root(
+                programmesResource.href,
+                calendarTermsResource.hrefTemplate.uri,
+                null
+            )
         }
         return null
     }
