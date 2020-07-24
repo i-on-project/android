@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.ionproject.android.common.IonApplication
-import org.ionproject.android.common.dto.MappingFromSirenException
 import org.ionproject.android.error.ERROR_KEY
 import org.ionproject.android.error.ErrorActivity
 import java.io.IOException
@@ -33,15 +32,15 @@ abstract class ExceptionHandlingActivity : AppCompatActivity() {
         when (throwable) {
             is JsonProcessingException -> intent.putExtra(
                 ERROR_KEY,
-                R.string.label_error_loading
+                R.string.label_error_loading_error
             )
             is IOException -> intent.putExtra(
                 ERROR_KEY,
-                resources.getString(R.string.label_no_connectivity_loading)
+                resources.getString(R.string.label_no_connectivity_loading_error)
             )
-            is MappingFromSirenException -> intent.putExtra(
+            else -> intent.putExtra(
                 ERROR_KEY,
-                resources.getString(R.string.label_outdated_app)
+                resources.getString(R.string.label_outdated_app_all)
             )
         }
         this.startActivity(intent)

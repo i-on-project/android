@@ -13,7 +13,7 @@
         android:id="@+id/textview_list_item_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_todo"
+        android:text="@string/placeholder_todo_all"
         android:textColor="@android:color/black" />
 
     <TextView
@@ -27,7 +27,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_export"
+        android:text="@string/label_export_all"
         android:textSize="12sp"
         app:icon="@drawable/ic_arrow_upward_black_24dp" />
 

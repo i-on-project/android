@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/fragments_padding_10"
         android:layout_marginRight="@dimen/fragments_padding_10"
-        android:text="@string/optional_courses"></Button>
+        android:text="@string/button_label_optional_courses"></Button>
 
 </org.ionproject.android.common.SwipeRightLinearLayout>

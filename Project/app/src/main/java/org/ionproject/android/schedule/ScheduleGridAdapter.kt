@@ -104,7 +104,7 @@ class ScheduleGridAdapter(
 
         fun bind(interval: Interval) {
             hours.text = view.resources.getString(
-                R.string.label_schedule_hours_placeholder,
+                R.string.placeholder_schedule_hours_schedule,
                 interval.first.toString(),
                 interval.second.toString()
             )

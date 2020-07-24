@@ -13,7 +13,7 @@
         android:id="@+id/textview_list_item_exams"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_exam"
+        android:text="@string/placeholder_exam_all"
         android:textColor="@android:color/black" />
 
     <Button
@@ -21,7 +21,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_export"
+        android:text="@string/label_export_all"
         android:textSize="12sp"
         app:icon="@drawable/ic_arrow_upward_black_24dp" />
 </LinearLayout>

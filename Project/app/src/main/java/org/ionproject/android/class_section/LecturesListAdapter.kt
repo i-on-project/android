@@ -38,7 +38,7 @@ class LecturesListAdapter(
             val endMoment = startMoment + lecture.duration
 
             lectureTextView.text = view.resources.getString(
-                R.string.placeholder_lecture,
+                R.string.placeholder_lecture_all,
                 lecture.summary,
                 lecture.weekDay.getName(view.context),
                 startMoment.hours.fillWithZero(),

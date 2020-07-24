@@ -56,13 +56,13 @@ class EventsListAdapter(
          */
         private fun showInfoAboutALecture(lecture: Lecture) {
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration)
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_duration_calendar)
 
             val startMoment = Moment.fromCalendar(lecture.start)
             val endMoment = startMoment + lecture.duration
 
             eventExtraResult1.text = view.resources.getString(
-                R.string.placeholder_interval,
+                R.string.placeholder_interval_calendar,
                 startMoment.hours.fillWithZero(),
                 startMoment.minutes.fillWithZero(),
                 endMoment.hours.fillWithZero(),
@@ -72,7 +72,7 @@ class EventsListAdapter(
                 lecture.export(it.context)
             }
             if (lecture.location != null) {
-                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_location)
+                eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_location_calendar)
                 eventExtraResult2.text = lecture.location
             }
         }
@@ -83,7 +83,7 @@ class EventsListAdapter(
          */
         private fun showInfoAboutAnExam(exam: Exam) {
             eventColor.setColorFilter(Color.parseColor(Exam.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts)
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_starts_calendar)
 
             var day = exam.startDate.day.fillWithZero()
             var month = (exam.startDate.month).fillWithZero()
@@ -93,14 +93,14 @@ class EventsListAdapter(
             var minute = exam.startDate.minute.fillWithZero()
 
             eventExtraResult1.text = view.resources.getString(
-                R.string.placeholder_time,
+                R.string.placeholder_time_calendar,
                 day,
                 month,
                 year,
                 hour,
                 minute
             )
-            eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends)
+            eventExtraLabel2.text = view.resources.getText(R.string.label_list_event_ends_calendar)
 
             day = exam.endDate.day.fillWithZero()
             month = (exam.endDate.month).fillWithZero()
@@ -110,7 +110,7 @@ class EventsListAdapter(
             minute = exam.endDate.minute.fillWithZero()
 
             eventExtraResult2.text = view.resources.getString(
-                R.string.placeholder_time,
+                R.string.placeholder_time_calendar,
                 day,
                 month,
                 year,
@@ -128,7 +128,7 @@ class EventsListAdapter(
          */
         private fun showInfoAboutATodo(todo: Todo) {
             eventColor.setColorFilter(Color.parseColor(Todo.color))
-            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery)
+            eventExtraLabel1.text = view.resources.getText(R.string.label_list_event_delivery_calendar)
 
             val day = todo.due.day.fillWithZero()
             val month = todo.due.month.fillWithZero()
@@ -138,7 +138,7 @@ class EventsListAdapter(
             val minute = todo.due.minute.fillWithZero()
 
             eventExtraResult1.text = view.resources.getString(
-                R.string.placeholder_time,
+                R.string.placeholder_time_calendar,
                 day,
                 month,
                 year,

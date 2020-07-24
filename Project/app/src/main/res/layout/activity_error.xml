@@ -20,13 +20,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/oops"
+            android:contentDescription="@string/title_oops_error"
             android:src="@drawable/ic_error_white_100dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/oops"
+            android:text="@string/title_oops_error"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/all_text_50" />
 
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/label_error_loading"
+            android:text="@string/label_error_loading_error"
             android:textSize="@dimen/all_text_18"
             android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/fragments_padding_20"
             android:backgroundTint="@color/secondaryLightColor"
-            android:text="@string/close" />
+            android:text="@string/label_button_close_error" />
 
     </LinearLayout>
 

@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_about"
+            android:text="@string/label_about_info"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_25"
             android:textStyle="bold" />
@@ -24,13 +24,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_info" />
+            android:text="@string/message_about_info" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/title_personal_data"
+            android:text="@string/label_personal_data_info"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_25"
             android:textStyle="bold" />
@@ -38,13 +38,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/personal_data_info" />
+            android:text="@string/message_personal_data_info" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/title_errors_improvement"
+            android:text="@string/label_errors_improvement_info"
             android:textColor="@color/secondaryColor"
             android:textSize="@dimen/all_text_25"
             android:textStyle="bold" />

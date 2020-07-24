@@ -35,7 +35,7 @@ class TodoAdapter(
 
         fun bindTo(todo: Todo) {
             todoTextView.text = view.resources.getString(
-                R.string.placeholder_todo,
+                R.string.placeholder_todo_all,
                 todo.summary,
                 todo.due.day,
                 todo.due.month,

@@ -50,7 +50,7 @@ class FavoritesListAdapter(
 
         fun bindTo(favorite: Favorite) {
             classItem.text = view.resources.getString(
-                R.string.label_favorites_placeholder,
+                R.string.label_favorites_placeholder_favorites,
                 favorite.courseAcronym,
                 favorite.id
             )
@@ -86,10 +86,10 @@ class FavoritesListAdapter(
             model.deleteFavorite(favorite)
             Snackbar.make(
                 itemView,
-                itemView.resources.getText(R.string.label_favorites_delete_message),
+                itemView.resources.getText(R.string.label_favorites_delete_message_favorites),
                 Snackbar.LENGTH_SHORT
             ).setAction(
-                itemView.resources.getText(R.string.label_favorite_undo)
+                itemView.resources.getText(R.string.label_favorite_undo_favorites)
             ) {
                 model.addFavorite(favorite)
             }.show()

@@ -72,9 +72,9 @@ class CoursesFragment : ExceptionHandlingFragment() {
 
         button_courses_optional_courses.setOnClickListener {
             if (viewModel.changeListType())
-                (it as Button).text = it.resources.getString(R.string.optional_courses)
+                (it as Button).text = it.resources.getString(R.string.button_label_optional_courses)
             else
-                (it as Button).text = it.resources.getString(R.string.mandatory_courses)
+                (it as Button).text = it.resources.getString(R.string.button_label_mandatory_courses)
         }
     }
 }

@@ -13,7 +13,7 @@
         android:id="@+id/textview_list_item_lectures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_lecture"
+        android:text="@string/placeholder_lecture_all"
         android:textColor="@android:color/black" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/label_export"
+        android:text="@string/label_export_all"
         android:textSize="12sp"
         app:icon="@drawable/ic_arrow_upward_black_24dp" />
 

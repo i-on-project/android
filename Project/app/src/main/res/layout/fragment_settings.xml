@@ -21,7 +21,7 @@
             android:lines="2"
             android:maxLines="2"
             android:singleLine="false"
-            android:text="@string/textView_settings_calendar_term"
+            android:text="@string/textView_calendar_term_settings"
             android:textSize="@dimen/all_text_18" />
 
         <Spinner

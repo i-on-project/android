@@ -182,18 +182,18 @@ fun Calendar.getMonthName(ctx: Context) = Month.values()[month - 1].getName(ctx)
  * this way, when the application language is altered, so is the month
  */
 private enum class Month(private val monthResId: Int) {
-    JANUARY(R.string.january),
-    FEBRUARY(R.string.february),
-    MARCH(R.string.march),
-    APRIL(R.string.april),
-    MAY(R.string.may),
-    JUNE(R.string.june),
-    JULY(R.string.july),
-    AUGUST(R.string.august),
-    SEPTEMBER(R.string.september),
-    OCTOBER(R.string.october),
-    NOVEMBER(R.string.november),
-    DECEMBER(R.string.december);
+    JANUARY(R.string.label_january_calendar),
+    FEBRUARY(R.string.label_february_calendar),
+    MARCH(R.string.label_march_calendar),
+    APRIL(R.string.label_april_calendar),
+    MAY(R.string.label_may_calendar),
+    JUNE(R.string.label_june_calendar),
+    JULY(R.string.label_july_calendar),
+    AUGUST(R.string.label_august_calendar),
+    SEPTEMBER(R.string.label_september_calendar),
+    OCTOBER(R.string.label_october_calendar),
+    NOVEMBER(R.string.label_november_calendar),
+    DECEMBER(R.string.label_december_calendar);
 
     fun getName(ctx: Context) = ctx.resources.getString(monthResId)
 }

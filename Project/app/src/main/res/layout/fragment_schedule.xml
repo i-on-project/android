@@ -52,7 +52,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/monday"
+                android:text="@string/label_monday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -64,7 +64,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/tuesday"
+                android:text="@string/label_tuesday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -76,7 +76,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/wednesday"
+                android:text="@string/label_wednesday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -88,7 +88,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/thursday"
+                android:text="@string/label_thursday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -100,7 +100,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/friday"
+                android:text="@string/label_friday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -112,7 +112,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/saturday"
+                android:text="@string/label_saturday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
 
@@ -124,7 +124,7 @@
                 android:background="@drawable/shape_rectangle_primary_color"
                 android:gravity="center"
                 android:padding="@dimen/fragments_padding_10"
-                android:text="@string/sunday"
+                android:text="@string/label_sunday_schedule"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp" />
         </LinearLayout>

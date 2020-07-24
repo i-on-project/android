@@ -49,7 +49,7 @@ fun Lecture.export(context: Context) {
     } else {
         Toast.makeText(
             context,
-            context.resources.getString(R.string.warning_no_more_classes),
+            context.resources.getString(R.string.warning_no_more_classes_all),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -72,7 +72,7 @@ fun Todo.export(context: Context) {
     } else {
         Toast.makeText(
             context,
-            context.resources.getString(R.string.warning_due_date_has_passed),
+            context.resources.getString(R.string.warning_due_date_has_passed_all),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -96,7 +96,7 @@ fun Exam.export(context: Context) {
     } else {
         Toast.makeText(
             context,
-            context.resources.getString(R.string.warning_start_date_has_passed),
+            context.resources.getString(R.string.warning_start_date_has_passed_all),
             Toast.LENGTH_SHORT
         ).show()
     }

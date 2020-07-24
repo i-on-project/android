@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
 
         android:padding="@dimen/fragments_padding_20"
-        android:text="@string/label_curricular_term_placeholder"
+        android:text="@string/placeholder_curricular_term_programme_details"
 
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
