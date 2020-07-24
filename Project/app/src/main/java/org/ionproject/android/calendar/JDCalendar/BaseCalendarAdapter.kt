@@ -46,14 +46,6 @@ class BaseCalendarAdapter<VH : CalendarAdapter.ViewHolder>(
         return newCalendar
     }
 
-    fun advanceMonthsNotOptimized(months: Int): Calendar {
-        val newCalendar = calendar.monthsFromNow(months)
-        val newDaysList = newCalendar.getDaysOfMonth()
-        daysList = newDaysList
-        calendar = newCalendar
-        return newCalendar
-    }
-
     /**
      * Called when this is being instantiated so that we obtain the
      * days of the current month.

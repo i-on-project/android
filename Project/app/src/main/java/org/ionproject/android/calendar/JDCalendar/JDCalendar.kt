@@ -101,23 +101,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
                     R.styleable.JDCalendar_weekDaysTextSize,
                     14F
                 )
-
-                /*monthTextStyle = getResourceId(
-                    R.styleable.JDCalendar_monthTextStyle,
-                    TODO("Default Style")
-                )
-                yearTextStyle = getResourceId(
-                    R.styleable.JDCalendar_yearTextStyle,
-                    TODO("Default Style")
-                )
-                weekDaysTextStyle = getResourceId(
-                    R.styleable.JDCalendar_weekDaysTextStyle,
-                    TODO("Default Style")
-                )
-                gridStyle = getResourceId(
-                    R.styleable.JDCalendar_gridStyle,
-                    TODO("Default Style")
-                )*/
             } finally {
                 recycle()
             }
@@ -139,15 +122,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
     private var monthTextSize: Float? = null
     private var yearTextSize: Float? = null
     private var weekDaysTextSize: Float? = null
-
-    // Position
-    private var topSectionElevation: Float? = null
-
-    // Styles
-    private var monthTextStyle: Int? = null
-    private var yearTextStyle: Int? = null
-    private var weekDaysTextStyle: Int? = null
-    private var gridStyle: Int? = null
 
     // Constraint layout view components
     private val gridView = gridview_calendar
@@ -212,7 +186,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
     private fun applyCustomAttributes() {
         applyColors()
         applySizes()
-        //applyStyle()
     }
 
     /**
@@ -253,15 +226,6 @@ class JDCalendar(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             saturdayTextView.textSize = it
             sundayTextView.textSize = it
         }
-    }
-
-
-    /**
-     * Applies all style custom attributes to its respective views
-     * (e.g TextSize)
-     */
-    private fun applyStyle() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**
