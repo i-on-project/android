@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -36,15 +35,6 @@ import org.ionproject.android.search.SearchSuggestionsProvider
 
 class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
-
-    /**
-     * lazy initialization with ThreadSafetyMode to NONE because we are sure that
-     * they will only be accessed via the UI thread, therefore we don't require a double-checked lock,
-     * which is the default
-     */
-    private val topBar: Toolbar by lazy(LazyThreadSafetyMode.NONE) {
-        toolbar_main
-    }
 
     private var searchViewItem: MenuItem? = null
 
@@ -164,17 +154,6 @@ class MainActivity : ExceptionHandlingActivity(),
     }
 
     /**
-     * Handle action bar items clicks here.
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_delete_suggestions) {
-            deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    /**
      * Instantiates the menu XML file @menu/top_bar_menu.xml into a Menu object.
      * Configures the search view by enabling assisted search and adding a search
      * submit button
@@ -184,51 +163,68 @@ class MainActivity : ExceptionHandlingActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar_menu, menu)
 
-        // Get the SearchView and set the searchable configuration.
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchViewItem = menu.findItem(R.id.action_search)
-        val searchView = searchViewItem?.actionView as? SearchView
+        val searchViewItem = menu.findItem(R.id.action_search)
+        val deleteSuggestionsItem = menu.findItem(R.id.action_delete_suggestions)
 
-        searchView?.apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        // If Root did not bring the searchUri we don't add the functionality
+        // and we hide all the buttons
+        if (sharedViewModel.root.searchUri == null) {
+            searchViewItem.isVisible = false
+            deleteSuggestionsItem.isVisible = false
+        } else {
+            // Get the SearchView and set the searchable configuration.
+            val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            this.searchViewItem = searchViewItem
+            val searchView = searchViewItem?.actionView as? SearchView
 
-            // Add search submit button
-            isSubmitButtonEnabled = true
+            // Set search menu item behaviour
+            searchView?.apply {
+                setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
-            /**
-             * We must redefine the [setOnQueryTextListener] in order to get query introduced
-             * by the user and pass it to the [SearchResultsFragment]. This is a fragment
-             * responsible to present information depending on the query.
-             */
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    queryTextSubmitBehaviour(query)
-                    return true
-                }
+                // Add search submit button
+                isSubmitButtonEnabled = true
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-                }
-            })
+                /**
+                 * We must redefine the [setOnQueryTextListener] in order to get query introduced
+                 * by the user and pass it to the [SearchResultsFragment]. This is a fragment
+                 * responsible to present information depending on the query.
+                 */
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        queryTextSubmitBehaviour(query)
+                        return true
+                    }
 
-            /**
-             * We must redefine the [setOnSuggestionListener] in order to get the suggestion
-             * query from the search view cursor's adapter to deliver it to the
-             * [SearchResultsFragment].
-             */
-            setOnSuggestionListener(object : SearchView.OnSuggestionListener {
-                override fun onSuggestionSelect(position: Int): Boolean {
-                    return true
-                }
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        return true
+                    }
+                })
 
-                override fun onSuggestionClick(position: Int): Boolean {
-                    val cursor = searchView.suggestionsAdapter.cursor
-                    cursor.moveToPosition(position)
-                    val suggestion: String = cursor.getString(2)
-                    searchView.setQuery(suggestion, true)
-                    return true
-                }
-            })
+                /**
+                 * We must redefine the [setOnSuggestionListener] in order to get the suggestion
+                 * query from the search view cursor's adapter to deliver it to the
+                 * [SearchResultsFragment].
+                 */
+                setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+                    override fun onSuggestionSelect(position: Int): Boolean {
+                        return true
+                    }
+
+                    override fun onSuggestionClick(position: Int): Boolean {
+                        val cursor = searchView.suggestionsAdapter.cursor
+                        cursor.moveToPosition(position)
+                        val suggestion: String = cursor.getString(2)
+                        searchView.setQuery(suggestion, true)
+                        return true
+                    }
+                })
+            }
+
+            // Set deleteSuggestions menu item behaviour
+            deleteSuggestionsItem.setOnMenuItemClickListener {
+                deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
+                true
+            }
         }
         return true
     }
@@ -278,7 +274,7 @@ class MainActivity : ExceptionHandlingActivity(),
      */
     private fun setupTopBarBehaviour() {
         // Sets up the top action bar as a custom toolbar
-        setSupportActionBar(topBar)
+        setSupportActionBar(toolbar_main)
 
         // Add back button support
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

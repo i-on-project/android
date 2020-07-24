@@ -14,7 +14,7 @@ import java.net.URI
 data class Root(
     val programmesUri: URI,
     val calendarTermsUri: URI,
-    val searchUri: URI,
+    val searchUri: URI?,
     @PrimaryKey val rootUri: URI = URI("/"),
     override var workerId: Int = 0
 ) : Parcelable, ICacheable {

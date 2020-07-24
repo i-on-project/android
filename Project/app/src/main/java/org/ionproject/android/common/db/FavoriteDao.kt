@@ -32,4 +32,7 @@ interface FavoriteDao {
     @Query("SELECT COUNT(*) FROM Favorite WHERE courseAcronym = :course AND calendarTerm=:calendarTerm AND id=:classSection")
     suspend fun favoriteExists(course: String, calendarTerm: String, classSection: String): Int
 
+    @Query("SELECT * FROM Favorite")
+    suspend fun getAllFavorites(): List<Favorite>
+
 }

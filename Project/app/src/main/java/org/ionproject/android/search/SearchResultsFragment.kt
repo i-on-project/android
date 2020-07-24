@@ -31,6 +31,15 @@ class SearchResultsFragment : ExceptionHandlingFragment() {
         SearchResultsViewModelProvider()
     }
 
+    /**
+     * Uri used to perform a search
+     */
+    private val searchUri by lazy(LazyThreadSafetyMode.NONE) {
+        val searchUri = sharedViewModel.root.searchUri
+        searchUri
+            ?: throw IllegalArgumentException("SearchUri is missing! Cannot load SearchResultsFragment without it.")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,7 +77,7 @@ class SearchResultsFragment : ExceptionHandlingFragment() {
             ).saveRecentQuery(query, null)
 
             hideKeyboard(view)
-            searchResultsViewModel.search(sharedViewModel.root.searchUri, query)
+            searchResultsViewModel.search(searchUri, query)
             searchResultsViewModel.observeSearchResults(this) {
                 searchResultsAdapter.submitList(it)
             }

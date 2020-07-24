@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,8 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
-import org.ionproject.android.SharedViewModel
-import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.model.Moment
 import org.ionproject.android.main.MainActivity
 
@@ -33,13 +30,6 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             this,
             ScheduleViewModelProvider()
         )[ScheduleViewModel::class.java]
-    }
-
-    /**
-     * This view model is shared between fragments and the MainActivity
-     */
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelProvider()
     }
 
     override fun onCreateView(
@@ -108,8 +98,7 @@ class ScheduleFragment : ExceptionHandlingFragment() {
             this.adapter = adapter
 
             viewModel.observerLecturesLiveData(viewLifecycleOwner) {
-                if (it.isNotEmpty())
-                    adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }

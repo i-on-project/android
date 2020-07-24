@@ -33,6 +33,15 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         SharedViewModelProvider()
     }
 
+    /**
+     * Uri used to obtain the course details
+     */
+    private val courseDetailsUri by lazy(LazyThreadSafetyMode.NONE) {
+        val courseDetailsUri = sharedViewModel.courseDetailsUri
+        courseDetailsUri
+            ?: throw IllegalArgumentException("CourseDetailsUri is missing! Cannot load CourseDetailsFragment without it.")
+    }
+
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(
             this,
@@ -71,7 +80,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
 
-        viewModel.getCourseDetails(sharedViewModel.courseDetailsUri) {
+        viewModel.getCourseDetails(courseDetailsUri) {
             // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
             courseFullName.text = it.name
                 ?: resources.getString(R.string.label_name_not_available)

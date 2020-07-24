@@ -11,7 +11,6 @@ class CalendarViewModelProvider : ViewModelProvider.Factory {
         return when (modelClass) {
             CalendarViewModel::class.java -> CalendarViewModel(
                 IonApplication.favoritesRepository,
-                IonApplication.calendarTermRepository,
                 IonApplication.eventsRepository,
                 IonApplication.classesRepository
             )
