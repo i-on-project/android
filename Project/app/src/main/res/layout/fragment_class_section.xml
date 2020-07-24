@@ -196,7 +196,7 @@
                 android:paddingTop="@dimen/sections_padding_8"
                 android:paddingRight="@dimen/all_list_item_padding_20"
                 android:paddingBottom="@dimen/sections_padding_8"
-                android:text="@string/label_todo_all"
+                android:text="@string/label_todos_all"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/all_text_18" />
 

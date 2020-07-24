@@ -38,7 +38,6 @@ class EventsListAdapter(
         private val eventExportButton = view.button_list_item_event_export
 
         fun bindTo(event: Event) {
-            eventType.text = event.eventType
             eventSummary.text = event.summary
 
             clearTextFromExtras()
@@ -55,6 +54,7 @@ class EventsListAdapter(
          * e.g: Week day: Monday  Duration: 11:30h - 13:00h
          */
         private fun showInfoAboutALecture(lecture: Lecture) {
+            eventType.text = view.resources.getString(R.string.label_lecture_all)
             eventColor.setColorFilter(Color.parseColor(Lecture.color))
             eventExtraLabel1.text =
                 view.resources.getText(R.string.label_list_event_duration_calendar)
@@ -84,6 +84,7 @@ class EventsListAdapter(
          * e.g: Starts: 22/06/2020 - 14:00h  Ends: 22/06/2020 - 17:00h
          */
         private fun showInfoAboutAnExam(exam: Exam) {
+            eventType.text = view.resources.getString(R.string.label_exam_all)
             eventColor.setColorFilter(Color.parseColor(Exam.color))
             eventExtraLabel1.text =
                 view.resources.getText(R.string.label_list_event_starts_calendar)
@@ -130,6 +131,7 @@ class EventsListAdapter(
          * e.g: Delivery: 15/06/2020 - 23:59h
          */
         private fun showInfoAboutATodo(todo: Todo) {
+            eventType.text = view.resources.getString(R.string.label_todo_all)
             eventColor.setColorFilter(Color.parseColor(Todo.color))
             eventExtraLabel1.text =
                 view.resources.getText(R.string.label_list_event_delivery_calendar)
