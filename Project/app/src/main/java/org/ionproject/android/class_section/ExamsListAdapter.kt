@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_exams.view.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.export
-import org.ionproject.android.calendar.jdcalendar.day
-import org.ionproject.android.calendar.jdcalendar.month
-import org.ionproject.android.calendar.jdcalendar.year
 import org.ionproject.android.common.model.Exam
+import org.ionproject.jdcalendar.day
+import org.ionproject.jdcalendar.month
+import org.ionproject.jdcalendar.year
 
 class ExamsListAdapter(
     private val model: ClassSectionViewModel

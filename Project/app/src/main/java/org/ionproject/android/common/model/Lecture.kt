@@ -1,10 +1,10 @@
 package org.ionproject.android.common.model
 
 import androidx.room.Entity
-import org.ionproject.android.calendar.jdcalendar.hour
-import org.ionproject.android.calendar.jdcalendar.minus
-import org.ionproject.android.calendar.jdcalendar.minute
 import org.ionproject.android.common.dto.ComponentProperties
+import org.ionproject.jdcalendar.hour
+import org.ionproject.jdcalendar.minus
+import org.ionproject.jdcalendar.minute
 import java.net.URI
 import java.util.*
 
