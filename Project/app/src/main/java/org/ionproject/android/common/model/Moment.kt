@@ -1,7 +1,7 @@
 package org.ionproject.android.common.model
 
-import org.ionproject.android.calendar.jdcalendar.hour
-import org.ionproject.android.calendar.jdcalendar.minute
+import org.ionproject.jdcalendar.hour
+import org.ionproject.jdcalendar.minute
 import java.util.*
 
 

@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.grid_item_jdcalendar.view.*
 import org.ionproject.android.R
-import org.ionproject.android.calendar.jdcalendar.CalendarAdapter
-import org.ionproject.android.calendar.jdcalendar.Day
-import org.ionproject.android.calendar.jdcalendar.day
-import org.ionproject.android.calendar.jdcalendar.dayOfWeek
 import org.ionproject.android.common.model.*
+import org.ionproject.jdcalendar.CalendarAdapter
+import org.ionproject.jdcalendar.Day
+import org.ionproject.jdcalendar.day
+import org.ionproject.jdcalendar.dayOfWeek
 
 typealias dayOfMonthClickListener = ((Events) -> Unit)?
 

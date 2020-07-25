@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_todos.view.*
 import org.ionproject.android.R
 import org.ionproject.android.calendar.export
-import org.ionproject.android.calendar.jdcalendar.*
 import org.ionproject.android.common.model.Todo
 import org.ionproject.android.common.model.fillWithZero
+import org.ionproject.jdcalendar.*
 
 class TodoAdapter(
     private val model: ClassSectionViewModel

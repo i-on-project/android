@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_event_item.view.*
 import org.ionproject.android.R
-import org.ionproject.android.calendar.jdcalendar.*
 import org.ionproject.android.common.model.*
+import org.ionproject.jdcalendar.*
 
 class EventsListAdapter(
     private val viewModel: EventsListViewModel

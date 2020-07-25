@@ -6,10 +6,10 @@ import android.provider.CalendarContract
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import org.ionproject.android.R
-import org.ionproject.android.calendar.jdcalendar.weekDaysUntil
 import org.ionproject.android.common.model.Exam
 import org.ionproject.android.common.model.Lecture
 import org.ionproject.android.common.model.Todo
+import org.ionproject.jdcalendar.weekDaysUntil
 import java.util.*
 
 /**
