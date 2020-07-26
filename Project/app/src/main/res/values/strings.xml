@@ -121,7 +121,7 @@
     <string name="error_message_exception_resource_not_available_all">Resource not available :(</string>
     <string name="errors_improvement_info">As with all software, this application is in constant development which means there might be errors that have to be fixed and improvements that can be made. The i-on Android team is doing its best to detect all the issues but, as you may realize, it\'s not an easy task so please contact us on via our github in case you found an error or if you feel there is a feature or improvement that should be added.</string>
 
-    <string name="message_personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is unninstalled the information is deleted.</string>
+    <string name="message_personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is uninstalled the information is deleted.</string>
     <string name="message_about_info">i-on Android is a mobile application developed by members of the i-on iniciative. The iniciative was created with the goal of improving some academic aspects in the Polytechnic Institute of Engineering of Lisbon. The iniciative was created by teachers and students. All the code from this application and the rest of the projects from the iniciative is public so feel free to check it out by clicking the i-on logo below.</string>
 
 </resources>
