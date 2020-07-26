@@ -16,8 +16,8 @@ android {
         applicationId "org.ionproject.android"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0-alpha"
+        versionCode 3
+        versionName "1.0.2-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             /*
