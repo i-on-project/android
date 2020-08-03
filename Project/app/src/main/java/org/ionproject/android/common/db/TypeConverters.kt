@@ -1,9 +1,9 @@
 package org.ionproject.android.common.db
 
 import androidx.room.TypeConverter
-import org.ionproject.android.calendar.jdcalendar.fromMilis
 import org.ionproject.android.common.model.Moment
 import org.ionproject.android.common.model.WeekDay
+import org.ionproject.jdcalendar.fromMilis
 import java.net.URI
 import java.util.*
 

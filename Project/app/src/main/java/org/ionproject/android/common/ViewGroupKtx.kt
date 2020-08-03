@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.view.children
-import androidx.core.view.contains
 
 /**
  * Finds the [ProgressBar] contained in the ViewGroup, makes it visible.

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"/>
 
-    <org.ionproject.android.calendar.jdcalendar.JDCalendar
+    <org.ionproject.jdcalendar.JDCalendar
         android:id="@+id/jdcalendar_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
