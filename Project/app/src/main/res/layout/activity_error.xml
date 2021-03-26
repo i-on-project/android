@@ -57,6 +57,15 @@
             android:backgroundTint="@color/secondaryLightColor"
             android:text="@string/label_button_close_error" />
 
+        <Button
+            android:id="@+id/button_activity_error_tryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/fragments_padding_20"
+            android:backgroundTint="@color/secondaryLightColor"
+            android:text="@string/label_button_close_tryAgain" />
+
     </LinearLayout>
 
 

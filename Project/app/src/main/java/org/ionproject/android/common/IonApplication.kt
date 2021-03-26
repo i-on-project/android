@@ -1,6 +1,8 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
 import org.ionproject.android.common.connectivity.IConnectivityObservable
@@ -37,6 +39,13 @@ class IonApplication : Application() {
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
         lateinit var connectivityObservable: IConnectivityObservable private set
+
+
+        lateinit var sharedPreferences: SharedPreferences
+
+        fun saveAPIURLToSharedPreferences(newURL:String) =
+            sharedPreferences.edit().putString("WEB_API_HOST", newURL).apply()
+
     }
 
     override fun onCreate() {
@@ -56,13 +65,15 @@ class IonApplication : Application() {
 
         val ionMapper = JacksonIonMapper()
 
+        sharedPreferences = getSharedPreferences("API_INFO_PREFERENCES", Context.MODE_PRIVATE)
+
         //------- Using mocked API -----------
         //val webAPI = MockIonWebAPI(ionMapper)
         //------------------------------------
 
         //------- Using real API -------------
         val retrofit = Retrofit.Builder()
-            .baseUrl(WEB_API_HOST)
+            .baseUrl(sharedPreferences.getString("WEB_API_HOST", WEB_API_HOST))
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
@@ -107,5 +118,4 @@ class IonApplication : Application() {
             Preferences(applicationContext)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
     }
-
 }

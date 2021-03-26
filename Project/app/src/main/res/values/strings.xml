@@ -55,6 +55,7 @@
 
     <string name="label_export_all">export</string>
     <string name="label_button_close_error">close</string>
+    <string name="label_button_close_tryAgain">Update info and try again</string>
     <string name="label_outdated_app_all">Application seems to be outdated :(</string>
     <string name="label_loading_i_on_loading">Loading i-on</string>
     <string name="label_name_not_available_all">Name not available</string>
