@@ -1,8 +1,11 @@
-package org.ionproject.android.error
+package org.ionproject.android.loading
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class RemoteConfig(
     @JsonProperty("api_link")
     var api_link: String
-    )
+    ){
+
+    val fresh = false
+}

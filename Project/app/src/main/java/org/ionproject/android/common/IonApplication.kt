@@ -10,6 +10,7 @@ import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import org.ionproject.android.loading.RemoteConfigRepository
 import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -40,12 +41,9 @@ class IonApplication : Application() {
         lateinit var preferences: Preferences private set
         lateinit var connectivityObservable: IConnectivityObservable private set
 
+        lateinit var remoteConfigRepository: RemoteConfigRepository private set
 
         lateinit var sharedPreferences: SharedPreferences
-
-        fun saveAPIURLToSharedPreferences(newURL:String) =
-            sharedPreferences.edit().putString("WEB_API_HOST", newURL).apply()
-
     }
 
     override fun onCreate() {
@@ -117,5 +115,7 @@ class IonApplication : Application() {
         preferences =
             Preferences(applicationContext)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
+
+        remoteConfigRepository = RemoteConfigRepository(ionWebAPI, sharedPreferences)
     }
 }
