@@ -116,6 +116,6 @@ class IonApplication : Application() {
             Preferences(applicationContext)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
 
-        remoteConfigRepository = RemoteConfigRepository(ionWebAPI, sharedPreferences)
+        remoteConfigRepository = RemoteConfigRepository(sharedPreferences, ionMapper)
     }
 }

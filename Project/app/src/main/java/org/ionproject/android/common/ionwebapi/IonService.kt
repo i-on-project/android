@@ -7,7 +7,7 @@ import retrofit2.http.Url
 
 interface IonService {
 
-    @Headers("Authorization: Bearer $WEB_API_AUTHORIZATION_TOKEN")
+    //@Headers("Authorization: Bearer $WEB_API_AUTHORIZATION_TOKEN")
     @GET
     suspend fun getFromUri(
         @Url uri: String,

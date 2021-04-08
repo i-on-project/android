@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
@@ -13,6 +12,7 @@ import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ERROR_KEY
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.main.MainActivity
+import java.net.URI
 
 // Random value key used to pass the root object from [LoadingActivity] to [MainActivity] via the intent
 const val ROOT_KEY = "m0192exe1gxe12x1"
@@ -35,19 +35,19 @@ class LoadingActivity : ExceptionHandlingActivity() {
                 intent.putExtra(ROOT_KEY, it)
                 this.startActivity(intent)
             } else {
-                Log.i("pls","root was null")
-                if(!loadingViewModel.fresh)
+                if(!loadingViewModel.fresh) {
+                    Log.d("API", "root was null")
                     loadingViewModel.getRemoteConfig()
-                else
+                }else
                     openingTheBrowser()
             }
         }
 
         //by this point remoteConfig already has the valid link
         loadingViewModel.observeRemoteConfigLiveData(this){
-            Log.i("pls","Remote Config returned")
+            Log.d("API","Remote Config returned")
             if(it != null)
-                loadingViewModel.getJsonHome()
+                loadingViewModel.getJsonHome(URI(it.api_link))
             else
                 startActivity(
                     Intent(this,ErrorActivity::class.java)

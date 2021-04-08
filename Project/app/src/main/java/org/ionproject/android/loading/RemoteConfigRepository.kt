@@ -11,18 +11,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
-private val remoteConfigURL = URI("https://raw.githubusercontent.com/Jtoliveira/test/main/Remote_Config.json")
-
-class RemoteConfigRepository(private val ionWebAPI: IIonWebAPI, private val sharedPreferences: SharedPreferences){
+class RemoteConfigRepository(private val sharedPreferences: SharedPreferences, mapper: JacksonIonMapper){
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://raw.githubusercontent.com/")
         .addConverterFactory(ScalarsConverterFactory.create())
         .build()
 
-    private val service: RemoteConfigService = retrofit.create(RemoteConfigService::class.java)
+    private val service: IonService = retrofit.create(IonService::class.java)
 
-    private val remoteConfigAPI = RemoteConfigAPI(service, JacksonIonMapper())
+    private val ionWebAPI = IonWebAPI(service, mapper)
 
     private fun saveAPIURLToSharedPreferences(newURL:String) =
         sharedPreferences.edit().putString("WEB_API_HOST", newURL).apply()
@@ -33,7 +31,7 @@ class RemoteConfigRepository(private val ionWebAPI: IIonWebAPI, private val shar
 
             var remoteConfig: RemoteConfig?
 
-            remoteConfig = remoteConfigAPI.getRemoteConfig(RemoteConfig::class.java)
+            remoteConfig = ionWebAPI.getFromURI(URI("https://raw.githubusercontent.com/Jtoliveira/test/main/Remote_Config.json"),RemoteConfig::class.java, "application/json")
 
             val storedApiUrl = sharedPreferences.getString("WEB_API_HOST", WEB_API_HOST)
 
@@ -41,7 +39,7 @@ class RemoteConfigRepository(private val ionWebAPI: IIonWebAPI, private val shar
             if(remoteConfig.api_link != storedApiUrl){
                 saveAPIURLToSharedPreferences(remoteConfig.api_link)
             }
-            Log.i("pls", "remoteConfig in repo: $remoteConfig")
+            Log.d("API", "remoteConfig in repo: $remoteConfig")
 
             remoteConfig
         }
