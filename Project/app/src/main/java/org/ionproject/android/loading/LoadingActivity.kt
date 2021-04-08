@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
 import org.ionproject.android.common.addGradientBackground
+import org.ionproject.android.common.model.Root
 import org.ionproject.android.error.ERROR_KEY
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.main.MainActivity
@@ -30,30 +31,41 @@ class LoadingActivity : ExceptionHandlingActivity() {
 
         // If JsonHome contains all required resources then open main activity else app must be outdated
         loadingViewModel.observeRootLiveData(this) {
-            if (it != null) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(ROOT_KEY, it)
-                this.startActivity(intent)
-            } else {
-                if(!loadingViewModel.fresh) {
-                    Log.d("API", "root was null")
-                    loadingViewModel.getRemoteConfig()
-                }else
-                    openingTheBrowser()
+            when (it) {
+                is FetchSuccess<Root> -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra(ROOT_KEY, it.value)
+                    this.startActivity(intent)
+                }
+                is FetchFailure<Root> -> {
+                    if (loadingViewModel.getRemoteConfigLiveData() == null)
+                        loadingViewModel.getRemoteConfig()
+                    else
+                        openingTheBrowser()
+                }
             }
         }
 
         //by this point remoteConfig already has the valid link
         loadingViewModel.observeRemoteConfigLiveData(this){
             Log.d("API","Remote Config returned")
-            if(it != null)
-                loadingViewModel.getJsonHome(URI(it.api_link))
-            else
-                startActivity(
-                    Intent(this,ErrorActivity::class.java)
-                        .putExtra(ERROR_KEY, resources.getString(R.string.label_no_connectivity_loading_error)
-                        )
-                )
+            when (it) {
+                is FetchSuccess<RemoteConfig> -> loadingViewModel.getJsonHome(URI(it.value.api_link))
+                is FetchFailure<RemoteConfig> -> {
+                    // TODO: Check if we have connectivity
+                    // If not, start error activity with a no connectivity message
+                    startActivity(
+                        Intent(this, ErrorActivity::class.java)
+                            .putExtra(
+                                ERROR_KEY,
+                                resources.getString(R.string.label_no_connectivity_loading_error)
+                            )
+                    )
+                    // If yes, open in browser
+                    // TODO:
+                    openingTheBrowser()
+                }
+            }
         }
     }
 

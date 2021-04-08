@@ -1,6 +1,5 @@
 package org.ionproject.android.loading
 
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.Root
@@ -10,24 +9,18 @@ import java.net.URI
 // This uri has to be hardcoded there is no other way
 private val ROOT_URI_V0 = URI("/")
 
-class LoadingViewModel(private val rootRepository: RootRepository, private val remoteConfigRepository: RemoteConfigRepository) : ViewModel() {
+sealed class FetchResult<out T>
+data class FetchFailure<T>(val throwable: Throwable? = null) : FetchResult<T>()
+data class FetchSuccess<T>(val value: T) : FetchResult<T>()
 
-    private val rootLiveData = MutableLiveData<Root?>()
+class LoadingViewModel(
+    private val rootRepository: RootRepository,
+    private val remoteConfigRepository: RemoteConfigRepository) : ViewModel() {
 
-    private val remoteConfigLiveData = MutableLiveData<RemoteConfig?>()
-
-    var fresh = false
+    private val rootLiveData = MutableLiveData<FetchResult<Root>>()
+    private val remoteConfigLiveData = MutableLiveData<FetchResult<RemoteConfig>>()
 
     init {
-        /*viewModelScope.launch {
-            try{
-                val root = rootRepository.getJsonHome()
-                rootLiveData.postValue(root)
-            }catch(e: Exception){
-                Log.i("pls", "error")
-                rootLiveData.postValue(null)
-            }
-        }*/
         getJsonHome(ROOT_URI_V0)
     }
 
@@ -41,29 +34,37 @@ class LoadingViewModel(private val rootRepository: RootRepository, private val r
      */
     fun getJsonHome(uri:URI){
         viewModelScope.launch {
-            try{
+            val result = try {
                 val root = rootRepository.getJsonHome(uri)
-                rootLiveData.postValue(root)
-            }catch(e: Exception){
-                Log.d("API", "error")
-                rootLiveData.postValue(null)
+                if (root != null) FetchSuccess(root) else FetchFailure<Root>()
+            } catch(e: Exception) {
+                FetchFailure<Root>(e)
             }
+
+            rootLiveData.postValue(result)
         }
     }
 
     fun getRemoteConfig(){
         viewModelScope.launch {
-            val remoteConfig = remoteConfigRepository.getRemoteConfig()
-            remoteConfigLiveData.postValue(remoteConfig)
-            fresh = true
+            val result = try {
+                val remoteConfig = remoteConfigRepository.getRemoteConfig()
+                if (remoteConfig != null) FetchSuccess(remoteConfig) else FetchFailure<RemoteConfig>()
+            } catch(e: Exception) {
+                FetchFailure<RemoteConfig>(e)
+            }
+
+            remoteConfigLiveData.postValue(result)
         }
     }
 
-    fun observeRootLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (Root?) -> Unit) {
+    fun observeRootLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<Root>) -> Unit) {
         rootLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
-    fun observeRemoteConfigLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (RemoteConfig?) -> Unit) {
+    fun observeRemoteConfigLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<RemoteConfig>) -> Unit) {
         remoteConfigLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
+
+    fun getRemoteConfigLiveData() = remoteConfigLiveData.value
 }
