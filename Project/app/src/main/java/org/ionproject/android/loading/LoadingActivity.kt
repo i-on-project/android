@@ -8,10 +8,8 @@ import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
-
-// Random value key used to pass the root object from [LoadingActivity] to [MainActivity] via the intent
-const val ROOT_KEY = "m0192exe1gxe12x1"
 
 class LoadingActivity : ExceptionHandlingActivity() {
 
@@ -28,7 +26,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
         loadingViewModel.observeRootLiveData(this) {
             if (it != null) {
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(ROOT_KEY, it)
+                intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it)
                 this.startActivity(intent)
             } else {
                 val intent = Intent(this, ErrorActivity::class.java)
