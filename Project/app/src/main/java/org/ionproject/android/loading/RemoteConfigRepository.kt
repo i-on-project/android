@@ -1,17 +1,15 @@
 package org.ionproject.android.loading
 
-import android.content.SharedPreferences
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.common.IonApplication
-import org.ionproject.android.common.IonApplication.Companion.ionMapper
 import org.ionproject.android.common.ionwebapi.*
+import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
-class RemoteConfigRepository(private val sharedPreferences: SharedPreferences, mapper: JacksonIonMapper){
+class RemoteConfigRepository(private val preferences: Preferences, mapper: JacksonIonMapper){
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://raw.githubusercontent.com/")
@@ -22,9 +20,6 @@ class RemoteConfigRepository(private val sharedPreferences: SharedPreferences, m
 
     private val ionWebAPI = IonWebAPI(service, mapper)
 
-    private fun saveAPIURLToSharedPreferences(newURL:String) =
-        sharedPreferences.edit().putString("WEB_API_HOST", newURL).apply()
-
     suspend fun getRemoteConfig() =
 
         withContext(Dispatchers.IO){
@@ -33,11 +28,11 @@ class RemoteConfigRepository(private val sharedPreferences: SharedPreferences, m
 
             remoteConfig = ionWebAPI.getFromURI(URI("https://raw.githubusercontent.com/Jtoliveira/test/main/Remote_Config.json"),RemoteConfig::class.java, "application/json")
 
-            val storedApiUrl = sharedPreferences.getString("WEB_API_HOST", WEB_API_HOST)
+            val storedApiUrl = preferences.getWebApiHost()
 
             //update the stored API URL in case it changed
             if(remoteConfig.api_link != storedApiUrl){
-                saveAPIURLToSharedPreferences(remoteConfig.api_link)
+                preferences.saveWebApiHost(remoteConfig.api_link)
             }
             Log.d("API", "remoteConfig in repo: $remoteConfig")
 

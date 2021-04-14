@@ -43,13 +43,15 @@ class IonApplication : Application() {
 
         lateinit var remoteConfigRepository: RemoteConfigRepository private set
 
-        lateinit var sharedPreferences: SharedPreferences
     }
 
     override fun onCreate() {
         super.onCreate()
 
         globalExceptionHandler = GlobalExceptionHandler()
+
+        preferences =
+            Preferences(applicationContext)
 
         /**
          * Our app runs in a single process therefore we follow
@@ -63,15 +65,13 @@ class IonApplication : Application() {
 
         val ionMapper = JacksonIonMapper()
 
-        sharedPreferences = getSharedPreferences("API_INFO_PREFERENCES", Context.MODE_PRIVATE)
-
         //------- Using mocked API -----------
         //val webAPI = MockIonWebAPI(ionMapper)
         //------------------------------------
 
         //------- Using real API -------------
         val retrofit = Retrofit.Builder()
-            .baseUrl(sharedPreferences.getString("WEB_API_HOST", WEB_API_HOST))
+            .baseUrl(preferences.getWebApiHost()?: WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
@@ -112,10 +112,8 @@ class IonApplication : Application() {
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         searchRepository = SearchRepository(webAPI)
-        preferences =
-            Preferences(applicationContext)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
 
-        remoteConfigRepository = RemoteConfigRepository(sharedPreferences, ionMapper)
+        remoteConfigRepository = RemoteConfigRepository(preferences, ionMapper)
     }
 }
