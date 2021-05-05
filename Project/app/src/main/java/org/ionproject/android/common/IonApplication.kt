@@ -40,9 +40,7 @@ class IonApplication : Application() {
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
         lateinit var connectivityObservable: IConnectivityObservable private set
-
         lateinit var remoteConfigRepository: RemoteConfigRepository private set
-
     }
 
     override fun onCreate() {
@@ -50,8 +48,7 @@ class IonApplication : Application() {
 
         globalExceptionHandler = GlobalExceptionHandler()
 
-        preferences =
-            Preferences(applicationContext)
+        preferences = Preferences(applicationContext)
 
         /**
          * Our app runs in a single process therefore we follow

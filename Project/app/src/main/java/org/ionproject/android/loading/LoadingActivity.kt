@@ -36,13 +36,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
         linearlayout_activity_loading.addGradientBackground()
 
         /**
-         * If JsonHome contains all required resources then open main activity else app must be outdated
-         *
-         * We check if remote config live data is null bc this observer is used for all requests made to
-         * the API: if it is the first request ever made, get the remote config
-         * (the live data is null at this point); if it is the request after getting remote config,
-         * and it fails again, redirect to ISEL's page
-         *
+         * If JsonHome contains all required resources then open main activity; if not app must be outdated
          */
         loadingViewModel.observeRootLiveData(this) {
             when (it) {
@@ -54,7 +48,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
                 is FetchFailure<Root> -> {
                     if (loadingViewModel.getRemoteConfigLiveData() == null) {
                         loadingViewModel.getRemoteConfig()
-                    }else {
+                    } else {
                         openISELPage()
                     }
                 }
@@ -65,11 +59,11 @@ class LoadingActivity : ExceptionHandlingActivity() {
          * We check the connectivity in this observer because, although unlikely, GitHub might
          * be down and there needs to be a plan for that
          */
-        loadingViewModel.observeRemoteConfigLiveData(this){
+        loadingViewModel.observeRemoteConfigLiveData(this) {
             when (it) {
                 is FetchSuccess<RemoteConfig> -> loadingViewModel.getJsonHome(URI(it.value.api_link))
                 is FetchFailure<RemoteConfig> -> {
-                    if(!IonApplication.connectivityObservable.hasConnectivity() ){
+                    if (!IonApplication.connectivityObservable.hasConnectivity()) {
                         startActivity(
                             Intent(this, ErrorActivity::class.java)
                                 .putExtra(
@@ -77,7 +71,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
                                     resources.getString(R.string.label_no_connectivity_loading_error)
                                 )
                         )
-                    }else{
+                    } else {
                         openISELPage()
                     }
                 }
@@ -85,11 +79,12 @@ class LoadingActivity : ExceptionHandlingActivity() {
         }
     }
 
-    //if the remote config link is the same as the link in the app,
-    //it means the API is down and for now we redirect to the ISEL website
-    private fun openISELPage(){
+    /**
+     * if the remote config link is the same as the link in the app,
+    it means the API is down and for now we redirect to the ISEL website
+     */
+    private fun openISELPage() {
         val iselURL = "https://www.isel.pt"
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(iselURL)))
     }
-
 }

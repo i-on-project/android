@@ -9,9 +9,9 @@ import java.net.URI
 // This uri has to be hardcoded there is no other way
 private val ROOT_URI_V0 = URI("/")
 
-/*
+/**
 getJsonHome() returns null when the API is unavailable. This makes the default null status of
-rootLiveData ambiguous, so thsi class envelops the results of the getJsonHome() method in order to
+rootLiveData ambiguous, so this class envelops the results of the getJsonHome() method in order to
 properly evaluate the state of the API and to launch the Remote Config strat
 
 Fetch Failure with null value: request was made to API and there was no response
@@ -26,7 +26,8 @@ data class FetchSuccess<T>(val value: T) : FetchResult<T>()
 
 class LoadingViewModel(
     private val rootRepository: RootRepository,
-    private val remoteConfigRepository: RemoteConfigRepository) : ViewModel() {
+    private val remoteConfigRepository: RemoteConfigRepository
+) : ViewModel() {
 
     private val rootLiveData = MutableLiveData<FetchResult<Root>>()
     private val remoteConfigLiveData = MutableLiveData<FetchResult<RemoteConfig>>()
@@ -35,17 +36,17 @@ class LoadingViewModel(
         getJsonHome(ROOT_URI_V0)
     }
 
-    /*
+    /**
     Retrofit note: since retrofit 2 uses okhttp's HttpUrl, we don't need to change the base url of
     the service in endpoints where the method annotation doesn't specify a url. it detects if the
     @URL parameter doesn't match with the base url and sorts everything out by itself
      */
-    fun getJsonHome(uri:URI){
+    fun getJsonHome(uri: URI) {
         viewModelScope.launch {
             val result = try {
                 val root = rootRepository.getJsonHome(uri)
                 if (root != null) FetchSuccess(root) else FetchFailure<Root>()
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 FetchFailure<Root>(e)
             }
 
@@ -53,12 +54,12 @@ class LoadingViewModel(
         }
     }
 
-    fun getRemoteConfig(){
+    fun getRemoteConfig() {
         viewModelScope.launch {
             val result = try {
                 val remoteConfig = remoteConfigRepository.getRemoteConfig()
                 if (remoteConfig?.api_link != null) FetchSuccess(remoteConfig) else FetchFailure<RemoteConfig>()
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 FetchFailure<RemoteConfig>(e)
             }
 
@@ -70,7 +71,10 @@ class LoadingViewModel(
         rootLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
-    fun observeRemoteConfigLiveData(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<RemoteConfig>) -> Unit) {
+    fun observeRemoteConfigLiveData(
+        lifecycleOwner: LifecycleOwner,
+        onUpdate: (FetchResult<RemoteConfig>) -> Unit
+    ) {
         remoteConfigLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
