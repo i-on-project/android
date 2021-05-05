@@ -30,15 +30,15 @@ abstract class ExceptionHandlingActivity : AppCompatActivity() {
         val intent = Intent(this, ErrorActivity::class.java)
         when (throwable) {
             is JsonProcessingException -> intent.putExtra(
-                ERROR_ACTIVITY_EXCEPTION_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_error_loading_error)
             )
             is IOException -> intent.putExtra(
-                ERROR_ACTIVITY_EXCEPTION_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_no_connectivity_loading_error)
             )
             else -> intent.putExtra(
-                ERROR_ACTIVITY_EXCEPTION_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_error_loading_error)
             )
         }

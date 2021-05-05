@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.activity_error.*
 import org.ionproject.android.R
 import org.ionproject.android.common.addGradientBackground
 
-const val ERROR_ACTIVITY_EXCEPTION_KEY = "ErrorActivity.Exception.Extra"
+const val ERROR_ACTIVITY_EXCEPTION_EXTRA = "ErrorActivity.Exception.Extra"
 
 class ErrorActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class ErrorActivity : AppCompatActivity() {
         }
 
         // Apply error message if it was passed via the intent
-        intent.getStringExtra(ERROR_ACTIVITY_EXCEPTION_KEY)?.apply {
+        intent.getStringExtra(ERROR_ACTIVITY_EXCEPTION_EXTRA)?.apply {
             textview_error_activity_message.text = this
         }
 
