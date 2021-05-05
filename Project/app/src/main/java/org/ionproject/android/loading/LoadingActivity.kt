@@ -3,6 +3,7 @@ package org.ionproject.android.loading
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
@@ -49,6 +50,11 @@ class LoadingActivity : ExceptionHandlingActivity() {
                     if (loadingViewModel.getRemoteConfigLiveData() == null) {
                         loadingViewModel.getRemoteConfig()
                     } else {
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.ion_api_down),
+                            Toast.LENGTH_LONG
+                        ).show()
                         openISELPage()
                     }
                 }
@@ -72,6 +78,11 @@ class LoadingActivity : ExceptionHandlingActivity() {
                                 )
                         )
                     } else {
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.remote_config_unreachable),
+                            Toast.LENGTH_LONG
+                        ).show()
                         openISELPage()
                     }
                 }
