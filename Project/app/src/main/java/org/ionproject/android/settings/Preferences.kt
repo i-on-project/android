@@ -2,9 +2,11 @@ package org.ionproject.android.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 
 private const val SHARED_PREFERENCES_FILE = "org.ionproject.android.SHARED_PREFERENCES_FILE"
 private const val CALENDAR_TERM_KEY = "calendar_term_key"
+private const val WEB_API_HOST_KEY = "webApi_host_key"
 
 /**
  * Preferences class, should contain only preferences related operations.
@@ -25,6 +27,13 @@ class Preferences(context: Context) {
 
     fun saveCalendarTerm(calendarTerm: String) = with(sharedPref.edit()) {
         putString(CALENDAR_TERM_KEY, calendarTerm)
+        commit()
+    }
+
+    fun getWebApiHost() = sharedPref.getString(WEB_API_HOST_KEY, WEB_API_HOST)
+
+    fun saveWebApiHost(newUrl: String) = with(sharedPref.edit()) {
+        putString(WEB_API_HOST_KEY, newUrl)
         commit()
     }
 }

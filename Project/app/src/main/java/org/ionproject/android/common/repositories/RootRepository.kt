@@ -12,9 +12,6 @@ import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI
 
 
-// This uri has to be hardcoded there is no other way
-private val ROOT_URI_V0 = URI("/")
-
 /**
  * Used to check the existence of i-on core Web API root endpoints. It does so by
  * checking the Root resource.
@@ -26,14 +23,14 @@ class RootRepository(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun getJsonHome() =
+    suspend fun getJsonHome(uri: URI) =
         withContext(dispatcher) {
             // Verify if root resource is stored locally
             var rootResource = rootResourceDao.getRootResource()
 
             if (rootResource == null) {
                 rootResource =
-                    ionWebAPI.getFromURI(ROOT_URI_V0, JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
+                    ionWebAPI.getFromURI(uri, JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
                         .toRoot()
                 if (rootResource != null) {
                     // Save root resource into local database and create a worker for it
@@ -50,4 +47,5 @@ class RootRepository(
             }
             rootResource
         }
+
 }

@@ -1,5 +1,6 @@
 package org.ionproject.android.error
 
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_error.*
@@ -25,6 +26,5 @@ class ErrorActivity : AppCompatActivity() {
         intent.getStringExtra(ERROR_KEY)?.apply {
             textview_error_activity_message.text = this
         }
-
     }
 }
