@@ -5,8 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.ionproject.android.common.IonApplication
-import org.ionproject.android.error.ERROR_KEY
-import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.error.*
 import java.io.IOException
 
 abstract class ExceptionHandlingActivity : AppCompatActivity() {
@@ -31,15 +30,15 @@ abstract class ExceptionHandlingActivity : AppCompatActivity() {
         val intent = Intent(this, ErrorActivity::class.java)
         when (throwable) {
             is JsonProcessingException -> intent.putExtra(
-                ERROR_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_error_loading_error)
             )
             is IOException -> intent.putExtra(
-                ERROR_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_no_connectivity_loading_error)
             )
             else -> intent.putExtra(
-                ERROR_KEY,
+                ERROR_ACTIVITY_EXCEPTION_EXTRA,
                 resources.getString(R.string.label_error_loading_error)
             )
         }

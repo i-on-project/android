@@ -13,11 +13,9 @@ import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.error.ERROR_KEY
 import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
 import java.net.URI
-
-// Random value key used to pass the root object from [LoadingActivity] to [MainActivity] via the intent
-const val ROOT_KEY = "m0192exe1gxe12x1"
 
 /**
  * 1) Try and get data from the JsonHome URL
@@ -43,7 +41,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
             when (it) {
                 is FetchSuccess<Root> -> {
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra(ROOT_KEY, it.value)
+                    intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
                     this.startActivity(intent)
                 }
                 is FetchFailure<Root> -> {

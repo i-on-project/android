@@ -30,8 +30,9 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.loading.ROOT_KEY
 import org.ionproject.android.search.SearchSuggestionsProvider
+
+const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
 
 class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
@@ -73,7 +74,7 @@ class MainActivity : ExceptionHandlingActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_activity.addGradientBackground()
-        val root = intent.getParcelableExtra<Root>(ROOT_KEY)
+        val root = intent.getParcelableExtra<Root>(MAIN_ACTIVITY_ROOT_EXTRA)
         if (root != null) {
             sharedViewModel.root = root
             setupTopBarBehaviour()
