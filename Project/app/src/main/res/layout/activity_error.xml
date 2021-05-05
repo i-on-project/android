@@ -56,7 +56,6 @@
             android:layout_marginTop="@dimen/fragments_padding_20"
             android:backgroundTint="@color/secondaryLightColor"
             android:text="@string/label_button_close_error" />
-
     </LinearLayout>
 
 

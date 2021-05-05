@@ -1,6 +1,8 @@
 package org.ionproject.android.common
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
 import org.ionproject.android.common.connectivity.IConnectivityObservable
@@ -8,6 +10,7 @@ import org.ionproject.android.common.db.AppDatabase
 import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
+import org.ionproject.android.loading.RemoteConfigRepository
 import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -37,12 +40,15 @@ class IonApplication : Application() {
         lateinit var globalExceptionHandler: GlobalExceptionHandler private set
         lateinit var preferences: Preferences private set
         lateinit var connectivityObservable: IConnectivityObservable private set
+        lateinit var remoteConfigRepository: RemoteConfigRepository private set
     }
 
     override fun onCreate() {
         super.onCreate()
 
         globalExceptionHandler = GlobalExceptionHandler()
+
+        preferences = Preferences(applicationContext)
 
         /**
          * Our app runs in a single process therefore we follow
@@ -62,7 +68,7 @@ class IonApplication : Application() {
 
         //------- Using real API -------------
         val retrofit = Retrofit.Builder()
-            .baseUrl(WEB_API_HOST)
+            .baseUrl(preferences.getWebApiHost()?: WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
@@ -103,9 +109,8 @@ class IonApplication : Application() {
             EventsRepository(db.eventsDao(), webAPI, workerManagerFacade)
         rootRepository = RootRepository(db.rootDao(), ionWebAPI, workerManagerFacade)
         searchRepository = SearchRepository(webAPI)
-        preferences =
-            Preferences(applicationContext)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
-    }
 
+        remoteConfigRepository = RemoteConfigRepository(preferences, ionMapper)
+    }
 }

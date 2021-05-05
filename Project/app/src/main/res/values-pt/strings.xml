@@ -85,6 +85,7 @@
     <string name="label_error_loading_error">Pedimos desculpa mas ocorreu um erro. Tente reiniciar a aplicação.</string>
     <string name="error_message_exception_resource_not_available_all">Este recurso não está disponível :(</string>
     <string name="label_button_close_error">fechar</string>
+    <string name="label_button_close_tryAgain">Atualizar e tentar de novo</string>
     <string name="label_name_not_available_all">Nome não disponível</string>
     <string name="message_personal_data_info">A aplicação i-on Android não guarda dados pessoais do utilizador, guarda apenas informação obtida através da i-on Core API. Além disto, toda a informação guardada é local ao dispositivo e é removida assim que o utilizador desinstala a aplicação.</string>
     <string name="label_personal_data_info">Dados pessoais</string>
@@ -96,4 +97,6 @@
     <string name="label_exam_all">Exame</string>
     <string name="label_todo_all">Tarefa</string>
     <string name="label_journal_all">Notícia</string>
+    <string name="ion_api_down">A API i-on não está disponível, a redirecionar para o site do ISEL</string>
+    <string name="remote_config_unreachable">Ficheiro de configuração remota não disponível, a redirecionar para o site do ISEL</string>
 </resources>

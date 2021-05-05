@@ -9,7 +9,7 @@ class LoadingViewModelProvider : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            LoadingViewModel::class.java -> LoadingViewModel(IonApplication.rootRepository)
+            LoadingViewModel::class.java -> LoadingViewModel(IonApplication.rootRepository, IonApplication.remoteConfigRepository)
             else -> throw IllegalArgumentException("Class $modelClass is not valid for this provider")
         } as T
     }
