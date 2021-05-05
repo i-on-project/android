@@ -9,6 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
+const val REMOTE_CONFIG_LINK = "https://raw.githubusercontent.com/i-on-project/isel/main/Remote_Config.json"
+
 class RemoteConfigRepository(private val preferences: Preferences, mapper: JacksonIonMapper){
 
     private val retrofit = Retrofit.Builder()
@@ -26,7 +28,7 @@ class RemoteConfigRepository(private val preferences: Preferences, mapper: Jacks
 
             var remoteConfig: RemoteConfig?
 
-            remoteConfig = ionWebAPI.getFromURI(URI("https://raw.githubusercontent.com/Jtoliveira/test/main/Remote_Config.json"),RemoteConfig::class.java, "application/json")
+            remoteConfig = ionWebAPI.getFromURI(URI(REMOTE_CONFIG_LINK),RemoteConfig::class.java, "application/json")
 
             val storedApiUrl = preferences.getWebApiHost()
 
