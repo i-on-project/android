@@ -11,7 +11,7 @@ import org.ionproject.android.R
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.error.ERROR_KEY
+import org.ionproject.android.error.ERROR_ACTIVITY_EXCEPTION_EXTRA
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
@@ -71,7 +71,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
                         startActivity(
                             Intent(this, ErrorActivity::class.java)
                                 .putExtra(
-                                    ERROR_KEY,
+                                    ERROR_ACTIVITY_EXCEPTION_EXTRA,
                                     resources.getString(R.string.label_no_connectivity_loading_error)
                                 )
                         )
