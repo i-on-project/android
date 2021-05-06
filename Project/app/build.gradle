@@ -31,6 +31,15 @@ android {
                 arguments = ["room.schemaLocation":"$projectDir/schemas".toString()]
             }
         }
+
+        //Having trouble running JUnit tests, "Method not mocked". This snippet is
+        //suggested in http://tools.android.com/tech-docs/unit-testing-support#TOC-Method-...-not-mocked.-
+        //This stemmed from changing the command line configurations after the error "command line too long"
+        //while trying to run the tests
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
+
         setProperty("archivesBaseName", applicationId + "-v" + versionCode + "(" + versionName + ")")
     }
 
