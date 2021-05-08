@@ -33,7 +33,11 @@ data class Evaluation(
 
 data class Details(
     val name: String,
-    val curricularTerm: List<Int>,
+    val curricularTerm: List<CurricularTerm>,
     val startDate: String,
     val endDate: String
+)
+
+data class CurricularTerm(
+    val id: Int
 )

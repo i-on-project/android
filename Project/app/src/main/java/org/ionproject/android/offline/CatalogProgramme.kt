@@ -8,22 +8,18 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * This data class represents each of the programmes that are present in the
  * folder with the programme list
  *
- * Each Programme has an array with its terms
+ * Each Programme has a name and a link to their terms
  *
- * term: Name of the term
+ * name: Name of the programme
  *
- * linkToInfo: URl to that programme's contents (timetable and exam schedule)
+ * linkToInfo: URl to that programme's terms (CatalogProgrammeTerms)
  *
- * This is the class that is used to fill the program details fragment
+ * This class is used to populate each of the items of the programmes list fragment
+ *
  */
 data class CatalogProgramme(
-    @JsonProperty("tree")
-    val terms: List<Term>
-)
-
-data class Term(
     @JsonProperty("path")
-    var term: String,
+    var programmeName: String,
     @JsonProperty("url")
     var linkToInfo: String
 )

@@ -11,11 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * Each element of the array is a data class that represents the JSON
  * representation of each programme's folder
  *
- * This class is used to fill the Programmes fragment, where the
- * user chooses the program
- *
+ * This class is used to fill the Programmes listfragment
  */
 data class CatalogProgrammes(
     @JsonProperty("tree")
-    var programmes: List<CatalogProgramme>
+    val programmes: List<CatalogProgramme>
 )

@@ -1,5 +1,6 @@
 package org.ionproject.android
 
+import android.net.Uri
 import android.os.Build
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -24,6 +25,8 @@ class CatalogTests {
     private val service: IonService = retrofit.create(IonService::class.java)
     private val webAPI = IonWebAPI(service, JacksonIonMapper())
 
+    private val catalogRepository = CatalogRepository(webAPI)
+
     @Test
     fun getCatalogProgrammeListTest() {
 
@@ -43,16 +46,16 @@ class CatalogTests {
     @Test
     fun getCatalogProgrammeTest(){
 
-        val programme: CatalogProgramme = runBlocking {
+        val programme: CatalogProgrammeTerms = runBlocking {
             webAPI.getFromURI(
                 URI("/repos/i-on-project/integration-data/git/trees/89b8c8474fce12b6729138ecc48c22f1755719f1"),
-                CatalogProgramme::class.java,
+                CatalogProgrammeTerms::class.java,
                 "application/json"
             )
         }
 
-        println("programmeLIst: $programme")
-        assertEquals(programme.terms.size, 1)
+        println("programme: $programme")
+        //assertEquals(programme.size, 1)
         assertEquals(programme.terms[0].term, "2020-2021-2")
     }
 
@@ -86,9 +89,9 @@ class CatalogTests {
         val decodedExam = runBlocking {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                Utils().decodeFileContentFromGitHubApi(encodedFile.content, ExamSchedule::class.java)
+                catalogRepository.decodeFileContentFromGitHubApi(encodedFile.content, ExamSchedule::class.java)
             }else{
-                Utils().getFileFromGithub(webAPI, "experimental", "leic", "2020-2021-2", ExamSchedule::class.java)
+                catalogRepository.getFileFromGithub( "experimental", "leic", "2020-2021-2", ExamSchedule::class.java)
             }
         }
 
@@ -98,9 +101,6 @@ class CatalogTests {
 
     @Test
     fun getTimetableScheduleTest(){
-
-        //NOTA: O JSON DO ARRAY CLASSES E INCONSISTENTE TANTO NA PRESENÇA DE "LOCATION" COMO
-        //NA EXISTENCIA DO OBJETO "CLASS"
 
         val encodedFile: Base64EncodedFile = runBlocking {
             webAPI.getFromURI(
@@ -117,14 +117,78 @@ class CatalogTests {
              * will have to adapt according to the device's SDK version
              */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                Utils().decodeFileContentFromGitHubApi(encodedFile.content, Timetable::class.java)
+               catalogRepository.decodeFileContentFromGitHubApi(encodedFile.content, Timetable::class.java)
             }else{
-                Utils().getFileFromGithub(webAPI, "experimental", "leic", "2020-2021-2", Timetable::class.java)
+                catalogRepository.getFileFromGithub( "experimental", "leic", "2020-2021-2", Timetable::class.java)
             }
         }
 
         println("timetable: $decoded")
         assertEquals(decoded.calendarTerm, "2020-2021-2")
+    }
+
+    @Test
+    fun getCatalogCalendar(){
+
+        val calendar = runBlocking {
+
+            webAPI.getFromURI(URI(linkToCalendar), CatalogCalendar::class.java, "application/json")
+
+        }
+
+        println("$calendar")
+        assertEquals("2019-2020-1", calendar.terms[0].calendarTerm)
+
+    }
+
+    @Test
+    fun testCatalogRepository(){
+
+        val programmeList = runBlocking{
+            catalogRepository.getCatalogProgrammeList()
+        }
+
+        println("programmeLIst: $programmeList")
+        if (programmeList != null) {
+            assertEquals(programmeList.programmes.size, 1)
+        }
+
+
+        val programmeTerms = runBlocking {
+            println(programmeList!!.programmes[0].programmeName)
+            catalogRepository.getCatalogProgrammeTerms(programmeList!!.programmes[0].linkToInfo)
+        }
+
+        println("Term list : $programmeTerms")
+        if (programmeTerms != null) {
+            assertEquals(programmeTerms.terms.size, 1)
+        }
+
+        val termFileList = runBlocking {
+            println(programmeTerms!!.terms[0].term)
+            catalogRepository.getTermInfo(programmeTerms.terms[0].linkToInfo)
+        }
+
+        println("File list : $termFileList")
+        assertEquals(termFileList.size, 2)
+
+        val examSchedule = runBlocking {
+
+            catalogRepository.getCatalogFile(termFileList[0].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,ExamSchedule::class.java)
+
+        }
+
+        println(examSchedule!!)
+        assertEquals(examSchedule.school.name, "Instituto Superior Engenharia Lisboa")
+
+        val timetable = runBlocking {
+
+            catalogRepository.getCatalogFile(termFileList[1].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,Timetable::class.java)
+
+        }
+
+        println(timetable!!)
+        assertEquals(timetable.school.name, "INSTITUTO SUPERIOR DE ENGENHARIA DE LISBOA")
     }
 
 }

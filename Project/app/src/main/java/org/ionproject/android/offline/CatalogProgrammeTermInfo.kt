@@ -20,15 +20,5 @@ the parsing code
 
 data class CatalogProgrammeTermInfo(
     @JsonProperty("tree")
-    var files: List<CatalogProgrammeInfoFile>
-)
-
-/**
-This data class represents each file's JSON representation within the array
- */
-data class CatalogProgrammeInfoFile(
-    @JsonProperty("path")
-    var fileName: String,
-    @JsonProperty("url")
-    var linkToFile: String
+    var files: List<CatalogProgrammeTermInfoFile>
 )
