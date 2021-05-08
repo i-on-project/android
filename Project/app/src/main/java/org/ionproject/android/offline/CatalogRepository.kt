@@ -4,10 +4,10 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
+import org.ionproject.android.offline.models.*
 import java.net.URI
 import java.util.*
 
@@ -40,12 +40,12 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
     /**
      * Returns a list with the available terms for a specific programme from the list
      */
-    suspend fun getCatalogProgrammeTerms(linkToProgramme: String) = withContext(Dispatchers.IO) {
+    suspend fun getCatalogProgrammeTerms(linkToProgramme: URI) = withContext(Dispatchers.IO) {
 
         var catalogProgramme: CatalogProgrammeTerms?
 
         catalogProgramme = webAPI.getFromURI(
-            URI(linkToProgramme),
+            linkToProgramme,
             CatalogProgrammeTerms::class.java,
             "application/json"
         )
@@ -61,12 +61,12 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
      * The filter in the end is because the integration repo has the files in json and yaml,
      * and this app deals exclusively in json
      */
-    suspend fun getTermInfo(linkToInfo: String) = withContext(Dispatchers.IO) {
+    suspend fun getTermInfo(linkToInfo: URI) = withContext(Dispatchers.IO) {
 
         var catalogProgrammeTermInfo: CatalogProgrammeTermInfo?
 
         catalogProgrammeTermInfo = webAPI.getFromURI(
-            URI(linkToInfo),
+            linkToInfo,
             CatalogProgrammeTermInfo::class.java,
             "application/json"
         )
@@ -82,13 +82,13 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
      *
      * TODO: Maybe change the null return value for something better
      */
-    suspend fun <T> getCatalogFile(fileLink:String?, branch: String?, programme: String?,term: String ?, klass: Class<T>): T?{
+    suspend fun <T> getCatalogFile(fileLink: URI, branch: String?, programme: String?,term: String ?, klass: Class<T>): T?{
 
        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
             val encodedFile: Base64EncodedFile =
                 webAPI.getFromURI(
-                    URI(fileLink),
+                    fileLink,
                     Base64EncodedFile::class.java,
                     "application/json"
                 )

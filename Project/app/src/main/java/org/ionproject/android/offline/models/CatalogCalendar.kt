@@ -1,4 +1,4 @@
-package org.ionproject.android.offline
+package org.ionproject.android.offline.models
 
 /**
  * This class parses the Calendar from JSON

@@ -36,11 +36,17 @@ class LoadingActivity : ExceptionHandlingActivity() {
 
         /**
          * If JsonHome contains all required resources then open main activity; if not app must be outdated
+         *
+         * if by the second JSONHome attempt this check fails, we move on the the normal usage but with
+         * catalog info
+         *
+         * the json home intent is null and we use that null value to tell the main activity to
+         * switch to catalog mode
          */
         loadingViewModel.observeRootLiveData(this) {
+            val intent = Intent(this, MainActivity::class.java)
             when (it) {
                 is FetchSuccess<Root> -> {
-                    val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
                     this.startActivity(intent)
                 }
@@ -48,12 +54,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
                     if (loadingViewModel.getRemoteConfigLiveData() == null) {
                         loadingViewModel.getRemoteConfig()
                     } else {
-                        Toast.makeText(
-                            this,
-                            resources.getString(R.string.ion_api_down),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        openISELPage()
+                        this.startActivity(intent)
                     }
                 }
             }
@@ -62,6 +63,9 @@ class LoadingActivity : ExceptionHandlingActivity() {
         /**
          * We check the connectivity in this observer because, although unlikely, GitHub might
          * be down and there needs to be a plan for that
+         *
+         * If github is down, we don't continue with catalog info because those files
+         * are held on github as well as the remote config
          */
         loadingViewModel.observeRemoteConfigLiveData(this) {
             when (it) {

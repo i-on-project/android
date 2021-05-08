@@ -1,4 +1,4 @@
-package org.ionproject.android.offline
+package org.ionproject.android.offline.models
 
 /**
  * This data class parses the exam schedule representation from Json

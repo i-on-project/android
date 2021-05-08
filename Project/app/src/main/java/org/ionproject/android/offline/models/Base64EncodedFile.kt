@@ -1,4 +1,4 @@
-package org.ionproject.android.offline
+package org.ionproject.android.offline.models
 
 /**
  * The github link to info from the tree gives us the file content

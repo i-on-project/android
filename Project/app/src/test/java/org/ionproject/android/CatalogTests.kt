@@ -1,6 +1,5 @@
 package org.ionproject.android
 
-import android.net.Uri
 import android.os.Build
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -12,8 +11,7 @@ import org.ionproject.android.common.ionwebapi.IonService
 import org.ionproject.android.common.ionwebapi.IonWebAPI
 import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.offline.*
-import org.json.JSONObject
-import java.util.*
+import org.ionproject.android.offline.models.*
 
 class CatalogTests {
 
@@ -174,7 +172,8 @@ class CatalogTests {
 
         val examSchedule = runBlocking {
 
-            catalogRepository.getCatalogFile(termFileList[0].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,ExamSchedule::class.java)
+            catalogRepository.getCatalogFile(termFileList[0].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,
+                ExamSchedule::class.java)
 
         }
 
@@ -183,7 +182,8 @@ class CatalogTests {
 
         val timetable = runBlocking {
 
-            catalogRepository.getCatalogFile(termFileList[1].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,Timetable::class.java)
+            catalogRepository.getCatalogFile(termFileList[1].linkToFile, "experimental",programmeList!!.programmes[0].programmeName, programmeTerms!!.terms[0].term,
+                Timetable::class.java)
 
         }
 

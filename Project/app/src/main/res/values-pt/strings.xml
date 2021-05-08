@@ -97,6 +97,8 @@
     <string name="label_exam_all">Exame</string>
     <string name="label_todo_all">Tarefa</string>
     <string name="label_journal_all">Notícia</string>
-    <string name="ion_api_down">A API i-on não está disponível, a redirecionar para o site do ISEL</string>
+
     <string name="remote_config_unreachable">Ficheiro de configuração remota não disponível, a redirecionar para o site do ISEL</string>
+
+    <string name="catalog_info_warning">A API i-on não está disponível, a exibir informação de catálogo</string>
 </resources>

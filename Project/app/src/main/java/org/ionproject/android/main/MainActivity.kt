@@ -70,18 +70,29 @@ class MainActivity : ExceptionHandlingActivity(),
         DeleteSuggestionsDialogFragment()
     }
 
+    /**
+     * If the root intent is null, it means the API is down and it's catalog mode from now on
+     *
+     * Search funtionalities don't even render (codebase had already taken care of this aspect in case
+     * of null root)
+     *
+     * bottom navigation render but doesn't work since setupBottomBarNavigation() is only called
+     * when root != null
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(MAIN_ACTIVITY_ROOT_EXTRA)
         if (root != null) {
+            catalogInfoTextView.visibility = View.INVISIBLE
             sharedViewModel.root = root
             setupTopBarBehaviour()
             setupBottomBarBehaviour()
             setupBackButton()
         } else {
-            throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
+            //throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
+            catalogInfoTextView.visibility = View.VISIBLE
         }
     }
 
@@ -169,7 +180,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
         // If Root did not bring the searchUri we don't add the functionality
         // and we hide all the buttons
-        if (sharedViewModel.root.searchUri == null) {
+        if (sharedViewModel.root?.searchUri == null) {
             searchViewItem.isVisible = false
             deleteSuggestionsItem.isVisible = false
         } else {

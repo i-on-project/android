@@ -10,7 +10,8 @@ class ProgrammesViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val model = when (modelClass) {
             ProgrammesViewModel::class.java -> ProgrammesViewModel(
-                IonApplication.programmesRepository
+                IonApplication.programmesRepository,
+                IonApplication.catalogRepository
             )
             else -> throw IllegalArgumentException("There is no ViewModel for class $modelClass")
         }

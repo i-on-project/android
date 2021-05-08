@@ -35,7 +35,7 @@ class SearchResultsFragment : ExceptionHandlingFragment() {
      * Uri used to perform a search
      */
     private val searchUri by lazy(LazyThreadSafetyMode.NONE) {
-        val searchUri = sharedViewModel.root.searchUri
+        val searchUri = sharedViewModel.root?.searchUri
         searchUri
             ?: throw IllegalArgumentException("SearchUri is missing! Cannot load SearchResultsFragment without it.")
     }
