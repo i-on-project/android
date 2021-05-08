@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_curricular_terms.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.offline.models.CatalogTerm
 import org.ionproject.android.programmeDetails.ProgrammeDetailsViewModel
+import java.net.URI
 
 class CatalogTermsListAdapter(
     private val model: ProgrammeDetailsViewModel,
@@ -29,7 +31,7 @@ class CatalogTermsListAdapter(
         holder.bind(model.catalogProgrammeTerms[position])
     }
 
-    class CatalogTermViewHolder(view: View, private val sharedViewModel: SharedViewModel) :
+    class CatalogTermViewHolder(private val view: View, private val sharedViewModel: SharedViewModel) :
 
         RecyclerView.ViewHolder(view) {
 
@@ -40,7 +42,8 @@ class CatalogTermsListAdapter(
 
             button.setOnClickListener {
                 sharedViewModel.selectedCatalogProgrammeTerm = catalogTerm
-                //view.findNavController().navigate(R.id.action_programme_details_to_courses)
+                sharedViewModel.catalogProgrammeTermsLink = URI(catalogTerm.linkToInfo)
+                view.findNavController().navigate(R.id.action_programme_details_to_courses)
             }
         }
     }

@@ -8,10 +8,18 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.repositories.ProgrammesRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.CatalogProgramme
+import org.ionproject.android.offline.models.CatalogProgrammeTermInfo
+import org.ionproject.android.offline.models.CatalogProgrammeTermInfoFile
+import org.ionproject.android.offline.models.CatalogTerm
+import java.net.URI
 
-class CoursesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
+class CoursesViewModel(private val programmesRepository: ProgrammesRepository, private val catalogRepository: CatalogRepository) : ViewModel() {
 
     private val programmeOffersLiveData = MutableLiveData<List<ProgrammeOffer>>()
+
+    val catalogTermFilesLiveData = MutableLiveData<List<CatalogProgrammeTermInfoFile>>()
 
     fun observeCoursesLiveData(
         lifecycleOwner: LifecycleOwner,
@@ -30,6 +38,9 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
 
     val programmeOffers: List<ProgrammeOffer>
         get() = programmeOffersLiveData.value ?: emptyList()
+
+    val catalogTermfiles: List<CatalogProgrammeTermInfoFile>
+        get() = catalogTermFilesLiveData.value ?: emptyList()
 
     /**
      * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
@@ -85,5 +96,25 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository) :
                 optionalCourses
         )
         return areMandatory
+    }
+
+    /**
+     * Gets the term files from the catalog folder
+     */
+    fun getCatalogTermFiles(
+        catalogTerm: CatalogTerm
+    ){
+        viewModelScope.launch{
+            val catalogTermFiles = catalogRepository.getTermInfo(
+                URI(catalogTerm.linkToInfo)
+            )
+            catalogTermFilesLiveData.postValue(catalogTermFiles)
+        }
+    }
+
+    fun observeCatalogTermFilesLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
+        catalogTermFilesLiveData.observe(lifecycleOwner, Observer {
+            onUpdate()
+        })
     }
 }
