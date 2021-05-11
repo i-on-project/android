@@ -19,9 +19,9 @@ import java.net.URI
 
 /**
  * 1) Try and get data from the JsonHome URL
- * 2) if it fails, get the URL from the Remote Config file
- * 3) it it fails to get that info, check connectivity: open isel's page if it exists, redirect to no connect
- * error if it doesn't
+ * 2) if it fails, check connectivity
+ * 3) if connected, try to access Remote Config; if not, intent to ErrorActivity
+ * 4) if URL from remote config fails to get JSONHome, normal flux but with catalog info
  */
 class LoadingActivity : ExceptionHandlingActivity() {
 
@@ -35,13 +35,12 @@ class LoadingActivity : ExceptionHandlingActivity() {
         linearlayout_activity_loading.addGradientBackground()
 
         /**
-         * If JsonHome contains all required resources then open main activity; if not app must be outdated
+         * Here we try and get root, if that fails we check connectivity and the amount of times
+         * this request has been attempted
          *
-         * if by the second JSONHome attempt this check fails, we move on the the normal usage but with
-         * catalog info
-         *
-         * the json home intent is null and we use that null value to tell the main activity to
-         * switch to catalog mode
+         * We can see if this is the first attempt by the value in the RemoteConfigLiveData object:
+         * if null, there has not been a request to the remote config file which means it is the first
+         * time the app tries to get the home resource
          */
         loadingViewModel.observeRootLiveData(this) {
             val intent = Intent(this, MainActivity::class.java)
@@ -50,10 +49,20 @@ class LoadingActivity : ExceptionHandlingActivity() {
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
                     this.startActivity(intent)
                 }
-                is FetchFailure<Root> -> {
-                    if (loadingViewModel.getRemoteConfigLiveData() == null) {
-                        loadingViewModel.getRemoteConfig()
-                    } else {
+                is FetchFailure<Root> -> { //unsuccessful request to jsonhome
+                    if (loadingViewModel.getRemoteConfigLiveData() == null) { //first attempt at api request
+                        if (!IonApplication.connectivityObservable.hasConnectivity()) { //connectivity check to see if that's why request failed
+                            startActivity(
+                                Intent(this, ErrorActivity::class.java)
+                                    .putExtra(
+                                        ERROR_ACTIVITY_EXCEPTION_EXTRA,
+                                        resources.getString(R.string.label_no_connectivity_loading_error)
+                                    )
+                            )
+                        } else {
+                            loadingViewModel.getRemoteConfig()
+                        }
+                    } else { // all attempts failed, using catalog info
                         this.startActivity(intent)
                     }
                 }
@@ -61,32 +70,24 @@ class LoadingActivity : ExceptionHandlingActivity() {
         }
 
         /**
-         * We check the connectivity in this observer because, although unlikely, GitHub might
-         * be down and there needs to be a plan for that
+         * If the RemoteConfig request is successful, we try to get the JsonHome resource again
          *
-         * If github is down, we don't continue with catalog info because those files
-         * are held on github as well as the remote config
+         * if it fails, GithHub is probably down so there's no point in trying to use teh catalog info, so we
+         * just open the ISEL page.
+         *
+         * We don't need to check for connectivity in this case because the connectivity check is done
+         * before we reach this stage of the fallback plan
          */
         loadingViewModel.observeRemoteConfigLiveData(this) {
             when (it) {
                 is FetchSuccess<RemoteConfig> -> loadingViewModel.getJsonHome(URI(it.value.api_link))
                 is FetchFailure<RemoteConfig> -> {
-                    if (!IonApplication.connectivityObservable.hasConnectivity()) {
-                        startActivity(
-                            Intent(this, ErrorActivity::class.java)
-                                .putExtra(
-                                    ERROR_ACTIVITY_EXCEPTION_EXTRA,
-                                    resources.getString(R.string.label_no_connectivity_loading_error)
-                                )
-                        )
-                    } else {
-                        Toast.makeText(
-                            this,
-                            resources.getString(R.string.remote_config_unreachable),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        openISELPage()
-                    }
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.remote_config_unreachable),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    openISELPage()
                 }
             }
         }
