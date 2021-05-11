@@ -12,10 +12,13 @@ import java.net.URI
 import java.util.*
 
 const val linkToCalendar =
-    "https://raw.githubusercontent.com/i-on-project/integration-data/experimental/pt.ipl.isel/academic_years/2020-2021/calendar.json"
+    "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/academic_years/2020-2021/calendar.json"
 
 const val linkToCatalogProgrammesList =
     "https://api.github.com/repos/i-on-project/integration-data/git/trees/748698e9248d2bb20a2266cb78b386a37f39930d"
+
+const val linkToExamSchedule = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/exam_schedule.json"
+const val linkToTimeTable = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/timetable.json"
 
 class CatalogRepository(private val webAPI: IIonWebAPI) {
 
@@ -76,15 +79,31 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
         catalogProgrammeTermInfo.files.filter { it.fileName.contains("json") }
     }
 
-    /**
-     * Returns a parsed from base64 exam_schdule or timetable file, taking into account the version
-     * of the device, since the base64 decoder is only available from version 26 onwards
-     *
-     * TODO: Maybe change the null return value for something better
-     */
-    suspend fun <T> getCatalogFile(fileLink: URI, branch: String?, programme: String?,term: String ?, klass: Class<T>): T?{
 
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    /**
+     * NOTE: Since the parsing of the base64 file was causing problems, the non 4head solution is
+     * just using the code that works with every version instead of this version checking nonsense
+     */
+    suspend fun <T> getFileFromGithub(
+        programme: String,
+        term: String,
+        klass: Class<T>
+    ): T {
+
+        val link = when (klass) {
+            ExamSchedule::class.java -> linkToExamSchedule.format(programme, term)
+            Timetable::class.java -> linkToTimeTable.format(programme, term)
+            else -> ""
+        }
+
+        return webAPI.getFromURI(
+            URI(link),
+            klass,
+            "application/json"
+        )
+    }
+
+        /*return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
             val encodedFile: Base64EncodedFile =
                 webAPI.getFromURI(
@@ -93,15 +112,11 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
                     "application/json"
                 )
 
-           return decodeFileContentFromGitHubApi(encodedFile.content, klass)
+            decodeFileContentFromGitHubApi(encodedFile.content, klass)
 
         }else{
-            if (branch != null && programme != null && term != null) {
-                return getFileFromGithub( branch, programme, term, klass)
-            }
-        }
 
-        return null
+        }
     }
 
     /**
@@ -115,29 +130,10 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
         val decodedBytes = Base64.getDecoder().decode(clean)
         val decoded = String(decodedBytes)
 
+        print(decoded)
+
         return JacksonIonMapper().parse(decoded, klass)
-    }
-
-    suspend fun <T> getFileFromGithub(
-        branch: String,
-        programme: String,
-        term: String,
-        klass: Class<T>
-    ): T {
-
-        val link = when (klass) {
-            ExamSchedule::class.java -> "https://raw.githubusercontent.com/i-on-project/integration-data/$branch/pt.ipl.isel/programmes/$programme/$term/exam_schedule.json"
-            Timetable::class.java -> "https://raw.githubusercontent.com/i-on-project/integration-data/$branch/pt.ipl.isel/programmes/$programme/$term/timetable.json"
-            else -> ""
-        }
-
-        return webAPI.getFromURI(
-            URI(link),
-            klass,
-            "application/json"
-        )
-    }
-
+    }*/
 }
 
 

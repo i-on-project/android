@@ -2,8 +2,6 @@ package org.ionproject.android.offline.models
 
 /**
  * This class parses the timetable from JSON
- *
- * NOTA: O JSON DO ARRAY CLASSES E INCONSISTENTE TANTO NA PRESENÇA DE "LOCATION"
  */
 data class Timetable(
     val school: SchoolAndProgrammeDetails,

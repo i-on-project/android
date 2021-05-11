@@ -6,8 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.offline.models.CatalogProgramme
-import org.ionproject.android.offline.models.CatalogTerm
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 /**
@@ -68,12 +67,19 @@ class SharedViewModel : ViewModel() {
     var curricularTerm: Int = 0
 
     //-------Catalog Variables--------
-
-    var catalogProgrammeTermsLink: URI? = null
-    var catalogProgrammeTermFilesLink: URI? = null
-
+    /**
+     * The programme that the user chose from the list in the ProgrammesFragment
+     */
     var selectedCatalogProgramme: CatalogProgramme? = null
+
+    /**
+     * The Term the user chose from the list of terms of the selected Programme
+     */
     var selectedCatalogProgrammeTerm: CatalogTerm? = null
 
+    var parsedExamSchedule: ExamSchedule? = null
 
+    var parsedTimeTable: Timetable? = null
+
+    var selectedClass: Section? = null
 }

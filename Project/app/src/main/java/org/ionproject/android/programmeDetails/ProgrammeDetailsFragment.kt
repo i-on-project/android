@@ -22,6 +22,7 @@ import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
 import org.ionproject.android.offline.CatalogProgrammesListAdapter
 import org.ionproject.android.offline.CatalogTermsListAdapter
+import java.net.URI
 
 class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
@@ -41,7 +42,7 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
     private val programmeDetailsUriUri by lazy(LazyThreadSafetyMode.NONE) {
         val programmeDetailsUri = sharedViewModel.programmeDetailsUri
 
-        programmeDetailsUri ?: sharedViewModel.catalogProgrammeTermsLink
+        programmeDetailsUri ?: URI(sharedViewModel.selectedCatalogProgramme?.linkToInfo)
     }
 
     private val programmeViewModel: ProgrammeDetailsViewModel by lazy(LazyThreadSafetyMode.NONE) {
@@ -67,9 +68,9 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
         Log.d("Catalog", "URI: $programmeDetailsUriUri")
 
-        if (programmeDetailsUriUri?.host?.contains("github") == false) {
+        if (programmeDetailsUriUri.host?.contains("github") == false) {
 
-            programmeDetailsUriUri?.let {
+            programmeDetailsUriUri.let {
                 programmeViewModel.getProgrammeDetails(it) {
                     viewGroup.stopLoading()
                     // Name is not mandatory (as mentioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
@@ -97,7 +98,7 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
         } else { //catalog info
 
-            programmeDetailsUriUri?.let { programmeViewModel.getCatalogProgramDetails(it) }
+            programmeDetailsUriUri.let { programmeViewModel.getCatalogProgramDetails(it) }
 
             programmeViewModel.observeCatalogTermsLiveData(viewLifecycleOwner) {
 

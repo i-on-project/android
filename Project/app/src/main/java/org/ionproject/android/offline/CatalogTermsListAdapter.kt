@@ -31,6 +31,11 @@ class CatalogTermsListAdapter(
         holder.bind(model.catalogProgrammeTerms[position])
     }
 
+    /**
+     * Since we can display both the timetable and the exam schedule in the class section fragment,
+     * we don't need to go through all the other fragments in between that are necessary in the
+     * normal usage
+     */
     class CatalogTermViewHolder(private val view: View, private val sharedViewModel: SharedViewModel) :
 
         RecyclerView.ViewHolder(view) {
@@ -42,8 +47,7 @@ class CatalogTermsListAdapter(
 
             button.setOnClickListener {
                 sharedViewModel.selectedCatalogProgrammeTerm = catalogTerm
-                sharedViewModel.catalogProgrammeTermsLink = URI(catalogTerm.linkToInfo)
-                view.findNavController().navigate(R.id.action_programme_details_to_courses)
+                view.findNavController().navigate(R.id.action_navigation_programme_details_to_navigation_course_details)
             }
         }
     }

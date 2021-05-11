@@ -19,8 +19,6 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository, p
 
     private val programmeOffersLiveData = MutableLiveData<List<ProgrammeOffer>>()
 
-    val catalogTermFilesLiveData = MutableLiveData<List<CatalogProgrammeTermInfoFile>>()
-
     fun observeCoursesLiveData(
         lifecycleOwner: LifecycleOwner,
         onUpdate: () -> Unit
@@ -39,8 +37,6 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository, p
     val programmeOffers: List<ProgrammeOffer>
         get() = programmeOffersLiveData.value ?: emptyList()
 
-    val catalogTermfiles: List<CatalogProgrammeTermInfoFile>
-        get() = catalogTermFilesLiveData.value ?: emptyList()
 
     /**
      * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
@@ -96,25 +92,5 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository, p
                 optionalCourses
         )
         return areMandatory
-    }
-
-    /**
-     * Gets the term files from the catalog folder
-     */
-    fun getCatalogTermFiles(
-        catalogTerm: CatalogTerm
-    ){
-        viewModelScope.launch{
-            val catalogTermFiles = catalogRepository.getTermInfo(
-                URI(catalogTerm.linkToInfo)
-            )
-            catalogTermFilesLiveData.postValue(catalogTermFiles)
-        }
-    }
-
-    fun observeCatalogTermFilesLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
-        catalogTermFilesLiveData.observe(lifecycleOwner, Observer {
-            onUpdate()
-        })
     }
 }

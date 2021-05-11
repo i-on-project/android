@@ -23,6 +23,9 @@ import org.ionproject.android.common.model.Classes
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import org.ionproject.android.offline.CatalogClassesListAdapter
+import org.ionproject.android.offline.models.Section
+import java.util.*
 
 class CourseDetailsFragment : ExceptionHandlingFragment() {
 
@@ -80,15 +83,68 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
 
-        viewModel.getCourseDetails(courseDetailsUri) {
-            // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
-            courseFullName.text = it.name
-                ?: resources.getString(R.string.label_name_not_available_all)
-            courseAcronym.text = it.acronym
-            setupCourseClassesList(recyclerview_course_details_classes_list)
-            setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
-            viewGroup.stopLoading()
+        if(sharedViewModel.selectedCatalogProgrammeTerm == null){ //if null, API data is present
+
+            viewModel.getCourseDetails(courseDetailsUri) {
+                // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
+                courseFullName.text = it.name
+                    ?: resources.getString(R.string.label_name_not_available_all)
+                courseAcronym.text = it.acronym
+                setupCourseClassesList(recyclerview_course_details_classes_list)
+                setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
+                viewGroup.stopLoading()
+            }
+
+        }else{
+
+            //get the catalog files
+            viewModel.getCatalogTermFiles(sharedViewModel.selectedCatalogProgrammeTerm!!)
+
+            viewModel.observeCatalogTermFilesLiveData(viewLifecycleOwner){
+
+                val programme = sharedViewModel.selectedCatalogProgramme?.programmeName
+
+                val term = sharedViewModel.selectedCatalogProgrammeTerm?.term
+
+                if (programme != null && term != null) {
+
+                    linearLayout_course_details_term_selection_section.visibility = View.GONE
+
+                    courseAcronym.text = ""
+
+                    courseFullName.text = programme.toUpperCase(Locale.ROOT)
+
+                    viewModel.getCatalogExamSchedule(programme,term){
+                        sharedViewModel.parsedExamSchedule = it
+                    }
+
+                    viewModel.getCatalogTimetable(programme,term){
+                        sharedViewModel.parsedTimeTable = it
+
+                        it.classes[0].sections?.distinctBy { section -> section.section }?.let { it1 ->
+                            setupCatalogClassesList(
+                                it1, recyclerview_course_details_classes_list)
+                        }
+                    }
+
+                    viewGroup.stopLoading()
+                }
+            }
+
         }
+    }
+
+    private fun setupCatalogClassesList(sections: List<Section>, classesList: RecyclerView){
+        classesList.layoutManager = LinearLayoutManager(context)
+        classesList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+        val classesListAdapter = CatalogClassesListAdapter(sections, sharedViewModel)
+        classesList.adapter = classesListAdapter
     }
 
     private fun setupCourseClassesList(classesList: RecyclerView) {

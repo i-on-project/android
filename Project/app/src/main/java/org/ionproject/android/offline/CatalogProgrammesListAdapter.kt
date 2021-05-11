@@ -37,10 +37,9 @@ class CatalogProgrammesListAdapter(
 
         fun bindTo(catalogProgramme: CatalogProgramme) {
             buttonProgramme.text = catalogProgramme.programmeName
-            sharedViewModel.selectedCatalogProgramme = catalogProgramme
 
             buttonProgramme.setOnClickListener {
-                sharedViewModel.catalogProgrammeTermsLink = URI(catalogProgramme.linkToInfo)
+                sharedViewModel.selectedCatalogProgramme = catalogProgramme
                 it.findNavController().navigate(R.id.action_programmes_to_programme_details)
             }
         }

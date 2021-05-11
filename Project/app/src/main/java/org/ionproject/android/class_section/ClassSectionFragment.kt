@@ -19,6 +19,7 @@ import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
 import java.net.URI
+import java.util.*
 
 class ClassSectionFragment : ExceptionHandlingFragment() {
 
@@ -96,16 +97,21 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         viewGroup = view as ViewGroup
         viewGroup.startLoading()
 
-        setupLecturesList()
-        setupExamsList()
-        setupWorkAssignmentsList()
-        setupJournalsList()
-        setupClassSectionDetails()
-        view.addSwipeRightGesture {
-            findNavController().navigateUp()
+        if (sharedViewModel.selectedCatalogProgramme == null) { //regular API info, the catalog vars are null
+            setupLecturesList()
+            setupExamsList()
+            setupWorkAssignmentsList()
+            setupJournalsList()
+            setupClassSectionDetails()
+            view.addSwipeRightGesture {
+                findNavController().navigateUp()
+            }
+            setupSectionsBehaviour()
+            setupRefreshButtonBehaviour()
+
+        } else {
+
         }
-        setupSectionsBehaviour()
-        setupRefreshButtonBehaviour()
     }
 
     /**

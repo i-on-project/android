@@ -7,6 +7,11 @@ import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.CatalogProgrammeTermInfoFile
+import org.ionproject.android.offline.models.CatalogTerm
+import org.ionproject.android.offline.models.ExamSchedule
+import org.ionproject.android.offline.models.Timetable
 import java.net.URI
 
 class ClassSectionViewModel(
@@ -129,4 +134,5 @@ class ClassSectionViewModel(
         }
     }
 
+    //---------Catalog Methods---------
 }
