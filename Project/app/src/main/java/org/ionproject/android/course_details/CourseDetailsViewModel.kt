@@ -2,6 +2,7 @@ package org.ionproject.android.course_details
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Classes
@@ -30,15 +31,6 @@ class CourseDetailsViewModel(
     fun observeClassesListLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
         classesListLiveData.observe(lifecycleOwner, Observer { onUpdate() })
     }
-
-    /**
-     * LiveData with a list with the parsed json representations of the exam schedule and timetable
-     *
-     * These objects need to be fetched, decoded from base 64, parsed into the correct classes and only then
-     * can we configure the adapters for the View
-     */
-    private val catalogTermFilesLiveData: MutableLiveData<List<CatalogProgrammeTermInfoFile>> =
-        MutableLiveData()
 
     /**
      *  Requests the details of a course from the API
@@ -101,58 +93,26 @@ class CourseDetailsViewModel(
         )
     }
 
-    //-------Catalog functions
+    //---Catalog functions
     /**
-     * Gets the term files from the catalog folder
+     * By this point we already know the programme, the term and the course
+     *
+     * We just need to select the info we want from the timetable to display
+     *
+     * In this case, we want to choose the classes that have the selected course
      */
-    fun getCatalogTermFiles(
-        catalogTerm: CatalogTerm
-    ) {
-        viewModelScope.launch {
-            val catalogTermFiles = catalogRepository.getTermInfo(
-                URI(catalogTerm.linkToInfo)
-            )
-            catalogTermFilesLiveData.postValue(catalogTermFiles)
-        }
-    }
+    fun getCatalogClassesFromACourse(selectedCourse: String, sharedViewModel: SharedViewModel): MutableList<String>{
 
-    fun observeCatalogTermFilesLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
-        catalogTermFilesLiveData.observe(lifecycleOwner, Observer {
-            println("the fucking list:$it")
-            onUpdate()
-        })
-    }
+        var classes: MutableList<String> = mutableListOf()
 
-    /**
-     * Get the Exam Schedule from the [catalogTermFilesLiveData] object
-     */
-    fun getCatalogExamSchedule(programme: String, term: String, onResult: (ExamSchedule) -> Unit) {
-        viewModelScope.launch {
-
-            catalogRepository.getFileFromGithub(
-                programme,
-                term,
-                ExamSchedule::class.java
-            ).let {
-                onResult(it)
+        for(klass in sharedViewModel.parsedTimeTable?.classes!!){
+            if(klass.acr == selectedCourse){
+                for(section in klass.sections!!){
+                    classes.add(section.section)
+                }
             }
         }
+
+        return classes
     }
-
-    /**
-     * Get the TimeTable from the [catalogTermFilesLiveData] object
-     */
-    fun getCatalogTimetable(programme: String, term: String, onResult: (Timetable) -> Unit) {
-        viewModelScope.launch {
-
-            catalogRepository.getFileFromGithub(
-                programme,
-                term,
-                Timetable::class.java
-            ).let {
-                onResult(it)
-            }
-        }
-    }
-
 }

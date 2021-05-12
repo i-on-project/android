@@ -2,16 +2,14 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
 import org.ionproject.android.offline.CatalogRepository
-import org.ionproject.android.offline.models.CatalogProgrammeTermInfoFile
-import org.ionproject.android.offline.models.CatalogTerm
-import org.ionproject.android.offline.models.ExamSchedule
-import org.ionproject.android.offline.models.Timetable
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 class ClassSectionViewModel(
@@ -135,4 +133,26 @@ class ClassSectionViewModel(
     }
 
     //---------Catalog Methods---------
+    /**
+     * Since the exam and timetable are already stored in the shared view model, we just need to
+     * filter the timetable to get the lectures that matter to the selected class
+     *
+     * Since the Exam schedule is the same programme wide, we don't need this step for the
+     * exam_schedule.json
+     */
+    fun getCatalogLecturesForSelectedClass(courseName:String, className: String, sharedViewModel: SharedViewModel): List<TimetableEvent>{
+
+        //get the lectures for the chosen class and course to present them in the recyclerView
+        for(details in sharedViewModel.parsedTimeTable?.classes!!){
+            if(details.acr == courseName){
+                for(section in details.sections!!){
+                    if(section.section == className){
+                        return section.events
+                    }
+                }
+            }
+        }
+
+        return listOf()
+    }
 }

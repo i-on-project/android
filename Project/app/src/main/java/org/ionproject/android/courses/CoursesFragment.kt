@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_course_details.*
 import kotlinx.android.synthetic.main.fragment_courses.*
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
@@ -18,6 +19,7 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import org.ionproject.android.offline.CatalogCoursesListAdapter
 
 class CoursesFragment : ExceptionHandlingFragment() {
 
@@ -47,36 +49,80 @@ class CoursesFragment : ExceptionHandlingFragment() {
         val viewModel =
             ViewModelProvider(this, CoursesViewModelProvider())[CoursesViewModel::class.java]
 
+        //if catalog variables are null, API data is present
+        if (sharedViewModel.selectedCatalogProgrammeTerm == null) {
 
-        //Courses List Setup
-        val coursesListAdapter = CoursesListAdapter(viewModel, sharedViewModel)
-        recyclerview_courses_list.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = coursesListAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            //Courses List Setup
+            val coursesListAdapter = CoursesListAdapter(viewModel, sharedViewModel)
+            recyclerview_courses_list.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = coursesListAdapter
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            }
+
+            //Request courses from a specific term from the WebAPI
+            viewModel.getAllCoursesFromCurricularTerm(
+                sharedViewModel.programmeOfferSummaries,
+                sharedViewModel.curricularTerm
+            )
+
+            viewModel.observeCoursesLiveData(this) {
+                coursesListAdapter.notifyDataSetChanged()
+                viewGroup.stopLoading()
+            }
+
+            view.addSwipeRightGesture {
+                findNavController().navigateUp()
+            }
+
+            button_courses_optional_courses.setOnClickListener {
+                if (viewModel.changeListType())
+                    (it as Button).text =
+                        it.resources.getString(R.string.button_label_optional_courses)
+                else
+                    (it as Button).text =
+                        it.resources.getString(R.string.button_label_mandatory_courses)
+            }
+
+        } else {
+
+            button_courses_optional_courses.visibility = View.GONE
+
+            //get the catalog files
+            viewModel.getCatalogTermFiles(sharedViewModel.selectedCatalogProgrammeTerm!!)
+
+            var courses: List<String> = mutableListOf()
+
+            viewModel.observeCatalogTermFilesLiveData(viewLifecycleOwner) {
+
+                val programme = sharedViewModel.selectedCatalogProgramme?.programmeName
+
+                val term = sharedViewModel.selectedCatalogProgrammeTerm?.term
+
+                if (programme != null && term != null) {
+
+                    viewModel.getCatalogExamSchedule(programme, term) {
+                        sharedViewModel.parsedExamSchedule = it
+                    }
+
+                    viewModel.getCatalogTimetable(programme, term) {
+                        sharedViewModel.parsedTimeTable = it
+
+                        courses = it.classes.map { klass -> klass.acr }
+
+                        val coursesListAdapter = courses.let { CatalogCoursesListAdapter(it, sharedViewModel) }
+
+                        recyclerview_courses_list.apply {
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = coursesListAdapter
+                            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                        }
+
+                        viewGroup.stopLoading()
+                    }
+                }
+            }
         }
 
-        //Request courses from a specific term from the WebAPI
-        viewModel.getAllCoursesFromCurricularTerm(
-            sharedViewModel.programmeOfferSummaries,
-            sharedViewModel.curricularTerm
-        )
-
-        viewModel.observeCoursesLiveData(this) {
-            coursesListAdapter.notifyDataSetChanged()
-            viewGroup.stopLoading()
-        }
-
-        view.addSwipeRightGesture {
-            findNavController().navigateUp()
-        }
-
-        button_courses_optional_courses.setOnClickListener {
-            if (viewModel.changeListType())
-                (it as Button).text = it.resources.getString(R.string.button_label_optional_courses)
-            else
-                (it as Button).text =
-                    it.resources.getString(R.string.button_label_mandatory_courses)
-        }
     }
 }

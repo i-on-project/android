@@ -9,10 +9,7 @@ import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.repositories.ProgrammesRepository
 import org.ionproject.android.offline.CatalogRepository
-import org.ionproject.android.offline.models.CatalogProgramme
-import org.ionproject.android.offline.models.CatalogProgrammeTermInfo
-import org.ionproject.android.offline.models.CatalogProgrammeTermInfoFile
-import org.ionproject.android.offline.models.CatalogTerm
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 class CoursesViewModel(private val programmesRepository: ProgrammesRepository, private val catalogRepository: CatalogRepository) : ViewModel() {
@@ -37,6 +34,11 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository, p
     val programmeOffers: List<ProgrammeOffer>
         get() = programmeOffersLiveData.value ?: emptyList()
 
+    /**
+     * LiveData with a list with the parsed json representations of the exam schedule and timetable
+     */
+    private val catalogTermFilesLiveData: MutableLiveData<List<CatalogProgrammeTermInfoFile>> =
+        MutableLiveData()
 
     /**
      * Launches multiple coroutines which will be obtaining programmeOffers and updating the live data.
@@ -92,5 +94,59 @@ class CoursesViewModel(private val programmesRepository: ProgrammesRepository, p
                 optionalCourses
         )
         return areMandatory
+    }
+
+    //----Catalog functions-----
+    /**
+     * Gets the term files from the catalog folder
+     */
+    fun getCatalogTermFiles(
+        catalogTerm: CatalogTerm
+    ) {
+        viewModelScope.launch {
+            val catalogTermFiles = catalogRepository.getTermInfo(
+                URI(catalogTerm.linkToInfo)
+            )
+            catalogTermFilesLiveData.postValue(catalogTermFiles)
+        }
+    }
+
+    fun observeCatalogTermFilesLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
+        catalogTermFilesLiveData.observe(lifecycleOwner, Observer {
+            println("the fucking list:$it")
+            onUpdate()
+        })
+    }
+
+    /**
+     * Get the Exam Schedule from the [catalogTermFilesLiveData] object
+     */
+    fun getCatalogExamSchedule(programme: String, term: String, onResult: (ExamSchedule) -> Unit) {
+        viewModelScope.launch {
+
+            catalogRepository.getFileFromGithub(
+                programme,
+                term,
+                ExamSchedule::class.java
+            ).let {
+                onResult(it)
+            }
+        }
+    }
+
+    /**
+     * Get the TimeTable from the [catalogTermFilesLiveData] object
+     */
+    fun getCatalogTimetable(programme: String, term: String, onResult: (Timetable) -> Unit) {
+        viewModelScope.launch {
+
+            catalogRepository.getFileFromGithub(
+                programme,
+                term,
+                Timetable::class.java
+            ).let {
+                onResult(it)
+            }
+        }
     }
 }

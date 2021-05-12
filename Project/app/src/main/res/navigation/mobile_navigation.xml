@@ -129,9 +129,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
-        <action
-            android:id="@+id/action_navigation_programme_details_to_navigation_course_details"
-            app:destination="@id/navigation_course_details" />
     </fragment>
 
     <fragment

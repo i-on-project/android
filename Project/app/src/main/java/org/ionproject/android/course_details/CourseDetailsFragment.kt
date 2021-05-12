@@ -97,54 +97,26 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
 
         }else{
 
-            //get the catalog files
-            viewModel.getCatalogTermFiles(sharedViewModel.selectedCatalogProgrammeTerm!!)
+            courseFullName.text = sharedViewModel.selectedCatalogProgramme?.programmeName?.toUpperCase(
+                Locale.ROOT)
 
-            viewModel.observeCatalogTermFilesLiveData(viewLifecycleOwner){
+            courseAcronym.text = sharedViewModel.selectedCatalogProgrammeTerm!!.term
 
-                val programme = sharedViewModel.selectedCatalogProgramme?.programmeName
+            val classes = sharedViewModel.selectedCourse?.let { viewModel.getCatalogClassesFromACourse(it, sharedViewModel) }
 
-                val term = sharedViewModel.selectedCatalogProgrammeTerm?.term
-
-                if (programme != null && term != null) {
-
-                    linearLayout_course_details_term_selection_section.visibility = View.GONE
-
-                    courseAcronym.text = ""
-
-                    courseFullName.text = programme.toUpperCase(Locale.ROOT)
-
-                    viewModel.getCatalogExamSchedule(programme,term){
-                        sharedViewModel.parsedExamSchedule = it
-                    }
-
-                    viewModel.getCatalogTimetable(programme,term){
-                        sharedViewModel.parsedTimeTable = it
-
-                        it.classes[0].sections?.distinctBy { section -> section.section }?.let { it1 ->
-                            setupCatalogClassesList(
-                                it1, recyclerview_course_details_classes_list)
-                        }
-                    }
-
-                    viewGroup.stopLoading()
-                }
-            }
-
-        }
-    }
-
-    private fun setupCatalogClassesList(sections: List<Section>, classesList: RecyclerView){
-        classesList.layoutManager = LinearLayoutManager(context)
-        classesList.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
+            recyclerview_course_details_classes_list.layoutManager = LinearLayoutManager(context)
+            recyclerview_course_details_classes_list.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
             )
-        )
 
-        val classesListAdapter = CatalogClassesListAdapter(sections, sharedViewModel)
-        classesList.adapter = classesListAdapter
+            val catalogClassesListAdapter = classes?.let { CatalogClassesListAdapter(it, sharedViewModel) }
+            recyclerview_course_details_classes_list.adapter = catalogClassesListAdapter
+
+            viewGroup.stopLoading()
+        }
     }
 
     private fun setupCourseClassesList(classesList: RecyclerView) {

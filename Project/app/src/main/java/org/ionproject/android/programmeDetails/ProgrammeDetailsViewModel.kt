@@ -9,10 +9,7 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.repositories.ProgrammesRepository
 import org.ionproject.android.offline.CatalogRepository
-import org.ionproject.android.offline.models.CatalogProgramme
-import org.ionproject.android.offline.models.CatalogProgrammeTerms
-import org.ionproject.android.offline.models.CatalogProgrammes
-import org.ionproject.android.offline.models.CatalogTerm
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 class ProgrammeDetailsViewModel(
@@ -25,7 +22,10 @@ class ProgrammeDetailsViewModel(
         get() = catalogProgrammeTermsLiveData.value?.terms
             ?: emptyList()
 
-    val catalogProgrammeTermsLiveData = MutableLiveData<CatalogProgrammeTerms>()
+    /**
+     * Live data for the terms of the specified programme
+     */
+    private val catalogProgrammeTermsLiveData = MutableLiveData<CatalogProgrammeTerms>()
 
     /**
      *  Requests the details of a programme from the API
@@ -43,6 +43,7 @@ class ProgrammeDetailsViewModel(
         }
     }
 
+    //-------Catalog functions
     /**
      * Requests the details of a programme (it's terms)
      * from the catalog
@@ -63,5 +64,4 @@ class ProgrammeDetailsViewModel(
             onUpdate()
         })
     }
-
 }

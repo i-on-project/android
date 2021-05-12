@@ -68,12 +68,12 @@ class SharedViewModel : ViewModel() {
 
     //-------Catalog Variables--------
     /**
-     * The programme that the user chose from the list in the ProgrammesFragment
+     * The programme that the user chose from the list in the ProgrammesFragment (curso)
      */
     var selectedCatalogProgramme: CatalogProgramme? = null
 
     /**
-     * The Term the user chose from the list of terms of the selected Programme
+     * The Term the user chose from the list of terms of the selected Programme (semestre)
      */
     var selectedCatalogProgrammeTerm: CatalogTerm? = null
 
@@ -81,5 +81,13 @@ class SharedViewModel : ViewModel() {
 
     var parsedTimeTable: Timetable? = null
 
-    var selectedClass: Section? = null
+    /**
+    Name of the chosen class to the show the respective lectures in class section fragment (turma)
+     */
+    var selectedClass: String? = null
+
+    /**
+     * ACR of the selected course to help filter the classes and the events in the fragments
+     */
+    var selectedCourse: String? = null
 }

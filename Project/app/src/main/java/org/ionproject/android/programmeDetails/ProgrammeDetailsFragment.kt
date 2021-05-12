@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_course_details.*
 import kotlinx.android.synthetic.main.fragment_programme_details.*
 import kotlinx.android.synthetic.main.fragment_programmes.*
 import org.ionproject.android.ExceptionHandlingFragment
@@ -23,6 +24,7 @@ import org.ionproject.android.common.stopLoading
 import org.ionproject.android.offline.CatalogProgrammesListAdapter
 import org.ionproject.android.offline.CatalogTermsListAdapter
 import java.net.URI
+import java.util.*
 
 class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
@@ -105,7 +107,7 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
                 viewGroup.stopLoading()
 
                 textview_programme_details_name.text =
-                    sharedViewModel.selectedCatalogProgramme?.programmeName?.toUpperCase()
+                    sharedViewModel.selectedCatalogProgramme?.programmeName?.toUpperCase(Locale.ROOT)
 
                 textview_programme_details_acronym.text = ""
 

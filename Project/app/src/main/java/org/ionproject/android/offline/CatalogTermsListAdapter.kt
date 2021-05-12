@@ -47,7 +47,7 @@ class CatalogTermsListAdapter(
 
             button.setOnClickListener {
                 sharedViewModel.selectedCatalogProgrammeTerm = catalogTerm
-                view.findNavController().navigate(R.id.action_navigation_programme_details_to_navigation_course_details)
+                view.findNavController().navigate(R.id.action_programme_details_to_courses)
             }
         }
     }
