@@ -155,4 +155,9 @@ class ClassSectionViewModel(
 
         return listOf()
     }
+
+    fun getCatalogExamsForSelectedClass(courseName: String, sharedViewModel: SharedViewModel): List<ExamDetails>{
+
+        return sharedViewModel.parsedExamSchedule?.exams!!.filter { it.name == courseName }
+    }
 }

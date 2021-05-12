@@ -9,11 +9,11 @@ import kotlinx.android.synthetic.main.list_item_classes.view.*
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.ClassSummary
-import org.ionproject.android.offline.models.Section
+import org.ionproject.android.course_details.CourseDetailsViewModel
 
 class CatalogClassesListAdapter(
-   private val sections:List<Section>,
-   private val sharedViewModel: SharedViewModel
+    private val classes: List<String>,
+    private val sharedViewModel: SharedViewModel
 ) : RecyclerView.Adapter<CatalogClassesListAdapter.CatalogClassViewHolder>() {
 
     // Create new views (invoked by the layout manager)
@@ -29,22 +29,25 @@ class CatalogClassesListAdapter(
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: CatalogClassViewHolder, position: Int) {
-        holder.bindTo(sections[position])
+        holder.bindTo(classes[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = sections.size
+    override fun getItemCount() = classes.size
 
     // Provides a reference to the views for each data item
-    class CatalogClassViewHolder(private val view: View, private val sharedViewModel: SharedViewModel) : RecyclerView.ViewHolder(view) {
+    class CatalogClassViewHolder(
+        private val view: View,
+        private val sharedViewModel: SharedViewModel
+    ) : RecyclerView.ViewHolder(view) {
 
         private val classItem = view.button_classes_list_item_class
 
-        fun bindTo(section: Section) {
-            classItem.text = section.section
+        fun bindTo(klass: String) {
+            classItem.text =klass
             classItem.setOnClickListener {
-                sharedViewModel.selectedClass = section
-                //view.findNavController().navigate(R.id.action_course_details_to_class_section)
+                sharedViewModel.selectedClass = klass
+                view.findNavController().navigate(R.id.action_course_details_to_class_section)
             }
         }
     }

@@ -18,6 +18,7 @@ import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import org.ionproject.android.offline.CatalogExamsListAdapter
 import org.ionproject.android.offline.CatalogLecturesListAdapter
 import java.net.URI
 import java.util.*
@@ -119,15 +120,22 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
                     sharedViewModel
                 )
 
+            val exams = viewModel.getCatalogExamsForSelectedClass(sharedViewModel.selectedCourse!!, sharedViewModel)
+
             //setup the top elements
             textView_class_section_calendar_term.text = sharedViewModel.selectedCatalogProgrammeTerm?.term
             textView_class_section_class.text = sharedViewModel.selectedClass
-            textView_class_section_course.text = sharedViewModel.selectedCatalogProgramme!!.programmeName.toUpperCase(Locale.ROOT)
+            textView_class_section_course.text = sharedViewModel.selectedCourse
 
             //setup lectures list for specified class
             val lecturesList = recyclerview_class_section_lectures
             lecturesList.layoutManager = LinearLayoutManager(context)
             lecturesList.adapter = CatalogLecturesListAdapter(lectures)
+
+            //setup exam list for specified course
+            val examsList = recyclerview_class_section_exams
+            examsList.layoutManager = LinearLayoutManager(context)
+            examsList.adapter = CatalogExamsListAdapter(exams)
 
             viewGroup.stopLoading()
         }
