@@ -1,4 +1,4 @@
-package org.ionproject.android.offline
+package org.ionproject.android.offline.catalogProgrammes
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +7,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_programme.view.*
 import org.ionproject.android.R
-import org.ionproject.android.SharedViewModel
+import org.ionproject.android.offline.CatalogSharedViewModel
 import org.ionproject.android.offline.models.CatalogProgramme
-import org.ionproject.android.programmes.ProgrammesViewModel
-import java.net.URI
 
 class CatalogProgrammesListAdapter(
-    private val model: ProgrammesViewModel,
-    private val sharedViewModel: SharedViewModel
+    private val model: CatalogProgrammesViewModel,
+    private val sharedViewModel: CatalogSharedViewModel
 ) :
     RecyclerView.Adapter<CatalogProgrammesListAdapter.CatalogProgrammeViewHolder>() {
 
@@ -30,7 +28,7 @@ class CatalogProgrammesListAdapter(
         holder.bindTo(model.catalogProgrammes[position])
     }
 
-    class CatalogProgrammeViewHolder(view: View, private val sharedViewModel: SharedViewModel) :
+    class CatalogProgrammeViewHolder(view: View, private val sharedViewModel: CatalogSharedViewModel) :
         RecyclerView.ViewHolder(view) {
 
         private val buttonProgramme = view.button_programmes_list_item_programme
@@ -40,7 +38,7 @@ class CatalogProgrammesListAdapter(
 
             buttonProgramme.setOnClickListener {
                 sharedViewModel.selectedCatalogProgramme = catalogProgramme
-                it.findNavController().navigate(R.id.action_programmes_to_programme_details)
+                it.findNavController().navigate(R.id.action_catalog_programmes_to_catalogProgrammeDetailsFragment)
             }
         }
     }

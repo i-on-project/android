@@ -128,4 +128,22 @@
     <string name="remote_config_unreachable">Couldn\'t update from Remote Config, redirecting to ISEL\'s homepage</string>
 
     <string name="catalog_info_warning">The i-on API is down, showing catalog info</string>
+
+    <string name="first_semester">1st Semester</string>
+    <string name="second_semester">2nd Semester</string>
+    <string name="calendar">Calendar</string>
+
+    <string name="title_exam">Exam Schedule</string>
+    <string name="title_timetable">Timetable</string>
+
+    <string name="exam_startDate">Start Date: %s</string>
+    <string name="exam_endDate">End Date: %s</string>
+    <string name="exam_category">Category: %s</string>
+    <string name="exam_location">Location: %s</string>
+
+    <string name="timetable_beginTime">Begin Time: %s</string>
+    <string name="timetable_duration">Duration: %s</string>
+    <string name="timetable_weekday">Weekday: %s</string>
+
+
 </resources>

@@ -101,4 +101,20 @@
     <string name="remote_config_unreachable">Ficheiro de configuração remota não disponível, a redirecionar para o site do ISEL</string>
 
     <string name="catalog_info_warning">A API i-on não está disponível, a exibir informação de catálogo</string>
+
+    <string name="first_semester">1º Semestre</string>
+    <string name="second_semester">2º Semestre</string>
+    <string name="calendar">Calendário</string>
+
+    <string name="title_exam">Calendário de Exames</string>
+    <string name="title_timetable">Horário</string>
+
+    <string name="exam_startDate">Data de início: %s</string>
+    <string name="exam_endDate">Data de fim: %s</string>
+    <string name="exam_category">Categoria: %s</string>
+    <string name="exam_location">Sala: %s</string>
+
+    <string name="timetable_beginTime">Hora de início: %s</string>
+    <string name="timetable_duration">Duração: %s</string>
+    <string name="timetable_weekday">Dia da semana: %s</string>
 </resources>

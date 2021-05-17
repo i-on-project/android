@@ -131,33 +131,4 @@ class ClassSectionViewModel(
             )
         }
     }
-
-    //---------Catalog Methods---------
-    /**
-     * Since the exam and timetable are already stored in the shared view model, we just need to
-     * filter the timetable to get the lectures that matter to the selected class
-     *
-     * Since the Exam schedule is the same programme wide, we don't need this step for the
-     * exam_schedule.json
-     */
-    fun getCatalogLecturesForSelectedClass(courseName:String, className: String, sharedViewModel: SharedViewModel): List<TimetableEvent>{
-
-        //get the lectures for the chosen class and course to present them in the recyclerView
-        for(details in sharedViewModel.parsedTimeTable?.classes!!){
-            if(details.acr == courseName){
-                for(section in details.sections!!){
-                    if(section.section == className){
-                        return section.events
-                    }
-                }
-            }
-        }
-
-        return listOf()
-    }
-
-    fun getCatalogExamsForSelectedClass(courseName: String, sharedViewModel: SharedViewModel): List<ExamDetails>{
-
-        return sharedViewModel.parsedExamSchedule?.exams!!.filter { it.name == courseName }
-    }
 }

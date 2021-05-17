@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/catalog_exam_name_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_transparent"
+        android:elevation="@dimen/all_sections_3"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/all_list_item_padding_20"
+        android:paddingTop="@dimen/sections_padding_8"
+        android:paddingRight="@dimen/all_list_item_padding_20"
+        android:paddingBottom="@dimen/sections_padding_8"
+        android:text="ClassName"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/all_text_18" />
+
+    <TextView
+        android:id="@+id/catalog_exam_startDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_startDate" />
+
+    <TextView
+        android:id="@+id/catalog_exam_endDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_endDate" />
+
+    <TextView
+        android:id="@+id/catalog_exam_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_category" />
+
+    <TextView
+        android:id="@+id/catalog_exam_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_location" />
+
+</LinearLayout>

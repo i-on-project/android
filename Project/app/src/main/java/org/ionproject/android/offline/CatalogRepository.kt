@@ -12,10 +12,13 @@ import java.net.URI
 import java.util.*
 
 const val linkToCalendar =
-    "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/academic_years/2020-2021/calendar.json"
+    "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/academic_years/%s/calendar.json" //%s is the selected year
 
 const val linkToCatalogProgrammesList =
     "https://api.github.com/repos/i-on-project/integration-data/git/trees/748698e9248d2bb20a2266cb78b386a37f39930d"
+
+const val linkToAcademicYears =
+    "https://api.github.com/repos/i-on-project/integration-data/git/trees/17c361250d14345325587c21c7840b97af944f79"
 
 const val linkToExamSchedule = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/exam_schedule.json"
 const val linkToTimeTable = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/timetable.json"
@@ -96,6 +99,8 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             else -> ""
         }
 
+        Log.d("Catalog", "File link: $link")
+
         return webAPI.getFromURI(
             URI(link),
             klass,
@@ -103,37 +108,35 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
         )
     }
 
-        /*return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    suspend fun getCatalogAcademicYears() = withContext(Dispatchers.IO) {
 
-            val encodedFile: Base64EncodedFile =
-                webAPI.getFromURI(
-                    fileLink,
-                    Base64EncodedFile::class.java,
-                    "application/json"
-                )
+        var catalogAcademicYears: CatalogAcademicYears?
 
-            decodeFileContentFromGitHubApi(encodedFile.content, klass)
+        catalogAcademicYears = webAPI.getFromURI(
+            URI(linkToAcademicYears),
+            CatalogAcademicYears::class.java,
+            "application/json"
+        )
 
-        }else{
+        Log.d("Catalog", "catalog programme list: $catalogAcademicYears")
 
-        }
+        catalogAcademicYears
     }
 
-    /**
-     * This function is used to decode Base64 encoded files from the "linkToInfo" value from the terms
-     */
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun <T> decodeFileContentFromGitHubApi(encodedString: String, klass: Class<T>): T {
+    suspend fun getCatalogCalendar(year: String) = withContext(Dispatchers.IO) {
 
-        val clean = encodedString.replace("\n", "")
+        var calendar: CatalogCalendar?
 
-        val decodedBytes = Base64.getDecoder().decode(clean)
-        val decoded = String(decodedBytes)
+        calendar = webAPI.getFromURI(
+            URI(linkToCalendar.format(year)),
+            CatalogCalendar::class.java,
+            "application/json"
+        )
 
-        print(decoded)
+        Log.d("Catalog", "calendar: $calendar")
 
-        return JacksonIonMapper().parse(decoded, klass)
-    }*/
+        calendar
+    }
 }
 
 

@@ -19,8 +19,7 @@ import java.net.URI
 
 class CourseDetailsViewModel(
     private val courseRepository: CourseRepository,
-    private val classesRepository: ClassesRepository,
-    private val catalogRepository: CatalogRepository
+    private val classesRepository: ClassesRepository
 ) : ViewModel() {
 
     private val classesListLiveData = MutableLiveData<List<ClassSummary>>()
@@ -91,28 +90,5 @@ class CourseDetailsViewModel(
             lifecycleOwner,
             Observer { onUpdate(it) }
         )
-    }
-
-    //---Catalog functions
-    /**
-     * By this point we already know the programme, the term and the course
-     *
-     * We just need to select the info we want from the timetable to display
-     *
-     * In this case, we want to choose the classes that have the selected course
-     */
-    fun getCatalogClassesFromACourse(selectedCourse: String, sharedViewModel: SharedViewModel): MutableList<String>{
-
-        var classes: MutableList<String> = mutableListOf()
-
-        for(klass in sharedViewModel.parsedTimeTable?.classes!!){
-            if(klass.acr == selectedCourse){
-                for(section in klass.sections!!){
-                    classes.add(section.section)
-                }
-            }
-        }
-
-        return classes
     }
 }

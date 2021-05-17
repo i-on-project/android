@@ -77,7 +77,11 @@ class CatalogTests {
 
         val calendar = runBlocking {
 
-            webAPI.getFromURI(URI(linkToCalendar), CatalogCalendar::class.java, "application/json")
+            val link = linkToCalendar.format("2020-2021")
+
+            println(link)
+
+            webAPI.getFromURI(URI(link), CatalogCalendar::class.java, "application/json")
 
         }
 

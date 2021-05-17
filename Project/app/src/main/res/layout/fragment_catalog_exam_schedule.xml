@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalog_exam_schedule"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".offline.catalogExamSchedule.CatalogExamScheduleFragment">
+
+    <ProgressBar
+        android:id="@+id/progressbar_catalog_exam_schedule"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <!-- Top Section -->
+    <LinearLayout
+        android:id="@+id/linearlayout_catalog_exams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:orientation="vertical"
+        android:padding="@dimen/fragments_padding_20">
+
+        <TextView
+            android:id="@+id/textview_catalog_exam_programme"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Program"
+            android:textColor="@color/primaryTextColor"
+
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_catalog_exam_term"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Term"
+
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/catalog_exam_schedule_recyclerView"
+        android:padding="@dimen/fragments_padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/catalog_exam_schedule_item"/>
+
+
+</org.ionproject.android.common.SwipeRightLinearLayout>

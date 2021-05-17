@@ -23,9 +23,6 @@ import org.ionproject.android.common.model.Classes
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
-import org.ionproject.android.offline.CatalogClassesListAdapter
-import org.ionproject.android.offline.models.Section
-import java.util.*
 
 class CourseDetailsFragment : ExceptionHandlingFragment() {
 
@@ -83,38 +80,13 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
 
-        if(sharedViewModel.selectedCatalogProgrammeTerm == null){ //if null, API data is present
-
-            viewModel.getCourseDetails(courseDetailsUri) {
-                // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
-                courseFullName.text = it.name
-                    ?: resources.getString(R.string.label_name_not_available_all)
-                courseAcronym.text = it.acronym
-                setupCourseClassesList(recyclerview_course_details_classes_list)
-                setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
-                viewGroup.stopLoading()
-            }
-
-        }else{
-
-            courseFullName.text = sharedViewModel.selectedCatalogProgramme?.programmeName?.toUpperCase(
-                Locale.ROOT)
-
-            courseAcronym.text = sharedViewModel.selectedCatalogProgrammeTerm!!.term
-
-            val classes = sharedViewModel.selectedCourse?.let { viewModel.getCatalogClassesFromACourse(it, sharedViewModel) }
-
-            recyclerview_course_details_classes_list.layoutManager = LinearLayoutManager(context)
-            recyclerview_course_details_classes_list.addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-
-            val catalogClassesListAdapter = classes?.let { CatalogClassesListAdapter(it, sharedViewModel) }
-            recyclerview_course_details_classes_list.adapter = catalogClassesListAdapter
-
+        viewModel.getCourseDetails(courseDetailsUri) {
+            // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
+            courseFullName.text = it.name
+                ?: resources.getString(R.string.label_name_not_available_all)
+            courseAcronym.text = it.acronym
+            setupCourseClassesList(recyclerview_course_details_classes_list)
+            setupCalendarTermSpinner(spinner_course_details_calendar_terms, it)
             viewGroup.stopLoading()
         }
     }

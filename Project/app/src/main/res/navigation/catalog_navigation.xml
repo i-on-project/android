@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalog_navigation"
+    app:startDestination="@id/catalog_programmes">
+    <fragment
+        android:id="@+id/catalog_programmes"
+        android:name="org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_catalog_programmes">
+        <action
+            android:id="@+id/action_catalog_programmes_to_catalogProgrammeDetailsFragment"
+            app:destination="@id/catalog_programme_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalog_Info"
+        android:name="org.ionproject.android.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
+    <fragment
+        android:id="@+id/catalog_programme_details"
+        android:name="org.ionproject.android.offline.catalogProgrammeDetails.CatalogProgrammeDetailsFragment"
+        android:label="@string/title_programme_details"
+        tools:layout="@layout/fragment_catalog_programme_details">
+        <action
+            android:id="@+id/action_catalog_programme_details_to_catalogTermFilesFragment"
+            app:destination="@id/catalog_term_files" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalog_term_files"
+        android:name="org.ionproject.android.offline.catalogTermFiles.CatalogTermFilesFragment"
+        android:label="@string/title_course_details"
+        tools:layout="@layout/fragment_catalog_term_files" >
+        <action
+            android:id="@+id/action_catalog_term_files_to_catalogExamScheduleFragment"
+            app:destination="@id/catalog_exam_schedule" />
+        <action
+            android:id="@+id/action_catalog_term_files_to_catalog_timetable"
+            app:destination="@id/catalog_timetable" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalog_exam_schedule"
+        android:name="org.ionproject.android.offline.catalogExamSchedule.CatalogExamScheduleFragment"
+        android:label="@string/title_exam"
+        tools:layout="@layout/fragment_catalog_exam_schedule" />
+    <fragment
+        android:id="@+id/catalog_timetable"
+        android:name="org.ionproject.android.offline.catalogTimetable.CatalogTimetableFragment"
+        android:label="@string/title_timetable"
+        tools:layout="@layout/fragment_catalog_timetable" />
+</navigation>

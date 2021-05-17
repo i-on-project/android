@@ -66,10 +66,6 @@ class SharedViewModel : ViewModel() {
     var programmeOfferSummaries: List<ProgrammeOfferSummary> = emptyList()
     var curricularTerm: Int = 0
 
-    //-------Catalog Variables--------
-    /**
-     * The programme that the user chose from the list in the ProgrammesFragment (curso)
-     */
     var selectedCatalogProgramme: CatalogProgramme? = null
 
     /**

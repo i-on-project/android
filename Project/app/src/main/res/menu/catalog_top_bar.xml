@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/no_connection_action"
+        android:icon="@drawable/ic_no_connectivity_white_s4dp"
+        android:title="@string/catalog_info_warning"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+</menu>

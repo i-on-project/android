@@ -10,8 +10,7 @@ class CoursesDetailsViewModelProvider : ViewModelProvider.Factory {
         return when (modelClass) {
             CourseDetailsViewModel::class.java -> CourseDetailsViewModel(
                 IonApplication.coursesRepository,
-                IonApplication.classesRepository,
-                IonApplication.catalogRepository
+                IonApplication.classesRepository
             )
             else -> throw IllegalArgumentException("Class $modelClass not supported by this provider")
         } as T

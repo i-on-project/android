@@ -15,6 +15,7 @@ import org.ionproject.android.error.ERROR_ACTIVITY_EXCEPTION_EXTRA
 import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
+import org.ionproject.android.offline.CatalogMainActivity
 import java.net.URI
 
 /**
@@ -43,9 +44,9 @@ class LoadingActivity : ExceptionHandlingActivity() {
          * time the app tries to get the home resource
          */
         loadingViewModel.observeRootLiveData(this) {
-            val intent = Intent(this, MainActivity::class.java)
             when (it) {
                 is FetchSuccess<Root> -> {
+                    val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
                     this.startActivity(intent)
                 }
@@ -63,6 +64,7 @@ class LoadingActivity : ExceptionHandlingActivity() {
                             loadingViewModel.getRemoteConfig()
                         }
                     } else { // all attempts failed, using catalog info
+                        val intent = Intent(this, CatalogMainActivity::class.java)
                         this.startActivity(intent)
                     }
                 }

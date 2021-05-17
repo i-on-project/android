@@ -17,7 +17,6 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
-import org.ionproject.android.offline.CatalogProgrammesListAdapter
 
 class ProgrammesFragment : ExceptionHandlingFragment() {
 
@@ -47,40 +46,21 @@ class ProgrammesFragment : ExceptionHandlingFragment() {
         val viewGroup = recyclerview_programmes_list.parent as ViewGroup
         viewGroup.startLoading()
 
-        /**
-         * If root is null, it's because the API is down and
-         * the fragment is going to show catalog info
-         */
-        if (sharedViewModel.root != null){
-            viewModel.getAllProgrammes(sharedViewModel.root!!.programmesUri)
+        viewModel.getAllProgrammes(sharedViewModel.root!!.programmesUri)
 
-            //Programmes list setup
-            val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
+        //Programmes list setup
+        val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
 
-            recyclerview_programmes_list.adapter = adapter
-            recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)
+        recyclerview_programmes_list.adapter = adapter
+        recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)
 
-            viewModel.observeProgrammesLiveData(viewLifecycleOwner) {
-                viewGroup.stopLoading() // Hide progress bar, show views
-                adapter.notifyDataSetChanged()
-            }
+        viewModel.observeProgrammesLiveData(viewLifecycleOwner) {
+            viewGroup.stopLoading() // Hide progress bar, show views
+            adapter.notifyDataSetChanged()
+        }
 
-            view.addSwipeRightGesture {
-                findNavController().navigateUp()
-            }
-
-        }else{
-            viewModel.getCatalogProgrammes()
-
-            val adapter = CatalogProgrammesListAdapter(viewModel,sharedViewModel)
-
-            recyclerview_programmes_list.adapter = adapter
-            recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)
-
-            viewModel.observeCatalogProgrammesLiveData(viewLifecycleOwner) {
-                viewGroup.stopLoading() // Hide progress bar, show views
-                adapter.notifyDataSetChanged()
-            }
+        view.addSwipeRightGesture {
+            findNavController().navigateUp()
         }
 
         // Adding divider between items in the list

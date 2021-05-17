@@ -136,7 +136,7 @@
         android:name="org.ionproject.android.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
-	
+
     <fragment
         android:id="@+id/infoFragment"
         android:name="org.ionproject.android.info.InfoFragment"

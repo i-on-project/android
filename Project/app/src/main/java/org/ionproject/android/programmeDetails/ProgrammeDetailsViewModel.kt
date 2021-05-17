@@ -13,19 +13,9 @@ import org.ionproject.android.offline.models.*
 import java.net.URI
 
 class ProgrammeDetailsViewModel(
-    private val programmesRepository: ProgrammesRepository,
-    private val catalogRepository: CatalogRepository
+    private val programmesRepository: ProgrammesRepository
 ) :
     ViewModel() {
-
-    val catalogProgrammeTerms: List<CatalogTerm>
-        get() = catalogProgrammeTermsLiveData.value?.terms
-            ?: emptyList()
-
-    /**
-     * Live data for the terms of the specified programme
-     */
-    private val catalogProgrammeTermsLiveData = MutableLiveData<CatalogProgrammeTerms>()
 
     /**
      *  Requests the details of a programme from the API
@@ -41,27 +31,5 @@ class ProgrammeDetailsViewModel(
         viewModelScope.launch {
             programmesRepository.getProgrammeDetails(programmeDetailsUri)?.let(onResult)
         }
-    }
-
-    //-------Catalog functions
-    /**
-     * Requests the details of a programme (it's terms)
-     * from the catalog
-     */
-    fun getCatalogProgramDetails(
-        programmeDetailsLink: URI
-    ) {
-        viewModelScope.launch {
-
-            val terms = catalogRepository.getCatalogProgrammeTerms(programmeDetailsLink)
-
-            catalogProgrammeTermsLiveData.postValue(terms)
-        }
-    }
-
-    fun observeCatalogTermsLiveData(lifecycleOwner: LifecycleOwner, onUpdate: () -> Unit) {
-        catalogProgrammeTermsLiveData.observe(lifecycleOwner, Observer {
-            onUpdate()
-        })
     }
 }

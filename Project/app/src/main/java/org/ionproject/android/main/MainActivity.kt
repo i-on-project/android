@@ -71,13 +71,7 @@ class MainActivity : ExceptionHandlingActivity(),
     }
 
     /**
-     * If the root intent is null, it means the API is down and it's catalog mode from now on
-     *
-     * Search funtionalities don't even render (codebase had already taken care of this aspect in case
-     * of null root)
-     *
-     * bottom navigation render but doesn't work since setupBottomBarNavigation() is only called
-     * when root != null
+     * If the root intent is null, it means the app is outdated
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,14 +79,12 @@ class MainActivity : ExceptionHandlingActivity(),
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(MAIN_ACTIVITY_ROOT_EXTRA)
         if (root != null) {
-            catalogInfoTextView.visibility = View.INVISIBLE
             sharedViewModel.root = root
             setupTopBarBehaviour()
             setupBottomBarBehaviour()
             setupBackButton()
         } else {
-            //throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
-            catalogInfoTextView.visibility = View.VISIBLE
+            throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
         }
     }
 

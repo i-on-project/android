@@ -17,5 +17,6 @@ data class ExamDetails(
     val name: String,
     val startDate: String,
     val endDate: String,
-    val category: String
+    val category: String,
+    val location: String?
 )
