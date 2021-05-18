@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.catalog_timetable_section_item.view.*
@@ -31,6 +32,7 @@ class CatalogTimetableSectionListAdapter(
 
         val sectionName = view.catalog_timetable_section_name_textView
 
+
         val eventRecyclerView = view.catalog_timetable_event_recyclerView
 
         fun bindTo(section: Section) {
@@ -39,6 +41,12 @@ class CatalogTimetableSectionListAdapter(
             eventRecyclerView.adapter = CatalogTimetableEventListAdapter(section.events)
             eventRecyclerView.layoutManager =  LinearLayoutManager(context)
 
+            sectionName.setOnClickListener {
+                if(eventRecyclerView.isVisible)
+                    eventRecyclerView.visibility = View.GONE
+                else
+                    eventRecyclerView.visibility = View.VISIBLE
+            }
         }
     }
 }

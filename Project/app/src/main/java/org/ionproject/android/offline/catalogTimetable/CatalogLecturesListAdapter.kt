@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.catalog_timetable_item.view.*
@@ -42,8 +43,14 @@ class CatalogLecturesListAdapter(
 
             sectionRecyclerView.adapter =
                 lecture.sections?.let { CatalogTimetableSectionListAdapter(it,context) }
-
             sectionRecyclerView.layoutManager = LinearLayoutManager(context)
+
+            classname.setOnClickListener {
+                if(sectionRecyclerView.isVisible)
+                    sectionRecyclerView.visibility = View.GONE
+                else
+                    sectionRecyclerView.visibility = View.VISIBLE
+            }
 
         }
     }
