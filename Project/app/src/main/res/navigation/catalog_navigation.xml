@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_catalog_programmes_to_catalogProgrammeDetailsFragment"
             app:destination="@id/catalog_programme_details" />
+        <action
+            android:id="@+id/action_catalog_programmes_to_catalog_Info"
+            app:destination="@id/catalog_Info" />
     </fragment>
     <fragment
         android:id="@+id/catalog_Info"
@@ -38,6 +41,9 @@
         <action
             android:id="@+id/action_catalog_term_files_to_catalog_timetable"
             app:destination="@id/catalog_timetable" />
+        <action
+            android:id="@+id/action_catalog_term_files_to_catalog_calendar"
+            app:destination="@id/catalog_calendar" />
     </fragment>
     <fragment
         android:id="@+id/catalog_exam_schedule"
@@ -49,4 +55,9 @@
         android:name="org.ionproject.android.offline.catalogTimetable.CatalogTimetableFragment"
         android:label="@string/title_timetable"
         tools:layout="@layout/fragment_catalog_timetable" />
+    <fragment
+        android:id="@+id/catalog_calendar"
+        android:name="org.ionproject.android.offline.catalogCalendar.CatalogCalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_catalog_calendar" />
 </navigation>

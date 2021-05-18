@@ -46,7 +46,7 @@ class CatalogTimetableFragment : ExceptionHandlingFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Hide view, show progress bar
-        val viewGroup = catalog_timetable_recyclerView.parent as ViewGroup
+        val viewGroup = view as ViewGroup
         viewGroup.startLoading()
 
         val programme = sharedViewModel.selectedCatalogProgramme?.programmeName

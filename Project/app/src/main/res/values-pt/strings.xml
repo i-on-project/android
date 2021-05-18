@@ -117,4 +117,9 @@
     <string name="timetable_beginTime">Hora de início: %s</string>
     <string name="timetable_duration">Duração: %s</string>
     <string name="timetable_weekday">Dia da semana: %s</string>
+
+    <string name="catalog_calendar_interruptions">Férias</string>
+    <string name="catalog_calendar_evaluations">Avaliações</string>
+    <string name="catalog_calendar_details">Início de Aulas</string>
+    <string name="catalog_calendar_otherEvents">Datas Importantes</string>
 </resources>

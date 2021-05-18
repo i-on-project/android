@@ -145,5 +145,10 @@
     <string name="timetable_duration">Duration: %s</string>
     <string name="timetable_weekday">Weekday: %s</string>
 
+    <string name="catalog_calendar_interruptions">Interruptions</string>
+    <string name="catalog_calendar_evaluations">Evaluations</string>
+    <string name="catalog_calendar_details">Details</string>
+    <string name="catalog_calendar_otherEvents">Important Events</string>
+
 
 </resources>

@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:indeterminate="true" />
 
-    <!-- Top Section -->
     <LinearLayout
         android:id="@+id/linearlayout_catalog_timetable"
         android:layout_width="match_parent"
@@ -46,13 +45,16 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/catalog_timetable_recyclerView"
-        android:padding="@dimen/fragments_padding_10"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/catalog_timetable_item"/>
+        android:orientation="vertical">
 
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/catalog_timetable_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/fragments_padding_10"
+            tools:listitem="@layout/catalog_timetable_item" />
+    </LinearLayout>
 </org.ionproject.android.common.SwipeRightLinearLayout>

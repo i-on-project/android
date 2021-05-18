@@ -2,8 +2,6 @@ package org.ionproject.android.offline.models
 
 /**
  * This class parses the Calendar from JSON
- *
- * This might need to be present even if the user has connectivity, we'll see
  */
 data class CatalogCalendar(
     val school: SchoolAndProgrammeDetails,

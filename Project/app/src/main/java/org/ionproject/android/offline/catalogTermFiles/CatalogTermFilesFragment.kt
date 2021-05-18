@@ -9,6 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import kotlinx.android.synthetic.main.fragment_catalog_calendar.*
+import kotlinx.android.synthetic.main.fragment_catalog_calendar.recyclerview_catalog_calendar_details
+import kotlinx.android.synthetic.main.fragment_catalog_term_files.*
 import kotlinx.android.synthetic.main.fragment_catalog_term_files.view.*
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
@@ -38,14 +42,9 @@ class CatalogTermFilesFragment : ExceptionHandlingFragment() {
 
         val navController = findNavController()
 
-        // Obtaining view model
-        val viewModel = ViewModelProvider(this, CatalogTermFilesViewModelProvider())[CatalogTermFilesViewModel::class.java]
-
         val programme = sharedViewModel.selectedCatalogProgramme?.programmeName ?: ""
 
         val term = sharedViewModel.selectedCatalogProgrammeTerm
-
-        val year = sharedViewModel.selectedYear
 
         view.textview_catalog_term_files_programme.text = programme.toUpperCase(Locale.ROOT)
 
@@ -60,9 +59,7 @@ class CatalogTermFilesFragment : ExceptionHandlingFragment() {
         }
 
         view.button_catalog_term_files_calendar.setOnClickListener {
-            viewModel.getCatalogCalendar(year) {
-                sharedViewModel.parsedCalendar = it
-            }
+            navController.navigate(R.id.action_catalog_term_files_to_catalog_calendar)
         }
     }
 }
