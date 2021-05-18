@@ -1,10 +1,10 @@
 package org.ionproject.android.offline.catalogExamSchedule
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,6 +19,7 @@ import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import org.ionproject.android.offline.CatalogMainActivity
 import org.ionproject.android.offline.CatalogSharedViewModel
 import org.ionproject.android.offline.CatalogSharedViewModelProvider
 import org.ionproject.android.offline.catalogProgrammeDetails.CatalogProgrammeDetailsViewModel
@@ -26,9 +27,14 @@ import org.ionproject.android.offline.catalogProgrammeDetails.CatalogProgrammeDe
 import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesListAdapter
 import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesViewModel
 import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesViewModelProvider
+import org.ionproject.android.offline.models.ExamDetails
 import java.util.*
 
 class CatalogExamScheduleFragment : ExceptionHandlingFragment() {
+
+    private val examsList = mutableListOf<ExamDetails>()
+
+    var adapter = CatalogExamsListAdapter(examsList)
 
     /**
      * This view model is shared between fragments and the MainActivity
@@ -55,6 +61,16 @@ class CatalogExamScheduleFragment : ExceptionHandlingFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /**
+         * Observes the live data in the shared view model;
+         *
+         * When the live data has a value, it means a query was input in the
+         * search action and we have to filter the exams
+         */
+        sharedViewModel.observeSearchText(viewLifecycleOwner) {
+            adapter.filter.filter(it)
+        }
+
         // Hide view, show progress bar
         val viewGroup = catalog_exam_schedule_recyclerView.parent as ViewGroup
         viewGroup.startLoading()
@@ -70,7 +86,9 @@ class CatalogExamScheduleFragment : ExceptionHandlingFragment() {
         if (programme != null) {
             examViewModel.getCatalogExamSchedule(programme, term){
 
-                val adapter = CatalogExamsListAdapter(it.exams)
+                examsList.addAll(it.exams)
+
+                adapter = CatalogExamsListAdapter(examsList)
 
                 catalog_exam_schedule_recyclerView.adapter = adapter
                 catalog_exam_schedule_recyclerView.layoutManager = LinearLayoutManager(context)

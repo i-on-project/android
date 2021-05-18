@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -107,17 +108,29 @@ class CatalogMainActivity :  ExceptionHandlingActivity() {
         return true
     }
 
-    /**
-     * Instantiates the menu XML file @menu/top_bar_menu.xml into a Menu object.
-     * Configures the search view by enabling assisted search and adding a search
-     * submit button
-     *
-     * This method is called by the framework after OnCreate but before it finishes
-     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.catalog_top_bar, menu)
 
         val noConnectivity = menu.findItem(R.id.no_connection_action)
+
+        this.searchViewItem = menu.findItem(R.id.catalog_action_search)
+
+        val searchView = searchViewItem?.actionView as? SearchView
+
+        searchView?.apply {
+            isSubmitButtonEnabled = true
+
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                        sharedViewModel.setSearchText(newText ?: "")
+                    return true
+                }
+            })
+        }
 
         noConnectivity.setOnMenuItemClickListener {
             AlertDialog.Builder(this).setMessage(R.string.catalog_info_warning)
