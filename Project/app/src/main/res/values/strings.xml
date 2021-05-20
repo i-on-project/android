@@ -136,18 +136,20 @@
     <string name="title_exam">Exam Schedule</string>
     <string name="title_timetable">Timetable</string>
 
-    <string name="exam_startDate">Start Date: %s</string>
-    <string name="exam_endDate">End Date: %s</string>
+    <string name="exam_day">Date: %s</string>
+    <string name="exam_startDate">Start Time: %s</string>
+    <string name="exam_endDate">End Time: %s</string>
     <string name="exam_category">Category: %s</string>
-    <string name="exam_location">Location: %s</string>
+    <string name="exam_location">Classroom: %s</string>
+    <string name="exam_location_tbd">To be determined</string>
 
-    <string name="timetable_beginTime">Begin Time: %s</string>
-    <string name="timetable_duration">Duration: %s</string>
+    <string name="timetable_beginTime">Begin Time: %sh</string>
+    <string name="timetable_duration">Duration: %sh</string>
     <string name="timetable_weekday">Weekday: %s</string>
 
     <string name="catalog_calendar_interruptions">Interruptions</string>
     <string name="catalog_calendar_evaluations">Evaluations</string>
-    <string name="catalog_calendar_details">Details</string>
+    <string name="catalog_calendar_details">Start of Classes</string>
     <string name="catalog_calendar_otherEvents">Important Events</string>
 
 

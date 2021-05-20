@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.offline.CatalogRepository
 import org.ionproject.android.offline.models.Timetable
 
-class CatalogTimetableViewModel(private val catalogRepository: CatalogRepository): ViewModel() {
+class CatalogTimetableViewModel(private val catalogRepository: CatalogRepository) : ViewModel() {
 
     /**
      * Get the TimeTable from the [catalogTermFilesLiveData] object

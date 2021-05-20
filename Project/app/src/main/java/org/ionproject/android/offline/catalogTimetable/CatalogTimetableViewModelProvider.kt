@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ionproject.android.common.IonApplication
 
-class CatalogTimetableViewModelProvider: ViewModelProvider.Factory {
+class CatalogTimetableViewModelProvider : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -28,7 +28,10 @@ class CatalogProgrammesListAdapter(
         holder.bindTo(model.catalogProgrammes[position])
     }
 
-    class CatalogProgrammeViewHolder(view: View, private val sharedViewModel: CatalogSharedViewModel) :
+    class CatalogProgrammeViewHolder(
+        view: View,
+        private val sharedViewModel: CatalogSharedViewModel
+    ) :
         RecyclerView.ViewHolder(view) {
 
         private val buttonProgramme = view.button_programmes_list_item_programme
@@ -38,7 +41,8 @@ class CatalogProgrammesListAdapter(
 
             buttonProgramme.setOnClickListener {
                 sharedViewModel.selectedCatalogProgramme = catalogProgramme
-                it.findNavController().navigate(R.id.action_catalog_programmes_to_catalogProgrammeDetailsFragment)
+                it.findNavController()
+                    .navigate(R.id.action_catalog_programmes_to_catalogProgrammeDetailsFragment)
             }
         }
     }

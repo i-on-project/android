@@ -109,13 +109,15 @@
     <string name="title_exam">Calendário de Exames</string>
     <string name="title_timetable">Horário</string>
 
-    <string name="exam_startDate">Data de início: %s</string>
-    <string name="exam_endDate">Data de fim: %s</string>
+    <string name="exam_day">Data: %s</string>
+    <string name="exam_startDate">Início: %s</string>
+    <string name="exam_endDate">Término: %s</string>
     <string name="exam_category">Categoria: %s</string>
     <string name="exam_location">Sala: %s</string>
+    <string name="exam_location_tbd">Por determinar</string>
 
-    <string name="timetable_beginTime">Hora de início: %s</string>
-    <string name="timetable_duration">Duração: %s</string>
+    <string name="timetable_beginTime">Hora de início: %sh</string>
+    <string name="timetable_duration">Duração: %sh</string>
     <string name="timetable_weekday">Dia da semana: %s</string>
 
     <string name="catalog_calendar_interruptions">Férias</string>

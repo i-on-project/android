@@ -1,6 +1,5 @@
 package org.ionproject.android.offline.catalogTimetable
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.catalog_timetable_event_item.view.*
 import org.ionproject.android.R
 import org.ionproject.android.offline.models.TimetableEvent
+import java.util.*
 
 class CatalogTimetableEventListAdapter(
     private val events: List<TimetableEvent>
@@ -27,7 +27,7 @@ class CatalogTimetableEventListAdapter(
 
     class CatalogEventViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-       private val eventName = view.catalog_timetable_event_name_textView
+        private val eventName = view.catalog_timetable_event_name_textView
 
         private val beginTime = view.catalog_timetable_event_beginTime
 
@@ -36,10 +36,54 @@ class CatalogTimetableEventListAdapter(
         private val eventWeekday = view.catalog_timetable_event_weekday
 
         fun bindTo(event: TimetableEvent) {
-            eventName.text = event.category
-            beginTime.text = view.resources.getString(R.string.timetable_beginTime).format(event.beginTime)
-            eventDuration.text = view.resources.getString(R.string.timetable_duration).format(event.duration)
-            eventWeekday.text = view.resources.getString(R.string.timetable_weekday).format(event.weekday)
+
+            if (Locale.getDefault().language == "pt") {
+                eventName.text = categoryParser(event.category)
+                eventWeekday.text = view.resources.getString(R.string.timetable_weekday)
+                    .format(weekdayParser(event.weekday))
+            } else {
+                eventName.text = event.category
+                eventWeekday.text =
+                    view.resources.getString(R.string.timetable_weekday).format(event.weekday)
+            }
+
+            beginTime.text =
+                view.resources.getString(R.string.timetable_beginTime).format(event.beginTime)
+            eventDuration.text =
+                view.resources.getString(R.string.timetable_duration).format(event.duration)
+        }
+
+        /**
+         * Parses the category to Portuguese using the docs in
+         * https://github.com/i-on-project/integration-data
+         */
+        private fun categoryParser(category: String): String {
+            when (category) {
+                "LECTURE" -> return "Aula Teórica"
+                "PRACTICE" -> return "Aula Prática"
+                "LAB" -> return "Aula de Laboratório"
+                "LECTURE-PRACTICE" -> return "Aula Teórico-Prática"
+            }
+
+            return category
+        }
+
+        /**
+         * Parses the weekday to Portuguese using the docs in
+         * https://github.com/i-on-project/integration-data
+         */
+        private fun weekdayParser(weekday: String): String {
+            when (weekday) {
+                "SU" -> return "DOM"
+                "MO" -> return "SEG"
+                "TU" -> return "TER"
+                "WE" -> return "QUA"
+                "TH" -> return "QUI"
+                "FR" -> return "SEX"
+                "SA" -> return "SAB"
+            }
+
+            return weekday
         }
     }
 }

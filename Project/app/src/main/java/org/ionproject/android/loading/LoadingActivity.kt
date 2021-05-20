@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
+import org.ionproject.android.common.FetchFailure
+import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root

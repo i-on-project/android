@@ -32,8 +32,10 @@ class CatalogCalendarDetailsAdapter(
 
         fun bindTo(details: Details) {
             nameTextView.text = details.name
-            startDateTextView.text = view.resources.getString(R.string.exam_startDate).format(details.startDate)
-            endDateTextView.text = view.resources.getString(R.string.exam_endDate).format(details.endDate)
+            startDateTextView.text =
+                view.resources.getString(R.string.exam_startDate).format(details.startDate)
+            endDateTextView.text =
+                view.resources.getString(R.string.exam_endDate).format(details.endDate)
         }
     }
 }

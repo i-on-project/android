@@ -1,32 +1,18 @@
 package org.ionproject.android.offline.catalogExamSchedule
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_catalog_exam_schedule.*
 import kotlinx.android.synthetic.main.fragment_catalog_exam_schedule.view.*
-import kotlinx.android.synthetic.main.fragment_catalog_programmes.*
-import kotlinx.android.synthetic.main.fragment_catalog_term_files.view.*
-import kotlinx.android.synthetic.main.fragment_catalog_term_files.view.textview_catalog_term_files_programme
-import kotlinx.android.synthetic.main.fragment_catalog_term_files.view.textview_catalog_term_files_term
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
-import org.ionproject.android.offline.CatalogMainActivity
 import org.ionproject.android.offline.CatalogSharedViewModel
 import org.ionproject.android.offline.CatalogSharedViewModelProvider
-import org.ionproject.android.offline.catalogProgrammeDetails.CatalogProgrammeDetailsViewModel
-import org.ionproject.android.offline.catalogProgrammeDetails.CatalogProgrammeDetailsViewModelProvider
-import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesListAdapter
-import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesViewModel
-import org.ionproject.android.offline.catalogProgrammes.CatalogProgrammesViewModelProvider
 import org.ionproject.android.offline.models.ExamDetails
 import java.util.*
 
@@ -54,8 +40,19 @@ class CatalogExamScheduleFragment : ExceptionHandlingFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_catalog_exam_schedule, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        /**
+         * Only have the search bar visible if the exam schedule fragment is visible
+         */
+        menu.findItem(R.id.catalog_action_search).isVisible = true
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,7 +81,7 @@ class CatalogExamScheduleFragment : ExceptionHandlingFragment() {
         view.textview_catalog_exam_term.text = term
 
         if (programme != null) {
-            examViewModel.getCatalogExamSchedule(programme, term){
+            examViewModel.getCatalogExamSchedule(programme, term) {
 
                 examsList.addAll(it.exams)
 

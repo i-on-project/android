@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.offline.CatalogRepository
 import org.ionproject.android.offline.models.ExamSchedule
 
-class CatalogExamScheduleViewModel(private val catalogRepository: CatalogRepository): ViewModel() {
+class CatalogExamScheduleViewModel(private val catalogRepository: CatalogRepository) : ViewModel() {
 
     /**
      * Get the Exam Schedule from the [catalogTermFilesLiveData] object

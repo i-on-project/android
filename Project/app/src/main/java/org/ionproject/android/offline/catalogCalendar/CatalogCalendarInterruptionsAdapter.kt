@@ -32,8 +32,10 @@ class CatalogCalendarInterruptionsAdapter(
 
         fun bindTo(calendarEvent: CalendarEvent) {
             nameTextView.text = calendarEvent.name
-            startDateTextView.text = view.resources.getString(R.string.exam_startDate).format(calendarEvent.startDate)
-            endDateTextView.text = view.resources.getString(R.string.exam_endDate).format(calendarEvent.endDate)
+            startDateTextView.text =
+                view.resources.getString(R.string.exam_startDate).format(calendarEvent.startDate)
+            endDateTextView.text =
+                view.resources.getString(R.string.exam_endDate).format(calendarEvent.endDate)
         }
     }
 }

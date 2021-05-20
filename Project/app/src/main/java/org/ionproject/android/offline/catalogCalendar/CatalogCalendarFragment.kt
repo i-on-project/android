@@ -1,25 +1,24 @@
 package org.ionproject.android.offline.catalogCalendar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_catalog_calendar.*
 import kotlinx.android.synthetic.main.fragment_catalog_calendar.view.*
-import kotlinx.android.synthetic.main.fragment_catalog_programmes.*
-import kotlinx.android.synthetic.main.fragment_catalog_programmes.recyclerview_catalog_programmes_list
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
 import org.ionproject.android.offline.CatalogSharedViewModel
 import org.ionproject.android.offline.CatalogSharedViewModelProvider
+import org.ionproject.android.offline.models.CalendarEvent
+import org.ionproject.android.offline.models.Details
+import org.ionproject.android.offline.models.Evaluation
 import java.util.*
 
 class CatalogCalendarFragment : ExceptionHandlingFragment() {
@@ -62,67 +61,89 @@ class CatalogCalendarFragment : ExceptionHandlingFragment() {
         view.textview_catalog_calendar_program.text = programme?.toUpperCase(Locale.ROOT)
 
         if (programme != null) {
-            calendarViewModel.getCatalogCalendar(year){
+            calendarViewModel.getCatalogCalendar(year) {
 
                 val semesterNr = Integer.parseInt(term.split("-")[2]) //can be 1 or 2
 
-                Log.d("Catalog", "semester: $semesterNr term: $term")
-
-                val semesterContent = it.terms[semesterNr - 1] //terms has only two items in the list (0 and 1)
+                val semesterContent =
+                    it.terms[semesterNr - 1] //terms has only two items in the list (0 and 1)
 
                 view.textview_catalog_calendar_term.text = semesterContent.calendarTerm
 
-                val interruptionsAdapter = CatalogCalendarInterruptionsAdapter(semesterContent.interruptions)
-                view.recyclerview_catalog_calendar_interruptions.adapter = interruptionsAdapter
-                view.recyclerview_catalog_calendar_interruptions.layoutManager = LinearLayoutManager(context)
+                setupInterruptions(semesterContent.interruptions)
 
-                // Adding divider between items in the list
-                recyclerview_catalog_calendar_interruptions.addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                setupEvaluations(semesterContent.evaluations)
 
-                val evaluationsAdapter = CatalogCalendarEvaluationsAdapter(semesterContent.evaluations)
-                view.recyclerview_catalog_calendar_evaluations.adapter = evaluationsAdapter
-                view.recyclerview_catalog_calendar_evaluations.layoutManager = LinearLayoutManager(context)
+                setupDetails(semesterContent.details)
 
-                // Adding divider between items in the list
-                recyclerview_catalog_calendar_evaluations.addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
-
-                val detailsAdapter = CatalogCalendarDetailsAdapter(semesterContent.details)
-                view.recyclerview_catalog_calendar_details.adapter = detailsAdapter
-                view.recyclerview_catalog_calendar_details.layoutManager = LinearLayoutManager(context)
-
-                // Adding divider between items in the list
-                recyclerview_catalog_calendar_details.addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
-
-                val otherEventsAdapter = CatalogCalendarInterruptionsAdapter(semesterContent.otherEvents)
-                view.recyclerview_catalog_calendar_otherEvents.adapter = otherEventsAdapter
-                view.recyclerview_catalog_calendar_otherEvents.layoutManager = LinearLayoutManager(context)
-
-                // Adding divider between items in the list
-                recyclerview_catalog_calendar_otherEvents.addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                setupOtherEvents(semesterContent.otherEvents)
 
                 viewGroup.stopLoading()
             }
         }
 
+    }
+
+    private fun setupInterruptions(interruptions: List<CalendarEvent>) {
+
+        val interruptionsAdapter = CatalogCalendarInterruptionsAdapter(interruptions)
+        view?.recyclerview_catalog_calendar_interruptions?.adapter = interruptionsAdapter
+        view?.recyclerview_catalog_calendar_interruptions?.layoutManager =
+            LinearLayoutManager(context)
+
+        // Adding divider between items in the list
+        recyclerview_catalog_calendar_interruptions.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+    }
+
+    private fun setupEvaluations(evaluations: List<Evaluation>) {
+
+        val evaluationsAdapter = CatalogCalendarEvaluationsAdapter(evaluations)
+        view?.recyclerview_catalog_calendar_evaluations?.adapter = evaluationsAdapter
+        view?.recyclerview_catalog_calendar_evaluations?.layoutManager =
+            LinearLayoutManager(context)
+
+        // Adding divider between items in the list
+        recyclerview_catalog_calendar_evaluations.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+    }
+
+    private fun setupDetails(details: List<Details>) {
+
+        val detailsAdapter = CatalogCalendarDetailsAdapter(details)
+        view?.recyclerview_catalog_calendar_details?.adapter = detailsAdapter
+        view?.recyclerview_catalog_calendar_details?.layoutManager = LinearLayoutManager(context)
+
+        // Adding divider between items in the list
+        recyclerview_catalog_calendar_details.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+    }
+
+    private fun setupOtherEvents(events: List<CalendarEvent>) {
+        val otherEventsAdapter = CatalogCalendarInterruptionsAdapter(events)
+        view?.recyclerview_catalog_calendar_otherEvents?.adapter = otherEventsAdapter
+        view?.recyclerview_catalog_calendar_otherEvents?.layoutManager =
+            LinearLayoutManager(context)
+
+        // Adding divider between items in the list
+        recyclerview_catalog_calendar_otherEvents.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 }

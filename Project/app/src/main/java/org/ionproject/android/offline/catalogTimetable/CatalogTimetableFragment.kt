@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_catalog_exam_schedule.*
 import kotlinx.android.synthetic.main.fragment_catalog_timetable.*
 import kotlinx.android.synthetic.main.fragment_catalog_timetable.view.*
 import org.ionproject.android.ExceptionHandlingFragment
@@ -59,9 +58,10 @@ class CatalogTimetableFragment : ExceptionHandlingFragment() {
 
         if (programme != null) {
 
-            timetableViewModel.getCatalogTimetable(programme, term){
+            timetableViewModel.getCatalogTimetable(programme, term) {
 
-                catalog_timetable_recyclerView.adapter = CatalogLecturesListAdapter(it.classes, requireContext())
+                catalog_timetable_recyclerView.adapter =
+                    CatalogLecturesListAdapter(it.classes, requireContext())
                 catalog_timetable_recyclerView.layoutManager = LinearLayoutManager(context)
 
                 viewGroup.stopLoading()

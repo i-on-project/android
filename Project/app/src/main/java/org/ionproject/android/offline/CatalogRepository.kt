@@ -1,15 +1,10 @@
 package org.ionproject.android.offline
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.JacksonIonMapper
 import org.ionproject.android.offline.models.*
 import java.net.URI
-import java.util.*
 
 const val linkToCalendar =
     "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/academic_years/%s/calendar.json" //%s is the selected year
@@ -20,8 +15,10 @@ const val linkToCatalogProgrammesList =
 const val linkToAcademicYears =
     "https://api.github.com/repos/i-on-project/integration-data/git/trees/17c361250d14345325587c21c7840b97af944f79"
 
-const val linkToExamSchedule = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/exam_schedule.json"
-const val linkToTimeTable = "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/timetable.json"
+const val linkToExamSchedule =
+    "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/exam_schedule.json"
+const val linkToTimeTable =
+    "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/timetable.json"
 
 class CatalogRepository(private val webAPI: IIonWebAPI) {
 
@@ -38,8 +35,6 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             "application/json"
         )
 
-        Log.d("Catalog", "catalog programme list: $catalogProgrammeList")
-
         catalogProgrammeList
     }
 
@@ -55,8 +50,6 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             CatalogProgrammeTerms::class.java,
             "application/json"
         )
-
-        Log.d("Catalog", "catalog programme: $catalogProgramme")
 
         catalogProgramme
     }
@@ -77,15 +70,13 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             "application/json"
         )
 
-        Log.d("Catalog", "term info: $catalogProgrammeTermInfo")
-
         catalogProgrammeTermInfo.files.filter { it.fileName.contains("json") }
     }
 
 
     /**
-     * NOTE: Since the parsing of the base64 file was causing problems, the non 4head solution is
-     * just using the code that works with every version instead of this version checking nonsense
+     * NOTE: Since the parsing of the base64 file was causing problems, we use this
+     * simpler solution that works for all Android versions
      */
     suspend fun <T> getFileFromGithub(
         programme: String,
@@ -98,8 +89,6 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             Timetable::class.java -> linkToTimeTable.format(programme, term)
             else -> ""
         }
-
-        Log.d("Catalog", "File link: $link")
 
         return webAPI.getFromURI(
             URI(link),
@@ -118,8 +107,6 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             "application/json"
         )
 
-        Log.d("Catalog", "catalog programme list: $catalogAcademicYears")
-
         catalogAcademicYears
     }
 
@@ -132,8 +119,6 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             CatalogCalendar::class.java,
             "application/json"
         )
-
-        Log.d("Catalog", "calendar: $calendar")
 
         calendar
     }

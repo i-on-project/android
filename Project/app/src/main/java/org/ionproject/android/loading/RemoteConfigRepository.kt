@@ -3,13 +3,12 @@ package org.ionproject.android.loading
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.common.ionwebapi.*
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.REMOTE_CONFIG_LINK
 import org.ionproject.android.settings.Preferences
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
-class RemoteConfigRepository(private val preferences: Preferences, private val webAPI: IIonWebAPI) {
+class RemoteConfigRepository(val preferences: Preferences, private val webAPI: IIonWebAPI) {
 
     suspend fun getRemoteConfig() =
 

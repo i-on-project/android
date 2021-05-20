@@ -10,21 +10,21 @@ import org.ionproject.android.offline.models.Evaluation
 
 class CatalogCalendarEvaluationsAdapter(
     private val evaluations: List<Evaluation>
-) : RecyclerView.Adapter<CatalogCalendarEvaluationsAdapter.EvalutationViewHolder>() {
+) : RecyclerView.Adapter<CatalogCalendarEvaluationsAdapter.EvaluationViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EvalutationViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EvaluationViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.catalog_calendar_item, parent, false)
-        return EvalutationViewHolder(view)
+        return EvaluationViewHolder(view)
     }
 
     override fun getItemCount(): Int = evaluations.size
 
-    override fun onBindViewHolder(holder: EvalutationViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EvaluationViewHolder, position: Int) {
         holder.bindTo(evaluations[position])
     }
 
-    class EvalutationViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class EvaluationViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val nameTextView = view.catalog_calendar_item_name
         private val startDateTextView = view.catalog_calendar_item_startDate
@@ -32,8 +32,10 @@ class CatalogCalendarEvaluationsAdapter(
 
         fun bindTo(evaluation: Evaluation) {
             nameTextView.text = evaluation.name
-            startDateTextView.text = view.resources.getString(R.string.exam_startDate).format(evaluation.startDate)
-            endDateTextView.text = view.resources.getString(R.string.exam_endDate).format(evaluation.endDate)
+            startDateTextView.text =
+                view.resources.getString(R.string.exam_startDate).format(evaluation.startDate)
+            endDateTextView.text =
+                view.resources.getString(R.string.exam_endDate).format(evaluation.endDate)
         }
     }
 }

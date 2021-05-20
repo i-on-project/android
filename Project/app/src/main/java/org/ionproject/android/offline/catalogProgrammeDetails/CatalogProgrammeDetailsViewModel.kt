@@ -1,20 +1,13 @@
 package org.ionproject.android.offline.catalogProgrammeDetails
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.google.android.gms.common.config.GservicesValue.value
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.offline.CatalogRepository
 import org.ionproject.android.offline.models.CatalogAcademicYear
 import org.ionproject.android.offline.models.CatalogAcademicYears
-import org.ionproject.android.offline.models.CatalogProgrammeTerms
-import org.ionproject.android.offline.models.CatalogTerm
-import java.net.URI
 
-class CatalogProgrammeDetailsViewModel(private val catalogRepository: CatalogRepository): ViewModel() {
+class CatalogProgrammeDetailsViewModel(private val catalogRepository: CatalogRepository) :
+    ViewModel() {
 
     val catalogAcademicYears: List<CatalogAcademicYear>
         get() = catalogAcademicYearsLiveData.value?.years

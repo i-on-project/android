@@ -2,18 +2,13 @@ package org.ionproject.android.offline
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.SearchManager
-import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -23,20 +18,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_catalog_main.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.bottomnavview_main
-import kotlinx.android.synthetic.main.activity_main.toolbar_main
-import kotlinx.android.synthetic.main.toolbar_main.*
 import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
-import org.ionproject.android.SharedViewModel
-import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.FetchFailure
+import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.IonApplication
+import org.ionproject.android.common.IonApplication.Companion.remoteConfigRepository
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
+import org.ionproject.android.main.MainActivity
+import java.net.URI
 
-class CatalogMainActivity :  ExceptionHandlingActivity() {
+class CatalogMainActivity : ExceptionHandlingActivity() {
 
     private var searchViewItem: MenuItem? = null
 
@@ -45,6 +39,13 @@ class CatalogMainActivity :  ExceptionHandlingActivity() {
             this,
             CatalogSharedViewModelProvider()
         )[CatalogSharedViewModel::class.java]
+    }
+
+    private val viewModel: CatalogMainActivityViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProvider(
+            this,
+            CatalogMainActivityViewModelProvider()
+        )[CatalogMainActivityViewModel::class.java]
     }
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
@@ -69,6 +70,20 @@ class CatalogMainActivity :  ExceptionHandlingActivity() {
 
         AlertDialog.Builder(this).setMessage(R.string.catalog_info_warning)
             .setPositiveButton("Ok", null).show()
+
+        viewModel.observeRootLiveData(this) {
+            when (it) {
+                is FetchSuccess<Root> -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
+                    this.startActivity(intent)
+                }
+                is FetchFailure<Root> -> { //unsuccessful request to jsonhome
+                    AlertDialog.Builder(this).setMessage(R.string.catalog_info_warning)
+                        .setPositiveButton("Ok", null).show()
+                }
+            }
+        }
     }
 
     /**
@@ -117,6 +132,12 @@ class CatalogMainActivity :  ExceptionHandlingActivity() {
 
         val searchView = searchViewItem?.actionView as? SearchView
 
+        /**
+         * Only have the search bar visible if the exam schedule fragment is visible
+         */
+        menu.findItem(R.id.catalog_action_search).isVisible =
+            supportFragmentManager.findFragmentById(R.id.catalog_exam_schedule)?.isVisible == true
+
         searchView?.apply {
             isSubmitButtonEnabled = true
 
@@ -126,15 +147,17 @@ class CatalogMainActivity :  ExceptionHandlingActivity() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                        sharedViewModel.setSearchText(newText ?: "")
+                    sharedViewModel.setSearchText(newText ?: "")
                     return true
                 }
             })
         }
 
+        /**
+         * When the user clicks the no connection button, we try to reach the API again
+         */
         noConnectivity.setOnMenuItemClickListener {
-            AlertDialog.Builder(this).setMessage(R.string.catalog_info_warning)
-                .setPositiveButton("Ok", null).show()
+            viewModel.getJsonHome(URI(remoteConfigRepository.preferences.getWebApiHost()))
             true
         }
 

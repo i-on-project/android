@@ -5,14 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import kotlinx.android.synthetic.main.fragment_catalog_calendar.*
-import kotlinx.android.synthetic.main.fragment_catalog_calendar.recyclerview_catalog_calendar_details
-import kotlinx.android.synthetic.main.fragment_catalog_term_files.*
 import kotlinx.android.synthetic.main.fragment_catalog_term_files.view.*
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R

@@ -1,6 +1,5 @@
 package org.ionproject.android.offline.catalogProgrammeDetails
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,10 @@ class CatalogYearsListAdapter(
         holder.bind(model.catalogAcademicYears[position])
     }
 
-    class CatalogYearViewHolder(val view: View, private val sharedViewModel: CatalogSharedViewModel) :
+    class CatalogYearViewHolder(
+        val view: View,
+        private val sharedViewModel: CatalogSharedViewModel
+    ) :
 
         RecyclerView.ViewHolder(view) {
 
@@ -40,22 +42,22 @@ class CatalogYearsListAdapter(
 
         fun bind(academicYear: CatalogAcademicYear) {
 
-            Log.d("Catalog", "the year is ${academicYear.year}")
-
             yearTextView.text = academicYear.year
 
             firstSemesterButton.text = view.resources.getString(R.string.first_semester)
             firstSemesterButton.setOnClickListener {
                 sharedViewModel.selectedYear = academicYear.year
                 sharedViewModel.selectedCatalogProgrammeTerm = academicYear.year + "-1"
-                view.findNavController().navigate(R.id.action_catalog_programme_details_to_catalogTermFilesFragment)
+                view.findNavController()
+                    .navigate(R.id.action_catalog_programme_details_to_catalogTermFilesFragment)
             }
 
             secondSemesterButton.text = view.resources.getString(R.string.second_semester)
             secondSemesterButton.setOnClickListener {
                 sharedViewModel.selectedYear = academicYear.year
                 sharedViewModel.selectedCatalogProgrammeTerm = academicYear.year + "-2"
-                view.findNavController().navigate(R.id.action_catalog_programme_details_to_catalogTermFilesFragment)
+                view.findNavController()
+                    .navigate(R.id.action_catalog_programme_details_to_catalogTermFilesFragment)
             }
         }
     }

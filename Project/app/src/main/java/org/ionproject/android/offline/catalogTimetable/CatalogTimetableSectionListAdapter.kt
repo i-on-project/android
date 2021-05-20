@@ -19,7 +19,7 @@ class CatalogTimetableSectionListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogSectionViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.catalog_timetable_section_item, parent, false)
-        return CatalogSectionViewHolder(view,context)
+        return CatalogSectionViewHolder(view, context)
     }
 
     override fun getItemCount(): Int = sections.size
@@ -28,7 +28,8 @@ class CatalogTimetableSectionListAdapter(
         holder.bindTo(sections[position])
     }
 
-    class CatalogSectionViewHolder(val view: View, val context: Context) : RecyclerView.ViewHolder(view) {
+    class CatalogSectionViewHolder(val view: View, val context: Context) :
+        RecyclerView.ViewHolder(view) {
 
         val sectionName = view.catalog_timetable_section_name_textView
 
@@ -39,10 +40,10 @@ class CatalogTimetableSectionListAdapter(
             sectionName.text = section.section
 
             eventRecyclerView.adapter = CatalogTimetableEventListAdapter(section.events)
-            eventRecyclerView.layoutManager =  LinearLayoutManager(context)
+            eventRecyclerView.layoutManager = LinearLayoutManager(context)
 
             sectionName.setOnClickListener {
-                if(eventRecyclerView.isVisible)
+                if (eventRecyclerView.isVisible)
                     eventRecyclerView.visibility = View.GONE
                 else
                     eventRecyclerView.visibility = View.VISIBLE
