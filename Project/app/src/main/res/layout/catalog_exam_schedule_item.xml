@@ -20,6 +20,14 @@
         android:textSize="@dimen/all_text_18" />
 
     <TextView
+        android:id="@+id/catalog_exam_day"
+        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_day"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/catalog_exam_startDate"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"

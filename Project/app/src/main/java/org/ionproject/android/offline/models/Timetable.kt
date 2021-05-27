@@ -29,7 +29,7 @@ data class TimetableEvent(
     val location: List<String>?,
     val beginTime: String,
     val duration: String,
-    val weekday: String //all caps, first two letters of the weekday
+    val weekdays: String? //all caps, first two letters of the weekday
 )
 
 data class Instructor(

@@ -40,11 +40,11 @@ class CatalogTimetableEventListAdapter(
             if (Locale.getDefault().language == "pt") {
                 eventName.text = categoryParser(event.category)
                 eventWeekday.text = view.resources.getString(R.string.timetable_weekday)
-                    .format(weekdayParser(event.weekday))
+                    .format(weekdayParser(event.weekdays ?: ""))
             } else {
                 eventName.text = event.category
                 eventWeekday.text =
-                    view.resources.getString(R.string.timetable_weekday).format(event.weekday)
+                    view.resources.getString(R.string.timetable_weekday).format(event.weekdays)
             }
 
             beginTime.text =
@@ -81,9 +81,8 @@ class CatalogTimetableEventListAdapter(
                 "TH" -> return "QUI"
                 "FR" -> return "SEX"
                 "SA" -> return "SAB"
+                else -> return weekday
             }
-
-            return weekday
         }
     }
 }
