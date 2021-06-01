@@ -6,7 +6,7 @@ package org.ionproject.android.userAPI.models
  * This request can throw an error, but since we are using the [FetchResult] class we don't need
  * to make another sealed class to deal with these errors
  */
-data class PollSuccess(
+data class PollResponse(
     val access_token: String,
     val token_type:String,
     val refresh_token:String,

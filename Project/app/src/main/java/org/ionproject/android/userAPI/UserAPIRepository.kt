@@ -7,7 +7,11 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.ionproject.android.common.ionwebapi.AUTH_METHODS_LINK
+import org.ionproject.android.common.ionwebapi.CORE_POLL_LINK
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.offline.linkToCatalogProgrammesList
+import org.ionproject.android.offline.models.CatalogProgrammes
+import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethod
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
 import java.net.URI
@@ -33,8 +37,6 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
 
             val json = mapper.writeValueAsString(body)
 
-            Log.d("API", json)
-
             val loginResponse = webAPI.loginWithEmail(
                 URI(AUTH_METHODS_LINK),
                 "application/json",
@@ -44,8 +46,14 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
             loginResponse
         }
 
-    suspend fun pollCoreForAuthentication(token: String) =
+    suspend fun pollCoreForAuthentication() =
         withContext(Dispatchers.IO){
-            //TODO: later
+            var pollResponse = webAPI.getFromURIWithoutAuth(
+                URI(CORE_POLL_LINK),
+                PollResponse::class.java,
+                "application/json"
+            )
+
+            pollResponse
         }
 }

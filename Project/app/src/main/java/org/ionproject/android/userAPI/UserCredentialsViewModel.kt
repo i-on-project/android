@@ -12,6 +12,7 @@ import org.ionproject.android.common.FetchResult
 import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.ionwebapi.CLIENT_ID
 import org.ionproject.android.userAPI.models.AuthMethod
+import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethod
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
 
@@ -20,6 +21,8 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
     private val availableMethodsLiveData = MutableLiveData<FetchResult<List<AuthMethod>>>()
 
     private val loginResponseLiveData = MutableLiveData<FetchResult<SelectedMethodResponse>>()
+
+    private val pollResponseLiveData = MutableLiveData<FetchResult<PollResponse>>()
 
     init{
         getAvailableAuthMethods()
@@ -45,11 +48,9 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
     }
 
     fun loginWithEmail(email: String){
-        Log.d("API", "email in VM is: $email")
         viewModelScope.launch{
             val result = try {
                 val response = userAPIRepository.loginWithEmail(SelectedMethod("profile", "email", CLIENT_ID, "POLL", email))
-                Log.d("API", response.toString())
                 if (response.auth_req_id != "") FetchSuccess(response) else FetchFailure<SelectedMethodResponse>()
             } catch (e: Exception) {
                 FetchFailure<SelectedMethodResponse>(e)
@@ -63,5 +64,20 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
         loginResponseLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
+    fun pollCoreForEmailAuth(){
+        viewModelScope.launch{
+            val result = try {
+                val response = userAPIRepository.pollCoreForAuthentication()
+                if (response.access_token != "") FetchSuccess(response) else FetchFailure<PollResponse>()
+            } catch (e: Exception) {
+                FetchFailure<PollResponse>(e)
+            }
 
+            pollResponseLiveData.postValue(result)
+        }
+    }
+
+    fun observePollResponse(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<PollResponse>) -> Unit) {
+        pollResponseLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
+    }
 }
