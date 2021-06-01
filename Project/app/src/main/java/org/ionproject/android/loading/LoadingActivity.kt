@@ -15,10 +15,11 @@ import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.error.ERROR_ACTIVITY_EXCEPTION_EXTRA
 import org.ionproject.android.error.ErrorActivity
-import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
-import org.ionproject.android.main.MainActivity
 import org.ionproject.android.offline.CatalogMainActivity
 import java.net.URI
+import android.util.Log
+import org.ionproject.android.userAPI.USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA
+import org.ionproject.android.userAPI.UserCredentialsActivity
 
 /**
  * 1) Try and get data from the JsonHome URL
@@ -46,10 +47,11 @@ class LoadingActivity : ExceptionHandlingActivity() {
          * time the app tries to get the home resource
          */
         loadingViewModel.observeRootLiveData(this) {
+            Log.d("API", it.toString())
             when (it) {
                 is FetchSuccess<Root> -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
+                    val intent = Intent(this, UserCredentialsActivity::class.java)
+                    intent.putExtra(USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA, it.value)
                     this.startActivity(intent)
                 }
                 is FetchFailure<Root> -> { //unsuccessful request to jsonhome

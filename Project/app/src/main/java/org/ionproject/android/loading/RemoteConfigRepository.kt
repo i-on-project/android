@@ -16,7 +16,7 @@ class RemoteConfigRepository(val preferences: Preferences, private val webAPI: I
 
             var remoteConfig: RemoteConfig?
 
-            remoteConfig = webAPI.getFromURI(
+            remoteConfig = webAPI.getFromURIWithoutAuth(
                 URI(REMOTE_CONFIG_LINK),
                 RemoteConfig::class.java,
                 "application/json"

@@ -29,7 +29,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
 
         var catalogProgrammeList: CatalogProgrammes?
 
-        catalogProgrammeList = webAPI.getFromURI(
+        catalogProgrammeList = webAPI.getFromURIWithoutAuth(
             URI(linkToCatalogProgrammesList),
             CatalogProgrammes::class.java,
             "application/json"
@@ -45,7 +45,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
 
         var catalogProgramme: CatalogProgrammeTerms?
 
-        catalogProgramme = webAPI.getFromURI(
+        catalogProgramme = webAPI.getFromURIWithoutAuth(
             linkToProgramme,
             CatalogProgrammeTerms::class.java,
             "application/json"
@@ -64,7 +64,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
 
         var catalogProgrammeTermInfo: CatalogProgrammeTermInfo?
 
-        catalogProgrammeTermInfo = webAPI.getFromURI(
+        catalogProgrammeTermInfo = webAPI.getFromURIWithoutAuth(
             linkToInfo,
             CatalogProgrammeTermInfo::class.java,
             "application/json"
@@ -90,7 +90,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
             else -> ""
         }
 
-        return webAPI.getFromURI(
+        return webAPI.getFromURIWithoutAuth(
             URI(link),
             klass,
             "application/json"
@@ -101,7 +101,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
 
         var catalogAcademicYears: CatalogAcademicYears?
 
-        catalogAcademicYears = webAPI.getFromURI(
+        catalogAcademicYears = webAPI.getFromURIWithoutAuth(
             URI(linkToAcademicYears),
             CatalogAcademicYears::class.java,
             "application/json"
@@ -114,7 +114,7 @@ class CatalogRepository(private val webAPI: IIonWebAPI) {
 
         var calendar: CatalogCalendar?
 
-        calendar = webAPI.getFromURI(
+        calendar = webAPI.getFromURIWithoutAuth(
             URI(linkToCalendar.format(year)),
             CatalogCalendar::class.java,
             "application/json"

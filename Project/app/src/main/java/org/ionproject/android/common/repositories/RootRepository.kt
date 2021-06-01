@@ -7,6 +7,7 @@ import org.ionproject.android.common.db.RootDao
 import org.ionproject.android.common.dto.JsonHome
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JSON_HOME_MEDIA_TYPE
+import org.ionproject.android.common.ionwebapi.WEB_API_AUTHORIZATION_TOKEN
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI
@@ -30,7 +31,7 @@ class RootRepository(
 
             if (rootResource == null) {
                 rootResource =
-                    ionWebAPI.getFromURI(uri, JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
+                    ionWebAPI.getFromURI(URI("$uri/api/"), JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
                         .toRoot()
                 if (rootResource != null) {
                     // Save root resource into local database and create a worker for it

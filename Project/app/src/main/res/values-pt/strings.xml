@@ -124,4 +124,8 @@
     <string name="catalog_calendar_evaluations">Avaliações</string>
     <string name="catalog_calendar_details">Início de Aulas</string>
     <string name="catalog_calendar_otherEvents">Datas Importantes</string>
+
+    <string name="email_input">Insira o endereço de email</string>
+    <string name="allowed_domains">Domínios Permitidos</string>
+    <string name="invalid_email">Email Inválido! Consulte os domínios autorizados</string>
 </resources>

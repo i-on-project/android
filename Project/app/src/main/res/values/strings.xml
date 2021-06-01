@@ -152,5 +152,10 @@
     <string name="catalog_calendar_details">Start of Classes</string>
     <string name="catalog_calendar_otherEvents">Important Events</string>
 
+    <string name="email_input">Input your email address</string>
+    <string name="allowed_domains">Allowed Domains</string>
+    <string name="email_auth_button" translatable="false">Login</string>
+    <string name="invalid_email">Invalid Email! Check the authorized domains</string>
+
 
 </resources>
