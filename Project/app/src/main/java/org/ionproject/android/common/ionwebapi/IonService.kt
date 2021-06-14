@@ -6,15 +6,33 @@ import retrofit2.http.*
 
 interface IonService {
 
-    @Headers("Authorization: Bearer $WEB_API_AUTHORIZATION_TOKEN")
     @GET
     suspend fun getFromUri(
+        @Url uri: String,
+        @Header("Accept") accept: String,
+        @Header("Authorization") bearerToken: String
+    ): String
+
+    @PUT
+    suspend fun addClassSectionToCoreFavourites(
+        @Url uri: String,
+        @Header("Authorization") bearerToken: String
+    ): String
+
+    @DELETE
+    suspend fun removeClassSectionFromCoreFavourites(
+        @Url uri: String,
+        @Header("Authorization") bearerToken: String
+    )
+
+    @GET
+    suspend fun getFromUriWithoutAuth(
         @Url uri: String,
         @Header("Accept") accept: String
     ): String
 
-    @GET
-    suspend fun getFromUriWithoutAuth(
+    @POST
+    suspend fun pollCore(
         @Url uri: String,
         @Header("Accept") accept: String
     ): String

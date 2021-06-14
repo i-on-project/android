@@ -1,11 +1,13 @@
 package org.ionproject.android.common.repositories
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.EventsDao
 import org.ionproject.android.common.dto.SirenICalendar
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.*
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
@@ -30,7 +32,7 @@ class EventsRepository(
      * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
      */
     suspend fun getEvents(uri: URI) = withContext(dispatcher) {
-        var events = eventsDao.getEventsByUri(uri)
+        var events = eventsDao.getEventsByUri(URI("http://localhost:10023${uri.path}"))
 
         if (events == null) {
             events = ionWebAPI.getFromURI(uri, SirenICalendar::class.java).toEventsSummary()
@@ -55,7 +57,7 @@ class EventsRepository(
      * @return Events which contains all [Lectures],[Exams],[Todos] and [Journals] available
      */
     suspend fun forceGetEvents(uri: URI) = withContext(dispatcher) {
-        val eventsLocal = eventsDao.getEventsByUri(uri)
+        val eventsLocal = eventsDao.getEventsByUri(URI("http://localhost:10023${uri.path}"))
         val eventsServer = ionWebAPI.getFromURI(uri, SirenICalendar::class.java).toEventsSummary()
 
         if (eventsLocal == null) {
@@ -109,8 +111,8 @@ class EventsRepository(
         }
 
         if (classCollection != null)
-            getEventsAndAddToLists(classCollection.fields.calendarURI)
-        getEventsAndAddToLists(classSection.calendarURI)
+            getEventsAndAddToLists(URI("$WEB_API_HOST${classCollection.fields.calendarURI?.path}"))
+        getEventsAndAddToLists(URI("$WEB_API_HOST${classSection.calendarURI?.path}"))
 
         return Events.create(exams, lectures, todos, journals)
     }

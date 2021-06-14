@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -7,6 +8,7 @@ import org.ionproject.android.common.db.ProgrammeDao
 import org.ionproject.android.common.db.ProgrammeOfferDao
 import org.ionproject.android.common.dto.SirenEntity
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.ProgrammeSummary
@@ -59,7 +61,7 @@ class ProgrammesRepository(
     suspend fun getProgrammeDetails(
         programmeDetailsUri: URI
     ): ProgrammeWithOffers? = withContext(dispatcher) {
-        var programmeWithOffers = programmeDao.getProgrammeWithOffersByUri(programmeDetailsUri)
+        var programmeWithOffers = programmeDao.getProgrammeWithOffersByUri(URI("http://localhost:10023${programmeDetailsUri.path}"))
 
         if (programmeWithOffers == null) {
             programmeWithOffers = ionWebAPI.getFromURI(
@@ -89,7 +91,7 @@ class ProgrammesRepository(
 
             if (programmeOffer == null) {
                 programmeOffer =
-                    ionWebAPI.getFromURI(programmeOfferSummary.detailsUri, SirenEntity::class.java)
+                    ionWebAPI.getFromURI(URI("${WEB_API_HOST}${programmeOfferSummary.detailsUri.path}"), SirenEntity::class.java)
                         .toProgrammeOffer(programmeOfferSummary.courseId)
                 val workerId = workerManagerFacade.enqueueWorkForProgrammeOffer(
                     programmeOffer,

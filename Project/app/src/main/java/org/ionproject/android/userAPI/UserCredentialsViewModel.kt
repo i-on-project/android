@@ -50,7 +50,7 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
     fun loginWithEmail(email: String){
         viewModelScope.launch{
             val result = try {
-                val response = userAPIRepository.loginWithEmail(SelectedMethod("profile", "email", CLIENT_ID, "POLL", email))
+                val response = userAPIRepository.loginWithEmail(SelectedMethod("profile classes", "email", CLIENT_ID, "POLL", email))
                 if (response.auth_req_id != "") FetchSuccess(response) else FetchFailure<SelectedMethodResponse>()
             } catch (e: Exception) {
                 FetchFailure<SelectedMethodResponse>(e)

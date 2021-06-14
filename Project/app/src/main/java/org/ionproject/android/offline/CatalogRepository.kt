@@ -1,5 +1,6 @@
 package org.ionproject.android.offline
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.ionwebapi.IIonWebAPI

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "16b637cef788da062d94d7c81a91394b",
+    "identityHash": "2000754e76d6e2d21362f178bf6c3dd2",
     "entities": [
       {
         "tableName": "Root",
@@ -158,7 +158,7 @@
       },
       {
         "tableName": "ClassSection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `calendarURI` TEXT, `selfUri` TEXT NOT NULL, `upURI` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `classId` INTEGER NOT NULL, `calendarURI` TEXT, `selfUri` TEXT NOT NULL, `upURI` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -176,6 +176,12 @@
             "fieldPath": "calendarTerm",
             "columnName": "calendarTerm",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classId",
+            "columnName": "classId",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -882,7 +888,7 @@
       },
       {
         "tableName": "Classes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courseId` INTEGER NOT NULL, `calendarTerm` TEXT NOT NULL, `selfUri` TEXT NOT NULL, `upUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`selfUri`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courseId` INTEGER NOT NULL, `calendarTerm` TEXT NOT NULL, `id` INTEGER NOT NULL, `selfUri` TEXT NOT NULL, `upUri` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`selfUri`))",
         "fields": [
           {
             "fieldPath": "courseId",
@@ -894,6 +900,12 @@
             "fieldPath": "calendarTerm",
             "columnName": "calendarTerm",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -928,7 +940,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16b637cef788da062d94d7c81a91394b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2000754e76d6e2d21362f178bf6c3dd2')"
     ]
   }
 }

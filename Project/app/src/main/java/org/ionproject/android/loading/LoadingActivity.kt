@@ -18,6 +18,8 @@ import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.offline.CatalogMainActivity
 import java.net.URI
 import android.util.Log
+import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
+import org.ionproject.android.main.MainActivity
 import org.ionproject.android.userAPI.USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.userAPI.UserCredentialsActivity
 

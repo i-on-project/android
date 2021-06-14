@@ -14,6 +14,7 @@ data class ClassSection(
     val id: String,
     val courseAcronym: String,
     val calendarTerm: String,
+    val classId: Int,
     val calendarURI: URI?,
     val selfUri: URI,
     val upURI: URI,
@@ -28,6 +29,7 @@ data class ClassSection(
 data class Classes(
     val courseId: Int,
     val calendarTerm: String,
+    val id: Int,
     @PrimaryKey val selfUri: URI,
     val upUri: URI, // represents the list of classes in which this classes obj is contained,
     override var workerId: Int = 0

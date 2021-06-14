@@ -1,6 +1,7 @@
 package org.ionproject.android.class_section
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.ionwebapi.USER_API_ACCESS_TOKEN
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
@@ -43,8 +46,8 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
     /**
      * Uri used to obtain the class section
      */
-    private val classSectionUri: URI by lazy(LazyThreadSafetyMode.NONE) {
-        val classSectionUri = sharedViewModel.classSectionUri
+    private val classSectionUri by lazy(LazyThreadSafetyMode.NONE) {
+        val classSectionUri = sharedViewModel.classSectionUri?.path
         classSectionUri
             ?: throw IllegalArgumentException("ClassSectionUri is missing! Cannot load ClassSectionFragment without it.")
     }
@@ -122,7 +125,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
         val checkBox = checkbox_class_section_favorite
 
         // Search for Class Section Details
-        viewModel.getClassSectionDetails(classSectionUri) {
+        viewModel.getClassSectionDetails(URI("$WEB_API_HOST$classSectionUri")) {
             courseTextView.text = it.courseAcronym
             classTermTextView.text = it.id
             calendarTermTextView.text = it.calendarTerm
@@ -247,7 +250,7 @@ class ClassSectionFragment : ExceptionHandlingFragment() {
             val calendarTermTextView = textView_class_section_calendar_term
 
             // Search for Class Section Details
-            viewModel.forceGetClassSectionDetails(classSectionUri) {
+            viewModel.forceGetClassSectionDetails(URI("$WEB_API_HOST$classSectionUri")) {
                 courseTextView.text = it.courseAcronym
                 classTermTextView.text = it.id
                 calendarTermTextView.text = it.calendarTerm

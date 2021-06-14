@@ -1,6 +1,7 @@
 package org.ionproject.android.programmes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,10 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import java.net.URI
 
 class ProgrammesFragment : ExceptionHandlingFragment() {
 
@@ -46,7 +49,7 @@ class ProgrammesFragment : ExceptionHandlingFragment() {
         val viewGroup = recyclerview_programmes_list.parent as ViewGroup
         viewGroup.startLoading()
 
-        viewModel.getAllProgrammes(sharedViewModel.root!!.programmesUri)
+        viewModel.getAllProgrammes(URI("$WEB_API_HOST${sharedViewModel.root!!.programmesUri.path}"))
 
         //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)

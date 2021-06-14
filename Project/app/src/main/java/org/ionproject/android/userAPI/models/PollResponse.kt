@@ -7,9 +7,9 @@ package org.ionproject.android.userAPI.models
  * to make another sealed class to deal with these errors
  */
 data class PollResponse(
-    val access_token: String,
-    val token_type:String,
-    val refresh_token:String,
-    val expires_in:String,
-    val id_token:String
+    var access_token: String,
+    var token_type:String,
+    var refresh_token:String,
+    var expires_in:String,
+    var id_token:String
 )

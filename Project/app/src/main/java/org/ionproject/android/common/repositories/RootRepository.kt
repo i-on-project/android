@@ -7,7 +7,6 @@ import org.ionproject.android.common.db.RootDao
 import org.ionproject.android.common.dto.JsonHome
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.JSON_HOME_MEDIA_TYPE
-import org.ionproject.android.common.ionwebapi.WEB_API_AUTHORIZATION_TOKEN
 import org.ionproject.android.common.workers.WorkImportance
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import java.net.URI

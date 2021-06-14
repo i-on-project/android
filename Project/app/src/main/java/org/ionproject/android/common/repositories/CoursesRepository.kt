@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,7 +32,7 @@ class CourseRepository(
      */
     suspend fun getCourseDetails(courseDetailsUri: URI): Course? =
         withContext(dispatcher) {
-            var course = courseDao.getCourseByUri(courseDetailsUri)
+            var course = courseDao.getCourseByUri(URI("http://localhost:10023${courseDetailsUri.path}"))
 
             if (course == null) {
                 course = ionWebAPI.getFromURI(courseDetailsUri, SirenEntity::class.java)

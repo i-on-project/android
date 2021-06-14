@@ -5,9 +5,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.USER_API_ACCESS_TOKEN
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Favorite
+import java.net.URI
 
 /**
  * This type represents a Favorite repository, it performs requests
@@ -18,8 +21,13 @@ import org.ionproject.android.common.model.Favorite
  */
 class FavoriteRepository(
     private val favoriteDao: FavoriteDao,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher,
+    private val webAPI: IIonWebAPI //needed for the UserAPI class section actions
 ) {
+
+    suspend fun addClassSectionToCoreFavorites(uri: URI) =  withContext(dispatcher) {
+        webAPI.addClassSectionToCoreFavourites(uri, "Bearer $USER_API_ACCESS_TOKEN")
+    }
 
     /**
      * Adds a favorite to the local database
@@ -38,6 +46,9 @@ class FavoriteRepository(
             )
         }
 
+    suspend fun removeClassSectionFromCoreFavorites(uri: URI) =  withContext(dispatcher) {
+        webAPI.removeClassSectionFromCoreFavourites(uri, "Bearer $USER_API_ACCESS_TOKEN")
+    }
 
     /**
      * Remove an existing favorite from the local database

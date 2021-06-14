@@ -23,14 +23,37 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
     override suspend fun <T> getFromURI(
         uri: URI,
         klass: Class<T>,
-        accept: String
+        accept: String,
+        bearerToken: String
     ): T {
         val response = withContext(Dispatchers.IO) {
             Log.d("API", "Requesting resource from uri $uri")
 
-            ionService.getFromUri(uri.toString(), accept)
+            ionService.getFromUri(uri.toString(), accept, bearerToken)
         }
         return ionMapper.parse(response, klass)
+    }
+
+    override suspend fun addClassSectionToCoreFavourites(
+        uri: URI,
+        bearerToken: String
+    ): String {
+        val response = withContext(Dispatchers.IO) {
+            Log.d("API", "Requesting resource from uri $uri")
+
+            ionService.addClassSectionToCoreFavourites(uri.toString(),bearerToken)
+        }
+        return "add class section to core favourites"
+    }
+
+    override suspend fun removeClassSectionFromCoreFavourites(
+        uri: URI,
+        bearerToken: String
+    ){
+        val response = withContext(Dispatchers.IO) {
+            Log.d("API", "Requesting resource from uri $uri")
+            ionService.removeClassSectionFromCoreFavourites(uri.toString(),bearerToken)
+        }
     }
 
     /**
@@ -44,6 +67,14 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         val response = withContext(Dispatchers.IO) {
             Log.d("API", "Requesting resource from uri $uri")
             ionService.getFromUriWithoutAuth(uri.toString(), accept)
+        }
+        return ionMapper.parse(response, klass)
+    }
+
+    override suspend fun <T> pollCore(uri: URI, klass: Class<T>, accept: String): T {
+        val response = withContext(Dispatchers.IO) {
+            Log.d("API", "Requesting resource from uri $uri")
+            ionService.pollCore(uri.toString(), accept)
         }
         return ionMapper.parse(response, klass)
     }

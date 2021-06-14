@@ -15,11 +15,12 @@ fun SirenEntity.toClassSection(): ClassSection {
     val courseAcronym = properties?.get("courseAcr") as? String
     val calendarTerm = properties?.get("calendarTerm") as? String
     val id = properties?.get("id") as? String
+    val classId = properties?.get("classId") as? Int
     val selfUri = links?.findByRel("self")
     val upUri = links?.findByRel("collection")
 
-    if (courseAcronym != null && calendarTerm != null && id != null && selfUri != null && upUri != null) {
-        return ClassSection(id, courseAcronym, calendarTerm, calendarURI, selfUri, upUri)
+    if (courseAcronym != null && calendarTerm != null && id != null && selfUri != null && upUri != null && classId != null) {
+        return ClassSection(id, courseAcronym, calendarTerm, classId, calendarURI, selfUri, upUri)
     }
 
     throw MappingFromSirenException("Cannot convert $this to ClassSection")

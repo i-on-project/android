@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.internal.tls.OkHostnameVerifier
 import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
@@ -109,7 +110,7 @@ class IonApplication : Application() {
                 workerManagerFacade
             )
         favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+            FavoriteRepository(db.favoriteDao(), Dispatchers.IO, ionWebAPI)
         calendarTermRepository =
             CalendarTermRepository(
                 webAPI,

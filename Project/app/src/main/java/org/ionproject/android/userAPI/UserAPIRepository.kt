@@ -48,7 +48,7 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
 
     suspend fun pollCoreForAuthentication() =
         withContext(Dispatchers.IO){
-            var pollResponse = webAPI.getFromURIWithoutAuth(
+            var pollResponse = webAPI.pollCore(
                 URI(CORE_POLL_LINK),
                 PollResponse::class.java,
                 "application/json"

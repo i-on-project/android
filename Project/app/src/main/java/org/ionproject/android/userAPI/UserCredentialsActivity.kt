@@ -16,6 +16,8 @@ import org.ionproject.android.R
 import org.ionproject.android.common.FetchFailure
 import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.addGradientBackground
+import org.ionproject.android.common.ionwebapi.USER_API_ACCESS_TOKEN
+import org.ionproject.android.common.ionwebapi.USER_API_REFRESH_TOKEN
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
@@ -131,7 +133,8 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
                 }
                 is FetchFailure<SelectedMethodResponse> -> { //unsuccessful request
                     Log.d("API", "Failure $it")
-                    //go to catalog in case of failure?
+                    AlertDialog.Builder(this).setMessage("There was a problem in the login response")
+                        .setPositiveButton("Ok", null).show()
                 }
             }
         }
@@ -145,13 +148,19 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
             when (it) {
                 is FetchSuccess<PollResponse> -> {
                     pollResponse = it.value
+                    USER_API_ACCESS_TOKEN = it.value.access_token //setting the access token
+                    USER_API_REFRESH_TOKEN = it.value.refresh_token //setting the refresh token
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, root)
+                    handler.removeCallbacks(runnable) //stop the handler from polling the server after a successful login
                     this.startActivity(intent)
                 }
                 is FetchFailure<PollResponse> -> { //unsuccessful request
                     Log.d("API", "Failure $it")
-                    //go to catalog in case of failure?
+                    /*Since the server is going to be polled every 5 seconds, it is expected for the
+                    request to fail. For this reason, we don't do anything in the event of an
+                    unsuccessful poll
+                    * */
                 }
             }
         }
@@ -167,11 +176,15 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
         allowedDomainsTextView.visibility = View.VISIBLE
         emailAuthTriggerButton.visibility = View.VISIBLE
 
+        //display the allowed domains from the Core response
         activity_user_credentials.allowedDomainsContentTextView.text =
             authOptionsArray[position].allowed_domains.toString().replace("[", "")
                 .replace("]", "")
     }
 
+    /**
+     * Input verification and login trigger
+     */
     private fun emailLoginButtonActions(){
         val input = emailInputEditText.text.toString()
 

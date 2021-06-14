@@ -23,12 +23,27 @@ class MockIonWebAPI(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IIonWebAPI {
 
-    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String): T {
+    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String, bearerToken: String): T {
         val responseBody: String = get(uri)
         return ionMapper.parse(responseBody, klass)
     }
 
+    override suspend fun addClassSectionToCoreFavourites(uri: URI, bearerToken: String): String {
+        return get(uri)
+    }
+
+    override suspend fun removeClassSectionFromCoreFavourites(
+        uri: URI,
+        bearerToken: String
+    ){ get(uri)
+    }
+
     override suspend fun <T> getFromURIWithoutAuth(uri: URI, klass: Class<T>, accept: String): T {
+        val responseBody: String = get(uri)
+        return ionMapper.parse(responseBody, klass)
+    }
+
+    override suspend fun <T> pollCore(uri: URI, klass: Class<T>, accept: String): T {
         val responseBody: String = get(uri)
         return ionMapper.parse(responseBody, klass)
     }
