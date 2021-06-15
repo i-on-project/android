@@ -110,7 +110,7 @@ class IonApplication : Application() {
                 workerManagerFacade
             )
         favoritesRepository =
-            FavoriteRepository(db.favoriteDao(), Dispatchers.IO, ionWebAPI)
+            FavoriteRepository(db.favoriteDao(), Dispatchers.IO, ionWebAPI, preferences)
         calendarTermRepository =
             CalendarTermRepository(
                 webAPI,

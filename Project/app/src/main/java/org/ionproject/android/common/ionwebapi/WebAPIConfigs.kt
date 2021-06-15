@@ -16,6 +16,3 @@ const val AUTH_METHODS_LINK = "$WEB_API_HOST/api/auth/methods"
 const val CLIENT_ID = "22dd1551-db23-481b-acde-d286440388a5" //client ID provided by the core docs for testing
 
 var CORE_POLL_LINK = "$WEB_API_HOST/api/auth/request/$AUTH_REQ_ID/poll"
-
-var USER_API_ACCESS_TOKEN = "" //token sent by the UserAPI during authentication that is to be used in the authorization header
-var USER_API_REFRESH_TOKEN = "" //token sent by the UserAPI during authentication that is to be used for refreshing the access token

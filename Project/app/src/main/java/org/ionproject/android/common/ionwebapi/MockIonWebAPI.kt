@@ -35,7 +35,8 @@ class MockIonWebAPI(
     override suspend fun removeClassSectionFromCoreFavourites(
         uri: URI,
         bearerToken: String
-    ){ get(uri)
+    ){
+        get(uri)
     }
 
     override suspend fun <T> getFromURIWithoutAuth(uri: URI, klass: Class<T>, accept: String): T {

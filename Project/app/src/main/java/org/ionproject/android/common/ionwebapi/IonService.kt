@@ -2,6 +2,7 @@ package org.ionproject.android.common.ionwebapi
 
 import okhttp3.RequestBody
 import org.ionproject.android.userAPI.models.SelectedMethod
+import retrofit2.Response
 import retrofit2.http.*
 
 interface IonService {
@@ -19,11 +20,16 @@ interface IonService {
         @Header("Authorization") bearerToken: String
     ): String
 
+    /**
+     *
+     * This method requires Response<Unit> because the backend service returns
+     * non null body, despite having no content
+     */
     @DELETE
     suspend fun removeClassSectionFromCoreFavourites(
         @Url uri: String,
         @Header("Authorization") bearerToken: String
-    )
+    ): Response<Unit>
 
     @GET
     suspend fun getFromUriWithoutAuth(

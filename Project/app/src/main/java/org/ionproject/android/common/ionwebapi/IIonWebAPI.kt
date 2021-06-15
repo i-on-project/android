@@ -19,9 +19,9 @@ interface IIonWebAPI {
      */
     suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String = SIREN_MEDIA_TYPE, bearerToken: String = "Bearer $WEB_API_AUTHORIZATION_TOKEN"): T
 
-    suspend fun addClassSectionToCoreFavourites(uri: URI, bearerToken: String = "Bearer $USER_API_ACCESS_TOKEN"): String
+    suspend fun addClassSectionToCoreFavourites(uri: URI, bearerToken: String): String
 
-    suspend fun removeClassSectionFromCoreFavourites(uri: URI, bearerToken: String = "Bearer $USER_API_ACCESS_TOKEN")
+    suspend fun removeClassSectionFromCoreFavourites(uri: URI, bearerToken: String)
 
     suspend fun <T> getFromURIWithoutAuth(uri: URI, klass: Class<T>, accept: String = SIREN_MEDIA_TYPE): T
 

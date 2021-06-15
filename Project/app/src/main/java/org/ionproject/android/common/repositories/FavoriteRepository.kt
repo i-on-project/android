@@ -6,10 +6,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ionproject.android.common.db.FavoriteDao
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
-import org.ionproject.android.common.ionwebapi.USER_API_ACCESS_TOKEN
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Favorite
+import org.ionproject.android.settings.Preferences
 import java.net.URI
 
 /**
@@ -22,11 +22,12 @@ import java.net.URI
 class FavoriteRepository(
     private val favoriteDao: FavoriteDao,
     private val dispatcher: CoroutineDispatcher,
-    private val webAPI: IIonWebAPI //needed for the UserAPI class section actions
+    private val webAPI: IIonWebAPI, //needed for the UserAPI class section actions
+    private val preferences: Preferences
 ) {
 
     suspend fun addClassSectionToCoreFavorites(uri: URI) =  withContext(dispatcher) {
-        webAPI.addClassSectionToCoreFavourites(uri, "Bearer $USER_API_ACCESS_TOKEN")
+        webAPI.addClassSectionToCoreFavourites(uri, "Bearer ${preferences.getAccessToken()}")
     }
 
     /**
@@ -47,7 +48,7 @@ class FavoriteRepository(
         }
 
     suspend fun removeClassSectionFromCoreFavorites(uri: URI) =  withContext(dispatcher) {
-        webAPI.removeClassSectionFromCoreFavourites(uri, "Bearer $USER_API_ACCESS_TOKEN")
+        webAPI.removeClassSectionFromCoreFavourites(uri, "Bearer ${preferences.getAccessToken()}")
     }
 
     /**

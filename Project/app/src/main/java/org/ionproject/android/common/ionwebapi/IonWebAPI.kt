@@ -38,7 +38,7 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         uri: URI,
         bearerToken: String
     ): String {
-        val response = withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             Log.d("API", "Requesting resource from uri $uri")
 
             ionService.addClassSectionToCoreFavourites(uri.toString(),bearerToken)
@@ -50,7 +50,7 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         uri: URI,
         bearerToken: String
     ){
-        val response = withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             Log.d("API", "Requesting resource from uri $uri")
             ionService.removeClassSectionFromCoreFavourites(uri.toString(),bearerToken)
         }

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_user_credentials.*
 import kotlinx.android.synthetic.main.activity_user_credentials.view.*
@@ -15,12 +16,12 @@ import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
 import org.ionproject.android.common.FetchFailure
 import org.ionproject.android.common.FetchSuccess
+import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.addGradientBackground
-import org.ionproject.android.common.ionwebapi.USER_API_ACCESS_TOKEN
-import org.ionproject.android.common.ionwebapi.USER_API_REFRESH_TOKEN
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
+import org.ionproject.android.settings.Preferences
 import org.ionproject.android.userAPI.models.AuthMethod
 import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
@@ -77,7 +78,12 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
                 position: Int,
                 id: Long
             ) {
-                setupEmailAuth(position)
+                if (parent != null) {
+                    if(parent.selectedItem.toString() == "email")
+                        setupEmailAuth(position)
+                    else
+                        Toast.makeText(applicationContext,"No other solutions implemented yet",Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -148,8 +154,8 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
             when (it) {
                 is FetchSuccess<PollResponse> -> {
                     pollResponse = it.value
-                    USER_API_ACCESS_TOKEN = it.value.access_token //setting the access token
-                    USER_API_REFRESH_TOKEN = it.value.refresh_token //setting the refresh token
+                    preferences.saveAccessToken(it.value.access_token) //save the access token in the shared preferences
+                    preferences.saveRefreshToken(it.value.refresh_token)//setting the refresh token in the shared preferences
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, root)
                     handler.removeCallbacks(runnable) //stop the handler from polling the server after a successful login
@@ -157,10 +163,10 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
                 }
                 is FetchFailure<PollResponse> -> { //unsuccessful request
                     Log.d("API", "Failure $it")
-                    /*Since the server is going to be polled every 5 seconds, it is expected for the
+                    /**Since the server is going to be polled every 5 seconds, it is expected for the
                     request to fail. For this reason, we don't do anything in the event of an
                     unsuccessful poll
-                    * */
+                    */
                 }
             }
         }
