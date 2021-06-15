@@ -157,5 +157,8 @@
     <string name="email_auth_button" translatable="false">Login</string>
     <string name="invalid_email">Invalid Email! Check the authorized domains</string>
 
+    <string name="check_email">If this is your first login, please check your email to finish the authentication process</string>
+
+
 
 </resources>

@@ -1,5 +1,6 @@
 package org.ionproject.android.class_section
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,14 @@ import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
+import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.addSwipeRightGesture
 import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import org.ionproject.android.loading.LoadingActivity
+import org.ionproject.android.main.MainActivity
 import java.net.URI
 import java.util.*
 

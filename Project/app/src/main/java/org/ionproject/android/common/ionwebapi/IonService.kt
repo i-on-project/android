@@ -45,7 +45,7 @@ interface IonService {
 
     @Headers( "Content-Type: application/json" )
     @POST
-    suspend fun loginWithEmail(
+    suspend fun postWithBody(
         @Url uri: String,
         @Header("Accept") accept: String,
         @Body body: RequestBody

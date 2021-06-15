@@ -1,12 +1,17 @@
 package org.ionproject.android.main
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.SearchRecentSuggestions
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -28,14 +33,21 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
+import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
+import org.ionproject.android.userAPI.AlarmReceiver
 
 const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
 
 class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
+
+    private lateinit var alarmIntent: Intent
+
+    private lateinit var pendingIntent : PendingIntent
 
     private var searchViewItem: MenuItem? = null
 
@@ -83,6 +95,11 @@ class MainActivity : ExceptionHandlingActivity(),
             setupTopBarBehaviour()
             setupBottomBarBehaviour()
             setupBackButton()
+
+            alarmIntent = Intent(this, AlarmReceiver::class.java)
+
+            pendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0)
+
         } else {
             throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
         }
@@ -105,10 +122,31 @@ class MainActivity : ExceptionHandlingActivity(),
     }
 
     /**
-     * Start observing the connection
+     * Start observing the connection and setup the alarm for access token refresh
      */
     override fun onStart() {
         super.onStart()
+
+        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+
+        /**
+         * refresh the token every 20 minutes
+         *
+         * The alarm is executed when it is set, which means in an event where the user has stored an
+         * old token, it will be refreshed when he opens the app. the credentials screen will only be
+         * used in a first execution of the application (because sharedPreferences is empty)
+         */
+        alarmManager.setInexactRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + (20 * 60 * 1000),
+            (20 * 60 * 1000),
+            pendingIntent
+        )
+
+        Log.d("Alarm", "alarm set")
+
         observeConnectivity()
     }
 

@@ -94,7 +94,7 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         return jacksonObjectMapper().readValue(response)
     }
 
-    override suspend fun <T> loginWithEmail(
+    override suspend fun <T> postWithBody(
         uri: URI,
         accept: String,
         klass: Class<T>,
@@ -102,7 +102,7 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
     ): T {
         val response = withContext(Dispatchers.IO) {
             Log.d("API", "Requesting resource from uri $uri")
-            ionService.loginWithEmail(uri.toString(), accept, body)
+            ionService.postWithBody(uri.toString(), accept, body)
         }
         return ionMapper.parse(response, klass)
     }

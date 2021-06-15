@@ -1,7 +1,20 @@
 package org.ionproject.android.main
 
+import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import org.ionproject.android.common.FetchFailure
+import org.ionproject.android.common.FetchResult
+import org.ionproject.android.common.FetchSuccess
+import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.connectivity.IConnectivityObservable
+import org.ionproject.android.userAPI.UserAPIRepository
+import org.ionproject.android.userAPI.models.PollResponse
+import org.ionproject.android.userAPI.models.TokenRefresh
 
 private typealias onConnectionChanged = () -> Unit
 

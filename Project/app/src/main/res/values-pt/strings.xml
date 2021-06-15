@@ -128,4 +128,6 @@
     <string name="email_input">Insira o endereço de email</string>
     <string name="allowed_domains">Domínios Permitidos</string>
     <string name="invalid_email">Email Inválido! Consulte os domínios autorizados</string>
+
+    <string name="check_email">Se for o primeiro login, consulte o email para finalizar a autenticação</string>
 </resources>

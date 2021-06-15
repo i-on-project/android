@@ -53,7 +53,7 @@ class MockIonWebAPI(
         return listOf()
     }
 
-    override suspend fun <T> loginWithEmail(
+    override suspend fun <T> postWithBody(
         uri: URI,
         accept: String,
         klass: Class<T>,

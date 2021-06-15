@@ -200,9 +200,11 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
 
         val domain = input.split("@alunos")[1]
 
-        if(authOptionsArray.find{ it.type == "email"}?.allowed_domains?.contains("*$domain") == true)
+        if(authOptionsArray.find{ it.type == "email"}?.allowed_domains?.contains("*$domain") == true) {
             userAPIViewModel.loginWithEmail(emailInputEditText.text.toString())
-        else
+            AlertDialog.Builder(this).setMessage(R.string.check_email)
+                .setPositiveButton("Ok", null).show()
+        }else
             AlertDialog.Builder(this).setMessage(R.string.invalid_email)
                 .setPositiveButton("Ok", null).show()
     }

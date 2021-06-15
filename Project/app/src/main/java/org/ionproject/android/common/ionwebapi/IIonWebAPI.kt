@@ -29,5 +29,5 @@ interface IIonWebAPI {
 
     suspend fun getAuthMethodsArray(uri: URI, accept: String = SIREN_MEDIA_TYPE): List<AuthMethod>
 
-    suspend fun <T> loginWithEmail(uri: URI, accept: String = SIREN_MEDIA_TYPE, klass: Class<T>, body: RequestBody): T
+    suspend fun <T> postWithBody(uri: URI, accept: String = SIREN_MEDIA_TYPE, klass: Class<T>, body: RequestBody): T
 }

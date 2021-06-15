@@ -18,6 +18,7 @@ import org.ionproject.android.error.ErrorActivity
 import org.ionproject.android.offline.CatalogMainActivity
 import java.net.URI
 import android.util.Log
+import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
 import org.ionproject.android.userAPI.USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA
@@ -47,13 +48,21 @@ class LoadingActivity : ExceptionHandlingActivity() {
          * We can see if this is the first attempt by the value in the RemoteConfigLiveData object:
          * if null, there has not been a request to the remote config file which means it is the first
          * time the app tries to get the home resource
+         *
+         * If the shared preferences already has an access token, we don't need to ask for credentials
          */
         loadingViewModel.observeRootLiveData(this) {
             Log.d("API", it.toString())
             when (it) {
                 is FetchSuccess<Root> -> {
-                    val intent = Intent(this, UserCredentialsActivity::class.java)
-                    intent.putExtra(USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA, it.value)
+                    val intent: Intent
+                    if(preferences.getAccessToken() == "") {
+                        intent = Intent(this, UserCredentialsActivity::class.java)
+                        intent.putExtra(USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA, it.value)
+                    }else {
+                        intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
+                    }
                     this.startActivity(intent)
                 }
                 is FetchFailure<Root> -> { //unsuccessful request to jsonhome

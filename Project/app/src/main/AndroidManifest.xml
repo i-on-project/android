@@ -52,6 +52,7 @@
             android:name=".search.SearchSuggestionsProvider"
             android:authorities="org.ionproject.android.search.SearchSuggestionsProvider"
             android:readPermission="true" />
+        <receiver android:name=".userAPI.AlarmReceiver"></receiver>
     </application>
 
 </manifest>
