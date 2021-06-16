@@ -8,6 +8,6 @@ data class SelectedMethod(
     val scope: String,
     val type: String,
     val client_id: String,
-    val notification_method:String,
+    val notification_method: String,
     val email: String
 )

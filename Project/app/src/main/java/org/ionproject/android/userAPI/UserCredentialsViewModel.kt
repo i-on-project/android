@@ -1,11 +1,7 @@
 package org.ionproject.android.userAPI
 
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.FetchFailure
 import org.ionproject.android.common.FetchResult
@@ -16,7 +12,7 @@ import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethod
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
 
-class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository): ViewModel(){
+class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository) : ViewModel() {
 
     private val availableMethodsLiveData = MutableLiveData<FetchResult<List<AuthMethod>>>()
 
@@ -24,12 +20,12 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
 
     private val pollResponseLiveData = MutableLiveData<FetchResult<PollResponse>>()
 
-    init{
+    init {
         getAvailableAuthMethods()
     }
 
-    private fun getAvailableAuthMethods(){
-        viewModelScope.launch{
+    private fun getAvailableAuthMethods() {
+        viewModelScope.launch {
 
             val result = try {
                 val methods = userAPIRepository.getAuthMethods()
@@ -43,14 +39,25 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
         }
     }
 
-    fun observeAvailableAuthMethods(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<List<AuthMethod>>) -> Unit) {
+    fun observeAvailableAuthMethods(
+        lifecycleOwner: LifecycleOwner,
+        onUpdate: (FetchResult<List<AuthMethod>>) -> Unit
+    ) {
         availableMethodsLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
-    fun loginWithEmail(email: String){
-        viewModelScope.launch{
+    fun loginWithEmail(email: String) {
+        viewModelScope.launch {
             val result = try {
-                val response = userAPIRepository.loginWithEmail(SelectedMethod("profile classes", "email", CLIENT_ID, "POLL", email))
+                val response = userAPIRepository.loginWithEmail(
+                    SelectedMethod(
+                        "profile classes",
+                        "email",
+                        CLIENT_ID,
+                        "POLL",
+                        email
+                    )
+                )
                 if (response.auth_req_id != "") FetchSuccess(response) else FetchFailure<SelectedMethodResponse>()
             } catch (e: Exception) {
                 FetchFailure<SelectedMethodResponse>(e)
@@ -60,12 +67,15 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
         }
     }
 
-    fun observeLoginResponse(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<SelectedMethodResponse>) -> Unit) {
+    fun observeLoginResponse(
+        lifecycleOwner: LifecycleOwner,
+        onUpdate: (FetchResult<SelectedMethodResponse>) -> Unit
+    ) {
         loginResponseLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 
-    fun pollCoreForEmailAuth(){
-        viewModelScope.launch{
+    fun pollCoreForEmailAuth() {
+        viewModelScope.launch {
             val result = try {
                 val response = userAPIRepository.pollCoreForAuthentication()
                 if (response.access_token != "") FetchSuccess(response) else FetchFailure<PollResponse>()
@@ -77,7 +87,10 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
         }
     }
 
-    fun observePollResponse(lifecycleOwner: LifecycleOwner, onUpdate: (FetchResult<PollResponse>) -> Unit) {
+    fun observePollResponse(
+        lifecycleOwner: LifecycleOwner,
+        onUpdate: (FetchResult<PollResponse>) -> Unit
+    ) {
         pollResponseLiveData.observe(lifecycleOwner, Observer { onUpdate(it) })
     }
 }

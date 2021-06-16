@@ -11,7 +11,6 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.SearchRecentSuggestions
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -33,10 +32,8 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
-import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
 import org.ionproject.android.userAPI.AlarmReceiver
 
@@ -47,7 +44,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
     private lateinit var alarmIntent: Intent
 
-    private lateinit var pendingIntent : PendingIntent
+    private lateinit var pendingIntent: PendingIntent
 
     private var searchViewItem: MenuItem? = null
 
@@ -98,7 +95,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
             alarmIntent = Intent(this, AlarmReceiver::class.java)
 
-            pendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0)
+            pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
 
         } else {
             throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
@@ -129,8 +126,6 @@ class MainActivity : ExceptionHandlingActivity(),
 
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
-
         /**
          * refresh the token every 20 minutes
          *
@@ -144,8 +139,6 @@ class MainActivity : ExceptionHandlingActivity(),
             (20 * 60 * 1000),
             pendingIntent
         )
-
-        Log.d("Alarm", "alarm set")
 
         observeConnectivity()
     }

@@ -10,7 +10,7 @@ package org.ionproject.android.userAPI.models
  * create the data class to parse the error
  */
 data class TokenRefresh(
-    val access_token:String, //the access token to refresh
-    val refresh_token:String //the refresh token associated with the provided access token
+    val access_token: String, //the access token to refresh
+    val refresh_token: String //the refresh token associated with the provided access token
 )
 

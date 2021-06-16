@@ -21,7 +21,6 @@ import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
-import org.ionproject.android.settings.Preferences
 import org.ionproject.android.userAPI.models.AuthMethod
 import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
@@ -30,11 +29,12 @@ const val USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA = "UserCredentialsActivity.Root.E
 
 var AUTH_REQ_ID = ""
 
-class UserCredentialsActivity : ExceptionHandlingActivity(){
+class UserCredentialsActivity : ExceptionHandlingActivity() {
 
     private val authOptionsArray: MutableList<AuthMethod> = mutableListOf()
 
-    private val authTypesArray: MutableList<String> = mutableListOf() //idk why but it needs a list of strings for the spinner to work
+    private val authTypesArray: MutableList<String> =
+        mutableListOf() //idk why but it needs a list of strings for the spinner to work
 
     lateinit var pollResponse: PollResponse
 
@@ -64,13 +64,14 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
             emailLoginButtonActions()
         }
 
-        adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, authTypesArray)
+        adapter =
+            ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, authTypesArray)
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         AuthChoicesSpinner.adapter = adapter
 
-        AuthChoicesSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        AuthChoicesSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -79,10 +80,14 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
                 id: Long
             ) {
                 if (parent != null) {
-                    if(parent.selectedItem.toString() == "email")
+                    if (parent.selectedItem.toString() == "email")
                         setupEmailAuth(position)
                     else
-                        Toast.makeText(applicationContext,"No other solutions implemented yet",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "No other solutions implemented yet",
+                            Toast.LENGTH_SHORT
+                        ).show()
                 }
             }
 
@@ -130,16 +135,15 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
          * Since the user has to open an email client and grant permissions to the API,
          * we run a handler that checks for updates every 5 seconds
          */
-        userAPIViewModel.observeLoginResponse(this){
+        userAPIViewModel.observeLoginResponse(this) {
             when (it) {
                 is FetchSuccess<SelectedMethodResponse> -> {
                     AUTH_REQ_ID = it.value.auth_req_id
-                    Log.d("API", "Login sucess token: $AUTH_REQ_ID")
                     runnable.run() //start polling the server
                 }
                 is FetchFailure<SelectedMethodResponse> -> { //unsuccessful request
-                    Log.d("API", "Failure $it")
-                    AlertDialog.Builder(this).setMessage("There was a problem in the login response")
+                    AlertDialog.Builder(this)
+                        .setMessage("There was a problem in the login response")
                         .setPositiveButton("Ok", null).show()
                 }
             }
@@ -150,7 +154,7 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
          * usage or we go to the catalog (?) navigation in case there is a problem with the
          * authentication system
          */
-        userAPIViewModel.observePollResponse(this){
+        userAPIViewModel.observePollResponse(this) {
             when (it) {
                 is FetchSuccess<PollResponse> -> {
                     pollResponse = it.value
@@ -161,13 +165,6 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
                     handler.removeCallbacks(runnable) //stop the handler from polling the server after a successful login
                     this.startActivity(intent)
                 }
-                is FetchFailure<PollResponse> -> { //unsuccessful request
-                    Log.d("API", "Failure $it")
-                    /**Since the server is going to be polled every 5 seconds, it is expected for the
-                    request to fail. For this reason, we don't do anything in the event of an
-                    unsuccessful poll
-                    */
-                }
             }
         }
     }
@@ -175,7 +172,7 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
     /**
      * Display all the views relevant to this type of authentication
      */
-    private fun setupEmailAuth(position: Int){
+    private fun setupEmailAuth(position: Int) {
         ionLogoView.visibility = View.VISIBLE
         emailInputEditText.visibility = View.VISIBLE
         allowedDomainsContentTextView.visibility = View.VISIBLE
@@ -191,20 +188,20 @@ class UserCredentialsActivity : ExceptionHandlingActivity(){
     /**
      * Input verification and login trigger
      */
-    private fun emailLoginButtonActions(){
+    private fun emailLoginButtonActions() {
         val input = emailInputEditText.text.toString()
 
-        if(input == "")
+        if (input == "")
             AlertDialog.Builder(this).setMessage(R.string.email_input)
                 .setPositiveButton("Ok", null).show()
 
         val domain = input.split("@alunos")[1]
 
-        if(authOptionsArray.find{ it.type == "email"}?.allowed_domains?.contains("*$domain") == true) {
+        if (authOptionsArray.find { it.type == "email" }?.allowed_domains?.contains("*$domain") == true) {
             userAPIViewModel.loginWithEmail(emailInputEditText.text.toString())
             AlertDialog.Builder(this).setMessage(R.string.check_email)
                 .setPositiveButton("Ok", null).show()
-        }else
+        } else
             AlertDialog.Builder(this).setMessage(R.string.invalid_email)
                 .setPositiveButton("Ok", null).show()
     }

@@ -8,8 +8,8 @@ package org.ionproject.android.userAPI.models
  */
 data class PollResponse(
     var access_token: String,
-    var token_type:String,
-    var refresh_token:String,
-    var expires_in:String,
-    var id_token:String
+    var token_type: String,
+    var refresh_token: String,
+    var expires_in: String,
+    var id_token: String
 )

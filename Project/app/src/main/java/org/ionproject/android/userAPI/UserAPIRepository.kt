@@ -1,6 +1,5 @@
 package org.ionproject.android.userAPI
 
-import android.util.Log
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,15 +9,13 @@ import org.ionproject.android.common.ionwebapi.AUTH_METHODS_LINK
 import org.ionproject.android.common.ionwebapi.CORE_POLL_LINK
 import org.ionproject.android.common.ionwebapi.IIonWebAPI
 import org.ionproject.android.common.ionwebapi.REFRESH_TOKEN_LINK
-import org.ionproject.android.offline.linkToCatalogProgrammesList
-import org.ionproject.android.offline.models.CatalogProgrammes
 import org.ionproject.android.userAPI.models.PollResponse
 import org.ionproject.android.userAPI.models.SelectedMethod
 import org.ionproject.android.userAPI.models.SelectedMethodResponse
 import org.ionproject.android.userAPI.models.TokenRefresh
 import java.net.URI
 
-class UserAPIRepository(private val webAPI: IIonWebAPI)  {
+class UserAPIRepository(private val webAPI: IIonWebAPI) {
 
     suspend fun getAuthMethods() =
         withContext(Dispatchers.IO) {
@@ -33,7 +30,7 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
 
     suspend fun loginWithEmail(body: SelectedMethod) =
 
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
 
             val mapper = ObjectMapper() //jackson mapper so we can send a request body in JSON
 
@@ -49,7 +46,7 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
         }
 
     suspend fun pollCoreForAuthentication() =
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             var pollResponse = webAPI.pollCore(
                 URI(CORE_POLL_LINK),
                 PollResponse::class.java,
@@ -61,7 +58,7 @@ class UserAPIRepository(private val webAPI: IIonWebAPI)  {
 
     suspend fun refreshAccessToken(body: TokenRefresh) =
 
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
 
             val mapper = ObjectMapper() //jackson mapper so we can send a request body in JSON
 
