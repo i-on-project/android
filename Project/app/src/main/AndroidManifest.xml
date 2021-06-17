@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".userAPI.UserCredentialsActivity"></activity>
+        <activity android:name=".userAPI.UserCredentialsActivity" />
         <activity
             android:name=".offline.CatalogMainActivity"
             android:screenOrientation="userPortrait"
@@ -52,7 +52,8 @@
             android:name=".search.SearchSuggestionsProvider"
             android:authorities="org.ionproject.android.search.SearchSuggestionsProvider"
             android:readPermission="true" />
-        <receiver android:name=".userAPI.AlarmReceiver"></receiver>
+
+        <receiver android:name=".userAPI.AlarmReceiver" />
     </application>
 
 </manifest>

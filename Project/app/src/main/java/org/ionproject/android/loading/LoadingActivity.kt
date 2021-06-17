@@ -16,6 +16,7 @@ import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.error.ERROR_ACTIVITY_EXCEPTION_EXTRA
 import org.ionproject.android.error.ErrorActivity
+import org.ionproject.android.main.MAIN_ACTIVITY_STALE_TOKEN_EXTRA
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
 import org.ionproject.android.main.MainActivity
 import org.ionproject.android.offline.CatalogMainActivity
@@ -57,9 +58,11 @@ class LoadingActivity : ExceptionHandlingActivity() {
                     if (preferences.getAccessToken() == "") {
                         intent = Intent(this, UserCredentialsActivity::class.java)
                         intent.putExtra(USER_CREDENTIALS_ACTIVITY_ROOT_EXTRA, it.value)
+                        intent.putExtra(MAIN_ACTIVITY_STALE_TOKEN_EXTRA, false)
                     } else {
                         intent = Intent(this, MainActivity::class.java)
                         intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, it.value)
+                        intent.putExtra(MAIN_ACTIVITY_STALE_TOKEN_EXTRA, true)
                     }
                     this.startActivity(intent)
                 }

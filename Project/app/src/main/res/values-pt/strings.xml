@@ -128,6 +128,12 @@
     <string name="email_input">Insira o endereço de email</string>
     <string name="allowed_domains">Domínios Permitidos</string>
     <string name="invalid_email">Email Inválido! Consulte os domínios autorizados</string>
-
     <string name="check_email">Se for o primeiro login, consulte o email para finalizar a autenticação</string>
+    <string name="error_login_request">Houve um problema no login. Pressione "OK" para verificar a conetividade</string>
+    <string name="error_auth_methods_request">Não foi possível obter os métodos de autenticação. Pressione "OK" para verificar a conetividade</string>
+
+    <string name="error_refreshing_token">Houve um problema na atualização do token de acesso. Não será possível
+        adicionar turmas como favoritas até o problema ser resolvido</string>
+
+    <string name="are_you_sure_logout">Tem a certeza que quer terminar sessão?</string>
 </resources>

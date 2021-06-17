@@ -15,5 +15,4 @@
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_schedule_black_24"
         android:title="@string/title_schedule" />
-
 </menu>

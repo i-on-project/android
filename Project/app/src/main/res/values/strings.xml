@@ -156,9 +156,15 @@
     <string name="allowed_domains">Allowed Domains</string>
     <string name="email_auth_button" translatable="false">Login</string>
     <string name="invalid_email">Invalid Email! Check the authorized domains</string>
-
     <string name="check_email">If this is your first login, please check your email to finish the authentication process</string>
+    <string name="error_login_request">There was a problem in the login response. Press "OK" to check connectivity</string>
+    <string name="error_auth_methods_request">Couldn\'t get the authentication methods. Press "OK" to check connectivity</string>
 
+    <string name="error_refreshing_token">There was an error refreshing the Access Token.
+        Any attempt to subscribe to a class section will fail untill the issue is resolved.</string>
+
+    <string name="logout" translatable="false">Logout</string>
+    <string name="are_you_sure_logout">Are you sure you want to log out?</string>
 
 
 </resources>

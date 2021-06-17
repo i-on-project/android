@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,7 +18,9 @@ import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.IonApplication.Companion.preferences
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.main.MAIN_ACTIVITY_ROOT_EXTRA
+import org.ionproject.android.main.MAIN_ACTIVITY_STALE_TOKEN_EXTRA
 import org.ionproject.android.main.MainActivity
 import org.ionproject.android.userAPI.models.AuthMethod
 import org.ionproject.android.userAPI.models.PollResponse
@@ -42,7 +43,7 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
 
     val handler = Handler()
 
-    private val runnable: Runnable = object : Runnable {
+    private val pollTheServer: Runnable = object : Runnable {
         override fun run() {
 
             userAPIViewModel.pollCoreForEmailAuth()
@@ -111,6 +112,10 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
          *
          * when we get the response, we oppulate the options arrays and create the View
          * for the chosen method
+         *
+         * If the auth methods request fails, we immediately redirect to [LoadingActivity]
+         * to check connectivity and trigger the catalog navigation, in case there is a
+         * problem with the backend service
          */
         userAPIViewModel.observeAvailableAuthMethods(this) {
             when (it) {
@@ -120,8 +125,11 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
                     adapter.notifyDataSetChanged()
                 }
                 is FetchFailure<List<AuthMethod>> -> { //unsuccessful request
-                    Log.d("API", "Failure $it")
-                    //go to catalog in case of failure?
+                    AlertDialog.Builder(this)
+                        .setMessage(R.string.error_auth_methods_request)
+                        .setPositiveButton("OK"){_,_ ->
+                            this.startActivity(Intent(this, LoadingActivity::class.java))
+                        }.show()
                 }
             }
         }
@@ -134,17 +142,23 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
          *
          * Since the user has to open an email client and grant permissions to the API,
          * we run a handler that checks for updates every 5 seconds
+         *
+         * If the loginRequest fails, we redirect the user to the [LoadingActivity]
+         * to check connectivity and trigger the catalog navigation if there is a problem
+         * with the backend service
          */
         userAPIViewModel.observeLoginResponse(this) {
             when (it) {
                 is FetchSuccess<SelectedMethodResponse> -> {
                     AUTH_REQ_ID = it.value.auth_req_id
-                    runnable.run() //start polling the server
+                    pollTheServer.run()
                 }
                 is FetchFailure<SelectedMethodResponse> -> { //unsuccessful request
                     AlertDialog.Builder(this)
-                        .setMessage("There was a problem in the login response")
-                        .setPositiveButton("Ok", null).show()
+                        .setMessage(R.string.error_login_request)
+                        .setPositiveButton("OK"){_,_ ->
+                            this.startActivity(Intent(this, LoadingActivity::class.java))
+                        }.show()
                 }
             }
         }
@@ -162,7 +176,8 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
                     preferences.saveRefreshToken(it.value.refresh_token)//setting the refresh token in the shared preferences
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MAIN_ACTIVITY_ROOT_EXTRA, root)
-                    handler.removeCallbacks(runnable) //stop the handler from polling the server after a successful login
+                    intent.putExtra(MAIN_ACTIVITY_STALE_TOKEN_EXTRA, false)
+                    handler.removeCallbacks(pollTheServer) //stop the handler from polling the server after a successful login
                     this.startActivity(intent)
                 }
             }
@@ -193,7 +208,7 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
 
         if (input == "")
             AlertDialog.Builder(this).setMessage(R.string.email_input)
-                .setPositiveButton("Ok", null).show()
+                .setPositiveButton("OK", null).show()
 
         val domain = input.split("@alunos")[1]
 

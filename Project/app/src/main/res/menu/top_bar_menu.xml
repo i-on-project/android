@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_delete_suggestions_24"
         android:title="@string/title_delete_suggestions"
         app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_baseline_close_24"
+        android:title="@string/logout"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

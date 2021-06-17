@@ -27,6 +27,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
+import kotlinx.coroutines.runBlocking
 import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
@@ -34,10 +35,12 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
 import org.ionproject.android.userAPI.AlarmReceiver
 
 const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
+const val MAIN_ACTIVITY_STALE_TOKEN_EXTRA = "MainActivity.Token.Extra"
 
 class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
@@ -47,6 +50,17 @@ class MainActivity : ExceptionHandlingActivity(),
     private lateinit var pendingIntent: PendingIntent
 
     private var searchViewItem: MenuItem? = null
+
+    private lateinit var alarmManager: AlarmManager
+
+    /**
+    This flag is used to let the Main Activity know if the user had to go through the
+    authentication process or if they were already logged in.
+
+    True: token was stale (arleady logged in)
+    False: fresh token (had to login)
+     */
+    private var staleTokenFlag: Boolean = true
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost).apply {
@@ -87,6 +101,9 @@ class MainActivity : ExceptionHandlingActivity(),
         setContentView(R.layout.activity_main)
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(MAIN_ACTIVITY_ROOT_EXTRA)
+
+        staleTokenFlag = intent.getBooleanExtra(MAIN_ACTIVITY_STALE_TOKEN_EXTRA, true)
+
         if (root != null) {
             sharedViewModel.root = root
             setupTopBarBehaviour()
@@ -124,14 +141,20 @@ class MainActivity : ExceptionHandlingActivity(),
     override fun onStart() {
         super.onStart()
 
-        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         /**
-         * refresh the token every 20 minutes
-         *
-         * The alarm is executed when it is set, which means in an event where the user has stored an
-         * old token, it will be refreshed when he opens the app. the credentials screen will only be
-         * used in a first execution of the application (because sharedPreferences is empty)
+         * If the user didn't go through the authentication process,
+         * refresh the access token stored locally
+         */
+        if (staleTokenFlag) {
+            runBlocking {
+                AlarmReceiver().refreshAccessToken(applicationContext)
+            }
+        }
+
+        /**
+         * Set up an alarm to refresh the token every 20 minutes
          */
         alarmManager.setInexactRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -145,10 +168,14 @@ class MainActivity : ExceptionHandlingActivity(),
 
     /**
      * Stops observing the device connectivity
+     *
+     * Cancel the alarm manager to stop the refresh attempts
      */
     override fun onStop() {
         super.onStop()
         IonApplication.connectivityObservable.stopObserving()
+
+        alarmManager.cancel(pendingIntent)
     }
 
     /**
@@ -200,6 +227,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
         val searchViewItem = menu.findItem(R.id.action_search)
         val deleteSuggestionsItem = menu.findItem(R.id.action_delete_suggestions)
+        val logoutItem = menu.findItem(R.id.action_logout)
 
         // If Root did not bring the searchUri we don't add the functionality
         // and we hide all the buttons
@@ -258,6 +286,18 @@ class MainActivity : ExceptionHandlingActivity(),
             // Set deleteSuggestions menu item behaviour
             deleteSuggestionsItem.setOnMenuItemClickListener {
                 deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
+                true
+            }
+
+            //remove the user credentials and redirect to the loading activity
+            logoutItem.setOnMenuItemClickListener {
+                AlertDialog.Builder(this).setMessage(R.string.are_you_sure_logout)
+                    .setPositiveButton("Ok") { _, _ ->
+                        IonApplication.preferences.saveAccessToken("")
+                        IonApplication.preferences.saveRefreshToken("")
+                        val intent = Intent(this, LoadingActivity::class.java)
+                        this.startActivity(intent)
+                    }.show()
                 true
             }
         }
