@@ -35,9 +35,11 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.common.repositories.FavoriteRepository
 import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
 import org.ionproject.android.userAPI.AlarmReceiver
+import java.net.URI
 
 const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
 const val MAIN_ACTIVITY_STALE_TOKEN_EXTRA = "MainActivity.Token.Extra"
@@ -95,6 +97,11 @@ class MainActivity : ExceptionHandlingActivity(),
 
     /**
      * If the root intent is null, it means the app is outdated
+     *
+     * Creates instances of the alarmIntent and pendingIntent required for the AlarmManager
+     * that refreshes the AccessToken every 20 minutes
+     *
+     * Also syncs the remote favorites list with the local favorites list when the app is starting up
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +121,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
             pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
 
+            viewModel.syncLocalFavoritesWithRemoteFavorites()
         } else {
             throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
         }

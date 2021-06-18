@@ -8,7 +8,7 @@ import org.ionproject.android.common.IonApplication
 class MainViewModelProvider : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            MainViewModel::class.java -> MainViewModel(IonApplication.connectivityObservable)
+            MainViewModel::class.java -> MainViewModel(IonApplication.connectivityObservable, IonApplication.mainRepository)
             else -> throw IllegalArgumentException("Class $modelClass is not valid for this provider")
         } as T
     }

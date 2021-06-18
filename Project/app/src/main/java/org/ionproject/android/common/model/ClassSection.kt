@@ -12,6 +12,7 @@ import java.net.URI
 @Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
 data class ClassSection(
     val id: String,
+    val courseId: Int,
     val courseAcronym: String,
     val calendarTerm: String,
     val classId: Int,

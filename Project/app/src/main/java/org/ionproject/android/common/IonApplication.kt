@@ -48,6 +48,7 @@ class IonApplication : Application() {
         lateinit var remoteConfigRepository: RemoteConfigRepository private set
         lateinit var catalogRepository: CatalogRepository private set
         lateinit var userAPIRepository: UserAPIRepository private set
+        lateinit var mainRepository: MainRepository private set
     }
 
     override fun onCreate() {
@@ -129,5 +130,7 @@ class IonApplication : Application() {
         catalogRepository = CatalogRepository(ionWebAPI)
 
         userAPIRepository = UserAPIRepository(ionWebAPI)
+
+        mainRepository = MainRepository(favoritesRepository)
     }
 }

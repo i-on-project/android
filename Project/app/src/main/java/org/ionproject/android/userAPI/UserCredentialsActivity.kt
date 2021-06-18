@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -172,6 +173,7 @@ class UserCredentialsActivity : ExceptionHandlingActivity() {
             when (it) {
                 is FetchSuccess<PollResponse> -> {
                     pollResponse = it.value
+                    Log.d("API", it.value.access_token)
                     preferences.saveAccessToken(it.value.access_token) //save the access token in the shared preferences
                     preferences.saveRefreshToken(it.value.refresh_token)//setting the refresh token in the shared preferences
                     val intent = Intent(this, MainActivity::class.java)

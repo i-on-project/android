@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2000754e76d6e2d21362f178bf6c3dd2",
+    "identityHash": "68a06e178ebf1e238f9ad7dec258f1aa",
     "entities": [
       {
         "tableName": "Root",
@@ -158,12 +158,18 @@
       },
       {
         "tableName": "ClassSection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `classId` INTEGER NOT NULL, `calendarURI` TEXT, `selfUri` TEXT NOT NULL, `upURI` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseId` INTEGER NOT NULL, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `classId` INTEGER NOT NULL, `calendarURI` TEXT, `selfUri` TEXT NOT NULL, `upURI` TEXT NOT NULL, `workerId` INTEGER NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -568,13 +574,19 @@
       },
       {
         "tableName": "Favorite",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `selfURI` TEXT NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `courseId` INTEGER, `courseAcronym` TEXT NOT NULL, `calendarTerm` TEXT NOT NULL, `selfURI` TEXT NOT NULL, PRIMARY KEY(`id`, `courseAcronym`, `calendarTerm`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "courseAcronym",
@@ -940,7 +952,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2000754e76d6e2d21362f178bf6c3dd2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '68a06e178ebf1e238f9ad7dec258f1aa')"
     ]
   }
 }
