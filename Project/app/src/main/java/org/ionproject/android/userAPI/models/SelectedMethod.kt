@@ -6,8 +6,7 @@ package org.ionproject.android.userAPI.models
  */
 data class SelectedMethod(
     val scope: String,
-    val type: String,
-    val client_id: String,
-    val notification_method: String,
-    val email: String
+    val acr_values: String,
+    val login_hint: String,
+    val client_id: String
 )

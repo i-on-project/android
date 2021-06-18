@@ -166,8 +166,8 @@ class MainActivity : ExceptionHandlingActivity(),
          */
         alarmManager.setInexactRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + (20 * 60 * 1000),
-            (20 * 60 * 1000),
+            SystemClock.elapsedRealtime() + (30 * 60 * 1000),
+            (30 * 60 * 1000),
             pendingIntent
         )
 

@@ -7,10 +7,7 @@ import org.ionproject.android.common.FetchFailure
 import org.ionproject.android.common.FetchResult
 import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.ionwebapi.CLIENT_ID
-import org.ionproject.android.userAPI.models.AuthMethod
-import org.ionproject.android.userAPI.models.PollResponse
-import org.ionproject.android.userAPI.models.SelectedMethod
-import org.ionproject.android.userAPI.models.SelectedMethodResponse
+import org.ionproject.android.userAPI.models.*
 
 class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository) : ViewModel() {
 
@@ -51,11 +48,10 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
             val result = try {
                 val response = userAPIRepository.loginWithEmail(
                     SelectedMethod(
-                        "profile classes",
+                        "profile classes openid",
                         "email",
-                        CLIENT_ID,
-                        "POLL",
-                        email
+                        email,
+                        CLIENT_ID
                     )
                 )
                 if (response.auth_req_id != "") FetchSuccess(response) else FetchFailure<SelectedMethodResponse>()
@@ -77,7 +73,7 @@ class UserCredentialsViewModel(private val userAPIRepository: UserAPIRepository)
     fun pollCoreForEmailAuth() {
         viewModelScope.launch {
             val result = try {
-                val response = userAPIRepository.pollCoreForAuthentication()
+                val response = userAPIRepository.pollCoreForAuthentication(PollBody("urn:openid:params:grant-type:ciba", AUTH_REQ_ID, CLIENT_ID))
                 if (response.access_token != "") FetchSuccess(response) else FetchFailure<PollResponse>()
             } catch (e: Exception) {
                 FetchFailure<PollResponse>(e)

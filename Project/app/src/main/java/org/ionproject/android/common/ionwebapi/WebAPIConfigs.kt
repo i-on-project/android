@@ -13,8 +13,8 @@ const val REMOTE_CONFIG_LINK =
 
 const val AUTH_METHODS_LINK = "$WEB_API_HOST/api/auth/methods"
 
-const val REFRESH_TOKEN_LINK = "$WEB_API_HOST/api/auth/refreshToken"
+const val CLIENT_ID = "14633a07-30d8-41f9-aa4d-d55341d7c7f3" //client ID provided by the core docs for testing
 
-const val CLIENT_ID = "22dd1551-db23-481b-acde-d286440388a5" //client ID provided by the core docs for testing
+var CORE_POLL_LINK = "$WEB_API_HOST/api/auth/token"
 
-var CORE_POLL_LINK = "$WEB_API_HOST/api/auth/request/$AUTH_REQ_ID/poll"
+const val AUTHENTICATION_ENDPOINT = "$WEB_API_HOST/api/auth/backchannel"
