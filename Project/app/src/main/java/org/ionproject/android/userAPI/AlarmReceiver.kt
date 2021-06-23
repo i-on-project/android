@@ -41,13 +41,12 @@ class AlarmReceiver : BroadcastReceiver() {
      */
     suspend fun refreshAccessToken(context: Context?): Boolean {
 
-        val at = preferences.getAccessToken() ?: ""
         val rt = preferences.getRefreshToken() ?: ""
 
         val response: PollResponse
 
         try {
-            response = IonApplication.userAPIRepository.refreshAccessToken(TokenRefresh(at, rt))
+            response = IonApplication.userAPIRepository.refreshAccessToken(TokenRefresh(rt))
             if (response.access_token != "") {
                 preferences.saveAccessToken(response.access_token)
                 preferences.saveRefreshToken(response.refresh_token)

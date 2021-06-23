@@ -1,5 +1,7 @@
 package org.ionproject.android.userAPI.models
 
+import org.ionproject.android.common.ionwebapi.CLIENT_ID
+
 /**
  * Body of the request to refresh the auth token
  *
@@ -10,7 +12,8 @@ package org.ionproject.android.userAPI.models
  * create the data class to parse the error
  */
 data class TokenRefresh(
-    val access_token: String, //the access token to refresh
-    val refresh_token: String //the refresh token associated with the provided access token
+    val refresh_token: String, //the refresh token associated with the provided access token
+    val grant_type: String = "refresh_token",
+    val client_id: String = CLIENT_ID //the access token to refresh
 )
 

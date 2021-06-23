@@ -27,7 +27,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.toolbar_main
-import kotlinx.coroutines.runBlocking
 import org.ionproject.android.ExceptionHandlingActivity
 import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
@@ -35,11 +34,9 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
-import org.ionproject.android.common.repositories.FavoriteRepository
 import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
 import org.ionproject.android.userAPI.AlarmReceiver
-import java.net.URI
 
 const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
 const val MAIN_ACTIVITY_STALE_TOKEN_EXTRA = "MainActivity.Token.Extra"
@@ -122,6 +119,7 @@ class MainActivity : ExceptionHandlingActivity(),
             pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
 
             viewModel.syncLocalFavoritesWithRemoteFavorites()
+
         } else {
             throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
         }
@@ -145,45 +143,32 @@ class MainActivity : ExceptionHandlingActivity(),
 
     /**
      * Start observing the connection and setup the alarm for access token refresh
+     *
+     * Create an alarm manager to refresh the token every 30 minutes
      */
     override fun onStart() {
         super.onStart()
+        observeConnectivity()
 
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         /**
-         * If the user didn't go through the authentication process,
-         * refresh the access token stored locally
-         */
-        if (staleTokenFlag) {
-            runBlocking {
-                AlarmReceiver().refreshAccessToken(applicationContext)
-            }
-        }
-
-        /**
          * Set up an alarm to refresh the token every 20 minutes
          */
-        alarmManager.setInexactRepeating(
+        alarmManager.setRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
             SystemClock.elapsedRealtime() + (30 * 60 * 1000),
             (30 * 60 * 1000),
             pendingIntent
         )
-
-        observeConnectivity()
     }
 
     /**
      * Stops observing the device connectivity
-     *
-     * Cancel the alarm manager to stop the refresh attempts
      */
     override fun onStop() {
         super.onStop()
         IonApplication.connectivityObservable.stopObserving()
-
-        alarmManager.cancel(pendingIntent)
     }
 
     /**
@@ -297,10 +282,14 @@ class MainActivity : ExceptionHandlingActivity(),
                 true
             }
 
-            //remove the user credentials and redirect to the loading activity
+            /** remove the user credentials and redirect to the loading activity
+             *
+             * cancel the alarm for token refresh
+             */
             logoutItem.setOnMenuItemClickListener {
                 AlertDialog.Builder(this).setMessage(R.string.are_you_sure_logout)
                     .setPositiveButton("Ok") { _, _ ->
+                        alarmManager.cancel(pendingIntent)
                         IonApplication.preferences.saveAccessToken("")
                         IonApplication.preferences.saveRefreshToken("")
                         val intent = Intent(this, LoadingActivity::class.java)
