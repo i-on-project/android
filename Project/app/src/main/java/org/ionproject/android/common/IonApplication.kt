@@ -131,6 +131,6 @@ class IonApplication : Application() {
 
         userAPIRepository = UserAPIRepository(ionWebAPI)
 
-        mainRepository = MainRepository(favoritesRepository)
+        mainRepository = MainRepository(favoritesRepository, userAPIRepository, preferences)
     }
 }

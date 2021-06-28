@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.connectivity.IConnectivityObservable
+import org.ionproject.android.common.ionwebapi.USER_SUBSCRIBED_SECTIONS_URL
 import org.ionproject.android.common.repositories.FavoriteRepository
 import org.ionproject.android.common.repositories.MainRepository
 import java.net.URI
@@ -42,7 +43,16 @@ class MainViewModel(
      */
     fun syncLocalFavoritesWithRemoteFavorites(){
         viewModelScope.launch {
-            mainRepository.syncLocalFavoritesWithRemoteFavorites(URI(""))
+            mainRepository.syncLocalFavoritesWithRemoteFavorites(URI(USER_SUBSCRIBED_SECTIONS_URL))
+        }
+    }
+
+    /**
+     * Revoke the access token in the API on logout so we can properly login afterwards
+     */
+    fun revokeAccessToken(){
+        viewModelScope.launch {
+            mainRepository.revokeAccessToken()
         }
     }
 }

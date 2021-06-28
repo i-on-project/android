@@ -51,5 +51,9 @@ interface IonService {
         @Body body: RequestBody
     ): String
 
-
+    @Headers( "Content-Type: application/json" )
+    @HTTP(method = "DELETE", path = REVOKE_ACCESS_TOKEN, hasBody = true)
+    suspend fun revokeAccessToken(
+        @Body body: RequestBody
+    ): Response<Unit>
 }

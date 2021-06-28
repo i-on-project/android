@@ -18,3 +18,7 @@ const val CLIENT_ID = "14633a07-30d8-41f9-aa4d-d55341d7c7f3" //client ID provide
 var CORE_POLL_LINK = "$WEB_API_HOST/api/auth/token"
 
 const val AUTHENTICATION_ENDPOINT = "$WEB_API_HOST/api/auth/backchannel"
+
+const val USER_SUBSCRIBED_SECTIONS_URL = "$WEB_API_HOST/api/users/sections"
+
+const val REVOKE_ACCESS_TOKEN = "$WEB_API_HOST/api/auth/revoke"

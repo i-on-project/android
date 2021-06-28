@@ -106,4 +106,10 @@ class IonWebAPI(private val ionService: IonService, private val ionMapper: IIonM
         }
         return ionMapper.parse(response, klass)
     }
+
+    override suspend fun revokeAccessToken(body: RequestBody) {
+        withContext(Dispatchers.IO) {
+            ionService.revokeAccessToken(body)
+        }
+    }
 }

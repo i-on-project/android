@@ -43,31 +43,31 @@ class FavoriteRepository(
      * remotely
      */
     suspend fun syncFavoritesListFromCore(uri: URI) = withContext(dispatcher) {
-        /*val remoteList = webAPI.getFromURI(
+        val remoteList = webAPI.getFromURI(
             uri,
             SirenEntity::class.java,
             SIREN_MEDIA_TYPE,
             "Bearer ${preferences.getAccessToken()}"
         )
-            .toFavoriteList()*/
+            .toFavoriteList()
 
         /**
          * Mock data untill the Core branch has a favorite class section endpoint
          *
          * 18/06/2021
          */
-        val remoteList = listOf(Favorite("1D",1,"SL","1718i",URI("http://10.0.2.2:10023/api/courses/1/classes/1718i/1D")))
+        //val remoteList = listOf(Favorite("1D",1,"SL","1718i",URI("http://10.0.2.2:10023/api/courses/1/classes/1718i/1D")))
 
         val localList = getAllFavorites()
-
-        for (remoteFavorite in remoteList) {
-            if (!localList.contains(remoteFavorite))
-                addFavorite(remoteFavorite)
-        }
 
         for (localFavorite in localList) {
             if (!remoteList.contains(localFavorite))
                 removeFavorite(localFavorite)
+        }
+
+        for (remoteFavorite in remoteList) {
+            if (!localList.contains(remoteFavorite))
+                addFavorite(remoteFavorite)
         }
     }
 

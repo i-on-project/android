@@ -71,4 +71,18 @@ class UserAPIRepository(private val webAPI: IIonWebAPI) {
             )
             refreshResponse
         }
+
+    suspend fun revokeAccessToken(body: TokenRevoke) =
+
+        withContext(Dispatchers.IO){
+
+            val mapper = ObjectMapper() //jackson mapper so we can send a request body in JSON
+
+            val json = mapper.writeValueAsString(body)
+
+            val revokeResponse = webAPI.revokeAccessToken(
+                RequestBody.create(MediaType.parse("application/json"), json)
+            )
+            revokeResponse
+        }
 }

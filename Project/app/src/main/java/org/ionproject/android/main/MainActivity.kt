@@ -285,11 +285,14 @@ class MainActivity : ExceptionHandlingActivity(),
             /** remove the user credentials and redirect to the loading activity
              *
              * cancel the alarm for token refresh
+             *
+             * revoke the access token in the API
              */
             logoutItem.setOnMenuItemClickListener {
                 AlertDialog.Builder(this).setMessage(R.string.are_you_sure_logout)
                     .setPositiveButton("Ok") { _, _ ->
                         alarmManager.cancel(pendingIntent)
+                        viewModel.revokeAccessToken()
                         IonApplication.preferences.saveAccessToken("")
                         IonApplication.preferences.saveRefreshToken("")
                         val intent = Intent(this, LoadingActivity::class.java)

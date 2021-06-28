@@ -63,6 +63,10 @@ class MockIonWebAPI(
         return ionMapper.parse(responseBody, klass)
     }
 
+    override suspend fun revokeAccessToken(body: RequestBody) {
+
+    }
+
     /**
      *  This is using the IO Dispacher, which is optimized to perform disk or network I/O
      *  outside of the main thread. Examples include using the Room component,
