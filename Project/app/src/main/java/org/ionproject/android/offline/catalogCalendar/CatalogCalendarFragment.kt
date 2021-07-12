@@ -74,7 +74,7 @@ class CatalogCalendarFragment : ExceptionHandlingFragment() {
 
                 setupEvaluations(semesterContent.evaluations)
 
-                setupDetails(semesterContent.details)
+                setupDetails(semesterContent.lectures)
 
                 setupOtherEvents(semesterContent.otherEvents)
 

@@ -4,7 +4,10 @@ package org.ionproject.android.offline.models
  * This class parses the Calendar from JSON
  */
 data class CatalogCalendar(
+    val creationDateTime: String,
+    val retrievalDateTime: String,
     val school: SchoolAndProgrammeDetails,
+    val language: String,
     val terms: List<CalendarTerm>
 )
 
@@ -12,7 +15,7 @@ data class CalendarTerm(
     val calendarTerm: String,
     val interruptions: List<CalendarEvent>,
     val evaluations: List<Evaluation>,
-    val details: List<Details>,
+    val lectures: List<Details>,
     val otherEvents: List<CalendarEvent>
 )
 

@@ -17,6 +17,7 @@ const val linkToAcademicYears =
 
 const val linkToExamSchedule =
     "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/exam_schedule.json"
+
 const val linkToTimeTable =
     "https://raw.githubusercontent.com/i-on-project/integration-data/master/pt.ipl.isel/programmes/%s/%s/timetable.json"
 
