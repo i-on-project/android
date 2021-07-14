@@ -11,6 +11,7 @@ import org.ionproject.android.common.ionwebapi.*
 import org.ionproject.android.common.repositories.*
 import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.loading.RemoteConfigRepository
+import org.ionproject.android.offline.CatalogRepository
 import org.ionproject.android.settings.Preferences
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -41,6 +42,7 @@ class IonApplication : Application() {
         lateinit var preferences: Preferences private set
         lateinit var connectivityObservable: IConnectivityObservable private set
         lateinit var remoteConfigRepository: RemoteConfigRepository private set
+        lateinit var catalogRepository: CatalogRepository private set
     }
 
     override fun onCreate() {
@@ -111,6 +113,8 @@ class IonApplication : Application() {
         searchRepository = SearchRepository(webAPI)
         connectivityObservable = ConnectivityObservableFactory.create(applicationContext)
 
-        remoteConfigRepository = RemoteConfigRepository(preferences, ionMapper)
+        remoteConfigRepository = RemoteConfigRepository(preferences, ionWebAPI)
+
+        catalogRepository = CatalogRepository(ionWebAPI)
     }
 }

@@ -46,22 +46,14 @@ class ProgrammesFragment : ExceptionHandlingFragment() {
         val viewGroup = recyclerview_programmes_list.parent as ViewGroup
         viewGroup.startLoading()
 
-        // Get all programmes
-        viewModel.getAllProgrammes(sharedViewModel.root.programmesUri)
+        viewModel.getAllProgrammes(sharedViewModel.root!!.programmesUri)
 
         //Programmes list setup
         val adapter = ProgrammesListAdapter(viewModel, sharedViewModel)
 
-        // Adding divider between items in the list
-        recyclerview_programmes_list.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-
         recyclerview_programmes_list.adapter = adapter
         recyclerview_programmes_list.layoutManager = LinearLayoutManager(context)
+
         viewModel.observeProgrammesLiveData(viewLifecycleOwner) {
             viewGroup.stopLoading() // Hide progress bar, show views
             adapter.notifyDataSetChanged()
@@ -71,6 +63,13 @@ class ProgrammesFragment : ExceptionHandlingFragment() {
             findNavController().navigateUp()
         }
 
+        // Adding divider between items in the list
+        recyclerview_programmes_list.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
 }

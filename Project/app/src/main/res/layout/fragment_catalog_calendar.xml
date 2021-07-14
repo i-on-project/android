@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalog_calendar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".offline.catalogCalendar.CatalogCalendarFragment">
+
+    <ProgressBar
+        android:id="@+id/progressbar_catalog_calendar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <!-- Top Section -->
+    <LinearLayout
+        android:id="@+id/linearlayout_catalog_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:orientation="vertical"
+        android:padding="@dimen/fragments_padding_20">
+
+        <TextView
+            android:id="@+id/textview_catalog_calendar_program"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Program"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_catalog_calendar_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Term"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textView_catalog_calendar_interruptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_transparent"
+                android:elevation="@dimen/all_sections_3"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/all_list_item_padding_20"
+                android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
+                android:paddingBottom="@dimen/sections_padding_8"
+                android:text="@string/catalog_calendar_interruptions"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/all_text_18" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_catalog_calendar_interruptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/catalog_calendar_item" />
+
+            <TextView
+                android:id="@+id/textView_catalog_calendar_evaluations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_transparent"
+                android:elevation="3dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/all_list_item_padding_20"
+                android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
+                android:paddingBottom="@dimen/sections_padding_8"
+                android:text="@string/catalog_calendar_evaluations"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/all_text_18" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_catalog_calendar_evaluations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/catalog_calendar_item" />
+
+            <TextView
+                android:id="@+id/textView_catalog_calendar_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_transparent"
+                android:elevation="3dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/all_list_item_padding_20"
+                android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
+                android:paddingBottom="@dimen/sections_padding_8"
+                android:text="@string/catalog_calendar_details"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/all_text_18" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_catalog_calendar_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/catalog_calendar_item" />
+
+
+            <TextView
+                android:id="@+id/textView_catalog_calendar_otherEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_transparent"
+                android:elevation="3dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/all_list_item_padding_20"
+                android:paddingTop="@dimen/sections_padding_8"
+                android:paddingRight="@dimen/all_list_item_padding_20"
+                android:paddingBottom="@dimen/sections_padding_8"
+                android:text="@string/catalog_calendar_otherEvents"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/all_text_18" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_catalog_calendar_otherEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/catalog_calendar_item" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</org.ionproject.android.common.SwipeRightLinearLayout>

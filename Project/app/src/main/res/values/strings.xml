@@ -125,6 +125,32 @@
     <string name="message_personal_data_info">The i-on Android application does not save any personal user data, it only saves information obtained from the i-on Core API. All the information that is saved stays only local to the device and once the application is uninstalled the information is deleted.</string>
     <string name="message_about_info">i-on Android is a mobile application developed by members of the i-on iniciative. The iniciative was created with the goal of improving some academic aspects in the Polytechnic Institute of Engineering of Lisbon. The iniciative was created by teachers and students. All the code from this application and the rest of the projects from the iniciative is public so feel free to check it out by clicking the i-on logo below.</string>
 
-    <string name="ion_api_down">The i-on API is down, redirecting to ISEL\'s homepage</string>
     <string name="remote_config_unreachable">Couldn\'t update from Remote Config, redirecting to ISEL\'s homepage</string>
+
+    <string name="catalog_info_warning">The i-on API is down, showing catalog info</string>
+
+    <string name="first_semester">1st Semester</string>
+    <string name="second_semester">2nd Semester</string>
+    <string name="calendar">Calendar</string>
+
+    <string name="title_exam">Exam Schedule</string>
+    <string name="title_timetable">Timetable</string>
+
+    <string name="exam_day">Date: %s</string>
+    <string name="exam_startDate">Start Time: %s</string>
+    <string name="exam_endDate">End Time: %s</string>
+    <string name="exam_category">Category: %s</string>
+    <string name="exam_location">Classroom: %s</string>
+    <string name="exam_location_tbd">To be determined</string>
+
+    <string name="timetable_beginTime">Begin Time: %sh</string>
+    <string name="timetable_duration">Duration: %sh</string>
+    <string name="timetable_weekday">Weekday: %s</string>
+
+    <string name="catalog_calendar_interruptions">Interruptions</string>
+    <string name="catalog_calendar_evaluations">Evaluations</string>
+    <string name="catalog_calendar_details">Start of Classes</string>
+    <string name="catalog_calendar_otherEvents">Important Events</string>
+
+
 </resources>

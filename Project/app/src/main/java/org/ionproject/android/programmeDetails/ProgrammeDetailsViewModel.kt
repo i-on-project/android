@@ -1,13 +1,20 @@
 package org.ionproject.android.programmeDetails
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ProgrammeWithOffers
 import org.ionproject.android.common.repositories.ProgrammesRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
-class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepository) :
+class ProgrammeDetailsViewModel(
+    private val programmesRepository: ProgrammesRepository
+) :
     ViewModel() {
 
     /**
@@ -25,6 +32,4 @@ class ProgrammeDetailsViewModel(private val programmesRepository: ProgrammesRepo
             programmesRepository.getProgrammeDetails(programmeDetailsUri)?.let(onResult)
         }
     }
-
-
 }

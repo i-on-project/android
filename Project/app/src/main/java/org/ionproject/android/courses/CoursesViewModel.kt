@@ -8,6 +8,9 @@ import kotlinx.coroutines.launch
 import org.ionproject.android.common.model.ProgrammeOffer
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.repositories.ProgrammesRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.*
+import java.net.URI
 
 class CoursesViewModel(private val programmesRepository: ProgrammesRepository) : ViewModel() {
 

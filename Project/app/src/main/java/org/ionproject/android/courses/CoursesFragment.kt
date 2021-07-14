@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_course_details.*
 import kotlinx.android.synthetic.main.fragment_courses.*
 import org.ionproject.android.ExceptionHandlingFragment
 import org.ionproject.android.R
@@ -72,7 +73,8 @@ class CoursesFragment : ExceptionHandlingFragment() {
 
         button_courses_optional_courses.setOnClickListener {
             if (viewModel.changeListType())
-                (it as Button).text = it.resources.getString(R.string.button_label_optional_courses)
+                (it as Button).text =
+                    it.resources.getString(R.string.button_label_optional_courses)
             else
                 (it as Button).text =
                     it.resources.getString(R.string.button_label_mandatory_courses)

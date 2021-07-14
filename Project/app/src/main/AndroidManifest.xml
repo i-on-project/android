@@ -15,11 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".offline.CatalogMainActivity"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".loading.LoadingActivity"
             android:screenOrientation="userPortrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,8 +44,7 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-        <!-- Content Provider for custom search suggestions -->
+        </activity> <!-- Content Provider for custom search suggestions -->
         <provider
             android:name=".search.SearchSuggestionsProvider"
             android:authorities="org.ionproject.android.search.SearchSuggestionsProvider"

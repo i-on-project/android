@@ -3,25 +3,12 @@ package org.ionproject.android.loading
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.ionproject.android.common.ionwebapi.*
+import org.ionproject.android.common.ionwebapi.IIonWebAPI
+import org.ionproject.android.common.ionwebapi.REMOTE_CONFIG_LINK
 import org.ionproject.android.settings.Preferences
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URI
 
-const val REMOTE_CONFIG_LINK =
-    "https://raw.githubusercontent.com/i-on-project/isel/main/Remote_Config.json"
-
-class RemoteConfigRepository(private val preferences: Preferences, mapper: JacksonIonMapper) {
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://raw.githubusercontent.com/")
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .build()
-
-    private val service: IonService = retrofit.create(IonService::class.java)
-
-    private val ionWebAPI = IonWebAPI(service, mapper)
+class RemoteConfigRepository(val preferences: Preferences, private val webAPI: IIonWebAPI) {
 
     suspend fun getRemoteConfig() =
 
@@ -29,7 +16,7 @@ class RemoteConfigRepository(private val preferences: Preferences, mapper: Jacks
 
             var remoteConfig: RemoteConfig?
 
-            remoteConfig = ionWebAPI.getFromURI(
+            remoteConfig = webAPI.getFromURI(
                 URI(REMOTE_CONFIG_LINK),
                 RemoteConfig::class.java,
                 "application/json"

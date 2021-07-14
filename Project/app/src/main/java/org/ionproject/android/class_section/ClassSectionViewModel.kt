@@ -2,11 +2,14 @@ package org.ionproject.android.class_section
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.EventsRepository
 import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 class ClassSectionViewModel(
@@ -128,5 +131,4 @@ class ClassSectionViewModel(
             )
         }
     }
-
 }

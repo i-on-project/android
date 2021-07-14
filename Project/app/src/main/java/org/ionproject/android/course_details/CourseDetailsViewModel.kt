@@ -2,6 +2,7 @@ package org.ionproject.android.course_details
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.SharedViewModel
 import org.ionproject.android.common.model.CalendarTerm
 import org.ionproject.android.common.model.ClassSummary
 import org.ionproject.android.common.model.Classes
@@ -9,12 +10,16 @@ import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.repositories.CalendarTermRepository
 import org.ionproject.android.common.repositories.ClassesRepository
 import org.ionproject.android.common.repositories.CourseRepository
+import org.ionproject.android.offline.CatalogRepository
+import org.ionproject.android.offline.models.CatalogProgrammeTermInfoFile
+import org.ionproject.android.offline.models.CatalogTerm
+import org.ionproject.android.offline.models.ExamSchedule
+import org.ionproject.android.offline.models.Timetable
 import java.net.URI
 
 class CourseDetailsViewModel(
     private val courseRepository: CourseRepository,
-    private val classesRepository: ClassesRepository,
-    private val calendarTermRepository: CalendarTermRepository
+    private val classesRepository: ClassesRepository
 ) : ViewModel() {
 
     private val classesListLiveData = MutableLiveData<List<ClassSummary>>()

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.ionproject.android.common.SwipeRightLinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalog_timetable"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".offline.catalogTimetable.CatalogTimetableFragment">
+
+    <ProgressBar
+        android:id="@+id/progressbar_catalog_timetable"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_catalog_timetable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:orientation="vertical"
+        android:padding="@dimen/fragments_padding_20">
+
+        <TextView
+            android:id="@+id/textview_catalog_timetable_programme"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Program"
+            android:textColor="@color/primaryTextColor"
+
+            android:textSize="@dimen/all_text_25"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_catalog_timetable_term"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Term"
+
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/all_text_18" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/catalog_timetable_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/fragments_padding_10"
+            android:layout_marginBottom="@dimen/fragments_padding_10"
+            tools:listitem="@layout/catalog_timetable_item" />
+    </LinearLayout>
+</org.ionproject.android.common.SwipeRightLinearLayout>

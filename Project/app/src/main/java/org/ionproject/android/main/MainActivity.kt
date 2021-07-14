@@ -70,6 +70,9 @@ class MainActivity : ExceptionHandlingActivity(),
         DeleteSuggestionsDialogFragment()
     }
 
+    /**
+     * If the root intent is null, it means the app is outdated
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -169,7 +172,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
         // If Root did not bring the searchUri we don't add the functionality
         // and we hide all the buttons
-        if (sharedViewModel.root.searchUri == null) {
+        if (sharedViewModel.root?.searchUri == null) {
             searchViewItem.isVisible = false
             deleteSuggestionsItem.isVisible = false
         } else {

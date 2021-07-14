@@ -19,6 +19,7 @@ import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
 import java.net.URI
+import java.util.*
 
 class ClassSectionFragment : ExceptionHandlingFragment() {
 

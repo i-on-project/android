@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.ionproject.android.common.SwipeRightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalog_programmes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".offline.catalogProgrammes.CatalogProgrammesFragment">
+
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progressbar_catalog_programmes"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_catalog_programmes_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fragments_padding_10"
+        tools:listitem="@layout/list_item_programme" />
+
+</org.ionproject.android.common.SwipeRightLinearLayout>

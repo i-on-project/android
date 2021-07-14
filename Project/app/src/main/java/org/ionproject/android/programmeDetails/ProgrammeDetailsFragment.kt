@@ -1,6 +1,7 @@
 package org.ionproject.android.programmeDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,32 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
         val viewGroup = view as ViewGroup
         viewGroup.startLoading()
 
+        programmeDetailsUriUri.let {
+            programmeViewModel.getProgrammeDetails(it) {
+                viewGroup.stopLoading()
+                // Name is not mandatory (as mentioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
+                textview_programme_details_name.text =
+                    it.programme.name
+                        ?: resources.getString(R.string.label_name_not_available_all)
+
+                textview_programme_details_acronym.text = it.programme.acronym
+
+                recyclerview_programme_details_terms.layoutManager =
+                    GridLayoutManager(context, 2)
+
+                recyclerview_programme_details_terms.adapter =
+                    TermsListAdapter(it.programme.termSize, sharedViewModel)
+
+                sharedViewModel.programmeOfferSummaries =
+                    it.programmeOffers //Sharing programme here otherwise it have to be passed to TermsListAdapter
+
+                view.addSwipeRightGesture {
+                    findNavController().navigateUp()
+                }
+
+            }
+        }
+
         // Adding dividers between items in the grid
         recyclerview_programme_details_terms.addItemDecoration(
             DividerItemDecoration(
@@ -64,24 +91,5 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
-
-        programmeViewModel.getProgrammeDetails(programmeDetailsUriUri) {
-            viewGroup.stopLoading()
-            // Name is not mandatory (as mentioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
-            textview_programme_details_name.text =
-                it.programme.name
-                    ?: resources.getString(R.string.label_name_not_available_all)
-            textview_programme_details_acronym.text = it.programme.acronym
-            recyclerview_programme_details_terms.layoutManager = GridLayoutManager(context, 2)
-            recyclerview_programme_details_terms.adapter =
-                TermsListAdapter(it.programme.termSize, sharedViewModel)
-            sharedViewModel.programmeOfferSummaries =
-                it.programmeOffers //Sharing programme here otherwise it have to be passed to TermsListAdapter
-
-        }
-
-        view.addSwipeRightGesture {
-            findNavController().navigateUp()
-        }
     }
 }

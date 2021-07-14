@@ -2,27 +2,12 @@ package org.ionproject.android.loading
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.ionproject.android.common.FetchFailure
+import org.ionproject.android.common.FetchResult
+import org.ionproject.android.common.FetchSuccess
 import org.ionproject.android.common.model.Root
 import org.ionproject.android.common.repositories.RootRepository
 import java.net.URI
-
-// This uri has to be hardcoded there is no other way
-private val ROOT_URI_V0 = URI("/")
-
-/**
-getJsonHome() returns null when the API is unavailable. This makes the default null status of
-rootLiveData ambiguous, so this class envelops the results of the getJsonHome() method in order to
-properly evaluate the state of the API and to launch the Remote Config strat
-
-Fetch Failure with null value: request was made to API and there was no response
-Fetch Failure with throwable: request threw an Exception, if not caught triggers the global Exception Handler
-from ExceptionHandlingActivity()
-
-Fetch Success : valid response
- */
-sealed class FetchResult<out T>
-data class FetchFailure<T>(val throwable: Throwable? = null) : FetchResult<T>()
-data class FetchSuccess<T>(val value: T) : FetchResult<T>()
 
 class LoadingViewModel(
     private val rootRepository: RootRepository,
@@ -33,7 +18,7 @@ class LoadingViewModel(
     private val remoteConfigLiveData = MutableLiveData<FetchResult<RemoteConfig>>()
 
     init {
-        getJsonHome(ROOT_URI_V0)
+        getJsonHome(URI(remoteConfigRepository.preferences.getWebApiHost()))
     }
 
     /**

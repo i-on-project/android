@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import org.ionproject.android.common.model.ProgrammeOfferSummary
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.offline.models.*
 import java.net.URI
 
 /**
@@ -14,7 +15,6 @@ import java.net.URI
  * docs if you are sharing objects.
  */
 class SharedViewModel : ViewModel() {
-
 
     // Search text used to pass data from search bar to searchResultFragment
     private val searchTextLiveData = MutableLiveData<String>()
@@ -38,7 +38,7 @@ class SharedViewModel : ViewModel() {
     /**
      * [Root] used check for the existence of resources
      */
-    lateinit var root: Root
+    var root: Root? = null
 
     /**
      * [courseDetailsUri] is used to pass the uri from [org.ionproject.android.courses.CoursesFragment]
@@ -66,5 +66,24 @@ class SharedViewModel : ViewModel() {
     var programmeOfferSummaries: List<ProgrammeOfferSummary> = emptyList()
     var curricularTerm: Int = 0
 
+    var selectedCatalogProgramme: CatalogProgramme? = null
 
+    /**
+     * The Term the user chose from the list of terms of the selected Programme (semestre)
+     */
+    var selectedCatalogProgrammeTerm: CatalogTerm? = null
+
+    var parsedExamSchedule: ExamSchedule? = null
+
+    var parsedTimeTable: Timetable? = null
+
+    /**
+    Name of the chosen class to the show the respective lectures in class section fragment (turma)
+     */
+    var selectedClass: String? = null
+
+    /**
+     * ACR of the selected course to help filter the classes and the events in the fragments
+     */
+    var selectedCourse: String? = null
 }
