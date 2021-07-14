@@ -12,6 +12,7 @@ import java.net.URI
 @Entity(primaryKeys = ["id", "courseAcronym", "calendarTerm"])
 data class Favorite(
     val id: String,
+    val courseId: Int?,
     val courseAcronym: String,
     val calendarTerm: String, //Should be a foreign key in the future
     val selfURI: URI

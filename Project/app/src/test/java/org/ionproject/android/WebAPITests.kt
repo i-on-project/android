@@ -16,7 +16,7 @@ import java.net.URI
 class WebAPITests {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://host1.dev.ionproject.org")
+        .baseUrl("https://localhost:10023")
         .addConverterFactory(ScalarsConverterFactory.create())
         .build()
 
@@ -26,7 +26,7 @@ class WebAPITests {
     @Test
     fun shouldGetRootResource() {
         val jsonHome: JsonHome = runBlocking {
-            webAPI.getFromURI(URI("/"), JsonHome::class.java)
+            webAPI.getFromURI(URI("/api/"), JsonHome::class.java)
         }
         assert(jsonHome.api.title == "i-on Core")
         assert(jsonHome.resources.isNotEmpty())

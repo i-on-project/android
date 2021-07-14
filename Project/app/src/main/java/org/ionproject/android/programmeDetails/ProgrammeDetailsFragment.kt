@@ -16,8 +16,10 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import java.net.URI
 
 class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
 
@@ -32,7 +34,7 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
      * Uri used to obtain the programme details
      */
     private val programmeDetailsUriUri by lazy(LazyThreadSafetyMode.NONE) {
-        val programmeDetailsUri = sharedViewModel.programmeDetailsUri
+        val programmeDetailsUri = sharedViewModel.programmeDetailsUri?.path
         programmeDetailsUri
             ?: throw IllegalArgumentException("ProgrammeDetailsUri is missing! Cannot load ProgrammeDetailsFragment without it.")
     }
@@ -59,7 +61,7 @@ class ProgrammeDetailsFragment : ExceptionHandlingFragment() {
         viewGroup.startLoading()
 
         programmeDetailsUriUri.let {
-            programmeViewModel.getProgrammeDetails(it) {
+            programmeViewModel.getProgrammeDetails(URI("$WEB_API_HOST$it")) {
                 viewGroup.stopLoading()
                 // Name is not mandatory (as mentioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/courses.md)
                 textview_programme_details_name.text =

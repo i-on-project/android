@@ -65,25 +65,4 @@ class SharedViewModel : ViewModel() {
      */
     var programmeOfferSummaries: List<ProgrammeOfferSummary> = emptyList()
     var curricularTerm: Int = 0
-
-    var selectedCatalogProgramme: CatalogProgramme? = null
-
-    /**
-     * The Term the user chose from the list of terms of the selected Programme (semestre)
-     */
-    var selectedCatalogProgrammeTerm: CatalogTerm? = null
-
-    var parsedExamSchedule: ExamSchedule? = null
-
-    var parsedTimeTable: Timetable? = null
-
-    /**
-    Name of the chosen class to the show the respective lectures in class section fragment (turma)
-     */
-    var selectedClass: String? = null
-
-    /**
-     * ACR of the selected course to help filter the classes and the events in the fragments
-     */
-    var selectedCourse: String? = null
 }

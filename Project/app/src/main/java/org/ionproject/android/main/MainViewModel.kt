@@ -1,12 +1,19 @@
 package org.ionproject.android.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.ionproject.android.common.connectivity.IConnectivityObservable
+import org.ionproject.android.common.ionwebapi.USER_SUBSCRIBED_SECTIONS_URL
+import org.ionproject.android.common.repositories.FavoriteRepository
+import org.ionproject.android.common.repositories.MainRepository
+import java.net.URI
 
 private typealias onConnectionChanged = () -> Unit
 
 class MainViewModel(
-    private val connectivityObservable: IConnectivityObservable
+    private val connectivityObservable: IConnectivityObservable,
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     /**
@@ -26,6 +33,26 @@ class MainViewModel(
         connectivityObservable.observe {
             firstConnectivityChecked = true
             onConnectionChanged()
+        }
+    }
+
+    /**
+     * This action has to be performed when the MainActivity launches
+     * so it is automatic and doesn't require the user to enter the
+     * Favorites fragment in order to trigger it
+     */
+    fun syncLocalFavoritesWithRemoteFavorites(){
+        viewModelScope.launch {
+            mainRepository.syncLocalFavoritesWithRemoteFavorites(URI(USER_SUBSCRIBED_SECTIONS_URL))
+        }
+    }
+
+    /**
+     * Revoke the access token in the API on logout so we can properly login afterwards
+     */
+    fun revokeAccessToken(){
+        viewModelScope.launch {
+            mainRepository.revokeAccessToken()
         }
     }
 }

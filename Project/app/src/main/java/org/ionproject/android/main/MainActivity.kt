@@ -1,11 +1,15 @@
 package org.ionproject.android.main
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.SearchRecentSuggestions
 import android.view.Menu
 import android.view.MenuItem
@@ -30,14 +34,32 @@ import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.IonApplication
 import org.ionproject.android.common.addGradientBackground
 import org.ionproject.android.common.model.Root
+import org.ionproject.android.loading.LoadingActivity
 import org.ionproject.android.search.SearchSuggestionsProvider
+import org.ionproject.android.userAPI.AlarmReceiver
 
 const val MAIN_ACTIVITY_ROOT_EXTRA = "MainActivity.Root.Extra"
+const val MAIN_ACTIVITY_STALE_TOKEN_EXTRA = "MainActivity.Token.Extra"
 
 class MainActivity : ExceptionHandlingActivity(),
     DeleteSuggestionsDialogFragment.OnDeleteSuggestionsDialogListener {
 
+    private lateinit var alarmIntent: Intent
+
+    private lateinit var pendingIntent: PendingIntent
+
     private var searchViewItem: MenuItem? = null
+
+    private lateinit var alarmManager: AlarmManager
+
+    /**
+    This flag is used to let the Main Activity know if the user had to go through the
+    authentication process or if they were already logged in.
+
+    True: token was stale (arleady logged in)
+    False: fresh token (had to login)
+     */
+    private var staleTokenFlag: Boolean = true
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController(R.id.fragment_main_navhost).apply {
@@ -72,17 +94,32 @@ class MainActivity : ExceptionHandlingActivity(),
 
     /**
      * If the root intent is null, it means the app is outdated
+     *
+     * Creates instances of the alarmIntent and pendingIntent required for the AlarmManager
+     * that refreshes the AccessToken every 20 minutes
+     *
+     * Also syncs the remote favorites list with the local favorites list when the app is starting up
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_activity.addGradientBackground()
         val root = intent.getParcelableExtra<Root>(MAIN_ACTIVITY_ROOT_EXTRA)
+
+        staleTokenFlag = intent.getBooleanExtra(MAIN_ACTIVITY_STALE_TOKEN_EXTRA, true)
+
         if (root != null) {
             sharedViewModel.root = root
             setupTopBarBehaviour()
             setupBottomBarBehaviour()
             setupBackButton()
+
+            alarmIntent = Intent(this, AlarmReceiver::class.java)
+
+            pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0)
+
+            viewModel.syncLocalFavoritesWithRemoteFavorites()
+
         } else {
             throw IllegalArgumentException("Root is missing! Cannot load main activity without root.")
         }
@@ -105,11 +142,25 @@ class MainActivity : ExceptionHandlingActivity(),
     }
 
     /**
-     * Start observing the connection
+     * Start observing the connection and setup the alarm for access token refresh
+     *
+     * Create an alarm manager to refresh the token every 30 minutes
      */
     override fun onStart() {
         super.onStart()
         observeConnectivity()
+
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        /**
+         * Set up an alarm to refresh the token every 20 minutes
+         */
+        alarmManager.setRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + (30 * 60 * 1000),
+            (30 * 60 * 1000),
+            pendingIntent
+        )
     }
 
     /**
@@ -169,6 +220,7 @@ class MainActivity : ExceptionHandlingActivity(),
 
         val searchViewItem = menu.findItem(R.id.action_search)
         val deleteSuggestionsItem = menu.findItem(R.id.action_delete_suggestions)
+        val logoutItem = menu.findItem(R.id.action_logout)
 
         // If Root did not bring the searchUri we don't add the functionality
         // and we hide all the buttons
@@ -227,6 +279,25 @@ class MainActivity : ExceptionHandlingActivity(),
             // Set deleteSuggestions menu item behaviour
             deleteSuggestionsItem.setOnMenuItemClickListener {
                 deleteSuggestionsDialogFragment.show(supportFragmentManager, "Delete Suggestions")
+                true
+            }
+
+            /** remove the user credentials and redirect to the loading activity
+             *
+             * cancel the alarm for token refresh
+             *
+             * revoke the access token in the API
+             */
+            logoutItem.setOnMenuItemClickListener {
+                AlertDialog.Builder(this).setMessage(R.string.are_you_sure_logout)
+                    .setPositiveButton("Ok") { _, _ ->
+                        alarmManager.cancel(pendingIntent)
+                        viewModel.revokeAccessToken()
+                        IonApplication.preferences.saveAccessToken("")
+                        IonApplication.preferences.saveRefreshToken("")
+                        val intent = Intent(this, LoadingActivity::class.java)
+                        this.startActivity(intent)
+                    }.show()
                 true
             }
         }

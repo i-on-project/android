@@ -1,5 +1,6 @@
 package org.ionproject.android.loading
 
+import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.common.FetchFailure

@@ -19,10 +19,12 @@ import org.ionproject.android.R
 import org.ionproject.android.SharedViewModel
 import org.ionproject.android.SharedViewModelProvider
 import org.ionproject.android.common.addSwipeRightGesture
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.Classes
 import org.ionproject.android.common.model.Course
 import org.ionproject.android.common.startLoading
 import org.ionproject.android.common.stopLoading
+import java.net.URI
 
 class CourseDetailsFragment : ExceptionHandlingFragment() {
 
@@ -37,7 +39,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
      * Uri used to obtain the course details
      */
     private val courseDetailsUri by lazy(LazyThreadSafetyMode.NONE) {
-        val courseDetailsUri = sharedViewModel.courseDetailsUri
+        val courseDetailsUri = sharedViewModel.courseDetailsUri?.path
         courseDetailsUri
             ?: throw IllegalArgumentException("CourseDetailsUri is missing! Cannot load CourseDetailsFragment without it.")
     }
@@ -80,7 +82,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
         val courseFullName = textview_course_details_full_name
         val courseAcronym = textview_course_details_acronym
 
-        viewModel.getCourseDetails(courseDetailsUri) {
+        viewModel.getCourseDetails(URI("$WEB_API_HOST$courseDetailsUri")) {
             // Name is not mandatory (as mencioned in Core Docs https://github.com/i-on-project/core/blob/master/docs/api/read/programme.md)
             courseFullName.text = it.name
                 ?: resources.getString(R.string.label_name_not_available_all)
@@ -116,7 +118,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
     private fun setupCalendarTermSpinner(spinner: Spinner, course: Course) {
         // There is no point in obtaining the classes if there aren't any
         if (course.classesUri != null) {
-            viewModel.getClasses(course.classesUri)
+            viewModel.getClasses(URI("$WEB_API_HOST${course.classesUri.path}"))
 
             val spinnerAdapter = ArrayAdapter<Classes>(
                 requireContext(), R.layout.support_simple_spinner_dropdown_item
@@ -140,7 +142,7 @@ class CourseDetailsFragment : ExceptionHandlingFragment() {
                 ) {
                     val selectedItem = viewModel.classes[position]
                     //Obtaining the classes from that course
-                    viewModel.getClassesFromCourse(selectedItem.selfUri)
+                    viewModel.getClassesFromCourse(URI("$WEB_API_HOST${selectedItem.selfUri.path}"))
                 }
             }
         }

@@ -1,5 +1,6 @@
 package org.ionproject.android.common.repositories
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,7 +30,8 @@ class ClassesRepository(
 
     suspend fun forceGetClassSection(classSectionUri: URI): ClassSection =
         withContext(dispatcher) {
-            val classSectionLocal = classSectionDao.getClassSectionByUri(classSectionUri)
+            val classSectionLocal = classSectionDao.getClassSectionByUri(URI("http://localhost:10023${classSectionUri.path}"))
+
             val classSectionServer =
                 ionWebAPI.getFromURI(classSectionUri, SirenEntity::class.java)
                     .toClassSection()
@@ -51,7 +53,8 @@ class ClassesRepository(
 
     suspend fun getClassSection(classSectionUri: URI): ClassSection? =
         withContext(dispatcher) {
-            var classSection = classSectionDao.getClassSectionByUri(classSectionUri)
+            var classSection = classSectionDao.getClassSectionByUri(URI("http://localhost:10023${classSectionUri.path}"))
+
             if (classSection == null) {
                 classSection =
                     ionWebAPI.getFromURI(classSectionUri, SirenEntity::class.java)
@@ -71,7 +74,8 @@ class ClassesRepository(
 
     suspend fun getClassCollectionByUri(classesUri: URI): ClassCollection? =
         withContext(dispatcher) {
-            var classCollection = classCollectionDao.getClassCollectionByUri(classesUri)
+            var classCollection = classCollectionDao.getClassCollectionByUri(URI("http://localhost:10023${classesUri.path}"))
+
             if (classCollection == null) {
                 classCollection = ionWebAPI.getFromURI(
                     classesUri,
@@ -92,7 +96,8 @@ class ClassesRepository(
 
     suspend fun getClassesFromUri(classesUri: URI): List<Classes> =
         withContext(dispatcher) {
-            var classes = classesDao.getClassesByUri(classesUri)
+            var classes = classesDao.getClassesByUri(URI(classesUri.path)) //changed by Joao oliveira for testing with core. original: (classesUri)
+
             if (classes.count() == 0) {
                 classes = ionWebAPI.getFromURI(
                     classesUri,

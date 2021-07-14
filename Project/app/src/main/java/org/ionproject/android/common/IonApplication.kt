@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
+import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import okhttp3.internal.tls.OkHostnameVerifier
 import org.ionproject.android.common.connectivity.ConnectivityObservableFactory
 import org.ionproject.android.common.connectivity.IConnectivityObservable
 import org.ionproject.android.common.db.AppDatabase
@@ -13,6 +16,7 @@ import org.ionproject.android.common.workers.WorkerManagerFacade
 import org.ionproject.android.loading.RemoteConfigRepository
 import org.ionproject.android.offline.CatalogRepository
 import org.ionproject.android.settings.Preferences
+import org.ionproject.android.userAPI.UserAPIRepository
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -43,6 +47,8 @@ class IonApplication : Application() {
         lateinit var connectivityObservable: IConnectivityObservable private set
         lateinit var remoteConfigRepository: RemoteConfigRepository private set
         lateinit var catalogRepository: CatalogRepository private set
+        lateinit var userAPIRepository: UserAPIRepository private set
+        lateinit var mainRepository: MainRepository private set
     }
 
     override fun onCreate() {
@@ -69,7 +75,13 @@ class IonApplication : Application() {
         //------------------------------------
 
         //------- Using real API -------------
+
+        val client = OkHttpClient()
+
+        client.newBuilder().hostnameVerifier { _, _ -> true}
+
         val retrofit = Retrofit.Builder()
+            .client(client)
             .baseUrl(preferences.getWebApiHost()?: WEB_API_HOST)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
@@ -99,7 +111,7 @@ class IonApplication : Application() {
                 workerManagerFacade
             )
         favoritesRepository =
-            FavoriteRepository(db.favoriteDao())
+            FavoriteRepository(db.favoriteDao(), Dispatchers.IO, ionWebAPI, preferences)
         calendarTermRepository =
             CalendarTermRepository(
                 webAPI,
@@ -116,5 +128,9 @@ class IonApplication : Application() {
         remoteConfigRepository = RemoteConfigRepository(preferences, ionWebAPI)
 
         catalogRepository = CatalogRepository(ionWebAPI)
+
+        userAPIRepository = UserAPIRepository(ionWebAPI)
+
+        mainRepository = MainRepository(favoritesRepository, userAPIRepository, preferences)
     }
 }

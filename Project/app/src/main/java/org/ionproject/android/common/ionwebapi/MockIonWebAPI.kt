@@ -4,6 +4,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import okhttp3.RequestBody
+import org.ionproject.android.userAPI.models.AuthMethod
+import org.ionproject.android.userAPI.models.SelectedMethod
 import java.net.URI
 import java.net.URISyntaxException
 import kotlin.random.Random
@@ -20,9 +23,48 @@ class MockIonWebAPI(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IIonWebAPI {
 
-    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String): T {
+    override suspend fun <T> getFromURI(uri: URI, klass: Class<T>, accept: String, bearerToken: String): T {
         val responseBody: String = get(uri)
         return ionMapper.parse(responseBody, klass)
+    }
+
+    override suspend fun addClassSectionToCoreFavourites(uri: URI, bearerToken: String): String {
+        return get(uri)
+    }
+
+    override suspend fun removeClassSectionFromCoreFavourites(
+        uri: URI,
+        bearerToken: String
+    ){
+        get(uri)
+    }
+
+    override suspend fun <T> getFromURIWithoutAuth(uri: URI, klass: Class<T>, accept: String): T {
+        val responseBody: String = get(uri)
+        return ionMapper.parse(responseBody, klass)
+    }
+
+    override suspend fun <T> pollCore(uri: URI, klass: Class<T>, accept: String): T {
+        val responseBody: String = get(uri)
+        return ionMapper.parse(responseBody, klass)
+    }
+
+    override suspend fun getAuthMethodsArray(uri: URI, accept: String): List<AuthMethod> {
+        return listOf()
+    }
+
+    override suspend fun <T> postWithBody(
+        uri: URI,
+        accept: String,
+        klass: Class<T>,
+        body:RequestBody
+    ): T {
+        val responseBody: String = get(uri)
+        return ionMapper.parse(responseBody, klass)
+    }
+
+    override suspend fun revokeAccessToken(body: RequestBody) {
+
     }
 
     /**

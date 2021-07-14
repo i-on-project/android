@@ -1,8 +1,10 @@
 package org.ionproject.android.class_section
 
+import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.ionproject.android.SharedViewModel
+import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 import org.ionproject.android.common.model.ClassSection
 import org.ionproject.android.common.model.Events
 import org.ionproject.android.common.repositories.ClassesRepository
@@ -106,6 +108,7 @@ class ClassSectionViewModel(
     fun addClassToFavorites(classSection: ClassSection) {
         viewModelScope.launch {
             favoriteRepository.addClassToFavorites(classSection)
+            favoriteRepository.addClassSectionToCoreFavorites(URI("$WEB_API_HOST/api/users/classes/${classSection.classId}/${classSection.id}"))
         }
     }
 
@@ -118,6 +121,7 @@ class ClassSectionViewModel(
     fun removeClassFromFavorites(classSection: ClassSection) {
         viewModelScope.launch {
             favoriteRepository.removeClassFromFavorites(classSection)
+            favoriteRepository.removeClassSectionFromCoreFavorites(URI("$WEB_API_HOST/api/users/classes/${classSection.classId}/${classSection.id}"))
         }
     }
 

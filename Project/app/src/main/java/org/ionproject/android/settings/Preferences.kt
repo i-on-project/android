@@ -7,6 +7,8 @@ import org.ionproject.android.common.ionwebapi.WEB_API_HOST
 private const val SHARED_PREFERENCES_FILE = "org.ionproject.android.SHARED_PREFERENCES_FILE"
 private const val CALENDAR_TERM_KEY = "calendar_term_key"
 private const val WEB_API_HOST_KEY = "webApi_host_key"
+private const val USER_API_ACCESS_TOKEN_KEY = "access_token_key"
+private const val USER_API_REFRESH_TOKEN_KEY = "refresh_token_key"
 
 /**
  * Preferences class, should contain only preferences related operations.
@@ -36,4 +38,18 @@ class Preferences(context: Context) {
         putString(WEB_API_HOST_KEY, newUrl)
         commit()
     }
+
+    fun saveAccessToken(token: String) = with(sharedPref.edit()){
+        putString(USER_API_ACCESS_TOKEN_KEY, token)
+        commit()
+    }
+
+    fun getAccessToken() = sharedPref.getString(USER_API_ACCESS_TOKEN_KEY, "")
+
+    fun saveRefreshToken(token: String) = with(sharedPref.edit()){
+        putString(USER_API_REFRESH_TOKEN_KEY, token)
+        commit()
+    }
+
+    fun getRefreshToken() = sharedPref.getString(USER_API_REFRESH_TOKEN_KEY, "")
 }

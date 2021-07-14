@@ -48,10 +48,11 @@ fun SirenEntity.toClassCollection(): ClassCollection {
                 if (embeddedEntity.clazz.containsAll(listOf("class", "section"))) {
                     val id = embeddedEntity.properties?.get("id") as? String
                     val detailsUri: URI? = embeddedEntity.links?.findByRel("self")
+                    val classId = embeddedEntity.properties?.get("classId") as? String
 
                     if (id != null && detailsUri != null)
                         classesSummary.add(
-                            ClassSummary(id, courseAcronym, calendarTerm, detailsUri)
+                            ClassSummary(id, courseAcronym, calendarTerm,detailsUri)
                         )
 
                 } else if (embeddedEntity.clazz.contains("calendar")) {
@@ -79,13 +80,14 @@ fun SirenEntity.toClassCollection(): ClassCollection {
 fun SirenEntity.toClasses(): List<Classes> {
     val classesList = mutableListOf<Classes>()
 
-    val courseId = properties?.get("cid") as? Int
+    val courseId = properties?.get("courseId") as? Int
     val selfUriPath =
         links?.findByRel("self")?.path // This is required because it might be an hreftemplate
 
     if (courseId != null && selfUriPath != null) {
         entities?.findEmbeddedEntitiesByRel("item")?.forEach {
             val calendarTerm = it.properties?.get("calendarTerm") as? String
+            val id = it.properties?.get("id") as? Int
             val detailsUri: URI? = it.links?.findByRel("self")
 
             if (calendarTerm != null && detailsUri != null)
@@ -93,6 +95,7 @@ fun SirenEntity.toClasses(): List<Classes> {
                     Classes(
                         courseId,
                         calendarTerm,
+                        id!!,
                         detailsUri,
                         URI(selfUriPath)
                     )

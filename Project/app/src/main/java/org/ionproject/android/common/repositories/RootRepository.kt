@@ -30,7 +30,7 @@ class RootRepository(
 
             if (rootResource == null) {
                 rootResource =
-                    ionWebAPI.getFromURI(uri, JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
+                    ionWebAPI.getFromURI(URI("$uri/api/"), JsonHome::class.java, JSON_HOME_MEDIA_TYPE)
                         .toRoot()
                 if (rootResource != null) {
                     // Save root resource into local database and create a worker for it
